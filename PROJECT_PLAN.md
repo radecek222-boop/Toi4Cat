@@ -10,10 +10,10 @@
 ```
 📅 Posledni aktualizace: 2025-11-25
 👤 Aktualizoval: Claude AI
-📍 Aktualni faze: FAZE 5 - Hlavni stranka
-✅ Posledni dokonceny krok: FAZE 3 - Design system kompletne hotov
-⏳ Aktualne se dela: Aplikace design systemu na HTML stranky
-🔜 Dalsi krok: Upravit index.html a app.html s novymi CSS tridami
+📍 Aktualni faze: FAZE 6 - Moduly aplikace
+✅ Posledni dokonceny krok: FAZE 5 - Design system aplikovan na HTML
+⏳ Aktualne se dela: Testovani na GitHub Pages
+🔜 Dalsi krok: Otestovat responzivitu, pak FAZE 6
 ```
 
 ---
@@ -91,10 +91,10 @@ FIXO/
 ### FAZE 4: Sablony (Templates) ⏭️ PRESKOCENO
 > Sablony budou vytvoreny podle potreby v ramci FAZE 5-6
 
-### FAZE 5: Hlavni stranka ⏳ PROBIHA
-- [ ] Aplikovat design system na index.html
-- [ ] Aplikovat design system na app.html
-- [ ] Otestovat na GitHub Pages
+### FAZE 5: Hlavni stranka ✅ HOTOVO
+- [x] Aplikovat design system na index.html
+- [x] Aplikovat design system na app.html
+- [ ] Otestovat na GitHub Pages (po merge do main)
 - [ ] Responzivita (mobil, tablet, desktop)
 
 ### FAZE 6: Moduly aplikace ⬚ CEKA
