@@ -10,9 +10,9 @@
 
 ```
 📅 Zahájení: 2025-11-25
-📍 Aktuální fáze: FÁZE 0 - Příprava
-✅ Dokončeno: 0/50 kroků
-⏳ Probíhá: Analýza a plánování
+📍 Aktuální fáze: FÁZE 0 - Příprava (Krok 0.2 HOTOVO)
+✅ Dokončeno: 6/50 kroků
+⏳ Probíhá: Modernizace Design Systému
 🎯 Cíl Q1 2026: MVP s monetizací
 ```
 
@@ -40,20 +40,38 @@
 
 > **Cíl:** Připravit základ pro migraci, udělat klíčová rozhodnutí
 
-### Krok 0.1: Záloha současného stavu
-- [ ] Vytvořit Git tag `v1.0-legacy`
-- [ ] Exportovat všechna data do zálohy
-- [ ] Zdokumentovat současné API endpointy
-- [ ] Screenshot všech stránek pro referenci
+### Krok 0.1: Záloha současného stavu ✅ HOTOVO
+- [x] Vytvořit Git tag `v1.0-legacy`
+- [x] Exportovat všechna data do zálohy
+- [x] Zdokumentovat současné API endpointy
+- [x] Screenshot všech stránek pro referenci
 
-### Krok 0.2: Rozhodnutí o tech stacku
-- [ ] **Frontend:** Next.js 14+ (App Router) ✅ Doporučeno
-- [ ] **Styling:** Tailwind CSS + shadcn/ui ✅ Doporučeno
-- [ ] **Backend:** Next.js API Routes + tRPC ✅ Doporučeno
-- [ ] **Database:** PostgreSQL + Prisma ORM ✅ Doporučeno
-- [ ] **Auth:** NextAuth.js nebo Clerk ⚠️ Rozhodnout
-- [ ] **Payments:** Stripe ✅ Doporučeno
-- [ ] **Hosting:** Vercel (frontend) + Railway/Supabase (DB) ✅ Doporučeno
+### Krok 0.2: Rozhodnutí o tech stacku ✅ HOTOVO
+- [x] **Frontend:** Next.js 14+ (App Router) ✅ Doporučeno
+- [x] **Styling:** Vlastní moderní CSS (oklch, layers, container queries) + budoucí Tailwind
+- [x] **Backend:** Next.js API Routes + tRPC ✅ Doporučeno
+- [x] **Database:** PostgreSQL + Prisma ORM ✅ Doporučeno
+- [x] **Auth:** NextAuth.js ✅ Rozhodnuto
+- [x] **Payments:** Stripe ✅ Doporučeno
+- [x] **Hosting:** Vercel (frontend) + Railway/Supabase (DB) ✅ Doporučeno
+
+### Krok 0.2b: Modernizace CSS Design Systému ✅ HOTOVO
+- [x] Vytvořen `design-system-v2.css` - moderní CSS proměnné s oklch() barvami
+- [x] Vytvořen `components-v2.css` - moderní komponenty s container queries
+- [x] Vytvořen `layout-v2.css` - moderní layout s logical properties
+- [x] Vytvořen `fixo-v2.css` - hlavní entry point + FIXO-specifické komponenty
+
+**Nové CSS features pro budoucnost:**
+- CSS Layers (@layer) pro správnou specificitu
+- oklch() barvy pro lepší color science
+- clamp() pro fluid typography
+- Container Queries pro komponentovou responzivitu
+- Logical Properties (inline/block) pro i18n
+- View Transitions API ready
+- Scroll-driven animations
+- Preference queries (prefers-reduced-motion, prefers-color-scheme)
+- Glassmorphism efekty
+- Modern selectors (:has, :is, :where)
 
 ### Krok 0.3: Založení nového projektu
 - [ ] Inicializovat Next.js projekt s TypeScript
