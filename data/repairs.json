@@ -9823,6 +9823,87 @@
             "comingSoon": true
           },
           "affiliateLinks": []
+        },
+        {
+          "id": "garage-door-spring",
+          "name": "Prasklá pružina vrat",
+          "description": "Torzní pružina garážových vrat je prasklá nebo slabá",
+          "riskScore": 4,
+          "difficulty": "Obtížná",
+          "timeEstimate": "1-2 hodiny",
+          "materialCost": {
+            "min": 500,
+            "max": 1500,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 2000,
+            "max": 4000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Klíče",
+            "Napínací tyče",
+            "Svěrky"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Odpojte pohon vrat",
+              "time": "2 min",
+              "icon": "⚡",
+              "hint": "Bezpečnost!"
+            },
+            {
+              "step": 2,
+              "action": "Zajistěte vrata",
+              "time": "5 min",
+              "icon": "🔒",
+              "hint": "Svěrkami"
+            },
+            {
+              "step": 3,
+              "action": "Uvolněte starou pružinu",
+              "time": "15 min",
+              "icon": "⚠️",
+              "hint": "POZOR - napětí!"
+            },
+            {
+              "step": 4,
+              "action": "Namontujte novou",
+              "time": "20 min",
+              "icon": "🔧",
+              "hint": "Správný typ"
+            },
+            {
+              "step": 5,
+              "action": "Napněte a seřiďte",
+              "time": "15 min",
+              "icon": "✅",
+              "hint": "Dle návodu"
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Výměna pružiny garážových vrat",
+            "duration": "14:00",
+            "placeholder": true
+          },
+          "preRepairChecklist": [
+            {
+              "item": "Odpojit elektriku",
+              "critical": true
+            },
+            {
+              "item": "Správný typ pružiny",
+              "critical": true
+            },
+            {
+              "item": "Druhá osoba na pomoc",
+              "critical": true
+            }
+          ],
+          "affiliateLinks": []
         }
       ]
     },
@@ -10436,6 +10517,1509 @@
             "premium": true,
             "comingSoon": true
           },
+          "affiliateLinks": []
+        }
+      ]
+    },
+    "bazén": {
+      "name": "Bazén",
+      "category": "zahrada",
+      "icon": "🏊",
+      "issues": [
+        {
+          "id": "green-water",
+          "name": "Zelená voda v bazénu",
+          "description": "Voda je zelená od řas",
+          "riskScore": 2,
+          "difficulty": "Střední",
+          "timeEstimate": "2-3 dny",
+          "materialCost": {
+            "min": 300,
+            "max": 800,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 1500,
+            "max": 4000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Tester pH",
+            "Chlor",
+            "Kartáč na bazén"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Změřte pH vody",
+              "time": "5 min",
+              "icon": "🧪",
+              "hint": "Ideální pH je 7.2-7.6"
+            },
+            {
+              "step": 2,
+              "action": "Proveďte šokovou chloraci",
+              "time": "30 min",
+              "icon": "💧"
+            },
+            {
+              "step": 3,
+              "action": "Spusťte filtraci na 24 hodin",
+              "time": "24 h",
+              "icon": "🔄"
+            },
+            {
+              "step": 4,
+              "action": "Vykartáčujte stěny a dno",
+              "time": "30 min",
+              "icon": "🧹"
+            },
+            {
+              "step": 5,
+              "action": "Properte filtr a opakujte",
+              "time": "-",
+              "icon": "🔁"
+            }
+          ],
+          "safetyWarnings": [
+            "Nekoupejte se během šokové chlorace",
+            "Používejte rukavice při práci s chemikáliemi"
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "weather-ok",
+              "text": "Počasí je vhodné pro práci",
+              "critical": false
+            },
+            {
+              "id": "safety-gear",
+              "text": "Mám ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám potřebné nástroje",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          },
+          "affiliateLinks": []
+        },
+        {
+          "id": "low-pressure",
+          "name": "Slabý tlak filtrace",
+          "description": "Filtrace bazénu špatně funguje",
+          "riskScore": 2,
+          "difficulty": "Nízká",
+          "timeEstimate": "30 min",
+          "materialCost": {
+            "min": 0,
+            "max": 500,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 800,
+            "max": 2000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Hadice",
+            "Klíč"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Vypněte čerpadlo",
+              "time": "1 min",
+              "icon": "🔌"
+            },
+            {
+              "step": 2,
+              "action": "Vyčistěte předfiltr čerpadla",
+              "time": "10 min",
+              "icon": "🧹"
+            },
+            {
+              "step": 3,
+              "action": "Properte pískový filtr",
+              "time": "10 min",
+              "icon": "💧",
+              "hint": "Backwash režim"
+            },
+            {
+              "step": 4,
+              "action": "Zkontrolujte těsnost spojů",
+              "time": "10 min",
+              "icon": "🔍"
+            }
+          ],
+          "safetyWarnings": [
+            "Vypněte čerpadlo před jakoukoliv prací"
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "weather-ok",
+              "text": "Počasí je vhodné pro práci",
+              "critical": false
+            },
+            {
+              "id": "safety-gear",
+              "text": "Mám ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám potřebné nástroje",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          },
+          "affiliateLinks": []
+        }
+      ]
+    },
+    "plot": {
+      "name": "Plot",
+      "category": "zahrada",
+      "icon": "🏗️",
+      "issues": [
+        {
+          "id": "broken-slat",
+          "name": "Poškozená laťka plotu",
+          "description": "Prasklá nebo chybějící laťka",
+          "riskScore": 2,
+          "difficulty": "Nízká",
+          "timeEstimate": "30 min",
+          "materialCost": {
+            "min": 50,
+            "max": 300,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 500,
+            "max": 1200,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Kladivo",
+            "Hřebíky",
+            "Pila",
+            "Nová laťka"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Odstraňte poškozenou laťku",
+              "time": "5 min",
+              "icon": "🔨"
+            },
+            {
+              "step": 2,
+              "action": "Změřte rozměr nové laťky",
+              "time": "2 min",
+              "icon": "📏"
+            },
+            {
+              "step": 3,
+              "action": "Nařežte novou laťku na míru",
+              "time": "5 min",
+              "icon": "🪚"
+            },
+            {
+              "step": 4,
+              "action": "Připevněte novou laťku",
+              "time": "10 min",
+              "icon": "🔨"
+            },
+            {
+              "step": 5,
+              "action": "Natřete ochranným nátěrem",
+              "time": "10 min",
+              "icon": "🎨"
+            }
+          ],
+          "safetyWarnings": [
+            "Používejte rukavice při práci se dřevem"
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "weather-ok",
+              "text": "Počasí je vhodné pro práci",
+              "critical": false
+            },
+            {
+              "id": "safety-gear",
+              "text": "Mám ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám potřebné nástroje",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          },
+          "affiliateLinks": []
+        },
+        {
+          "id": "wobbly-post",
+          "name": "Viklající se sloupek",
+          "description": "Sloupek plotu se viklá",
+          "riskScore": 3,
+          "difficulty": "Střední",
+          "timeEstimate": "1 hodina",
+          "materialCost": {
+            "min": 100,
+            "max": 500,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 800,
+            "max": 2000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Lopata",
+            "Beton",
+            "Vodováha"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Odkopejte zeminu kolem sloupku",
+              "time": "15 min",
+              "icon": "⛏️"
+            },
+            {
+              "step": 2,
+              "action": "Vyrovnejte sloupek do svislice",
+              "time": "5 min",
+              "icon": "📐"
+            },
+            {
+              "step": 3,
+              "action": "Podepřete sloupek dočasně",
+              "time": "5 min",
+              "icon": "🪵"
+            },
+            {
+              "step": 4,
+              "action": "Zalijte betonem",
+              "time": "15 min",
+              "icon": "🧱"
+            },
+            {
+              "step": 5,
+              "action": "Nechte zaschnout 24 hodin",
+              "time": "24 h",
+              "icon": "⏳"
+            }
+          ],
+          "safetyWarnings": [
+            "Při práci s betonem používejte rukavice"
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "weather-ok",
+              "text": "Počasí je vhodné pro práci",
+              "critical": false
+            },
+            {
+              "id": "safety-gear",
+              "text": "Mám ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám potřebné nástroje",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          },
+          "affiliateLinks": []
+        }
+      ]
+    },
+    "koberec": {
+      "name": "Koberec",
+      "category": "podlahy",
+      "icon": "🟫",
+      "issues": [
+        {
+          "id": "stain",
+          "name": "Skvrna na koberci",
+          "description": "Odstranění skvrn z koberce",
+          "riskScore": 1,
+          "difficulty": "Nízká",
+          "timeEstimate": "20 min",
+          "materialCost": {
+            "min": 50,
+            "max": 300,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 500,
+            "max": 1500,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Čistící prostředek",
+            "Hadřík",
+            "Kartáč"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Odsajte přebytečnou tekutinu",
+              "time": "2 min",
+              "icon": "🧽",
+              "hint": "Netlačte skvrnu hlouběji"
+            },
+            {
+              "step": 2,
+              "action": "Aplikujte čistící prostředek",
+              "time": "5 min",
+              "icon": "🧴"
+            },
+            {
+              "step": 3,
+              "action": "Nechte působit dle návodu",
+              "time": "10 min",
+              "icon": "⏱️"
+            },
+            {
+              "step": 4,
+              "action": "Vytřete čistou vodou",
+              "time": "5 min",
+              "icon": "💧"
+            },
+            {
+              "step": 5,
+              "action": "Nechte uschnout",
+              "time": "-",
+              "icon": "💨"
+            }
+          ],
+          "safetyWarnings": [
+            "Vyzkoušejte prostředek na nenápadném místě"
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "area-clear",
+              "text": "Pracovní prostor je volný",
+              "critical": false
+            },
+            {
+              "id": "ventilation",
+              "text": "Místnost je větraná",
+              "critical": false
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám potřebné nástroje",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          },
+          "affiliateLinks": []
+        },
+        {
+          "id": "lifting",
+          "name": "Odlepující se koberec",
+          "description": "Koberec se odlepuje od podlahy",
+          "riskScore": 1,
+          "difficulty": "Nízká",
+          "timeEstimate": "30 min",
+          "materialCost": {
+            "min": 100,
+            "max": 400,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 600,
+            "max": 1500,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Kobercové lepidlo",
+            "Špachtle",
+            "Váleček"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Odklopte odlepený koberec",
+              "time": "2 min",
+              "icon": "🔍"
+            },
+            {
+              "step": 2,
+              "action": "Vyčistěte podklad",
+              "time": "5 min",
+              "icon": "🧹"
+            },
+            {
+              "step": 3,
+              "action": "Naneste lepidlo na podklad",
+              "time": "5 min",
+              "icon": "🧴"
+            },
+            {
+              "step": 4,
+              "action": "Přitlačte koberec a vyválečkujte",
+              "time": "10 min",
+              "icon": "🔨"
+            },
+            {
+              "step": 5,
+              "action": "Zatížte na 24 hodin",
+              "time": "24 h",
+              "icon": "⏳"
+            }
+          ],
+          "safetyWarnings": [
+            "Větrejte při práci s lepidlem"
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "area-clear",
+              "text": "Pracovní prostor je volný",
+              "critical": false
+            },
+            {
+              "id": "ventilation",
+              "text": "Místnost je větraná",
+              "critical": false
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám potřebné nástroje",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          },
+          "affiliateLinks": []
+        }
+      ]
+    },
+    "terasa": {
+      "name": "Terasa",
+      "category": "zahrada",
+      "icon": "🏠",
+      "issues": [
+        {
+          "id": "broken-tile",
+          "name": "Prasklá dlažba terasy",
+          "description": "Poškozená venkovní dlažba",
+          "riskScore": 2,
+          "difficulty": "Střední",
+          "timeEstimate": "2 hodiny",
+          "materialCost": {
+            "min": 100,
+            "max": 500,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 800,
+            "max": 2000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Sekáč",
+            "Kladivo",
+            "Lepidlo na dlažbu",
+            "Spárovací hmota"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Odstraňte poškozenou dlaždici",
+              "time": "20 min",
+              "icon": "🔨"
+            },
+            {
+              "step": 2,
+              "action": "Vyčistěte podklad",
+              "time": "10 min",
+              "icon": "🧹"
+            },
+            {
+              "step": 3,
+              "action": "Naneste lepidlo",
+              "time": "5 min",
+              "icon": "🧴"
+            },
+            {
+              "step": 4,
+              "action": "Usaďte novou dlaždici",
+              "time": "10 min",
+              "icon": "🔧"
+            },
+            {
+              "step": 5,
+              "action": "Vyspárujte",
+              "time": "30 min",
+              "icon": "✅"
+            }
+          ],
+          "safetyWarnings": [
+            "Používejte ochranné brýle při sekání"
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "weather-ok",
+              "text": "Počasí je vhodné pro práci",
+              "critical": false
+            },
+            {
+              "id": "safety-gear",
+              "text": "Mám ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám potřebné nástroje",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          },
+          "affiliateLinks": []
+        },
+        {
+          "id": "weed-joints",
+          "name": "Plevel ve spárách",
+          "description": "Plevel prorůstá mezi dlažbou",
+          "riskScore": 1,
+          "difficulty": "Nízká",
+          "timeEstimate": "1 hodina",
+          "materialCost": {
+            "min": 100,
+            "max": 300,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 400,
+            "max": 1000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Škrabka na spáry",
+            "Herbicid",
+            "Hadice"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Mechanicky odstraňte plevel",
+              "time": "30 min",
+              "icon": "🌿"
+            },
+            {
+              "step": 2,
+              "action": "Vyčistěte spáry",
+              "time": "15 min",
+              "icon": "🧹"
+            },
+            {
+              "step": 3,
+              "action": "Aplikujte herbicid (volitelné)",
+              "time": "10 min",
+              "icon": "🧴"
+            },
+            {
+              "step": 4,
+              "action": "Doplňte spárovací písek",
+              "time": "10 min",
+              "icon": "🏖️"
+            }
+          ],
+          "safetyWarnings": [
+            "Při použití herbicidu dodržujte bezpečnostní pokyny"
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "weather-ok",
+              "text": "Počasí je vhodné pro práci",
+              "critical": false
+            },
+            {
+              "id": "safety-gear",
+              "text": "Mám ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám potřebné nástroje",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          },
+          "affiliateLinks": []
+        }
+      ]
+    },
+    "umyvadlo": {
+      "name": "Umyvadlo",
+      "category": "voda",
+      "icon": "🚿",
+      "issues": [
+        {
+          "id": "cracked",
+          "name": "Prasklé umyvadlo",
+          "description": "Trhlina nebo prasklina v umyvadle",
+          "riskScore": 3,
+          "difficulty": "Střední",
+          "timeEstimate": "1 hodina",
+          "materialCost": {
+            "min": 200,
+            "max": 800,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 1500,
+            "max": 4000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Epoxidové lepidlo",
+            "Brusný papír",
+            "Odmašťovač"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Vyčistěte a odmaštěte prasklinu",
+              "time": "10 min",
+              "icon": "🧹"
+            },
+            {
+              "step": 2,
+              "action": "Obruste okolí praskliny",
+              "time": "5 min",
+              "icon": "📄"
+            },
+            {
+              "step": 3,
+              "action": "Aplikujte epoxidové lepidlo",
+              "time": "10 min",
+              "icon": "🧴"
+            },
+            {
+              "step": 4,
+              "action": "Nechte zaschnout 24 hodin",
+              "time": "24 h",
+              "icon": "⏳"
+            },
+            {
+              "step": 5,
+              "action": "Přebruste a vyleštěte",
+              "time": "10 min",
+              "icon": "✨"
+            }
+          ],
+          "safetyWarnings": [
+            "Pracujte v dobře větrané místnosti",
+            "Při větším poškození zvažte výměnu"
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "water-off",
+              "text": "Přívod vody je uzavřen",
+              "critical": true
+            },
+            {
+              "id": "bucket-ready",
+              "text": "Mám připravený kbelík",
+              "critical": false
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám potřebné nástroje",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          },
+          "affiliateLinks": []
+        },
+        {
+          "id": "loose",
+          "name": "Viklající se umyvadlo",
+          "description": "Umyvadlo není pevně uchyceno",
+          "riskScore": 3,
+          "difficulty": "Střední",
+          "timeEstimate": "45 min",
+          "materialCost": {
+            "min": 50,
+            "max": 300,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 800,
+            "max": 2000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Klíč",
+            "Šroubovák",
+            "Silikon"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Uzavřete přívod vody",
+              "time": "2 min",
+              "icon": "🚰"
+            },
+            {
+              "step": 2,
+              "action": "Zkontrolujte uchycení ke stěně",
+              "time": "5 min",
+              "icon": "🔍"
+            },
+            {
+              "step": 3,
+              "action": "Dotáhněte šrouby/hmoždinky",
+              "time": "15 min",
+              "icon": "🔧"
+            },
+            {
+              "step": 4,
+              "action": "Zkontrolujte spoje odpadu",
+              "time": "10 min",
+              "icon": "🔩"
+            },
+            {
+              "step": 5,
+              "action": "Utěsněte silikonem u stěny",
+              "time": "10 min",
+              "icon": "✅"
+            }
+          ],
+          "safetyWarnings": [
+            "Dejte pozor na váhu umyvadla"
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "water-off",
+              "text": "Přívod vody je uzavřen",
+              "critical": true
+            },
+            {
+              "id": "bucket-ready",
+              "text": "Mám připravený kbelík",
+              "critical": false
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám potřebné nástroje",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          },
+          "affiliateLinks": []
+        }
+      ]
+    },
+    "schody": {
+      "name": "Schody",
+      "category": "konstrukce",
+      "icon": "🪜",
+      "issues": [
+        {
+          "id": "creaky-stairs",
+          "name": "Vrzající schody",
+          "description": "Dřevěné schody vydávají při chůzi nepříjemné zvuky",
+          "riskScore": 2,
+          "difficulty": "Střední",
+          "timeEstimate": "1-2 hodiny",
+          "materialCost": {
+            "min": 100,
+            "max": 400,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 1500,
+            "max": 4000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Šroubovák",
+            "Kladivo",
+            "Pilka",
+            "Dřevěné klínky"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Identifikujte vrzající stupně",
+              "time": "5 min",
+              "icon": "👂",
+              "hint": "Projděte schody a označte vrzající místa"
+            },
+            {
+              "step": 2,
+              "action": "Zkontrolujte uvolněné vruty",
+              "time": "5 min",
+              "icon": "🔍",
+              "hint": "Hledejte uvolněné spoje"
+            },
+            {
+              "step": 3,
+              "action": "Aplikujte grafit do spár",
+              "time": "10 min",
+              "icon": "✏️",
+              "hint": "Grafit funguje jako mazivo"
+            },
+            {
+              "step": 4,
+              "action": "Zatlučte klínky do mezer",
+              "time": "15 min",
+              "icon": "🔨",
+              "hint": "Použijte dřevěné klínky s lepidlem"
+            },
+            {
+              "step": 5,
+              "action": "Dotáhněte vruty",
+              "time": "10 min",
+              "icon": "🔧",
+              "hint": "Případně vyměňte za delší"
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Jak opravit vrzající schody",
+            "duration": "7:20",
+            "placeholder": true
+          },
+          "preRepairChecklist": [
+            {
+              "item": "Identifikovat všechny vrzající stupně",
+              "critical": true
+            },
+            {
+              "item": "Připravit klínky a lepidlo",
+              "critical": false
+            }
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Lepidlo na dřevo",
+              "links": [
+                {
+                  "store": "Hornbach",
+                  "url": "https://www.hornbach.cz/s/lepidlo-drevo"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "loose-handrail",
+          "name": "Uvolněné zábradlí",
+          "description": "Zábradlí na schodech je uvolněné nebo viklá se",
+          "riskScore": 4,
+          "difficulty": "Střední",
+          "timeEstimate": "30-60 minut",
+          "materialCost": {
+            "min": 50,
+            "max": 200,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 800,
+            "max": 2000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Šroubovák",
+            "Vrtačka",
+            "Klíče"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Zkontrolujte úchyty zábradlí",
+              "time": "5 min",
+              "icon": "🔍",
+              "hint": "Všechny úchyty musí držet pevně"
+            },
+            {
+              "step": 2,
+              "action": "Dotáhněte uvolněné šrouby",
+              "time": "10 min",
+              "icon": "🔧",
+              "hint": "Použijte správnou velikost šroubováku"
+            },
+            {
+              "step": 3,
+              "action": "Vyvrtejte nové otvory",
+              "time": "15 min",
+              "icon": "🔩",
+              "hint": "Pokud jsou otvory vyšlapané"
+            },
+            {
+              "step": 4,
+              "action": "Aplikujte lepidlo na spoje",
+              "time": "5 min",
+              "icon": "🧴",
+              "hint": "Na dřevěné spoje"
+            },
+            {
+              "step": 5,
+              "action": "Zkontrolujte stabilitu",
+              "time": "2 min",
+              "icon": "✅",
+              "hint": "Zábradlí musí být pevné!"
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Oprava uvolněného zábradlí",
+            "duration": "5:45",
+            "placeholder": true
+          },
+          "preRepairChecklist": [
+            {
+              "item": "Zkontrolovat nosnost zábradlí",
+              "critical": true
+            },
+            {
+              "item": "Připravit náhradní šrouby",
+              "critical": false
+            }
+          ],
+          "affiliateLinks": []
+        },
+        {
+          "id": "broken-step",
+          "name": "Poškozený schod",
+          "description": "Dřevěný schod je prasklý nebo propadlý",
+          "riskScore": 4,
+          "difficulty": "Obtížná",
+          "timeEstimate": "2-4 hodiny",
+          "materialCost": {
+            "min": 200,
+            "max": 800,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 2000,
+            "max": 5000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Pila",
+            "Vrtačka",
+            "Kladivo",
+            "Dláto"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Označte poškozený schod",
+              "time": "2 min",
+              "icon": "⚠️",
+              "hint": "Varujte ostatní"
+            },
+            {
+              "step": 2,
+              "action": "Odstraňte poškozený díl",
+              "time": "30 min",
+              "icon": "🪚",
+              "hint": "Opatrně"
+            },
+            {
+              "step": 3,
+              "action": "Změřte rozměry",
+              "time": "5 min",
+              "icon": "📏",
+              "hint": "Přesně"
+            },
+            {
+              "step": 4,
+              "action": "Vyřízněte nový díl",
+              "time": "20 min",
+              "icon": "🪵",
+              "hint": "Stejný materiál"
+            },
+            {
+              "step": 5,
+              "action": "Namontujte a zajistěte",
+              "time": "30 min",
+              "icon": "🔧",
+              "hint": "Šrouby + lepidlo"
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Výměna poškozeného schodu",
+            "duration": "11:30",
+            "placeholder": true
+          },
+          "preRepairChecklist": [
+            {
+              "item": "Zabezpečit schod",
+              "critical": true
+            },
+            {
+              "item": "Sehnat stejný materiál",
+              "critical": true
+            }
+          ],
+          "affiliateLinks": []
+        }
+      ]
+    },
+    "komin": {
+      "name": "Komín",
+      "category": "vytápění",
+      "icon": "🏠",
+      "issues": [
+        {
+          "id": "chimney-draft",
+          "name": "Špatný tah komína",
+          "description": "Komín netáhne správně, kouř jde do místnosti",
+          "riskScore": 5,
+          "difficulty": "Obtížná",
+          "timeEstimate": "2-4 hodiny",
+          "materialCost": {
+            "min": 200,
+            "max": 800,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 2000,
+            "max": 6000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Kominický kartáč",
+            "Zrcátko",
+            "Svítilna"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Zkontrolujte průchodnost komína",
+              "time": "10 min",
+              "icon": "🔦",
+              "hint": "Použijte zrcátko a svítilnu"
+            },
+            {
+              "step": 2,
+              "action": "Vyčistěte komín kartáčem",
+              "time": "30 min",
+              "icon": "🧹",
+              "hint": "Od spodu nahoru"
+            },
+            {
+              "step": 3,
+              "action": "Zkontrolujte přívod vzduchu",
+              "time": "5 min",
+              "icon": "💨",
+              "hint": "Místnost musí mít dostatek vzduchu"
+            },
+            {
+              "step": 4,
+              "action": "Opravte netěsnosti tmelem",
+              "time": "20 min",
+              "icon": "🔧",
+              "hint": "Speciální tmel na komíny"
+            },
+            {
+              "step": 5,
+              "action": "Zkontrolujte komínovou hlavici",
+              "time": "10 min",
+              "icon": "🏠",
+              "hint": "Z venku nebo ze střechy"
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Kontrola tahu komína",
+            "duration": "8:30",
+            "placeholder": true
+          },
+          "preRepairChecklist": [
+            {
+              "item": "Zajistit větrání místnosti",
+              "critical": true
+            },
+            {
+              "item": "Zkontrolovat detektor CO",
+              "critical": true
+            },
+            {
+              "item": "Připravit kominické náčiní",
+              "critical": false
+            }
+          ],
+          "affiliateLinks": []
+        },
+        {
+          "id": "chimney-creosote",
+          "name": "Dehet v komíně",
+          "description": "Nahromaděný dehet v komíně - riziko požáru",
+          "riskScore": 5,
+          "difficulty": "Obtížná",
+          "timeEstimate": "2-4 hodiny",
+          "materialCost": {
+            "min": 300,
+            "max": 1000,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 2500,
+            "max": 5000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Kominický kartáč",
+            "Speciální chemie",
+            "Ochranné pomůcky"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Vypněte topení",
+              "time": "1 min",
+              "icon": "🔥",
+              "hint": "Minimálně 24h předem"
+            },
+            {
+              "step": 2,
+              "action": "Zajistěte větrání",
+              "time": "5 min",
+              "icon": "💨",
+              "hint": "Otevřete okna"
+            },
+            {
+              "step": 3,
+              "action": "Aplikujte chemii",
+              "time": "10 min",
+              "icon": "🧪",
+              "hint": "Dle návodu"
+            },
+            {
+              "step": 4,
+              "action": "Mechanicky vyčistěte",
+              "time": "60 min",
+              "icon": "🧹",
+              "hint": "Kominickým kartáčem"
+            },
+            {
+              "step": 5,
+              "action": "Zkontrolujte průchodnost",
+              "time": "10 min",
+              "icon": "✅",
+              "hint": "Zrcátkem"
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Čištění komína od dehtu",
+            "duration": "12:00",
+            "placeholder": true
+          },
+          "preRepairChecklist": [
+            {
+              "item": "Netopeno 24h",
+              "critical": true
+            },
+            {
+              "item": "Ochranné pomůcky",
+              "critical": true
+            },
+            {
+              "item": "Detektor CO funkční",
+              "critical": true
+            }
+          ],
+          "affiliateLinks": []
+        }
+      ]
+    },
+    "strecha": {
+      "name": "Střecha",
+      "category": "konstrukce",
+      "icon": "🏚️",
+      "issues": [
+        {
+          "id": "missing-tile",
+          "name": "Chybějící taška",
+          "description": "Na střeše chybí nebo je poškozená střešní taška",
+          "riskScore": 4,
+          "difficulty": "Obtížná",
+          "timeEstimate": "1-2 hodiny",
+          "materialCost": {
+            "min": 50,
+            "max": 300,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 1500,
+            "max": 4000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Žebřík",
+            "Pojistný postroj",
+            "Kleště",
+            "Kladivo"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Zajistěte bezpečný přístup",
+              "time": "10 min",
+              "icon": "🪜",
+              "hint": "Stabilní žebřík, pojistný postroj"
+            },
+            {
+              "step": 2,
+              "action": "Odstraňte poškozenou tašku",
+              "time": "5 min",
+              "icon": "🔧",
+              "hint": "Opatrně nadzdvihněte okolní tašky"
+            },
+            {
+              "step": 3,
+              "action": "Připravte novou tašku",
+              "time": "2 min",
+              "icon": "🧱",
+              "hint": "Stejný typ a barva"
+            },
+            {
+              "step": 4,
+              "action": "Zasuňte novou tašku",
+              "time": "5 min",
+              "icon": "🏠",
+              "hint": "Pod horní řadu"
+            },
+            {
+              "step": 5,
+              "action": "Zajistěte háčkem",
+              "time": "2 min",
+              "icon": "✅",
+              "hint": "Použijte originální úchyt"
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Výměna střešní tašky",
+            "duration": "6:15",
+            "placeholder": true
+          },
+          "preRepairChecklist": [
+            {
+              "item": "Zkontrolovat počasí",
+              "critical": true
+            },
+            {
+              "item": "Připravit bezpečnostní vybavení",
+              "critical": true
+            },
+            {
+              "item": "Sehnat stejný typ tašky",
+              "critical": true
+            }
+          ],
+          "affiliateLinks": []
+        },
+        {
+          "id": "gutter-clog",
+          "name": "Ucpaný okap",
+          "description": "Okapový žlab je ucpaný listím a nečistotami",
+          "riskScore": 2,
+          "difficulty": "Střední",
+          "timeEstimate": "30-60 minut",
+          "materialCost": {
+            "min": 0,
+            "max": 100,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 500,
+            "max": 1500,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Žebřík",
+            "Rukavice",
+            "Lopatka",
+            "Hadice"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Bezpečně postavte žebřík",
+              "time": "5 min",
+              "icon": "🪜",
+              "hint": "Na rovný pevný podklad"
+            },
+            {
+              "step": 2,
+              "action": "Nasaďte rukavice",
+              "time": "1 min",
+              "icon": "🧤",
+              "hint": "Ochrana před nečistotami"
+            },
+            {
+              "step": 3,
+              "action": "Vyberte hrubé nečistoty",
+              "time": "15 min",
+              "icon": "🍂",
+              "hint": "Ručně nebo lopatkou"
+            },
+            {
+              "step": 4,
+              "action": "Propláchněte hadicí",
+              "time": "10 min",
+              "icon": "💧",
+              "hint": "Od nejvyššího bodu"
+            },
+            {
+              "step": 5,
+              "action": "Zkontrolujte odtok",
+              "time": "5 min",
+              "icon": "✅",
+              "hint": "Voda musí volně téct"
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Čištění okapů",
+            "duration": "4:30",
+            "placeholder": true
+          },
+          "preRepairChecklist": [
+            {
+              "item": "Stabilní žebřík",
+              "critical": true
+            },
+            {
+              "item": "Rukavice",
+              "critical": false
+            }
+          ],
+          "affiliateLinks": []
+        },
+        {
+          "id": "roof-leak",
+          "name": "Zatékání střechou",
+          "description": "Střecha propouští vodu, objevují se mokré skvrny na stropě",
+          "riskScore": 4,
+          "difficulty": "Obtížná",
+          "timeEstimate": "2-6 hodin",
+          "materialCost": {
+            "min": 300,
+            "max": 1500,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 3000,
+            "max": 10000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Žebřík",
+            "Pojistný postroj",
+            "Střešní tmel",
+            "Fólie"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Lokalizujte místo zatékání",
+              "time": "15 min",
+              "icon": "🔍",
+              "hint": "Zevnitř na půdě"
+            },
+            {
+              "step": 2,
+              "action": "Zkontrolujte střechu zvenku",
+              "time": "20 min",
+              "icon": "🪜",
+              "hint": "Bezpečný přístup"
+            },
+            {
+              "step": 3,
+              "action": "Identifikujte poškození",
+              "time": "10 min",
+              "icon": "🔦",
+              "hint": "Praskliny, chybějící tašky"
+            },
+            {
+              "step": 4,
+              "action": "Aplikujte střešní tmel",
+              "time": "30 min",
+              "icon": "🧴",
+              "hint": "Na malé praskliny"
+            },
+            {
+              "step": 5,
+              "action": "Případně vyměňte tašky",
+              "time": "30 min",
+              "icon": "🏠",
+              "hint": "Stejný typ"
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Oprava zatékající střechy",
+            "duration": "9:45",
+            "placeholder": true
+          },
+          "preRepairChecklist": [
+            {
+              "item": "Suché počasí",
+              "critical": true
+            },
+            {
+              "item": "Bezpečnostní vybavení",
+              "critical": true
+            }
+          ],
           "affiliateLinks": []
         }
       ]
