@@ -1533,15 +1533,46 @@
                 }
             };
 
-            const processFile = (file) => {
-                if (file && file.type.startsWith('image/')) {
+            // Komprese obrázku před odesláním (pro iPhone a vysoké rozlišení)
+            const compressImage = (file, maxWidth = 1920, quality = 0.8) => {
+                return new Promise((resolve) => {
                     const reader = new FileReader();
-                    reader.onloadend = () => {
-                        const imageData = reader.result;
-                        setSelectedImage(imageData);
-                        analyzeImage(imageData); // Předáme obrázek jako base64 pro API
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            let width = img.width;
+                            let height = img.height;
+
+                            // Zmenšit pokud je větší než maxWidth
+                            if (width > maxWidth) {
+                                height = Math.round((height * maxWidth) / width);
+                                width = maxWidth;
+                            }
+
+                            canvas.width = width;
+                            canvas.height = height;
+
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, width, height);
+
+                            // Komprimovat jako JPEG
+                            const compressedData = canvas.toDataURL('image/jpeg', quality);
+                            console.log(`Komprese: ${(file.size / 1024 / 1024).toFixed(2)}MB -> ${(compressedData.length / 1024 / 1024).toFixed(2)}MB`);
+                            resolve(compressedData);
+                        };
+                        img.src = e.target.result;
                     };
                     reader.readAsDataURL(file);
+                });
+            };
+
+            const processFile = async (file) => {
+                if (file && file.type.startsWith('image/')) {
+                    // Komprimovat obrázek před odesláním
+                    const compressedImage = await compressImage(file);
+                    setSelectedImage(compressedImage);
+                    analyzeImage(compressedImage);
                 }
             };
 
