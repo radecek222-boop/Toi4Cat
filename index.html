@@ -4676,20 +4676,145 @@
                             </div>
                         )}
 
-                        {/* Premium Page View */}
+                        {/* Premium Page View - Freemium Tiers */}
                         {currentView === 'premium' && (
-                            <div className="max-w-2xl mx-auto">
+                            <div className="max-w-4xl mx-auto">
                                 <h2 className="page-title">
                                     <i className="fas fa-crown mr-2" style={{color: '#f59e0b'}}></i>
-                                    FIXO Premium
+                                    Vyberte si plán
                                 </h2>
 
-                                {/* Cenový banner */}
-                                <div className="card mb-6" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white'}}>
-                                    <div className="card-body text-center" style={{padding: 'var(--space-8)'}}>
-                                        <p style={{fontSize: 'var(--text-sm)', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: 'var(--space-2)'}}>Jednorázová platba</p>
-                                        <div style={{fontSize: '3rem', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>€3.99</div>
-                                        <p style={{opacity: 0.9}}>Doživotní přístup ke všem funkcím</p>
+                                <p style={{textAlign: 'center', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-6)'}}>
+                                    Začněte zdarma, upgradujte kdykoliv
+                                </p>
+
+                                {/* Pricing Cards */}
+                                <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-6)'}}>
+                                    {/* FREE Tier */}
+                                    <div className="card" style={{border: '2px solid var(--color-border)'}}>
+                                        <div className="card-body" style={{padding: 'var(--space-6)'}}>
+                                            <div style={{textAlign: 'center', marginBottom: 'var(--space-4)'}}>
+                                                <span style={{fontSize: '2rem'}}>🆓</span>
+                                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginTop: 'var(--space-2)'}}>FREE</h3>
+                                                <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-success)', margin: 'var(--space-2) 0'}}>0 Kč</div>
+                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Navždy zdarma</p>
+                                            </div>
+                                            <ul style={{listStyle: 'none', padding: 0, marginBottom: 'var(--space-4)'}}>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>3 AI analýzy denně</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Základní návody</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Databáze 67 oprav</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', opacity: 0.5}}>
+                                                    <i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i>
+                                                    <span>Video návody</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', opacity: 0.5}}>
+                                                    <i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i>
+                                                    <span>Kontakty řemeslníků</span>
+                                                </li>
+                                            </ul>
+                                            <button className="btn btn-secondary w-full" disabled style={{opacity: 0.7}}>
+                                                Aktuální plán
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* PLUS Tier - Most Popular */}
+                                    <div className="card" style={{border: '2px solid var(--color-primary)', position: 'relative', transform: 'scale(1.02)'}}>
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: '-12px',
+                                            left: '50%',
+                                            transform: 'translateX(-50%)',
+                                            background: 'var(--color-primary)',
+                                            color: 'white',
+                                            padding: 'var(--space-1) var(--space-3)',
+                                            borderRadius: 'var(--radius-full)',
+                                            fontSize: 'var(--text-xs)',
+                                            fontWeight: 'var(--font-bold)'
+                                        }}>
+                                            NEJOBLÍBENĚJŠÍ
+                                        </div>
+                                        <div className="card-body" style={{padding: 'var(--space-6)'}}>
+                                            <div style={{textAlign: 'center', marginBottom: 'var(--space-4)'}}>
+                                                <span style={{fontSize: '2rem'}}>⭐</span>
+                                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginTop: 'var(--space-2)'}}>PLUS</h3>
+                                                <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-primary)', margin: 'var(--space-2) 0'}}>49 Kč<span style={{fontSize: 'var(--text-base)', fontWeight: 'normal'}}>/měsíc</span></div>
+                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>nebo 399 Kč/rok (ušetříte 33%)</p>
+                                            </div>
+                                            <ul style={{listStyle: 'none', padding: 0, marginBottom: 'var(--space-4)'}}>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span><strong>Neomezené</strong> AI analýzy</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Video návody</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Affiliate odkazy na materiál</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Odhady nákladů</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', opacity: 0.5}}>
+                                                    <i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i>
+                                                    <span>Prioritní podpora</span>
+                                                </li>
+                                            </ul>
+                                            <button className="btn btn-primary w-full" onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 49 Kč/měsíc\n\nZískáte:\n• Neomezené AI analýzy\n• Video návody\n• Affiliate odkazy')}>
+                                                <i className="fas fa-rocket mr-2"></i>
+                                                Začít s PLUS
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* PRO Tier */}
+                                    <div className="card" style={{border: '2px solid #f59e0b', background: 'linear-gradient(135deg, #fefce8 0%, #fef9c3 100%)'}}>
+                                        <div className="card-body" style={{padding: 'var(--space-6)'}}>
+                                            <div style={{textAlign: 'center', marginBottom: 'var(--space-4)'}}>
+                                                <span style={{fontSize: '2rem'}}>👑</span>
+                                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginTop: 'var(--space-2)'}}>PRO</h3>
+                                                <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', color: '#d97706', margin: 'var(--space-2) 0'}}>99 Kč<span style={{fontSize: 'var(--text-base)', fontWeight: 'normal'}}>/měsíc</span></div>
+                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>nebo 799 Kč/rok (ušetříte 33%)</p>
+                                            </div>
+                                            <ul style={{listStyle: 'none', padding: 0, marginBottom: 'var(--space-4)'}}>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Vše z PLUS</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span><strong>Kontakty řemeslníků</strong></span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Technická schémata</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Prioritní podpora 24/7</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Offline režim</span>
+                                                </li>
+                                            </ul>
+                                            <button className="btn w-full" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white'}} onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 99 Kč/měsíc\n\nZískáte VŠE:\n• Neomezené AI analýzy\n• Video návody\n• Kontakty řemeslníků\n• Technická schémata\n• Prioritní podpora')}>
+                                                <i className="fas fa-crown mr-2"></i>
+                                                Získat PRO
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -4749,64 +4874,50 @@
                                     </div>
                                 </div>
 
-                                {/* Srovnání */}
+                                {/* FAQ */}
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title">Porovnání verzí</h3>
+                                        <h3 className="card-title">
+                                            <i className="fas fa-question-circle mr-2"></i>
+                                            Časté dotazy
+                                        </h3>
                                     </div>
                                     <div className="card-body" style={{padding: 0}}>
-                                        <table style={{width: '100%', borderCollapse: 'collapse'}}>
-                                            <thead>
-                                                <tr style={{background: 'var(--color-bg-secondary)'}}>
-                                                    <th style={{padding: 'var(--space-3)', textAlign: 'left'}}>Funkce</th>
-                                                    <th style={{padding: 'var(--space-3)', textAlign: 'center'}}>Free</th>
-                                                    <th style={{padding: 'var(--space-3)', textAlign: 'center', background: 'var(--color-warning-light)'}}>Premium</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>AI analýza</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}>5/den</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}>∞</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Základní návody</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Technická schémata</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Odkazy na materiál</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Kontakty opravářů</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Video návody</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <div style={{borderBottom: '1px solid var(--color-border)', padding: 'var(--space-4)'}}>
+                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Mohu kdykoliv zrušit předplatné?</h4>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Ano, předplatné můžete zrušit kdykoliv bez poplatků. Po zrušení budete moci používat placenou verzi do konce zaplaceného období.</p>
+                                        </div>
+                                        <div style={{borderBottom: '1px solid var(--color-border)', padding: 'var(--space-4)'}}>
+                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Jak funguje roční platba?</h4>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Při roční platbě ušetříte 33% oproti měsíční platbě. PLUS stojí 399 Kč/rok místo 588 Kč, PRO stojí 799 Kč/rok místo 1188 Kč.</p>
+                                        </div>
+                                        <div style={{borderBottom: '1px solid var(--color-border)', padding: 'var(--space-4)'}}>
+                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Existují speciální ceny pro důchodce nebo studenty?</h4>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Ano! Nabízíme 50% slevu pro seniory (65+) a studenty. Kontaktujte nás na podpora@fixo.cz s dokladem o věku nebo studiu.</p>
+                                        </div>
+                                        <div style={{padding: 'var(--space-4)'}}>
+                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Mohu si FIXO vyzkoušet před placením?</h4>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Samozřejmě! Verze FREE je navždy zdarma. Navíc nabízíme 7denní zkušební dobu na PLUS a PRO plány.</p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {/* CTA Button */}
-                                <button className="btn btn-lg w-full" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white', marginBottom: 'var(--space-6)'}}>
-                                    <i className="fas fa-crown mr-2"></i>
-                                    Získat Premium za €3.99
-                                </button>
+                                {/* Social Pricing Info */}
+                                <div className="alert" style={{background: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)', border: 'none'}}>
+                                    <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
+                                        <i className="fas fa-heart" style={{color: 'var(--color-primary)', fontSize: 'var(--text-xl)'}}></i>
+                                        <div>
+                                            <p style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>Sociální dostupnost</p>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>
+                                                FIXO věří v dostupnost pro všechny. Senioři 65+ a studenti získají 50% slevu.
+                                                Kontaktujte nás na <a href="mailto:podpora@fixo.cz" style={{color: 'var(--color-primary)'}}>podpora@fixo.cz</a>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                <div className="alert alert-info">
-                                    <p><i className="fas fa-shield-alt mr-2"></i>Bezpečná platba přes Stripe. Jednorázově, bez předplatného.</p>
+                                <div className="alert alert-info" style={{marginTop: 'var(--space-4)'}}>
+                                    <p><i className="fas fa-shield-alt mr-2"></i>Bezpečná platba přes Stripe. Zrušit můžete kdykoliv.</p>
                                 </div>
                             </div>
                         )}
