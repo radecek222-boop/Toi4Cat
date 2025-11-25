@@ -191,23 +191,36 @@ export default function DashboardPage() {
       {/* Idle State - Upload Zone */}
       {state === "idle" && (
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">Vyfotografujte závadu</h1>
-            <p className="text-muted-foreground">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-600 text-white mb-6 shadow-lg shadow-indigo-500/25">
+              <Camera className="h-8 w-8" />
+            </div>
+            <h1 className="text-3xl font-bold mb-3 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+              Vyfotografujte závadu
+            </h1>
+            <p className="text-muted-foreground text-lg">
               AI okamžitě identifikuje problém a nabídne řešení
             </p>
           </div>
 
           <div
             className={cn(
-              "upload-zone cursor-pointer",
-              dragOver && "drag-over"
+              "relative group border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 cursor-pointer bg-gradient-to-b from-slate-50 to-white",
+              dragOver
+                ? "border-indigo-500 bg-indigo-50/50 scale-[1.02]"
+                : "border-slate-200 hover:border-indigo-300 hover:bg-slate-50"
             )}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
           >
+            {/* Decorative corner elements */}
+            <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-indigo-200 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-indigo-200 rounded-tr-lg opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-indigo-200 rounded-bl-lg opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-indigo-200 rounded-br-lg opacity-0 group-hover:opacity-100 transition-opacity" />
+
             <input
               ref={fileInputRef}
               type="file"
@@ -215,49 +228,67 @@ export default function DashboardPage() {
               className="hidden"
               onChange={handleFileSelect}
             />
-            <Upload className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-            <p className="text-lg font-medium">Přetáhněte fotografii sem</p>
-            <p className="text-sm text-muted-foreground mt-1">
+            <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-100 to-teal-100 mb-6 group-hover:scale-110 transition-transform duration-300">
+              <Upload className="h-10 w-10 text-indigo-600" />
+            </div>
+            <p className="text-xl font-semibold text-slate-800 mb-2">Přetáhněte fotografii sem</p>
+            <p className="text-muted-foreground">
               nebo klikněte pro výběr souboru
             </p>
-            <p className="text-xs text-muted-foreground mt-4">
-              Podporované formáty: JPG, PNG, GIF, WebP
-            </p>
+            <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 text-sm text-muted-foreground">
+              <FileImage className="h-4 w-4" />
+              JPG, PNG, GIF, WebP
+            </div>
           </div>
 
-          <div className="mt-6 flex justify-center gap-4">
-            <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
-              <FileImage className="mr-2 h-4 w-4" />
+          <div className="mt-8 flex justify-center gap-4">
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-2 hover:border-indigo-300 hover:bg-indigo-50 transition-all"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <FileImage className="mr-2 h-5 w-5 text-indigo-600" />
               Vybrat fotografii
             </Button>
             {cameraAvailable !== false && (
-              <Button variant="outline" onClick={() => setShowCamera(true)}>
-                <Camera className="mr-2 h-4 w-4" />
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white shadow-lg shadow-indigo-500/25 transition-all hover:-translate-y-0.5"
+                onClick={() => setShowCamera(true)}
+              >
+                <Camera className="mr-2 h-5 w-5" />
                 Použít kameru
               </Button>
             )}
           </div>
 
           {/* Quick stats */}
-          <div className="grid grid-cols-3 gap-4 mt-12">
-            <Card>
+          <div className="grid grid-cols-3 gap-4 mt-14">
+            <Card className="border-0 shadow-sm bg-gradient-to-br from-indigo-50 to-white">
               <CardContent className="pt-6 text-center">
-                <Clock className="mx-auto h-6 w-6 text-fixo-primary mb-2" />
-                <div className="font-semibold">30 sekund</div>
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-indigo-100 mb-3">
+                  <Clock className="h-6 w-6 text-indigo-600" />
+                </div>
+                <div className="font-semibold text-slate-800">30 sekund</div>
                 <div className="text-xs text-muted-foreground">Průměrná analýza</div>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="border-0 shadow-sm bg-gradient-to-br from-teal-50 to-white">
               <CardContent className="pt-6 text-center">
-                <CheckCircle className="mx-auto h-6 w-6 text-success mb-2" />
-                <div className="font-semibold">Bezpečné</div>
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-teal-100 mb-3">
+                  <CheckCircle className="h-6 w-6 text-teal-600" />
+                </div>
+                <div className="font-semibold text-slate-800">Bezpečné</div>
                 <div className="text-xs text-muted-foreground">S varováními</div>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="border-0 shadow-sm bg-gradient-to-br from-amber-50 to-white">
               <CardContent className="pt-6 text-center">
-                <Wrench className="mx-auto h-6 w-6 text-fixo-secondary mb-2" />
-                <div className="font-semibold">500+ oprav</div>
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-amber-100 mb-3">
+                  <Wrench className="h-6 w-6 text-amber-600" />
+                </div>
+                <div className="font-semibold text-slate-800">500+ oprav</div>
                 <div className="text-xs text-muted-foreground">V databázi</div>
               </CardContent>
             </Card>
@@ -267,19 +298,29 @@ export default function DashboardPage() {
 
       {/* Analyzing State */}
       {(state === "uploading" || state === "analyzing") && (
-        <div className="max-w-md mx-auto text-center py-12">
-          <Loader2 className="mx-auto h-12 w-12 text-fixo-primary animate-spin mb-4" />
-          <h2 className="text-xl font-semibold mb-2">
-            {state === "uploading" ? "Nahrávám fotografii..." : "Analyzuji..."}
+        <div className="max-w-md mx-auto text-center py-16">
+          <div className="relative inline-flex items-center justify-center mb-8">
+            <div className="absolute w-24 h-24 rounded-full bg-indigo-100 animate-ping opacity-75" />
+            <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+              <Loader2 className="h-10 w-10 text-white animate-spin" />
+            </div>
+          </div>
+          <h2 className="text-2xl font-bold text-slate-800 mb-6">
+            {state === "uploading" ? "Nahrávám fotografii..." : "AI analyzuje..."}
           </h2>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <p className={state === "analyzing" ? "text-fixo-primary font-medium" : ""}>
-              ✓ Detekce objektu
-            </p>
-            <p className={state === "analyzing" ? "text-fixo-primary font-medium" : ""}>
-              ✓ Identifikace závady
-            </p>
-            <p>○ Příprava návodů</p>
+          <div className="space-y-3 text-base">
+            <div className={`flex items-center justify-center gap-3 ${state === "analyzing" ? "text-teal-600 font-medium" : "text-muted-foreground"}`}>
+              <CheckCircle className={`h-5 w-5 ${state === "analyzing" ? "text-teal-500" : ""}`} />
+              <span>Detekce objektu</span>
+            </div>
+            <div className={`flex items-center justify-center gap-3 ${state === "analyzing" ? "text-teal-600 font-medium" : "text-muted-foreground"}`}>
+              <CheckCircle className={`h-5 w-5 ${state === "analyzing" ? "text-teal-500" : ""}`} />
+              <span>Identifikace závady</span>
+            </div>
+            <div className="flex items-center justify-center gap-3 text-muted-foreground">
+              <div className="h-5 w-5 rounded-full border-2 border-slate-300" />
+              <span>Příprava návodů</span>
+            </div>
           </div>
         </div>
       )}
@@ -288,22 +329,22 @@ export default function DashboardPage() {
       {state === "complete" && result && (
         <div className="max-w-4xl mx-auto">
           {/* Result Header */}
-          <Card className="mb-6 overflow-hidden">
-            <div className="bg-gradient-to-r from-fixo-primary to-blue-600 text-white p-6">
-              <div className="flex items-start gap-4">
+          <Card className="mb-6 overflow-hidden border-0 shadow-xl">
+            <div className="bg-gradient-to-r from-indigo-600 via-indigo-700 to-slate-800 text-white p-8">
+              <div className="flex items-start gap-6">
                 {preview && (
                   <img
                     src={preview}
                     alt="Analyzovaný obrázek"
-                    className="w-24 h-24 object-cover rounded-lg"
+                    className="w-28 h-28 object-cover rounded-xl shadow-lg ring-4 ring-white/20"
                   />
                 )}
                 <div className="flex-1">
-                  <Badge variant="secondary" className="mb-2">
+                  <Badge className="mb-3 bg-teal-500/20 text-teal-200 border-teal-400/30">
                     Detekováno s {Math.round(result.object.confidence * 100)}% jistotou
                   </Badge>
-                  <h2 className="text-2xl font-bold">{result.object.name}</h2>
-                  <p className="text-blue-100 mt-1">{result.issue.name}</p>
+                  <h2 className="text-3xl font-bold">{result.object.name}</h2>
+                  <p className="text-indigo-200 mt-2 text-lg">{result.issue.name}</p>
                 </div>
               </div>
             </div>
@@ -392,13 +433,16 @@ export default function DashboardPage() {
                 </Button>
                 {currentStep < result.steps.length - 1 ? (
                   <Button
-                    variant="fixo"
+                    className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white shadow-lg shadow-indigo-500/25"
                     onClick={() => setCurrentStep(currentStep + 1)}
                   >
                     Další krok
                   </Button>
                 ) : (
-                  <Button variant="success" onClick={resetAnalysis}>
+                  <Button
+                    className="bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white shadow-lg shadow-teal-500/25"
+                    onClick={resetAnalysis}
+                  >
                     <CheckCircle className="mr-2 h-4 w-4" />
                     Dokončit opravu
                   </Button>
@@ -407,24 +451,24 @@ export default function DashboardPage() {
 
               {/* All steps overview */}
               <div className="mt-8 pt-6 border-t">
-                <h4 className="text-sm font-medium mb-4">Přehled všech kroků</h4>
+                <h4 className="text-sm font-semibold text-slate-700 mb-4">Přehled všech kroků</h4>
                 <div className="space-y-2">
                   {result.steps.map((step, i) => (
                     <div
                       key={step.step}
                       className={cn(
-                        "flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-colors",
-                        i === currentStep && "bg-fixo-primary-light border-l-4 border-fixo-primary",
-                        i < currentStep && "bg-success-light opacity-75",
-                        i > currentStep && "bg-muted"
+                        "flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200",
+                        i === currentStep && "bg-indigo-50 border-l-4 border-indigo-500 shadow-sm",
+                        i < currentStep && "bg-teal-50 opacity-90",
+                        i > currentStep && "bg-slate-50 hover:bg-slate-100"
                       )}
                       onClick={() => setCurrentStep(i)}
                     >
-                      <span className="text-lg">{step.icon}</span>
-                      <span className={cn("flex-1 text-sm", i === currentStep && "font-medium")}>
+                      <span className="text-xl">{step.icon}</span>
+                      <span className={cn("flex-1 text-sm", i === currentStep && "font-semibold text-indigo-700", i < currentStep && "text-teal-700")}>
                         {step.action}
                       </span>
-                      <span className="text-xs text-muted-foreground">{step.time}</span>
+                      <span className={cn("text-xs px-2 py-1 rounded-full", i === currentStep ? "bg-indigo-100 text-indigo-600" : "text-muted-foreground")}>{step.time}</span>
                     </div>
                   ))}
                 </div>
