@@ -501,28 +501,96 @@
             const fileInputRef = useRef(null);
             const dropZoneRef = useRef(null);
 
-            // Simulace AI analýzy fotky
-            const analyzeImage = async () => {
+            // Konfigurace API - při lokálním vývoji použij backend, jinak simulaci
+            const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                ? 'http://localhost:3000'
+                : null; // Na GitHub Pages není backend
+
+            // AI analýza fotky - použije backend API nebo simulaci
+            const analyzeImage = async (imageData) => {
                 setIsAnalyzing(true);
                 setCurrentView('analyzing');
 
-                // Simulujeme AI zpracování (2-3 sekundy)
-                await new Promise(resolve => setTimeout(resolve, 2500));
+                try {
+                    // Pokud běžíme s backendem, použij skutečné AI
+                    if (API_URL && imageData) {
+                        const response = await fetch(`${API_URL}/api/analyze-base64`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ image: imageData })
+                        });
 
-                // Simulovaný výsledek - náhodně vybereme objekt
-                const objects = Object.keys(repairDatabase);
-                const randomObject = objects[Math.floor(Math.random() * objects.length)];
-                const objectData = repairDatabase[randomObject];
-                const randomIssue = objectData.issues[0];
+                        if (response.ok) {
+                            const result = await response.json();
+                            if (result.success) {
+                                const data = result.data;
+                                setAnalysisResult({
+                                    object: {
+                                        name: data.detection.object.name,
+                                        category: data.detection.object.category,
+                                        icon: getCategoryIcon(data.detection.object.category)
+                                    },
+                                    issue: {
+                                        name: data.detection.issue.name,
+                                        description: data.detection.issue.description,
+                                        riskScore: data.detection.issue.riskScore,
+                                        difficulty: data.detection.issue.difficulty,
+                                        timeEstimate: data.recommendations.timeEstimate,
+                                        tools: data.recommendations.tools,
+                                        steps: data.recommendations.steps,
+                                        safetyWarnings: data.recommendations.safetyWarnings
+                                    },
+                                    confidence: Math.round(data.detection.object.confidence * 100)
+                                });
+                                setIsAnalyzing(false);
+                                setCurrentView('results');
+                                return;
+                            }
+                        }
+                    }
 
-                setAnalysisResult({
-                    object: objectData,
-                    issue: randomIssue,
-                    confidence: Math.floor(Math.random() * 20) + 80 // 80-99%
-                });
+                    // Fallback: Simulovaná analýza (pro GitHub Pages nebo při chybě API)
+                    await new Promise(resolve => setTimeout(resolve, 2500));
+                    const objects = Object.keys(repairDatabase);
+                    const randomObject = objects[Math.floor(Math.random() * objects.length)];
+                    const objectData = repairDatabase[randomObject];
+                    const randomIssue = objectData.issues[0];
+
+                    setAnalysisResult({
+                        object: objectData,
+                        issue: randomIssue,
+                        confidence: Math.floor(Math.random() * 20) + 80
+                    });
+                } catch (error) {
+                    console.error('Chyba při analýze:', error);
+                    // Fallback na simulaci při chybě
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    const objects = Object.keys(repairDatabase);
+                    const randomObject = objects[Math.floor(Math.random() * objects.length)];
+                    const objectData = repairDatabase[randomObject];
+                    const randomIssue = objectData.issues[0];
+
+                    setAnalysisResult({
+                        object: objectData,
+                        issue: randomIssue,
+                        confidence: Math.floor(Math.random() * 20) + 80
+                    });
+                }
 
                 setIsAnalyzing(false);
                 setCurrentView('results');
+            };
+
+            // Pomocná funkce pro získání ikony kategorie
+            const getCategoryIcon = (category) => {
+                const icons = {
+                    voda: '🚰', elektrina: '⚡', topeni: '🌡️',
+                    dvere_okna: '🚪', nabytek: '🪑', spotrebice: '🔌',
+                    kuchyn: '🍳', koupelna: '🚿', steny_podlahy: '🏠', zahrada: '🌱'
+                };
+                return icons[category] || '🔧';
             };
 
             const handleImageUpload = (event) => {
@@ -536,8 +604,9 @@
                 if (file && file.type.startsWith('image/')) {
                     const reader = new FileReader();
                     reader.onloadend = () => {
-                        setSelectedImage(reader.result);
-                        analyzeImage();
+                        const imageData = reader.result;
+                        setSelectedImage(imageData);
+                        analyzeImage(imageData); // Předáme obrázek jako base64 pro API
                     };
                     reader.readAsDataURL(file);
                 }

@@ -10,10 +10,10 @@
 ```
 📅 Posledni aktualizace: 2025-11-25
 👤 Aktualizoval: Claude AI
-📍 Aktualni faze: FAZE 6 - Moduly aplikace
-✅ Posledni dokonceny krok: Drag & drop upload, rozsirena databaze, filtrovani kategorii
-⏳ Aktualne se dela: Vylepseni UI pruvodce opravou
-🔜 Dalsi krok: Vylepsit historii oprav s filtrovanim a exportem
+📍 Aktualni faze: FAZE 6/7 - AI integrace
+✅ Posledni dokonceny krok: OpenAI Vision API integrace
+⏳ Aktualne se dela: Backend s AI analyzu obrazku
+🔜 Dalsi krok: Nasadit backend na Render.com, testovani AI
 ```
 
 ---
@@ -48,6 +48,8 @@
 FIXO/
 ├── index.html              # Landing page (hlavni informacni stranka)
 ├── app.html                # FIXO aplikace (React)
+├── .env                    # ⚠️ TAJNE - API klice (NIKDY NECOMMITOVAT!)
+├── .env.example            # Sablona pro .env soubor
 ├── PROJECT_PLAN.md         # TENTO DOKUMENT - ridici plan
 ├── README.md               # Dokumentace projektu
 ├── public/
@@ -212,6 +214,9 @@ FIXO/
 
 | Datum | Autor | Zmena |
 |-------|-------|-------|
+| 2025-11-25 | Claude AI | **FAZE 7** - OpenAI Vision API integrace do backendu |
+| 2025-11-25 | Claude AI | Bezpecne ulozeni API klicu (.env) |
+| 2025-11-25 | Claude AI | Frontend pripojeni k backend AI |
 | 2025-11-25 | Claude AI | **FAZE 6** - Filtrovani kategorii v databazi zavad |
 | 2025-11-25 | Claude AI | **FAZE 6** - Rozsirena databaze (13 objektu, 11 kategorii) |
 | 2025-11-25 | Claude AI | **FAZE 6** - Drag & drop upload fotografii |
