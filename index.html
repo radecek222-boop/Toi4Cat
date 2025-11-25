@@ -1579,6 +1579,26 @@
             const [speechSupported, setSpeechSupported] = useState(false);
             const recognitionRef = useRef(null);
 
+            // Dark mode state
+            const [darkMode, setDarkMode] = useState(() => {
+                const saved = localStorage.getItem('fixo-dark-mode');
+                if (saved !== null) return saved === 'true';
+                return window.matchMedia('(prefers-color-scheme: dark)').matches;
+            });
+
+            // Apply dark mode on change
+            useEffect(() => {
+                document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+                localStorage.setItem('fixo-dark-mode', darkMode);
+            }, [darkMode]);
+
+            const toggleDarkMode = () => setDarkMode(prev => !prev);
+
+            // Pre-repair checklist state
+            const [showChecklist, setShowChecklist] = useState(false);
+            const [pendingIssue, setPendingIssue] = useState(null);
+            const [checklistItems, setChecklistItems] = useState({});
+
             // PWA Service Worker registration
             useEffect(() => {
                 if ('serviceWorker' in navigator) {
@@ -2220,7 +2240,49 @@
                 );
             };
 
+            // Generuje checklist items na základě typu opravy
+            const generateChecklistItems = (issue) => {
+                const items = [
+                    { id: 'tools', text: 'Mám připravené všechny nástroje', icon: 'fa-toolbox' },
+                    { id: 'time', text: `Mám dostatek času (${issue.timeEstimate})`, icon: 'fa-clock' },
+                    { id: 'space', text: 'Mám dostatek prostoru pro práci', icon: 'fa-expand' }
+                ];
+
+                // Přidat specifické položky podle rizika
+                if (issue.riskScore >= 5) {
+                    items.unshift({ id: 'safety', text: 'Přečetl/a jsem bezpečnostní varování', icon: 'fa-exclamation-triangle', important: true });
+                }
+
+                // Přidat položky podle kategorie/typu opravy
+                const issueName = issue.name?.toLowerCase() || '';
+                if (issueName.includes('kohoutek') || issueName.includes('voda') || issueName.includes('wc') || issueName.includes('odpad')) {
+                    items.push({ id: 'water', text: 'Uzavřel/a jsem přívod vody', icon: 'fa-tint', important: true });
+                }
+                if (issueName.includes('zásuvk') || issueName.includes('elektr') || issueName.includes('světl') || issueName.includes('vypínač')) {
+                    items.push({ id: 'electricity', text: 'Vypnul/a jsem jistič / elektřinu', icon: 'fa-bolt', important: true });
+                }
+                if (issueName.includes('plyn') || issueName.includes('kotel')) {
+                    items.push({ id: 'gas', text: 'Uzavřel/a jsem přívod plynu', icon: 'fa-fire', important: true });
+                }
+
+                return items;
+            };
+
             const startRepair = (issue) => {
+                // Zobrazit checklist před zahájením
+                setPendingIssue(issue);
+                const items = generateChecklistItems(issue);
+                const initialState = {};
+                items.forEach(item => { initialState[item.id] = false; });
+                setChecklistItems(initialState);
+                setShowChecklist(true);
+            };
+
+            const confirmChecklist = () => {
+                const issue = pendingIssue;
+                setShowChecklist(false);
+                setPendingIssue(null);
+
                 setSelectedIssue(issue);
                 setCurrentStep(0);
                 setCurrentView('repair');
@@ -2229,7 +2291,7 @@
                 const historyItem = {
                     id: Date.now(),
                     date: new Date().toLocaleString('cs-CZ'),
-                    object: analysisResult.object.name,
+                    object: analysisResult?.object?.name || 'Neznámý objekt',
                     issue: issue.name,
                     status: 'in_progress',
                     timeEstimate: issue.timeEstimate,
@@ -2240,6 +2302,195 @@
                 };
                 setRepairHistory([historyItem, ...repairHistory]);
             };
+
+            const cancelChecklist = () => {
+                setShowChecklist(false);
+                setPendingIssue(null);
+                setChecklistItems({});
+            };
+
+            // Affiliate odkazy na e-shopy
+            const affiliateLinks = {
+                alza: {
+                    name: 'Alza',
+                    icon: '🛒',
+                    color: '#ff6600',
+                    baseUrl: 'https://www.alza.cz/search.htm?exps='
+                },
+                mall: {
+                    name: 'Mall.cz',
+                    icon: '🏪',
+                    color: '#e4002b',
+                    baseUrl: 'https://www.mall.cz/hledej?s='
+                },
+                hornbach: {
+                    name: 'Hornbach',
+                    icon: '🔨',
+                    color: '#ff6600',
+                    baseUrl: 'https://www.hornbach.cz/s/'
+                }
+            };
+
+            const getAffiliateUrl = (shop, toolName) => {
+                const searchTerm = encodeURIComponent(toolName);
+                return affiliateLinks[shop].baseUrl + searchTerm;
+            };
+
+            // Export shopping list
+            const exportShoppingList = (issue) => {
+                if (!issue || !issue.tools) return;
+
+                const listText = [
+                    `🛠️ FIXO - Nákupní seznam`,
+                    `📋 Oprava: ${issue.name}`,
+                    `📅 ${new Date().toLocaleDateString('cs-CZ')}`,
+                    ``,
+                    `Potřebné nástroje a materiál:`,
+                    `─────────────────────────`,
+                    ...issue.tools.map((tool, idx) => `☐ ${tool}`),
+                    ``,
+                    `─────────────────────────`,
+                    `Vygenerováno aplikací FIXO`,
+                    `www.fixo.cz`
+                ].join('\n');
+
+                // Try to use native share if available
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'FIXO - Nákupní seznam',
+                        text: listText
+                    }).catch(() => {
+                        // Fallback to clipboard
+                        copyToClipboard(listText);
+                    });
+                } else {
+                    copyToClipboard(listText);
+                }
+            };
+
+            const copyToClipboard = (text) => {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('✅ Nákupní seznam zkopírován do schránky!\n\nMůžeš ho vložit do poznámek nebo poslat SMS.');
+                }).catch(() => {
+                    // Fallback for older browsers
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    alert('✅ Nákupní seznam zkopírován do schránky!');
+                });
+            };
+
+            // Offline storage - saved guides
+            const [savedGuides, setSavedGuides] = useState(() => {
+                const saved = localStorage.getItem('fixo-saved-guides');
+                return saved ? JSON.parse(saved) : [];
+            });
+
+            // Save guide for offline
+            const saveGuideOffline = (issue) => {
+                if (!issue) return;
+
+                const guideData = {
+                    id: `guide_${Date.now()}`,
+                    savedAt: new Date().toISOString(),
+                    name: issue.name,
+                    description: issue.description,
+                    tools: issue.tools,
+                    steps: issue.steps,
+                    timeEstimate: issue.timeEstimate,
+                    difficulty: issue.difficulty,
+                    riskScore: issue.riskScore,
+                    safetyWarnings: issue.safetyWarnings,
+                    costEstimate: issue.costEstimate
+                };
+
+                const existingIndex = savedGuides.findIndex(g => g.name === issue.name);
+                let newGuides;
+
+                if (existingIndex >= 0) {
+                    // Update existing
+                    newGuides = [...savedGuides];
+                    newGuides[existingIndex] = guideData;
+                } else {
+                    // Add new
+                    newGuides = [guideData, ...savedGuides];
+                }
+
+                setSavedGuides(newGuides);
+                localStorage.setItem('fixo-saved-guides', JSON.stringify(newGuides));
+                alert('✅ Návod uložen pro offline použití!\n\nNajdeš ho v sekci "Uložené návody" v menu.');
+            };
+
+            const deleteOfflineGuide = (guideId) => {
+                const newGuides = savedGuides.filter(g => g.id !== guideId);
+                setSavedGuides(newGuides);
+                localStorage.setItem('fixo-saved-guides', JSON.stringify(newGuides));
+            };
+
+            const isGuideSaved = (issueName) => {
+                return savedGuides.some(g => g.name === issueName);
+            };
+
+            const loadOfflineGuide = (guide) => {
+                setSelectedIssue(guide);
+                setCurrentStep(0);
+                setCurrentView('repair');
+            };
+
+            // Stopwatch/Timer for repair steps
+            const [timerRunning, setTimerRunning] = useState(false);
+            const [elapsedTime, setElapsedTime] = useState(0);
+            const timerRef = useRef(null);
+
+            const startTimer = () => {
+                if (!timerRunning) {
+                    setTimerRunning(true);
+                    timerRef.current = setInterval(() => {
+                        setElapsedTime(prev => prev + 1);
+                    }, 1000);
+                }
+            };
+
+            const pauseTimer = () => {
+                setTimerRunning(false);
+                if (timerRef.current) {
+                    clearInterval(timerRef.current);
+                }
+            };
+
+            const resetTimer = () => {
+                pauseTimer();
+                setElapsedTime(0);
+            };
+
+            const formatTime = (seconds) => {
+                const hrs = Math.floor(seconds / 3600);
+                const mins = Math.floor((seconds % 3600) / 60);
+                const secs = seconds % 60;
+                if (hrs > 0) {
+                    return `${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                }
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            };
+
+            // Cleanup timer on unmount or view change
+            useEffect(() => {
+                return () => {
+                    if (timerRef.current) {
+                        clearInterval(timerRef.current);
+                    }
+                };
+            }, []);
+
+            // Reset timer when starting new repair
+            useEffect(() => {
+                if (currentView === 'repair') {
+                    resetTimer();
+                }
+            }, [selectedIssue]);
 
             const completeRepair = () => {
                 // Aktualizovat historii
@@ -2344,6 +2595,123 @@
                         </div>
                     )}
 
+                    {/* Před-opravní checklist modal */}
+                    {showChecklist && pendingIssue && (
+                        <div className="translating-overlay" onClick={cancelChecklist}>
+                            <div className="translating-box" style={{maxWidth: '450px', width: '95%', maxHeight: '90vh', overflow: 'auto'}} onClick={e => e.stopPropagation()}>
+                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                    <i className="fas fa-clipboard-check" style={{color: 'var(--color-primary)'}}></i>
+                                    Před zahájením opravy
+                                </h3>
+                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)'}}>
+                                    Zkontrolujte prosím tyto body před začátkem práce:
+                                </p>
+
+                                {/* Checklist items */}
+                                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', marginBottom: 'var(--space-6)'}}>
+                                    {generateChecklistItems(pendingIssue).map(item => (
+                                        <label
+                                            key={item.id}
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: 'var(--space-3)',
+                                                padding: 'var(--space-3)',
+                                                background: item.important
+                                                    ? (checklistItems[item.id] ? 'var(--color-success-light)' : 'var(--color-warning-light)')
+                                                    : (checklistItems[item.id] ? 'var(--color-success-light)' : 'var(--color-bg-secondary)'),
+                                                borderRadius: 'var(--radius-lg)',
+                                                cursor: 'pointer',
+                                                border: item.important ? '2px solid' : '1px solid',
+                                                borderColor: item.important
+                                                    ? (checklistItems[item.id] ? 'var(--color-success)' : 'var(--color-warning)')
+                                                    : 'var(--color-border)',
+                                                transition: 'var(--transition-fast)'
+                                            }}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                checked={checklistItems[item.id] || false}
+                                                onChange={() => setChecklistItems(prev => ({...prev, [item.id]: !prev[item.id]}))}
+                                                style={{
+                                                    width: '20px',
+                                                    height: '20px',
+                                                    accentColor: 'var(--color-success)'
+                                                }}
+                                            />
+                                            <i className={`fas ${item.icon}`} style={{
+                                                fontSize: 'var(--text-lg)',
+                                                color: item.important ? 'var(--color-warning)' : 'var(--color-primary)',
+                                                width: '24px'
+                                            }}></i>
+                                            <span style={{
+                                                flex: 1,
+                                                fontSize: 'var(--text-sm)',
+                                                fontWeight: item.important ? 'var(--font-semibold)' : 'var(--font-normal)',
+                                                textDecoration: checklistItems[item.id] ? 'line-through' : 'none',
+                                                opacity: checklistItems[item.id] ? 0.7 : 1
+                                            }}>
+                                                {item.text}
+                                                {item.important && <span style={{color: 'var(--color-danger)', marginLeft: 'var(--space-1)'}}>*</span>}
+                                            </span>
+                                        </label>
+                                    ))}
+                                </div>
+
+                                {/* Nářadí k připravení */}
+                                {pendingIssue.tools && pendingIssue.tools.length > 0 && (
+                                    <div style={{
+                                        background: 'var(--color-info-light)',
+                                        padding: 'var(--space-4)',
+                                        borderRadius: 'var(--radius-lg)',
+                                        marginBottom: 'var(--space-4)'
+                                    }}>
+                                        <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)', fontSize: 'var(--text-sm)'}}>
+                                            <i className="fas fa-toolbox mr-2"></i>
+                                            Potřebné nářadí:
+                                        </h4>
+                                        <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)'}}>
+                                            {pendingIssue.tools.map((tool, idx) => (
+                                                <span key={idx} style={{
+                                                    background: 'var(--color-bg-primary)',
+                                                    padding: 'var(--space-1) var(--space-2)',
+                                                    borderRadius: 'var(--radius-md)',
+                                                    fontSize: 'var(--text-xs)'
+                                                }}>{tool}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Action buttons */}
+                                <div className="flex gap-3">
+                                    <button onClick={cancelChecklist} className="btn btn-secondary flex-1">
+                                        <i className="fas fa-times mr-2"></i>
+                                        Zrušit
+                                    </button>
+                                    <button
+                                        onClick={confirmChecklist}
+                                        className="btn btn-success flex-1"
+                                        disabled={generateChecklistItems(pendingIssue).filter(i => i.important).some(i => !checklistItems[i.id])}
+                                        style={{
+                                            opacity: generateChecklistItems(pendingIssue).filter(i => i.important).some(i => !checklistItems[i.id]) ? 0.5 : 1
+                                        }}
+                                    >
+                                        <i className="fas fa-play mr-2"></i>
+                                        Začít opravu
+                                    </button>
+                                </div>
+
+                                {generateChecklistItems(pendingIssue).filter(i => i.important).some(i => !checklistItems[i.id]) && (
+                                    <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-warning)', textAlign: 'center', marginTop: 'var(--space-2)'}}>
+                                        <i className="fas fa-info-circle mr-1"></i>
+                                        Zaškrtni všechny důležité položky (*) pro pokračování
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
                     {/* Header s Hamburger Menu */}
                     <header className="header" style={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100}}>
                         <div className="container">
@@ -2380,6 +2748,21 @@
                             <i className="fas fa-book"></i>
                             <span>Databáze</span>
                         </div>
+                        <div className="mobile-menu-item" onClick={() => navigateTo('offline')} style={currentView === 'offline' ? {background: 'var(--color-primary-light)', color: 'var(--color-primary)'} : {}}>
+                            <i className="fas fa-cloud-download-alt" style={{color: savedGuides.length > 0 ? 'var(--color-success)' : undefined}}></i>
+                            <span>Offline návody</span>
+                            {savedGuides.length > 0 && (
+                                <span style={{
+                                    marginLeft: 'auto',
+                                    background: 'var(--color-success)',
+                                    color: 'white',
+                                    padding: '2px 8px',
+                                    borderRadius: 'var(--radius-full)',
+                                    fontSize: 'var(--text-xs)',
+                                    fontWeight: 'var(--font-bold)'
+                                }}>{savedGuides.length}</span>
+                            )}
+                        </div>
 
                         {/* Oddělovač */}
                         <div style={{borderTop: '1px solid var(--color-border)', margin: 'var(--space-2) 0'}}></div>
@@ -2400,6 +2783,37 @@
                         <div className="mobile-menu-item" onClick={() => navigateTo('suppliers')} style={currentView === 'suppliers' ? {background: 'var(--color-primary-light)', color: 'var(--color-primary)'} : {}}>
                             <i className="fas fa-truck"></i>
                             <span>Dodavatelé</span>
+                        </div>
+
+                        {/* Tmavý režim toggle */}
+                        <div
+                            className="mobile-menu-item"
+                            onClick={toggleDarkMode}
+                            style={{cursor: 'pointer'}}
+                        >
+                            <i className={`fas ${darkMode ? 'fa-sun' : 'fa-moon'}`} style={{color: darkMode ? '#fbbf24' : '#6366f1'}}></i>
+                            <span>{darkMode ? 'Světlý režim' : 'Tmavý režim'}</span>
+                            <div style={{
+                                marginLeft: 'auto',
+                                width: '44px',
+                                height: '24px',
+                                background: darkMode ? 'var(--color-primary)' : 'var(--color-border)',
+                                borderRadius: 'var(--radius-full)',
+                                position: 'relative',
+                                transition: 'var(--transition-fast)'
+                            }}>
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '2px',
+                                    left: darkMode ? '22px' : '2px',
+                                    width: '20px',
+                                    height: '20px',
+                                    background: 'white',
+                                    borderRadius: 'var(--radius-full)',
+                                    transition: 'var(--transition-fast)',
+                                    boxShadow: 'var(--shadow-sm)'
+                                }}></div>
+                            </div>
                         </div>
 
                         {/* Jazyk - rozbalovací */}
@@ -2944,6 +3358,88 @@
                                             </div>
                                         </div>
 
+                                        {/* 💰 Savings Calculator - DIY vs Professional */}
+                                        {analysisResult.issue.costEstimate && (
+                                            <div style={{
+                                                background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
+                                                border: '2px solid #10b981',
+                                                borderRadius: 'var(--radius-xl)',
+                                                padding: 'var(--space-6)',
+                                                marginBottom: 'var(--space-6)'
+                                            }}>
+                                                <h3 style={{
+                                                    fontWeight: 'var(--font-bold)',
+                                                    color: '#065f46',
+                                                    marginBottom: 'var(--space-4)',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: 'var(--space-2)'
+                                                }}>
+                                                    <i className="fas fa-piggy-bank" style={{fontSize: 'var(--text-xl)'}}></i>
+                                                    Kolik ušetříš?
+                                                </h3>
+
+                                                <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)', marginBottom: 'var(--space-4)'}}>
+                                                    {/* DIY Cost */}
+                                                    <div style={{
+                                                        background: 'white',
+                                                        padding: 'var(--space-4)',
+                                                        borderRadius: 'var(--radius-lg)',
+                                                        textAlign: 'center',
+                                                        border: '2px solid #10b981'
+                                                    }}>
+                                                        <div style={{fontSize: 'var(--text-xs)', textTransform: 'uppercase', color: '#059669', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>
+                                                            <i className="fas fa-hand-paper mr-1"></i> DIY oprava
+                                                        </div>
+                                                        <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: '#065f46'}}>
+                                                            {analysisResult.issue.costEstimate.min}-{analysisResult.issue.costEstimate.max} Kč
+                                                        </div>
+                                                        <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                            pouze materiál
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Professional Cost */}
+                                                    <div style={{
+                                                        background: 'white',
+                                                        padding: 'var(--space-4)',
+                                                        borderRadius: 'var(--radius-lg)',
+                                                        textAlign: 'center',
+                                                        border: '1px solid var(--color-border)'
+                                                    }}>
+                                                        <div style={{fontSize: 'var(--text-xs)', textTransform: 'uppercase', color: 'var(--color-text-secondary)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>
+                                                            <i className="fas fa-user-tie mr-1"></i> Profesionál
+                                                        </div>
+                                                        <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-text-secondary)'}}>
+                                                            {Math.round((analysisResult.issue.costEstimate.min + analysisResult.issue.costEstimate.max) / 2 * 5)}-{Math.round((analysisResult.issue.costEstimate.min + analysisResult.issue.costEstimate.max) / 2 * 8)} Kč
+                                                        </div>
+                                                        <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                            materiál + práce
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Savings highlight */}
+                                                <div style={{
+                                                    background: '#10b981',
+                                                    color: 'white',
+                                                    padding: 'var(--space-4)',
+                                                    borderRadius: 'var(--radius-lg)',
+                                                    textAlign: 'center'
+                                                }}>
+                                                    <div style={{fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)'}}>
+                                                        <i className="fas fa-star mr-1"></i> Tvoje úspora s FIXO
+                                                    </div>
+                                                    <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)'}}>
+                                                        {Math.round((analysisResult.issue.costEstimate.min + analysisResult.issue.costEstimate.max) / 2 * 4)}-{Math.round((analysisResult.issue.costEstimate.min + analysisResult.issue.costEstimate.max) / 2 * 7)} Kč
+                                                    </div>
+                                                    <div style={{fontSize: 'var(--text-xs)', opacity: 0.9}}>
+                                                        To je {Math.round(((analysisResult.issue.costEstimate.min + analysisResult.issue.costEstimate.max) / 2 * 5.5) / 79)} měsíců FIXO Premium zdarma! 💪
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
                                         {/* Safety Warnings */}
                                         {analysisResult.issue.riskScore > 5 && (
                                             <div className="alert alert-warning mb-6">
@@ -3071,17 +3567,196 @@
                                         ></div>
                                     </div>
 
-                                    {/* Tools Needed */}
+                                    {/* Save for Offline & Stopwatch */}
+                                    <div style={{
+                                        background: 'var(--color-bg-secondary)',
+                                        padding: 'var(--space-2) var(--space-4)',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        borderBottom: '1px solid var(--color-border)',
+                                        flexWrap: 'wrap',
+                                        gap: 'var(--space-2)'
+                                    }}>
+                                        <span style={{fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)'}}>
+                                            {selectedIssue.name}
+                                        </span>
+                                        <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                            {/* Stopwatch */}
+                                            <div style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: 'var(--space-1)',
+                                                background: timerRunning ? 'var(--color-success)' : 'var(--color-bg-tertiary)',
+                                                color: timerRunning ? 'white' : 'var(--color-text-primary)',
+                                                padding: 'var(--space-1) var(--space-2)',
+                                                borderRadius: 'var(--radius-md)',
+                                                fontFamily: 'var(--font-mono)',
+                                                fontSize: 'var(--text-sm)',
+                                                fontWeight: 'var(--font-bold)'
+                                            }}>
+                                                <i className="fas fa-stopwatch"></i>
+                                                <span>{formatTime(elapsedTime)}</span>
+                                            </div>
+                                            <button
+                                                onClick={timerRunning ? pauseTimer : startTimer}
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    width: '28px',
+                                                    height: '28px',
+                                                    background: timerRunning ? 'var(--color-warning)' : 'var(--color-success)',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: 'var(--radius-md)',
+                                                    cursor: 'pointer',
+                                                    fontSize: 'var(--text-xs)'
+                                                }}
+                                                title={timerRunning ? 'Pozastavit' : 'Spustit'}
+                                            >
+                                                <i className={`fas ${timerRunning ? 'fa-pause' : 'fa-play'}`}></i>
+                                            </button>
+                                            {elapsedTime > 0 && (
+                                                <button
+                                                    onClick={resetTimer}
+                                                    style={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        width: '28px',
+                                                        height: '28px',
+                                                        background: 'var(--color-bg-tertiary)',
+                                                        color: 'var(--color-text-secondary)',
+                                                        border: 'none',
+                                                        borderRadius: 'var(--radius-md)',
+                                                        cursor: 'pointer',
+                                                        fontSize: 'var(--text-xs)'
+                                                    }}
+                                                    title="Reset"
+                                                >
+                                                    <i className="fas fa-undo"></i>
+                                                </button>
+                                            )}
+                                            {/* Save offline button */}
+                                            <button
+                                                onClick={() => saveGuideOffline(selectedIssue)}
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: 'var(--space-1)',
+                                                    padding: 'var(--space-1) var(--space-2)',
+                                                    background: isGuideSaved(selectedIssue.name) ? 'var(--color-success)' : 'var(--color-primary)',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: 'var(--radius-md)',
+                                                    fontSize: 'var(--text-xs)',
+                                                    fontWeight: 'var(--font-semibold)',
+                                                    cursor: 'pointer'
+                                                }}
+                                            >
+                                                <i className={`fas ${isGuideSaved(selectedIssue.name) ? 'fa-check' : 'fa-download'}`}></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Tools Needed with Affiliate Links */}
                                     <div style={{background: 'var(--color-info-light)', padding: 'var(--space-6)', borderBottom: '1px solid var(--color-border)'}}>
-                                        <h3 style={{fontWeight: 'var(--font-semibold)', color: '#0c4a6e', marginBottom: 'var(--space-3)'}}>
-                                            <i className="fas fa-toolbox mr-2"></i>
-                                            {t('toolsNeeded')}
-                                        </h3>
-                                        <div className="tool-list">
+                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-3)'}}>
+                                            <h3 style={{fontWeight: 'var(--font-semibold)', color: '#0c4a6e'}}>
+                                                <i className="fas fa-toolbox mr-2"></i>
+                                                {t('toolsNeeded')}
+                                            </h3>
+                                            <button
+                                                onClick={() => exportShoppingList(selectedIssue)}
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: 'var(--space-1)',
+                                                    padding: 'var(--space-1) var(--space-2)',
+                                                    background: 'var(--color-success)',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: 'var(--radius-md)',
+                                                    fontSize: 'var(--text-xs)',
+                                                    fontWeight: 'var(--font-semibold)',
+                                                    cursor: 'pointer'
+                                                }}
+                                                title="Exportovat nákupní seznam"
+                                            >
+                                                <i className="fas fa-share-alt"></i>
+                                                Export
+                                            </button>
+                                        </div>
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)'}}>
                                             {selectedIssue.tools.map((tool, idx) => (
-                                                <span key={idx} className="tool-item">
-                                                    {tool}
-                                                </span>
+                                                <div key={idx} style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'space-between',
+                                                    background: 'var(--color-bg-primary)',
+                                                    padding: 'var(--space-2) var(--space-3)',
+                                                    borderRadius: 'var(--radius-lg)',
+                                                    border: '1px solid var(--color-border)'
+                                                }}>
+                                                    <span style={{fontWeight: 'var(--font-medium)', fontSize: 'var(--text-sm)'}}>
+                                                        <i className="fas fa-wrench mr-2" style={{color: 'var(--color-primary)', opacity: 0.7}}></i>
+                                                        {tool}
+                                                    </span>
+                                                    <div style={{display: 'flex', gap: 'var(--space-1)'}}>
+                                                        <a
+                                                            href={getAffiliateUrl('alza', tool)}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            style={{
+                                                                padding: 'var(--space-1) var(--space-2)',
+                                                                background: '#ff6600',
+                                                                color: 'white',
+                                                                borderRadius: 'var(--radius-md)',
+                                                                fontSize: 'var(--text-xs)',
+                                                                textDecoration: 'none',
+                                                                fontWeight: 'var(--font-semibold)'
+                                                            }}
+                                                            title="Koupit na Alza.cz"
+                                                        >
+                                                            Alza
+                                                        </a>
+                                                        <a
+                                                            href={getAffiliateUrl('mall', tool)}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            style={{
+                                                                padding: 'var(--space-1) var(--space-2)',
+                                                                background: '#e4002b',
+                                                                color: 'white',
+                                                                borderRadius: 'var(--radius-md)',
+                                                                fontSize: 'var(--text-xs)',
+                                                                textDecoration: 'none',
+                                                                fontWeight: 'var(--font-semibold)'
+                                                            }}
+                                                            title="Koupit na Mall.cz"
+                                                        >
+                                                            Mall
+                                                        </a>
+                                                        <a
+                                                            href={getAffiliateUrl('hornbach', tool)}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            style={{
+                                                                padding: 'var(--space-1) var(--space-2)',
+                                                                background: '#f97316',
+                                                                color: 'white',
+                                                                borderRadius: 'var(--radius-md)',
+                                                                fontSize: 'var(--text-xs)',
+                                                                textDecoration: 'none',
+                                                                fontWeight: 'var(--font-semibold)'
+                                                            }}
+                                                            title="Koupit v Hornbachu"
+                                                        >
+                                                            <i className="fas fa-hammer"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
                                             ))}
                                         </div>
                                     </div>
@@ -4032,6 +4707,114 @@
                                 <div className="alert alert-info">
                                     <p><i className="fas fa-info-circle mr-2"></i>Všichni partneři jsou prověřeni a nabízejí kvalitní produkty s garancí.</p>
                                 </div>
+                            </div>
+                        )}
+
+                        {/* Offline Guides View */}
+                        {currentView === 'offline' && (
+                            <div className="max-w-2xl mx-auto">
+                                <h2 className="page-title">
+                                    <i className="fas fa-cloud-download-alt mr-2" style={{color: 'var(--color-primary)'}}></i>
+                                    Offline návody
+                                </h2>
+
+                                {savedGuides.length === 0 ? (
+                                    <div className="card">
+                                        <div className="card-body text-center" style={{padding: 'var(--space-12)'}}>
+                                            <div style={{fontSize: '4rem', marginBottom: 'var(--space-4)', opacity: 0.3}}>
+                                                <i className="fas fa-cloud-download-alt"></i>
+                                            </div>
+                                            <h3 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>
+                                                Žádné uložené návody
+                                            </h3>
+                                            <p style={{color: 'var(--color-text-secondary)', marginBottom: 'var(--space-6)'}}>
+                                                Zatím nemáš žádné návody uložené pro offline použití.
+                                                <br />
+                                                Při prohlížení návodu klikni na "Uložit offline".
+                                            </p>
+                                            <button onClick={() => navigateTo('knowledge')} className="btn btn-primary">
+                                                <i className="fas fa-book mr-2"></i>
+                                                Procházet databázi
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="alert alert-success mb-6">
+                                            <p>
+                                                <i className="fas fa-wifi-slash mr-2"></i>
+                                                <strong>Funguje i bez internetu!</strong> Tyto návody máš uložené v telefonu.
+                                            </p>
+                                        </div>
+
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-4)'}}>
+                                            {savedGuides.map(guide => (
+                                                <div key={guide.id} className="card">
+                                                    <div className="card-body">
+                                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
+                                                            <div style={{flex: 1}}>
+                                                                <h3 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>
+                                                                    {guide.name}
+                                                                </h3>
+                                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                                                    {guide.description}
+                                                                </p>
+
+                                                                <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', marginBottom: 'var(--space-3)'}}>
+                                                                    <span className="badge">
+                                                                        <i className="fas fa-clock mr-1"></i>
+                                                                        {guide.timeEstimate}
+                                                                    </span>
+                                                                    <span className="badge">
+                                                                        <i className="fas fa-signal mr-1"></i>
+                                                                        {guide.difficulty}
+                                                                    </span>
+                                                                    <span className="badge">
+                                                                        <i className="fas fa-list mr-1"></i>
+                                                                        {guide.steps?.length || 0} kroků
+                                                                    </span>
+                                                                </div>
+
+                                                                <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                                    <i className="fas fa-save mr-1"></i>
+                                                                    Uloženo: {new Date(guide.savedAt).toLocaleDateString('cs-CZ')}
+                                                                </p>
+                                                            </div>
+
+                                                            <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)'}}>
+                                                                <button
+                                                                    onClick={() => loadOfflineGuide(guide)}
+                                                                    className="btn btn-success btn-sm"
+                                                                >
+                                                                    <i className="fas fa-play mr-1"></i>
+                                                                    Spustit
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => {
+                                                                        if (confirm('Opravdu smazat tento uložený návod?')) {
+                                                                            deleteOfflineGuide(guide.id);
+                                                                        }
+                                                                    }}
+                                                                    className="btn btn-secondary btn-sm"
+                                                                    style={{opacity: 0.7}}
+                                                                >
+                                                                    <i className="fas fa-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <div style={{marginTop: 'var(--space-6)', textAlign: 'center'}}>
+                                            <button onClick={() => navigateTo('knowledge')} className="btn btn-secondary">
+                                                <i className="fas fa-plus mr-2"></i>
+                                                Přidat další návody
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         )}
                     </main>
