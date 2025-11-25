@@ -1,13 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import { SessionProvider } from "@/components/providers/session-provider";
 import { Toaster } from "@/components/ui/toaster";
 import "@/styles/globals.css";
-
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-sans",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -44,7 +38,7 @@ export const metadata: Metadata = {
     siteName: "FIXO",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.svg",
         width: 1200,
         height: 630,
         alt: "FIXO - AI diagnostika domácích závad",
@@ -56,7 +50,7 @@ export const metadata: Metadata = {
     title: "FIXO - Okamžité opravy domácích závad",
     description:
       "AI analýza fotografií domácích závad s návody na opravu krok za krokem.",
-    images: ["/og-image.png"],
+    images: ["/og-image.svg"],
   },
   robots: {
     index: true,
@@ -71,9 +65,10 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/icons/icon-192x192.svg",
   },
 };
 
@@ -95,7 +90,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="cs" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className="font-sans antialiased">
         <SessionProvider>
           {children}
           <Toaster />

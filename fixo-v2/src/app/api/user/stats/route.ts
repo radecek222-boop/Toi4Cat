@@ -87,7 +87,7 @@ export async function GET() {
           savedGuides: user._count.savedGuides,
         },
         repairsByStatus: repairsByStatus.reduce(
-          (acc, item) => ({
+          (acc: Record<string, number>, item: { status: string; _count: number }) => ({
             ...acc,
             [item.status]: item._count,
           }),
