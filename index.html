@@ -356,6 +356,166 @@
             justify-content: space-between;
             gap: var(--space-3);
         }
+
+        /* Drawing Canvas Container - Fixed */
+        .drawing-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            touch-action: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .drawing-container canvas {
+            display: block;
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: var(--radius-lg);
+            cursor: crosshair;
+        }
+
+        /* Neon Pulsing Marker */
+        .neon-marker {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: neonPulse 1.5s ease-in-out infinite;
+            border: 3px solid #00ffff;
+            box-shadow:
+                0 0 5px #00ffff,
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                inset 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        @keyframes neonPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+                box-shadow:
+                    0 0 5px #00ffff,
+                    0 0 10px #00ffff,
+                    0 0 20px #00ffff,
+                    0 0 40px #00ffff,
+                    inset 0 0 10px rgba(0, 255, 255, 0.3);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.8;
+                box-shadow:
+                    0 0 10px #00ffff,
+                    0 0 20px #00ffff,
+                    0 0 40px #00ffff,
+                    0 0 60px #00ffff,
+                    inset 0 0 15px rgba(0, 255, 255, 0.5);
+            }
+        }
+
+        /* Neon drawing brush style */
+        .neon-brush {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            pointer-events: none;
+            border: 2px solid #00ffff;
+            box-shadow:
+                0 0 5px #00ffff,
+                0 0 10px #00ffff;
+            transform: translate(-50%, -50%);
+        }
+
+        /* PWA Mobile Layout Fixes */
+        html, body {
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Prevent elements from overflowing */
+        .container, .max-w-lg, .max-w-2xl {
+            max-width: 100%;
+            box-sizing: border-box;
+            padding-left: var(--space-4);
+            padding-right: var(--space-4);
+        }
+
+        /* Mobile-friendly buttons */
+        .btn {
+            min-height: 44px; /* iOS minimum tap target */
+            min-width: 44px;
+            padding: var(--space-3) var(--space-4);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .btn-lg {
+            min-height: 52px;
+            padding: var(--space-4) var(--space-6);
+        }
+
+        /* Flex wrap for button groups on mobile */
+        @media (max-width: 480px) {
+            .flex.gap-4, .flex.gap-3 {
+                flex-wrap: wrap;
+            }
+            .flex.gap-4 .btn, .flex.gap-3 .btn {
+                flex: 1 1 calc(50% - var(--space-2));
+                min-width: 120px;
+            }
+            .flex.gap-4 .btn.w-full, .flex.gap-3 .btn.w-full {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* Fixed position elements - safe area */
+        .pwa-install-banner {
+            padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+        }
+
+        /* Form inputs mobile sizing */
+        .input, select, textarea {
+            min-height: 44px;
+            font-size: 16px; /* Prevents iOS zoom on focus */
+            padding: var(--space-3);
+        }
+
+        /* Cards should not overflow */
+        .card {
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        /* Info boxes responsive */
+        @media (max-width: 380px) {
+            .grid-3 {
+                grid-template-columns: 1fr !important;
+            }
+            .info-box {
+                padding: var(--space-3);
+            }
+        }
+
+        /* Mobile menu touch improvements */
+        .mobile-menu-item {
+            min-height: 48px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Tool items wrapping */
+        .tool-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+        .tool-item {
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body>
@@ -1395,12 +1555,14 @@
             const canvasRef = useRef(null);
             const [isDrawingMode, setIsDrawingMode] = useState(false);
             const [isDrawing, setIsDrawing] = useState(false);
-            const [brushColor, setBrushColor] = useState('#ff0000');
+            const [brushColor, setBrushColor] = useState('#00ffff'); // Neon cyan
             const [brushSize, setBrushSize] = useState(5);
             const [annotatedImage, setAnnotatedImage] = useState(null);
+            const [neonMarkers, setNeonMarkers] = useState([]); // Placed markers [{x, y}]
 
             // Hamburger menu state
             const [menuOpen, setMenuOpen] = useState(false);
+            const [langMenuOpen, setLangMenuOpen] = useState(false);
 
             // PWA install state
             const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -1888,6 +2050,7 @@
 
             const draw = (e) => {
                 if (!isDrawing || !isDrawingMode) return;
+                e.preventDefault();
                 const canvas = canvasRef.current;
                 if (!canvas) return;
 
@@ -1903,17 +2066,55 @@
                 const x = (clientX - rect.left) * scaleX;
                 const y = (clientY - rect.top) * scaleY;
 
+                // Neon glow effect
                 ctx.lineWidth = brushSize * 2;
                 ctx.lineCap = 'round';
                 ctx.strokeStyle = brushColor;
+                ctx.shadowColor = brushColor;
+                ctx.shadowBlur = 15;
+
                 ctx.lineTo(x, y);
                 ctx.stroke();
                 ctx.beginPath();
                 ctx.moveTo(x, y);
             };
 
+            // Place a neon marker on click/tap
+            const placeMarker = (e) => {
+                if (!isDrawingMode) return;
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                const x = ((clientX - rect.left) / rect.width) * 100;
+                const y = ((clientY - rect.top) / rect.height) * 100;
+
+                setNeonMarkers(prev => [...prev, { x, y, id: Date.now() }]);
+
+                // Also draw on canvas
+                const ctx = canvas.getContext('2d');
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const canvasX = (clientX - rect.left) * scaleX;
+                const canvasY = (clientY - rect.top) * scaleY;
+
+                // Draw neon circle marker on canvas
+                ctx.beginPath();
+                ctx.arc(canvasX, canvasY, 30, 0, 2 * Math.PI);
+                ctx.strokeStyle = '#00ffff';
+                ctx.lineWidth = 4;
+                ctx.shadowColor = '#00ffff';
+                ctx.shadowBlur = 20;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            };
+
             const clearCanvas = () => {
                 initCanvas();
+                setNeonMarkers([]);
             };
 
             const saveAnnotatedImage = () => {
@@ -2165,43 +2366,79 @@
 
                     {/* Mobile Menu */}
                     <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
+                        {/* Hlavní navigace */}
                         <div className="mobile-menu-item" onClick={() => navigateTo('home')} style={currentView === 'home' ? {background: 'var(--color-primary-light)', color: 'var(--color-primary)'} : {}}>
                             <i className="fas fa-camera"></i>
-                            <span>{t('navAnalyze')}</span>
+                            <span>Analyzovat</span>
                         </div>
                         <div className="mobile-menu-item" onClick={() => navigateTo('history')} style={currentView === 'history' ? {background: 'var(--color-primary-light)', color: 'var(--color-primary)'} : {}}>
                             <i className="fas fa-history"></i>
-                            <span>{t('navHistory')}</span>
+                            <span>Historie</span>
                         </div>
                         <div className="mobile-menu-item" onClick={() => navigateTo('knowledge')} style={currentView === 'knowledge' ? {background: 'var(--color-primary-light)', color: 'var(--color-primary)'} : {}}>
                             <i className="fas fa-book"></i>
-                            <span>{t('navDatabase')}</span>
+                            <span>Databáze</span>
                         </div>
 
-                        {/* Jazyky v menu */}
-                        <div style={{padding: 'var(--space-4) var(--space-6)', borderTop: '1px solid var(--color-border)', marginTop: 'var(--space-4)'}}>
-                            <div style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', marginBottom: 'var(--space-3)'}}>
-                                <i className="fas fa-globe mr-2"></i>Jazyk
+                        {/* Oddělovač */}
+                        <div style={{borderTop: '1px solid var(--color-border)', margin: 'var(--space-2) 0'}}></div>
+
+                        {/* Nové stránky */}
+                        <div className="mobile-menu-item" onClick={() => navigateTo('about')} style={currentView === 'about' ? {background: 'var(--color-primary-light)', color: 'var(--color-primary)'} : {}}>
+                            <i className="fas fa-info-circle"></i>
+                            <span>O nás</span>
+                        </div>
+                        <div className="mobile-menu-item" onClick={() => navigateTo('premium')} style={currentView === 'premium' ? {background: 'var(--color-primary-light)', color: 'var(--color-primary)'} : {}}>
+                            <i className="fas fa-crown" style={{color: '#f59e0b'}}></i>
+                            <span>Premium</span>
+                        </div>
+                        <div className="mobile-menu-item" onClick={() => navigateTo('partnership')} style={currentView === 'partnership' ? {background: 'var(--color-primary-light)', color: 'var(--color-primary)'} : {}}>
+                            <i className="fas fa-handshake"></i>
+                            <span>Partnerství</span>
+                        </div>
+                        <div className="mobile-menu-item" onClick={() => navigateTo('suppliers')} style={currentView === 'suppliers' ? {background: 'var(--color-primary-light)', color: 'var(--color-primary)'} : {}}>
+                            <i className="fas fa-truck"></i>
+                            <span>Dodavatelé</span>
+                        </div>
+
+                        {/* Jazyk - rozbalovací */}
+                        <div style={{borderTop: '1px solid var(--color-border)', marginTop: 'var(--space-2)'}}>
+                            <div
+                                className="mobile-menu-item"
+                                onClick={() => setLangMenuOpen(!langMenuOpen)}
+                                style={{justifyContent: 'space-between'}}
+                            >
+                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                    <span style={{fontSize: 'var(--text-xl)', marginRight: 'var(--space-3)'}}>{getCurrentLanguageData().flag}</span>
+                                    <span>{getCurrentLanguageData().native}</span>
+                                </div>
+                                <i className={`fas fa-chevron-${langMenuOpen ? 'up' : 'down'}`}></i>
                             </div>
-                            <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)'}}>
-                                {languages.slice(0, 8).map(lang => (
-                                    <button
-                                        key={lang.code}
-                                        onClick={() => { changeLanguage(lang.code); setMenuOpen(false); }}
-                                        style={{
-                                            padding: 'var(--space-2)',
-                                            borderRadius: 'var(--radius-lg)',
-                                            border: currentLanguage === lang.code ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
-                                            background: currentLanguage === lang.code ? 'var(--color-primary-light)' : 'transparent',
-                                            cursor: 'pointer',
-                                            fontSize: 'var(--text-xl)'
-                                        }}
-                                        title={lang.native}
-                                    >
-                                        {lang.flag}
-                                    </button>
-                                ))}
-                            </div>
+
+                            {langMenuOpen && (
+                                <div style={{background: 'var(--color-bg-secondary)', padding: 'var(--space-3)'}}>
+                                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--space-2)'}}>
+                                        {languages.map(lang => (
+                                            <button
+                                                key={lang.code}
+                                                onClick={() => { changeLanguage(lang.code); setLangMenuOpen(false); }}
+                                                style={{
+                                                    padding: 'var(--space-2)',
+                                                    borderRadius: 'var(--radius-lg)',
+                                                    border: currentLanguage === lang.code ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
+                                                    background: currentLanguage === lang.code ? 'var(--color-primary-light)' : 'var(--color-bg-primary)',
+                                                    cursor: 'pointer',
+                                                    fontSize: 'var(--text-xl)',
+                                                    textAlign: 'center'
+                                                }}
+                                                title={lang.native}
+                                            >
+                                                {lang.flag}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* PWA Install v menu */}
@@ -2409,27 +2646,33 @@
                                         </p>
                                     </div>
 
-                                    {/* Canvas / Image container */}
-                                    <div style={{position: 'relative', marginBottom: 'var(--space-4)'}}>
+                                    {/* Canvas / Image container - Fixed for touch */}
+                                    <div className="drawing-container" style={{marginBottom: 'var(--space-4)', background: '#000', borderRadius: 'var(--radius-lg)', overflow: 'hidden'}}>
                                         {isDrawingMode ? (
-                                            <canvas
-                                                ref={canvasRef}
-                                                onMouseDown={startDrawing}
-                                                onMouseMove={draw}
-                                                onMouseUp={stopDrawing}
-                                                onMouseLeave={stopDrawing}
-                                                onTouchStart={startDrawing}
-                                                onTouchMove={draw}
-                                                onTouchEnd={stopDrawing}
-                                                style={{
-                                                    width: '100%',
-                                                    maxHeight: '400px',
-                                                    objectFit: 'contain',
-                                                    borderRadius: 'var(--radius-lg)',
-                                                    cursor: 'crosshair',
-                                                    touchAction: 'none'
-                                                }}
-                                            />
+                                            <>
+                                                <canvas
+                                                    ref={canvasRef}
+                                                    onMouseDown={(e) => { startDrawing(e); }}
+                                                    onMouseMove={(e) => { draw(e); }}
+                                                    onMouseUp={stopDrawing}
+                                                    onMouseLeave={stopDrawing}
+                                                    onTouchStart={(e) => { e.preventDefault(); startDrawing(e); }}
+                                                    onTouchMove={(e) => { e.preventDefault(); draw(e); }}
+                                                    onTouchEnd={(e) => { e.preventDefault(); stopDrawing(); }}
+                                                    onClick={placeMarker}
+                                                />
+                                                {/* Neon markers overlay */}
+                                                {neonMarkers.map(marker => (
+                                                    <div
+                                                        key={marker.id}
+                                                        className="neon-marker"
+                                                        style={{
+                                                            left: `${marker.x}%`,
+                                                            top: `${marker.y}%`
+                                                        }}
+                                                    />
+                                                ))}
+                                            </>
                                         ) : (
                                             <img
                                                 src={annotatedImage || selectedImage}
@@ -2438,7 +2681,7 @@
                                                     width: '100%',
                                                     maxHeight: '400px',
                                                     objectFit: 'contain',
-                                                    borderRadius: 'var(--radius-lg)'
+                                                    display: 'block'
                                                 }}
                                             />
                                         )}
@@ -2451,17 +2694,18 @@
                                                 <div className="flex items-center gap-3">
                                                     <label style={{fontSize: 'var(--text-sm)'}}>Barva:</label>
                                                     <div className="flex gap-2">
-                                                        {['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ffffff'].map(color => (
+                                                        {['#00ffff', '#ff00ff', '#00ff00', '#ffff00', '#ff0000'].map(color => (
                                                             <button
                                                                 key={color}
                                                                 onClick={() => setBrushColor(color)}
                                                                 style={{
-                                                                    width: '28px',
-                                                                    height: '28px',
+                                                                    width: '32px',
+                                                                    height: '32px',
                                                                     borderRadius: '50%',
                                                                     backgroundColor: color,
-                                                                    border: brushColor === color ? '3px solid var(--color-text-primary)' : '2px solid var(--color-border)',
-                                                                    cursor: 'pointer'
+                                                                    border: brushColor === color ? '3px solid #fff' : '2px solid rgba(255,255,255,0.3)',
+                                                                    cursor: 'pointer',
+                                                                    boxShadow: brushColor === color ? `0 0 10px ${color}, 0 0 20px ${color}` : 'none'
                                                                 }}
                                                             />
                                                         ))}
@@ -2615,6 +2859,67 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    {/* Possible Issues Selection */}
+                                    {analysisResult.possibleIssues && analysisResult.possibleIssues.length > 0 && (
+                                        <div style={{padding: 'var(--space-4)', background: 'var(--color-bg-secondary)', borderBottom: '1px solid var(--color-border)'}}>
+                                            <h3 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-3)', fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>
+                                                <i className="fas fa-question-circle mr-2"></i>
+                                                Vyberte váš problém:
+                                            </h3>
+                                            <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)'}}>
+                                                {analysisResult.possibleIssues.map((issue, idx) => (
+                                                    <button
+                                                        key={issue.id || idx}
+                                                        onClick={() => {
+                                                            setAnalysisResult(prev => ({
+                                                                ...prev,
+                                                                issue: {
+                                                                    ...prev.issue,
+                                                                    name: issue.name,
+                                                                    description: issue.description
+                                                                }
+                                                            }));
+                                                        }}
+                                                        style={{
+                                                            padding: 'var(--space-3)',
+                                                            borderRadius: 'var(--radius-lg)',
+                                                            border: analysisResult.issue.name === issue.name
+                                                                ? '2px solid var(--color-primary)'
+                                                                : '1px solid var(--color-border)',
+                                                            background: analysisResult.issue.name === issue.name
+                                                                ? 'var(--color-primary-light)'
+                                                                : 'var(--color-bg-primary)',
+                                                            textAlign: 'left',
+                                                            cursor: 'pointer',
+                                                            transition: 'all var(--transition-fast)'
+                                                        }}
+                                                    >
+                                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                                            <div>
+                                                                <p style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>
+                                                                    {issue.name}
+                                                                </p>
+                                                                <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)'}}>
+                                                                    {issue.description}
+                                                                </p>
+                                                            </div>
+                                                            <div style={{
+                                                                background: idx === 0 ? 'var(--color-success)' : 'var(--color-bg-tertiary)',
+                                                                color: idx === 0 ? 'white' : 'var(--color-text-secondary)',
+                                                                padding: 'var(--space-1) var(--space-2)',
+                                                                borderRadius: 'var(--radius-full)',
+                                                                fontSize: 'var(--text-xs)',
+                                                                whiteSpace: 'nowrap'
+                                                            }}>
+                                                                {Math.round(issue.probability * 100)}%
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
 
                                     {/* Issue Details */}
                                     <div className="card-body">
@@ -2805,6 +3110,44 @@
                                                 <p style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>
                                                     {selectedIssue.steps[currentStep].action}
                                                 </p>
+
+                                                {/* Detailed description */}
+                                                {selectedIssue.steps[currentStep].description && (
+                                                    <p style={{fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)', lineHeight: 1.6}}>
+                                                        {selectedIssue.steps[currentStep].description}
+                                                    </p>
+                                                )}
+
+                                                {/* Tools for this step */}
+                                                {selectedIssue.steps[currentStep].tools_for_step && selectedIssue.steps[currentStep].tools_for_step.length > 0 && (
+                                                    <div style={{background: 'var(--color-info-light)', padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)', marginBottom: 'var(--space-3)', textAlign: 'left'}}>
+                                                        <p style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)'}}>
+                                                            <i className="fas fa-wrench mr-2" style={{color: '#0369a1'}}></i>Nástroje:
+                                                        </p>
+                                                        <p style={{fontSize: 'var(--text-sm)'}}>{selectedIssue.steps[currentStep].tools_for_step.join(', ')}</p>
+                                                    </div>
+                                                )}
+
+                                                {/* Parts for this step */}
+                                                {selectedIssue.steps[currentStep].parts_for_step && selectedIssue.steps[currentStep].parts_for_step.length > 0 && (
+                                                    <div style={{background: 'var(--color-warning-light)', padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)', marginBottom: 'var(--space-3)', textAlign: 'left'}}>
+                                                        <p style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)'}}>
+                                                            <i className="fas fa-box mr-2" style={{color: '#b45309'}}></i>Potřebné díly:
+                                                        </p>
+                                                        <p style={{fontSize: 'var(--text-sm)'}}>{selectedIssue.steps[currentStep].parts_for_step.join(', ')}</p>
+                                                    </div>
+                                                )}
+
+                                                {/* Tip for this step */}
+                                                {selectedIssue.steps[currentStep].tip && (
+                                                    <div style={{background: 'var(--color-success-light)', padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)', marginBottom: 'var(--space-3)', textAlign: 'left'}}>
+                                                        <p style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)'}}>
+                                                            <i className="fas fa-lightbulb mr-2" style={{color: '#15803d'}}></i>Tip:
+                                                        </p>
+                                                        <p style={{fontSize: 'var(--text-sm)'}}>{selectedIssue.steps[currentStep].tip}</p>
+                                                    </div>
+                                                )}
+
                                                 <p className="text-secondary">
                                                     <i className="fas fa-clock mr-2"></i>
                                                     {t('timeRequired')}: {selectedIssue.steps[currentStep].time}
@@ -2867,6 +3210,32 @@
                                                     {t('completeRepair')}
                                                 </button>
                                             )}
+                                        </div>
+
+                                        {/* Option to find local repair service */}
+                                        <div style={{marginTop: 'var(--space-6)', padding: 'var(--space-4)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)', textAlign: 'center'}}>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                                <i className="fas fa-question-circle mr-2"></i>
+                                                Nevyřešili jste problém? Potřebujete odbornou pomoc?
+                                            </p>
+                                            <button
+                                                onClick={() => {
+                                                    const query = encodeURIComponent(`${selectedIssue.name} opravář v mém okolí`);
+                                                    window.open(`https://www.google.com/search?q=${query}`, '_blank');
+                                                }}
+                                                className="btn btn-secondary"
+                                                style={{marginRight: 'var(--space-2)'}}
+                                            >
+                                                <i className="fas fa-search mr-2"></i>
+                                                Najít opraváře
+                                            </button>
+                                            <button
+                                                onClick={() => navigateTo('suppliers')}
+                                                className="btn btn-outline"
+                                            >
+                                                <i className="fas fa-truck mr-2"></i>
+                                                Naši partneři
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -3183,6 +3552,495 @@
                                     <p>
                                         {t('databaseInfo')}
                                     </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* About Page View */}
+                        {currentView === 'about' && (
+                            <div className="max-w-2xl mx-auto">
+                                <h2 className="page-title">O nás</h2>
+
+                                <div className="card mb-6">
+                                    <div className="card-body text-center" style={{padding: 'var(--space-8)'}}>
+                                        <div style={{fontSize: '4rem', marginBottom: 'var(--space-4)'}}>🔧</div>
+                                        <h3 style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)'}}>FIXO</h3>
+                                        <p style={{fontSize: 'var(--text-lg)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-6)'}}>
+                                            Váš chytrý pomocník pro domácí opravy
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title"><i className="fas fa-lightbulb mr-2" style={{color: '#f59e0b'}}></i>Náš příběh</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <p style={{lineHeight: 1.7, marginBottom: 'var(--space-4)'}}>
+                                            FIXO vzniklo z jednoduché myšlenky - co kdyby každý mohl snadno opravit běžné domácí závady bez nutnosti volat drahého opraváře?
+                                        </p>
+                                        <p style={{lineHeight: 1.7, marginBottom: 'var(--space-4)'}}>
+                                            Díky umělé inteligenci dokážeme z fotografie rozpoznat problém a poskytnout přesný návod krok za krokem. Ušetříte čas, peníze a získáte nové dovednosti.
+                                        </p>
+                                        <p style={{lineHeight: 1.7}}>
+                                            Naše databáze obsahuje stovky návodů pokrývajících vodoinstalaci, elektroinstalaci, topení, bytové opravy a další oblasti.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title"><i className="fas fa-users mr-2" style={{color: 'var(--color-primary)'}}></i>Náš tým</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="grid grid-2 gap-4">
+                                            <div className="text-center" style={{padding: 'var(--space-4)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <div style={{fontSize: '2.5rem', marginBottom: 'var(--space-2)'}}>👨‍💻</div>
+                                                <p style={{fontWeight: 'var(--font-semibold)'}}>Vývojáři</p>
+                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>AI & technologie</p>
+                                            </div>
+                                            <div className="text-center" style={{padding: 'var(--space-4)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <div style={{fontSize: '2.5rem', marginBottom: 'var(--space-2)'}}>🔧</div>
+                                                <p style={{fontWeight: 'var(--font-semibold)'}}>Odborníci</p>
+                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Řemeslníci & technici</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title"><i className="fas fa-envelope mr-2" style={{color: 'var(--color-success)'}}></i>Kontakt</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
+                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-3)'}}>
+                                                <i className="fas fa-envelope" style={{color: 'var(--color-primary)', width: '20px'}}></i>
+                                                <span>support@fixo.app</span>
+                                            </div>
+                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-3)'}}>
+                                                <i className="fas fa-globe" style={{color: 'var(--color-primary)', width: '20px'}}></i>
+                                                <span>www.fixo.app</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="alert alert-info">
+                                    <p><i className="fas fa-heart mr-2" style={{color: 'var(--color-danger)'}}></i>Děkujeme, že používáte FIXO!</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Premium Page View */}
+                        {currentView === 'premium' && (
+                            <div className="max-w-2xl mx-auto">
+                                <h2 className="page-title">
+                                    <i className="fas fa-crown mr-2" style={{color: '#f59e0b'}}></i>
+                                    FIXO Premium
+                                </h2>
+
+                                {/* Cenový banner */}
+                                <div className="card mb-6" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white'}}>
+                                    <div className="card-body text-center" style={{padding: 'var(--space-8)'}}>
+                                        <p style={{fontSize: 'var(--text-sm)', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: 'var(--space-2)'}}>Jednorázová platba</p>
+                                        <div style={{fontSize: '3rem', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>€3.99</div>
+                                        <p style={{opacity: 0.9}}>Doživotní přístup ke všem funkcím</p>
+                                    </div>
+                                </div>
+
+                                {/* Výhody Premium */}
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Co získáte s Premium</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-4)'}}>
+                                            <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
+                                                <div style={{background: 'var(--color-success-light)', color: 'var(--color-success)', padding: 'var(--space-2)', borderRadius: 'var(--radius-lg)'}}>
+                                                    <i className="fas fa-project-diagram"></i>
+                                                </div>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Technické schémata a diagramy</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Detailní nákresy zapojení, rozměry a technické výkresy</p>
+                                                </div>
+                                            </div>
+                                            <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
+                                                <div style={{background: 'var(--color-primary-light)', color: 'var(--color-primary)', padding: 'var(--space-2)', borderRadius: 'var(--radius-lg)'}}>
+                                                    <i className="fas fa-shopping-cart"></i>
+                                                </div>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Affiliate odkazy na materiál</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Přímé odkazy na potřebný materiál s nejlepšími cenami</p>
+                                                </div>
+                                            </div>
+                                            <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
+                                                <div style={{background: 'var(--color-warning-light)', color: '#d97706', padding: 'var(--space-2)', borderRadius: 'var(--radius-lg)'}}>
+                                                    <i className="fas fa-map-marker-alt"></i>
+                                                </div>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Kontakty na místní opraváře</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>AI vyhledá ověřené řemeslníky ve vašem okolí</p>
+                                                </div>
+                                            </div>
+                                            <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
+                                                <div style={{background: 'var(--color-danger-light)', color: 'var(--color-danger)', padding: 'var(--space-2)', borderRadius: 'var(--radius-lg)'}}>
+                                                    <i className="fas fa-video"></i>
+                                                </div>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Video návody</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Odkazy na profesionální video tutoriály</p>
+                                                </div>
+                                            </div>
+                                            <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
+                                                <div style={{background: '#faf5ff', color: '#9333ea', padding: 'var(--space-2)', borderRadius: 'var(--radius-lg)'}}>
+                                                    <i className="fas fa-infinity"></i>
+                                                </div>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Neomezené analýzy</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Žádné denní limity na AI analýzu fotek</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Srovnání */}
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Porovnání verzí</h3>
+                                    </div>
+                                    <div className="card-body" style={{padding: 0}}>
+                                        <table style={{width: '100%', borderCollapse: 'collapse'}}>
+                                            <thead>
+                                                <tr style={{background: 'var(--color-bg-secondary)'}}>
+                                                    <th style={{padding: 'var(--space-3)', textAlign: 'left'}}>Funkce</th>
+                                                    <th style={{padding: 'var(--space-3)', textAlign: 'center'}}>Free</th>
+                                                    <th style={{padding: 'var(--space-3)', textAlign: 'center', background: 'var(--color-warning-light)'}}>Premium</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>AI analýza</td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}>5/den</td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}>∞</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Základní návody</td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Technická schémata</td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Odkazy na materiál</td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Kontakty opravářů</td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Video návody</td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
+                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                {/* CTA Button */}
+                                <button className="btn btn-lg w-full" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white', marginBottom: 'var(--space-6)'}}>
+                                    <i className="fas fa-crown mr-2"></i>
+                                    Získat Premium za €3.99
+                                </button>
+
+                                <div className="alert alert-info">
+                                    <p><i className="fas fa-shield-alt mr-2"></i>Bezpečná platba přes Stripe. Jednorázově, bez předplatného.</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Partnership Page View */}
+                        {currentView === 'partnership' && (
+                            <div className="max-w-2xl mx-auto">
+                                <h2 className="page-title">
+                                    <i className="fas fa-handshake mr-2" style={{color: 'var(--color-primary)'}}></i>
+                                    Partnerský program
+                                </h2>
+
+                                {/* Hero banner */}
+                                <div className="card mb-6" style={{background: 'linear-gradient(135deg, var(--color-primary) 0%, #1e40af 100%)', color: 'white'}}>
+                                    <div className="card-body text-center" style={{padding: 'var(--space-8)'}}>
+                                        <div style={{fontSize: '3rem', marginBottom: 'var(--space-4)'}}>🤝</div>
+                                        <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>Staňte se partnerem FIXO</h3>
+                                        <p style={{opacity: 0.9}}>Získejte provize z doporučení a rozšiřte svůj byznys</p>
+                                    </div>
+                                </div>
+
+                                {/* Typy partnerství */}
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Typy partnerství</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-4)'}}>
+                                            <div className="card" style={{background: 'var(--color-bg-secondary)'}}>
+                                                <div className="card-body">
+                                                    <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
+                                                        <div style={{fontSize: '2rem'}}>🔧</div>
+                                                        <div style={{flex: 1}}>
+                                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>Řemeslníci & Opraváři</h4>
+                                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-2)'}}>
+                                                                Registrujte se jako místní odborník a získávejte zakázky od uživatelů FIXO
+                                                            </p>
+                                                            <span className="badge badge-success">Provize 15%</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="card" style={{background: 'var(--color-bg-secondary)'}}>
+                                                <div className="card-body">
+                                                    <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
+                                                        <div style={{fontSize: '2rem'}}>🏪</div>
+                                                        <div style={{flex: 1}}>
+                                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>E-shopy & Prodejci</h4>
+                                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-2)'}}>
+                                                                Nabídněte své produkty přímo v FIXO návodech
+                                                            </p>
+                                                            <span className="badge badge-primary">Affiliate program</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="card" style={{background: 'var(--color-bg-secondary)'}}>
+                                                <div className="card-body">
+                                                    <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
+                                                        <div style={{fontSize: '2rem'}}>📢</div>
+                                                        <div style={{flex: 1}}>
+                                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>Influenceři & Blogeři</h4>
+                                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-2)'}}>
+                                                                Sdílejte FIXO se svými sledujícími a získávejte provize
+                                                            </p>
+                                                            <span className="badge badge-warning">20% z prodejů</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Výhody */}
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Výhody partnerství</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="grid grid-2 gap-4">
+                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                <i className="fas fa-check-circle" style={{color: 'var(--color-success)'}}></i>
+                                                <span style={{fontSize: 'var(--text-sm)'}}>Pravidelné výplaty</span>
+                                            </div>
+                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                <i className="fas fa-check-circle" style={{color: 'var(--color-success)'}}></i>
+                                                <span style={{fontSize: 'var(--text-sm)'}}>Marketing materiály</span>
+                                            </div>
+                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                <i className="fas fa-check-circle" style={{color: 'var(--color-success)'}}></i>
+                                                <span style={{fontSize: 'var(--text-sm)'}}>Detailní statistiky</span>
+                                            </div>
+                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                <i className="fas fa-check-circle" style={{color: 'var(--color-success)'}}></i>
+                                                <span style={{fontSize: 'var(--text-sm)'}}>Dedikovaná podpora</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Registrační formulář */}
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title"><i className="fas fa-user-plus mr-2"></i>Registrace partnera</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <form onSubmit={(e) => e.preventDefault()} style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-4)'}}>
+                                            <div>
+                                                <label className="label">Jméno / Firma</label>
+                                                <input type="text" className="input" placeholder="Váš název nebo název firmy" />
+                                            </div>
+                                            <div>
+                                                <label className="label">E-mail</label>
+                                                <input type="email" className="input" placeholder="vas@email.cz" />
+                                            </div>
+                                            <div>
+                                                <label className="label">Typ partnerství</label>
+                                                <select className="input">
+                                                    <option value="">Vyberte typ...</option>
+                                                    <option value="craftsman">Řemeslník / Opravář</option>
+                                                    <option value="shop">E-shop / Prodejce</option>
+                                                    <option value="influencer">Influencer / Bloger</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label className="label">Zpráva (volitelné)</label>
+                                                <textarea className="input" rows="3" placeholder="Řekněte nám o sobě..."></textarea>
+                                            </div>
+                                            <button type="submit" className="btn btn-primary btn-lg">
+                                                <i className="fas fa-paper-plane mr-2"></i>
+                                                Odeslat žádost
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div className="alert alert-info">
+                                    <p><i className="fas fa-clock mr-2"></i>Žádosti zpracováváme do 48 hodin. Ozveme se vám e-mailem.</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Suppliers Page View */}
+                        {currentView === 'suppliers' && (
+                            <div className="max-w-2xl mx-auto">
+                                <h2 className="page-title">
+                                    <i className="fas fa-truck mr-2" style={{color: 'var(--color-primary)'}}></i>
+                                    Dodavatelé a partneři
+                                </h2>
+
+                                <p className="text-center text-secondary mb-6">
+                                    Spolupracujeme s prověřenými dodavateli materiálu a nářadí
+                                </p>
+
+                                {/* Kategorie dodavatelů */}
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title"><i className="fas fa-faucet mr-2" style={{color: '#3b82f6'}}></i>Vodoinstalace</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>SIKO koupelny</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Baterie, sprchy, WC</p>
+                                                </div>
+                                                <span className="badge badge-primary">Partner</span>
+                                            </div>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Ptáček velkoobchod</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Trubky, fitinky, čerpadla</p>
+                                                </div>
+                                                <span className="badge badge-success">Ověřený</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title"><i className="fas fa-bolt mr-2" style={{color: '#f59e0b'}}></i>Elektroinstalace</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>ELKOV elektro</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Kabely, zásuvky, jističe</p>
+                                                </div>
+                                                <span className="badge badge-primary">Partner</span>
+                                            </div>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>K+B Expert</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Elektro spotřebiče</p>
+                                                </div>
+                                                <span className="badge badge-success">Ověřený</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title"><i className="fas fa-tools mr-2" style={{color: '#10b981'}}></i>Nářadí a stavební materiál</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Hornbach</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Kompletní sortiment</p>
+                                                </div>
+                                                <span className="badge badge-primary">Partner</span>
+                                            </div>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>OBI</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>DIY materiál a nářadí</p>
+                                                </div>
+                                                <span className="badge badge-success">Ověřený</span>
+                                            </div>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Bauhaus</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Stavební centrum</p>
+                                                </div>
+                                                <span className="badge badge-success">Ověřený</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="card mb-6">
+                                    <div className="card-header">
+                                        <h3 className="card-title"><i className="fas fa-fire mr-2" style={{color: '#ef4444'}}></i>Topení a klimatizace</h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Thermona</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Kotle, zásobníky</p>
+                                                </div>
+                                                <span className="badge badge-primary">Partner</span>
+                                            </div>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <div>
+                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Vaillant</p>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Tepelná čerpadla, kotle</p>
+                                                </div>
+                                                <span className="badge badge-success">Ověřený</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Chci být dodavatelem */}
+                                <div className="card mb-6" style={{borderColor: 'var(--color-primary)', borderWidth: '2px'}}>
+                                    <div className="card-body text-center" style={{padding: 'var(--space-6)'}}>
+                                        <div style={{fontSize: '2.5rem', marginBottom: 'var(--space-3)'}}>🤝</div>
+                                        <h3 style={{fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>Chcete být náš partner?</h3>
+                                        <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)'}}>
+                                            Nabízíme spolupráci pro výrobce a prodejce materiálu
+                                        </p>
+                                        <button onClick={() => navigateTo('partnership')} className="btn btn-primary">
+                                            <i className="fas fa-arrow-right mr-2"></i>
+                                            Registrovat se jako partner
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="alert alert-info">
+                                    <p><i className="fas fa-info-circle mr-2"></i>Všichni partneři jsou prověřeni a nabízejí kvalitní produkty s garancí.</p>
                                 </div>
                             </div>
                         )}
