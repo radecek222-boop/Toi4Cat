@@ -163,6 +163,8 @@ const AppState = {
     isAnalyzing: false,
     selectedIssue: null,
     currentStep: 0,
+    stepAnswers: {},  // Uchovava odpovedi na kontrolni otazky pro kazdy krok
+    hintVisible: false,  // Stav viditelnosti napovedy
     repairHistory: JSON.parse(localStorage.getItem('fixo_history') || '[]')
 };
 
@@ -246,6 +248,8 @@ async function analyzeImage(file) {
 function startRepair(issue) {
     AppState.selectedIssue = issue;
     AppState.currentStep = 0;
+    AppState.stepAnswers = {};  // Reset odpovedi pri zahajeni nove opravy
+    AppState.hintVisible = false;
     AppState.currentView = 'repair';
 
     // Přidat do historie
@@ -265,7 +269,40 @@ function startRepair(issue) {
 function nextStep() {
     if (AppState.currentStep < AppState.selectedIssue.steps.length - 1) {
         AppState.currentStep++;
+        AppState.hintVisible = false;  // Skryj napovedu pri prechodu na dalsi krok
         renderApp();
+    }
+}
+
+// Funkce pro zpracovani odpovedi na kontrolni otazku
+function handleCheckAnswer(optionIdx) {
+    const step = AppState.selectedIssue.steps[AppState.currentStep];
+    if (!step.checkQuestion) return;
+
+    const isCorrect = step.checkQuestion.correctAnswer === null ||
+                      optionIdx === step.checkQuestion.correctAnswer;
+
+    // Ulozit odpoved
+    AppState.stepAnswers[AppState.currentStep] = isCorrect ? 'correct' : 'incorrect';
+
+    // Prekresleni
+    renderApp();
+}
+
+// Funkce pro prepnuti napovedy
+function toggleHint() {
+    AppState.hintVisible = !AppState.hintVisible;
+    const hintBox = document.getElementById('hint-box');
+    const hintToggle = document.getElementById('hint-toggle-btn');
+
+    if (hintBox) {
+        hintBox.style.display = AppState.hintVisible ? 'block' : 'none';
+    }
+    if (hintToggle) {
+        hintToggle.classList.toggle('active', AppState.hintVisible);
+        hintToggle.innerHTML = AppState.hintVisible
+            ? '<i class="fas fa-lightbulb"></i> Skrýt nápovědu <i class="fas fa-chevron-up"></i>'
+            : '<i class="fas fa-lightbulb"></i> Zobrazit nápovědu <i class="fas fa-chevron-down"></i>';
     }
 }
 
@@ -489,6 +526,9 @@ function renderRepairView() {
 
     const step = issue.steps[AppState.currentStep];
     const progress = ((AppState.currentStep + 1) / issue.steps.length) * 100;
+    const hasCheckQuestion = step.checkQuestion && step.checkQuestion.question;
+    const stepAnswerState = AppState.stepAnswers ? AppState.stepAnswers[AppState.currentStep] : null;
+    const canProceed = !hasCheckQuestion || stepAnswerState;
 
     return `
         <div class="max-w-4xl mx-auto px-4 py-8">
@@ -512,16 +552,72 @@ function renderRepairView() {
                         Krok ${AppState.currentStep + 1} z ${issue.steps.length}
                     </h2>
 
-                    <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-8 text-center mb-6">
+                    <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-8 text-center mb-6 step-interactive ${hasCheckQuestion && !stepAnswerState ? 'needs-answer' : ''} ${stepAnswerState === 'correct' ? 'answered-correct' : ''} ${stepAnswerState === 'incorrect' ? 'answered-incorrect' : ''}">
                         <div class="text-6xl mb-4">${step.icon}</div>
                         <p class="text-xl font-semibold text-gray-800 mb-2">${step.action}</p>
                         <p class="text-gray-600">
                             <i class="fas fa-clock mr-2"></i>
                             Časová náročnost: ${step.time}
                         </p>
+
+                        <!-- Tlacitko pro napovedu -->
+                        ${step.hint ? `
+                            <button class="hint-toggle mt-4" id="hint-toggle-btn">
+                                <i class="fas fa-lightbulb"></i>
+                                Zobrazit nápovědu
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        ` : ''}
                     </div>
 
-                    <div class="mb-6">
+                    <!-- Napoveda -->
+                    ${step.hint ? `
+                        <div class="hint-box" id="hint-box" style="display: none;">
+                            <div class="hint-header">
+                                <i class="fas fa-lightbulb"></i>
+                                Nápověda
+                            </div>
+                            <div class="hint-content">
+                                ${step.hint}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <!-- Kontrolni otazka -->
+                    ${hasCheckQuestion && !stepAnswerState ? `
+                        <div class="check-question" id="check-question">
+                            <div class="check-question-header">
+                                <i class="fas fa-question-circle"></i>
+                                Kontrolní otázka
+                            </div>
+                            <div class="check-question-text">
+                                ${step.checkQuestion.question}
+                            </div>
+                            <div class="check-options">
+                                ${step.checkQuestion.options.map((option, idx) => `
+                                    <div class="check-option" data-option-idx="${idx}">
+                                        <div class="check-option-icon">
+                                            <i class="fas fa-check" style="display: none;"></i>
+                                        </div>
+                                        <span>${option}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="check-feedback" id="check-feedback"></div>
+                        </div>
+                    ` : ''}
+
+                    <!-- Feedback pro zodpovezenou otazku -->
+                    ${stepAnswerState ? `
+                        <div class="alert ${stepAnswerState === 'correct' ? 'alert-success' : 'alert-warning'} mt-4">
+                            <i class="fas ${stepAnswerState === 'correct' ? 'fa-check-circle' : 'fa-exclamation-triangle'} mr-2"></i>
+                            ${stepAnswerState === 'correct'
+                                ? 'Výborně! Můžete pokračovat na další krok.'
+                                : step.checkQuestion.failMessage || 'Zkuste to znovu nebo pokračujte dále.'}
+                        </div>
+                    ` : ''}
+
+                    <div class="mb-6 mt-6">
                         <h3 class="font-semibold text-gray-700 mb-3">Přehled všech kroků</h3>
                         <div class="space-y-2">
                             ${issue.steps.map((s, idx) => `
@@ -548,12 +644,12 @@ function renderRepairView() {
                             Předchozí krok
                         </button>
                         ${AppState.currentStep < issue.steps.length - 1 ? `
-                            <button id="next-step-btn" class="btn btn-primary flex-1">
+                            <button id="next-step-btn" class="btn btn-primary flex-1" ${!canProceed ? 'disabled title="Nejprve zodpovězte kontrolní otázku"' : ''}>
                                 Další krok
                                 <i class="fas fa-arrow-right ml-2"></i>
                             </button>
                         ` : `
-                            <button id="complete-repair-btn" class="btn btn-success flex-1">
+                            <button id="complete-repair-btn" class="btn btn-success flex-1" ${!canProceed ? 'disabled title="Nejprve zodpovězte kontrolní otázku"' : ''}>
                                 <i class="fas fa-check mr-2"></i>
                                 Dokončit opravu
                             </button>
@@ -690,6 +786,21 @@ function attachEventListeners() {
     if (prevStepBtn) prevStepBtn.addEventListener('click', prevStep);
     if (nextStepBtn) nextStepBtn.addEventListener('click', nextStep);
     if (completeRepairBtn) completeRepairBtn.addEventListener('click', completeRepair);
+
+    // Napoveda toggle
+    const hintToggleBtn = $('#hint-toggle-btn');
+    if (hintToggleBtn) {
+        hintToggleBtn.addEventListener('click', toggleHint);
+    }
+
+    // Kontrolni otazky - kliknuti na moznosti
+    const checkOptions = $$('.check-option');
+    checkOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const optionIdx = parseInt(option.dataset.optionIdx);
+            handleCheckAnswer(optionIdx);
+        });
+    });
 }
 
 // ========================================
