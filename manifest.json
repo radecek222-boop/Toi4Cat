@@ -1,13 +1,16 @@
 {
   "name": "FIXO - Opravy domácích závad",
   "short_name": "FIXO",
-  "description": "AI aplikace pro rychlou diagnostiku a opravu domácích závad",
+  "description": "AI aplikace pro rychlou diagnostiku a opravu domácích závad. Vyfoťte problém a získejte návod na opravu!",
   "start_url": "/FIXO/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
   "orientation": "portrait-primary",
   "scope": "/FIXO/",
+  "lang": "cs",
+  "dir": "ltr",
+  "id": "/FIXO/",
   "icons": [
     {
       "src": "public/icons/icon-72x72.png",
@@ -58,7 +61,7 @@
       "purpose": "maskable any"
     }
   ],
-  "categories": ["utilities", "lifestyle"],
+  "categories": ["utilities", "lifestyle", "productivity"],
   "shortcuts": [
     {
       "name": "Vyfotit závadu",
@@ -66,6 +69,58 @@
       "description": "Rychle vyfotit a analyzovat závadu",
       "url": "/FIXO/?action=capture",
       "icons": [{ "src": "public/icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Databáze oprav",
+      "short_name": "Databáze",
+      "description": "Procházet databázi oprav",
+      "url": "/FIXO/?view=knowledge",
+      "icons": [{ "src": "public/icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Historie oprav",
+      "short_name": "Historie",
+      "description": "Zobrazit historii vašich oprav",
+      "url": "/FIXO/?view=history",
+      "icons": [{ "src": "public/icons/icon-96x96.png", "sizes": "96x96" }]
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "public/screenshots/home.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "label": "Domovská stránka FIXO"
+    },
+    {
+      "src": "public/screenshots/analysis.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "label": "AI analýza závady"
+    },
+    {
+      "src": "public/screenshots/repair.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "label": "Návod na opravu krok za krokem"
+    }
+  ],
+  "share_target": {
+    "action": "/FIXO/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "files": [
+        {
+          "name": "image",
+          "accept": ["image/*"]
+        }
+      ]
+    }
+  },
+  "prefer_related_applications": false,
+  "handle_links": "preferred",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
 }

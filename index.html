@@ -9,6 +9,24 @@
     <meta name="description" content="FIXO aplikace - AI analýza fotografií domácích závad s návody na opravu krok za krokem.">
     <meta name="theme-color" content="#2563eb">
 
+    <!-- Google Analytics 4 (replace G-XXXXXXXXXX with your Measurement ID) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+
+        // Custom events for FIXO
+        window.fixoAnalytics = {
+            trackRepair: (repairType, issue) => gtag('event', 'view_repair', { repair_type: repairType, issue: issue }),
+            trackSearch: (term) => gtag('event', 'search', { search_term: term }),
+            trackAffiliateClick: (shop, item) => gtag('event', 'affiliate_click', { shop: shop, item: item }),
+            trackCraftsmanContact: (category) => gtag('event', 'craftsman_contact', { category: category }),
+            trackPremiumView: (tier) => gtag('event', 'premium_view', { tier: tier })
+        };
+    </script>
+
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
@@ -1277,6 +1295,9 @@
             const [currentStep, setCurrentStep] = useState(0);
             const [isDragging, setIsDragging] = useState(false);
             const [selectedCategory, setSelectedCategory] = useState('all');
+            const [searchTerm, setSearchTerm] = useState(''); // Search in database
+            const [checkedItems, setCheckedItems] = useState({}); // Pre-repair checklist items
+            const [checklistPhase, setChecklistPhase] = useState(false); // Show checklist before repair
             const [historyFilter, setHistoryFilter] = useState('all'); // 'all', 'completed', 'in_progress'
             const [selectedRepairDetail, setSelectedRepairDetail] = useState(null);
             const fileInputRef = useRef(null);
@@ -1322,6 +1343,11 @@
             const [showChecklist, setShowChecklist] = useState(false);
             const [pendingIssue, setPendingIssue] = useState(null);
             const [checklistItems, setChecklistItems] = useState({});
+
+            // Craftsmen state
+            const [showCraftsmen, setShowCraftsmen] = useState(false);
+            const [craftsmenData, setCraftsmenData] = useState(null);
+            const [selectedCraftsmanCategory, setSelectedCraftsmanCategory] = useState('all');
 
             // PWA Service Worker registration
             useEffect(() => {
@@ -1954,18 +1980,47 @@
                 }
             };
 
-            // Filtrování databáze podle kategorie
+            // Filtrování databáze podle kategorie a vyhledávání
             const getFilteredDatabase = () => {
-                if (selectedCategory === 'all') {
-                    return Object.entries(repairDatabase);
+                let results = Object.entries(repairDatabase);
+
+                // Filtrovat podle kategorie
+                if (selectedCategory !== 'all') {
+                    results = results.filter(([key, item]) => item.category === selectedCategory);
                 }
-                return Object.entries(repairDatabase).filter(([key, item]) =>
-                    item.category === selectedCategory
-                );
+
+                // Filtrovat podle vyhledávacího výrazu
+                if (searchTerm.trim()) {
+                    const search = searchTerm.toLowerCase().trim();
+                    results = results.filter(([key, item]) => {
+                        // Hledat v názvu opravy
+                        if (item.name?.toLowerCase().includes(search)) return true;
+                        // Hledat v issues
+                        if (item.issues?.some(issue =>
+                            issue.name?.toLowerCase().includes(search) ||
+                            issue.description?.toLowerCase().includes(search) ||
+                            issue.tools?.some(tool => tool.toLowerCase().includes(search))
+                        )) return true;
+                        return false;
+                    });
+                }
+
+                return results;
             };
 
             // Generuje checklist items na základě typu opravy
             const generateChecklistItems = (issue) => {
+                // Pokud issue má preRepairChecklist z databáze, použij ho
+                if (issue.preRepairChecklist && issue.preRepairChecklist.length > 0) {
+                    return issue.preRepairChecklist.map(item => ({
+                        id: item.id,
+                        text: item.text,
+                        icon: item.critical ? 'fa-exclamation-triangle' : 'fa-check-circle',
+                        important: item.critical
+                    }));
+                }
+
+                // Fallback na generované položky
                 const items = [
                     { id: 'tools', text: 'Mám připravené všechny nástroje', icon: 'fa-toolbox' },
                     { id: 'time', text: `Mám dostatek času (${issue.timeEstimate})`, icon: 'fa-clock' },
@@ -2033,6 +2088,39 @@
                 setChecklistItems({});
             };
 
+            // Funkce pro načtení a zobrazení řemeslníků
+            const loadCraftsmen = async () => {
+                try {
+                    const response = await fetch('data/craftsmen.json');
+                    const data = await response.json();
+                    setCraftsmenData(data);
+                    setShowCraftsmen(true);
+                } catch (error) {
+                    console.error('Chyba při načítání řemeslníků:', error);
+                    alert('Nepodařilo se načíst databázi řemeslníků. Zkuste to prosím později.');
+                }
+            };
+
+            const getFilteredCraftsmen = () => {
+                if (!craftsmenData) return [];
+                let craftsmen = craftsmenData.craftsmen;
+
+                // Filtrovat podle kategorie
+                if (selectedCraftsmanCategory !== 'all') {
+                    craftsmen = craftsmen.filter(c => c.category === selectedCraftsmanCategory);
+                }
+
+                // Seřadit podle hodnocení
+                return craftsmen.sort((a, b) => b.rating - a.rating);
+            };
+
+            const getCraftsmenForCategory = (category) => {
+                if (!craftsmenData) return [];
+                return craftsmenData.craftsmen
+                    .filter(c => c.category === category || c.specializations?.includes(category))
+                    .sort((a, b) => b.rating - a.rating);
+            };
+
             // Affiliate odkazy na e-shopy
             const affiliateLinks = {
                 alza: {
@@ -2055,7 +2143,22 @@
                 }
             };
 
-            const getAffiliateUrl = (shop, toolName) => {
+            const getAffiliateUrl = (shop, toolName, issue = null) => {
+                // Pokud máme specifické affiliate odkazy v databázi, použijeme je
+                if (issue && issue.affiliateLinks) {
+                    const toolLink = issue.affiliateLinks.find(
+                        al => al.item.toLowerCase() === toolName.toLowerCase()
+                    );
+                    if (toolLink && toolLink.links) {
+                        const shopLink = toolLink.links.find(
+                            l => l.store.toLowerCase() === shop.toLowerCase()
+                        );
+                        if (shopLink && shopLink.url) {
+                            return shopLink.url;
+                        }
+                    }
+                }
+                // Fallback na generický vyhledávací odkaz
                 const searchTerm = encodeURIComponent(toolName);
                 return affiliateLinks[shop].baseUrl + searchTerm;
             };
@@ -2503,6 +2606,168 @@
                                         Zaškrtni všechny důležité položky (*) pro pokračování
                                     </p>
                                 )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Craftsmen Modal */}
+                    {showCraftsmen && craftsmenData && (
+                        <div className="translating-overlay" onClick={() => setShowCraftsmen(false)}>
+                            <div className="translating-box" style={{maxWidth: '600px', width: '95%', maxHeight: '90vh', overflow: 'auto'}} onClick={e => e.stopPropagation()}>
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)'}}>
+                                    <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                        <i className="fas fa-hard-hat" style={{color: 'var(--color-primary)'}}></i>
+                                        Najít řemeslníka
+                                    </h3>
+                                    <button onClick={() => setShowCraftsmen(false)} style={{background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: 'var(--color-text-secondary)'}}>
+                                        <i className="fas fa-times"></i>
+                                    </button>
+                                </div>
+
+                                {/* Category filter */}
+                                <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', marginBottom: 'var(--space-4)'}}>
+                                    <button
+                                        onClick={() => setSelectedCraftsmanCategory('all')}
+                                        style={{
+                                            padding: 'var(--space-1) var(--space-3)',
+                                            borderRadius: 'var(--radius-full)',
+                                            border: 'none',
+                                            background: selectedCraftsmanCategory === 'all' ? 'var(--color-primary)' : 'var(--color-bg-secondary)',
+                                            color: selectedCraftsmanCategory === 'all' ? 'white' : 'var(--color-text-primary)',
+                                            cursor: 'pointer',
+                                            fontSize: 'var(--text-sm)',
+                                            fontWeight: 'var(--font-medium)'
+                                        }}
+                                    >
+                                        Všichni
+                                    </button>
+                                    {craftsmenData.categories.map(cat => (
+                                        <button
+                                            key={cat.id}
+                                            onClick={() => setSelectedCraftsmanCategory(cat.id)}
+                                            style={{
+                                                padding: 'var(--space-1) var(--space-3)',
+                                                borderRadius: 'var(--radius-full)',
+                                                border: 'none',
+                                                background: selectedCraftsmanCategory === cat.id ? 'var(--color-primary)' : 'var(--color-bg-secondary)',
+                                                color: selectedCraftsmanCategory === cat.id ? 'white' : 'var(--color-text-primary)',
+                                                cursor: 'pointer',
+                                                fontSize: 'var(--text-sm)',
+                                                fontWeight: 'var(--font-medium)'
+                                            }}
+                                        >
+                                            {cat.icon} {cat.name}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {/* Craftsmen list */}
+                                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
+                                    {getFilteredCraftsmen().map(craftsman => (
+                                        <div key={craftsman.id} style={{
+                                            background: 'var(--color-bg-secondary)',
+                                            borderRadius: 'var(--radius-lg)',
+                                            padding: 'var(--space-4)',
+                                            border: '1px solid var(--color-border)'
+                                        }}>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-2)'}}>
+                                                <div>
+                                                    <h4 style={{fontWeight: 'var(--font-bold)', fontSize: 'var(--text-base)', marginBottom: 'var(--space-1)'}}>
+                                                        {craftsman.name}
+                                                        {craftsman.verified && (
+                                                            <i className="fas fa-check-circle ml-2" style={{color: 'var(--color-success)', fontSize: 'var(--text-sm)'}}></i>
+                                                        )}
+                                                    </h4>
+                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>{craftsman.company}</p>
+                                                </div>
+                                                <div style={{textAlign: 'right'}}>
+                                                    <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-1)', color: '#f59e0b'}}>
+                                                        <i className="fas fa-star"></i>
+                                                        <span style={{fontWeight: 'var(--font-bold)'}}>{craftsman.rating}</span>
+                                                        <span style={{color: 'var(--color-text-secondary)', fontSize: 'var(--text-xs)'}}>
+                                                            ({craftsman.reviewCount})
+                                                        </span>
+                                                    </div>
+                                                    <span style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)'}}>
+                                                        {craftsman.city}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                                {craftsman.description}
+                                            </p>
+
+                                            <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', marginBottom: 'var(--space-3)'}}>
+                                                <span style={{
+                                                    display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)',
+                                                    background: 'var(--color-info-light)', padding: 'var(--space-1) var(--space-2)',
+                                                    borderRadius: 'var(--radius-md)', fontSize: 'var(--text-xs)'
+                                                }}>
+                                                    <i className="fas fa-clock"></i> {craftsman.responseTime}
+                                                </span>
+                                                <span style={{
+                                                    display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)',
+                                                    background: 'var(--color-success-light)', padding: 'var(--space-1) var(--space-2)',
+                                                    borderRadius: 'var(--radius-md)', fontSize: 'var(--text-xs)'
+                                                }}>
+                                                    <i className="fas fa-calendar"></i> {craftsman.availability}
+                                                </span>
+                                                <span style={{
+                                                    display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)',
+                                                    background: 'var(--color-warning-light)', padding: 'var(--space-1) var(--space-2)',
+                                                    borderRadius: 'var(--radius-md)', fontSize: 'var(--text-xs)'
+                                                }}>
+                                                    <i className="fas fa-money-bill"></i> {craftsman.priceRange.min}-{craftsman.priceRange.max} {craftsman.priceRange.currency}/{craftsman.priceRange.unit}
+                                                </span>
+                                            </div>
+
+                                            <div style={{display: 'flex', gap: 'var(--space-2)'}}>
+                                                <a
+                                                    href={`tel:${craftsman.phone}`}
+                                                    style={{
+                                                        flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+                                                        padding: 'var(--space-2) var(--space-3)',
+                                                        background: 'var(--color-success)', color: 'white',
+                                                        borderRadius: 'var(--radius-md)', textDecoration: 'none',
+                                                        fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)'
+                                                    }}
+                                                >
+                                                    <i className="fas fa-phone"></i> Zavolat
+                                                </a>
+                                                {craftsman.email && (
+                                                    <a
+                                                        href={`mailto:${craftsman.email}`}
+                                                        style={{
+                                                            flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+                                                            padding: 'var(--space-2) var(--space-3)',
+                                                            background: 'var(--color-primary)', color: 'white',
+                                                            borderRadius: 'var(--radius-md)', textDecoration: 'none',
+                                                            fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)'
+                                                        }}
+                                                    >
+                                                        <i className="fas fa-envelope"></i> Email
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                    {getFilteredCraftsmen().length === 0 && (
+                                        <div style={{textAlign: 'center', padding: 'var(--space-8)', color: 'var(--color-text-secondary)'}}>
+                                            <i className="fas fa-search" style={{fontSize: '2rem', marginBottom: 'var(--space-2)', display: 'block'}}></i>
+                                            <p>Pro tuto kategorii zatím nemáme řemeslníky.</p>
+                                            <p style={{fontSize: 'var(--text-sm)'}}>Zkuste vybrat jinou kategorii.</p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div style={{marginTop: 'var(--space-4)', padding: 'var(--space-3)', background: 'var(--color-info-light)', borderRadius: 'var(--radius-lg)'}}>
+                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', textAlign: 'center'}}>
+                                        <i className="fas fa-info-circle mr-2"></i>
+                                        Jste řemeslník? <a href="mailto:remeslnik@fixo.cz" style={{color: 'var(--color-primary)', fontWeight: 'var(--font-semibold)'}}>Registrujte se</a> a získejte nové zákazníky!
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     )}
@@ -3349,7 +3614,7 @@
                                         </div>
 
                                         {/* 💰 Savings Calculator - DIY vs Professional */}
-                                        {analysisResult.issue.costEstimate && (
+                                        {analysisResult.issue.materialCost && analysisResult.issue.professionalCost && (
                                             <div style={{
                                                 background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
                                                 border: '2px solid #10b981',
@@ -3382,7 +3647,7 @@
                                                             <i className="fas fa-hand-paper mr-1"></i> DIY oprava
                                                         </div>
                                                         <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: '#065f46'}}>
-                                                            {analysisResult.issue.costEstimate.min}-{analysisResult.issue.costEstimate.max} Kč
+                                                            {analysisResult.issue.materialCost.min}-{analysisResult.issue.materialCost.max} Kč
                                                         </div>
                                                         <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
                                                             pouze materiál
@@ -3401,7 +3666,7 @@
                                                             <i className="fas fa-user-tie mr-1"></i> Profesionál
                                                         </div>
                                                         <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-text-secondary)'}}>
-                                                            {Math.round((analysisResult.issue.costEstimate.min + analysisResult.issue.costEstimate.max) / 2 * 5)}-{Math.round((analysisResult.issue.costEstimate.min + analysisResult.issue.costEstimate.max) / 2 * 8)} Kč
+                                                            {analysisResult.issue.professionalCost.min}-{analysisResult.issue.professionalCost.max} Kč
                                                         </div>
                                                         <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
                                                             materiál + práce
@@ -3421,10 +3686,10 @@
                                                         <i className="fas fa-star mr-1"></i> Tvoje úspora s FIXO
                                                     </div>
                                                     <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)'}}>
-                                                        {Math.round((analysisResult.issue.costEstimate.min + analysisResult.issue.costEstimate.max) / 2 * 4)}-{Math.round((analysisResult.issue.costEstimate.min + analysisResult.issue.costEstimate.max) / 2 * 7)} Kč
+                                                        {analysisResult.issue.professionalCost.min - analysisResult.issue.materialCost.max}-{analysisResult.issue.professionalCost.max - analysisResult.issue.materialCost.min} Kč
                                                     </div>
                                                     <div style={{fontSize: 'var(--text-xs)', opacity: 0.9}}>
-                                                        To je {Math.round(((analysisResult.issue.costEstimate.min + analysisResult.issue.costEstimate.max) / 2 * 5.5) / 79)} měsíců FIXO Premium zdarma! 💪
+                                                        To je {Math.round((analysisResult.issue.professionalCost.min + analysisResult.issue.professionalCost.max) / 2 / 79)} měsíců FIXO Premium zdarma! 💪
                                                     </div>
                                                 </div>
                                             </div>
@@ -3455,7 +3720,7 @@
                                                 {t('startRepair')}
                                             </button>
                                             <button
-                                                onClick={() => setCurrentView('home')}
+                                                onClick={() => loadCraftsmen()}
                                                 className="btn btn-secondary flex-1"
                                             >
                                                 <i className="fas fa-phone mr-2"></i>
@@ -3650,6 +3915,96 @@
                                         </div>
                                     </div>
 
+                                    {/* Video Tutorial Section */}
+                                    {selectedIssue.videoTutorial && (
+                                        <div style={{
+                                            background: 'linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%)',
+                                            padding: 'var(--space-4)',
+                                            borderBottom: '1px solid var(--color-border)'
+                                        }}>
+                                            {selectedIssue.videoTutorial.available ? (
+                                                <div>
+                                                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-3)'}}>
+                                                        <h3 style={{fontWeight: 'var(--font-semibold)', color: 'white', fontSize: 'var(--text-base)'}}>
+                                                            <i className="fas fa-play-circle mr-2" style={{color: '#ef4444'}}></i>
+                                                            Video návod
+                                                        </h3>
+                                                        <span style={{
+                                                            background: '#ef4444',
+                                                            color: 'white',
+                                                            padding: 'var(--space-1) var(--space-2)',
+                                                            borderRadius: 'var(--radius-md)',
+                                                            fontSize: 'var(--text-xs)',
+                                                            fontWeight: 'var(--font-bold)'
+                                                        }}>
+                                                            <i className="fas fa-clock mr-1"></i>
+                                                            {selectedIssue.videoTutorial.duration}
+                                                        </span>
+                                                    </div>
+                                                    <div style={{
+                                                        background: 'rgba(0,0,0,0.3)',
+                                                        borderRadius: 'var(--radius-lg)',
+                                                        padding: 'var(--space-4)',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: 'var(--space-3)'
+                                                    }}>
+                                                        <div style={{
+                                                            width: '64px',
+                                                            height: '64px',
+                                                            background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                                                            borderRadius: 'var(--radius-lg)',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            cursor: 'pointer',
+                                                            transition: 'transform 0.2s'
+                                                        }}
+                                                        onClick={() => alert('Video bude brzy dostupné!\n\n' + selectedIssue.videoTutorial.title)}
+                                                        onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                                                        onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                                                        >
+                                                            <i className="fas fa-play" style={{color: 'white', fontSize: '24px', marginLeft: '4px'}}></i>
+                                                        </div>
+                                                        <div style={{flex: 1}}>
+                                                            <p style={{color: 'white', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>
+                                                                {selectedIssue.videoTutorial.title}
+                                                            </p>
+                                                            <p style={{color: 'rgba(255,255,255,0.6)', fontSize: 'var(--text-sm)'}}>
+                                                                Sledujte krok za krokem jak opravit tento problém
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'space-between',
+                                                    gap: 'var(--space-3)'
+                                                }}>
+                                                    <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                        <i className="fas fa-video" style={{color: 'rgba(255,255,255,0.5)', fontSize: '20px'}}></i>
+                                                        <span style={{color: 'rgba(255,255,255,0.7)', fontSize: 'var(--text-sm)'}}>
+                                                            Video návod bude brzy dostupný
+                                                        </span>
+                                                    </div>
+                                                    <span style={{
+                                                        background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                                                        color: 'white',
+                                                        padding: 'var(--space-1) var(--space-2)',
+                                                        borderRadius: 'var(--radius-md)',
+                                                        fontSize: 'var(--text-xs)',
+                                                        fontWeight: 'var(--font-bold)'
+                                                    }}>
+                                                        <i className="fas fa-crown mr-1"></i>
+                                                        PRO
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
                                     {/* Tools Needed with Affiliate Links */}
                                     <div style={{background: 'var(--color-info-light)', padding: 'var(--space-6)', borderBottom: '1px solid var(--color-border)'}}>
                                         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-3)'}}>
@@ -3695,7 +4050,7 @@
                                                     </span>
                                                     <div style={{display: 'flex', gap: 'var(--space-1)'}}>
                                                         <a
-                                                            href={getAffiliateUrl('alza', tool)}
+                                                            href={getAffiliateUrl('alza', tool, selectedIssue)}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             style={{
@@ -3712,7 +4067,7 @@
                                                             Alza
                                                         </a>
                                                         <a
-                                                            href={getAffiliateUrl('mall', tool)}
+                                                            href={getAffiliateUrl('mall', tool, selectedIssue)}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             style={{
@@ -3729,7 +4084,7 @@
                                                             Mall
                                                         </a>
                                                         <a
-                                                            href={getAffiliateUrl('hornbach', tool)}
+                                                            href={getAffiliateUrl('hornbach', tool, selectedIssue)}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             style={{
@@ -4142,6 +4497,58 @@
                             <div className="max-w-2xl mx-auto">
                                 <h2 className="page-title">{t('databaseTitle')}</h2>
 
+                                {/* Search Input */}
+                                <div style={{marginBottom: 'var(--space-6)'}}>
+                                    <div style={{
+                                        position: 'relative',
+                                        maxWidth: '500px',
+                                        margin: '0 auto'
+                                    }}>
+                                        <i className="fas fa-search" style={{
+                                            position: 'absolute',
+                                            left: 'var(--space-4)',
+                                            top: '50%',
+                                            transform: 'translateY(-50%)',
+                                            color: 'var(--color-text-muted)'
+                                        }}></i>
+                                        <input
+                                            type="text"
+                                            placeholder="Hledat opravy, nástroje, problémy..."
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            style={{
+                                                width: '100%',
+                                                padding: 'var(--space-3) var(--space-4) var(--space-3) var(--space-10)',
+                                                borderRadius: 'var(--radius-full)',
+                                                border: '2px solid var(--color-border)',
+                                                fontSize: 'var(--text-base)',
+                                                transition: 'all var(--transition-fast)',
+                                                outline: 'none'
+                                            }}
+                                            onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
+                                            onBlur={(e) => e.target.style.borderColor = 'var(--color-border)'}
+                                        />
+                                        {searchTerm && (
+                                            <button
+                                                onClick={() => setSearchTerm('')}
+                                                style={{
+                                                    position: 'absolute',
+                                                    right: 'var(--space-4)',
+                                                    top: '50%',
+                                                    transform: 'translateY(-50%)',
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    color: 'var(--color-text-muted)',
+                                                    cursor: 'pointer',
+                                                    padding: 'var(--space-1)'
+                                                }}
+                                            >
+                                                <i className="fas fa-times"></i>
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+
                                 {/* Category Filter */}
                                 <div className="category-filter">
                                     {categories.map(cat => (
@@ -4287,20 +4694,145 @@
                             </div>
                         )}
 
-                        {/* Premium Page View */}
+                        {/* Premium Page View - Freemium Tiers */}
                         {currentView === 'premium' && (
-                            <div className="max-w-2xl mx-auto">
+                            <div className="max-w-4xl mx-auto">
                                 <h2 className="page-title">
                                     <i className="fas fa-crown mr-2" style={{color: '#f59e0b'}}></i>
-                                    FIXO Premium
+                                    Vyberte si plán
                                 </h2>
 
-                                {/* Cenový banner */}
-                                <div className="card mb-6" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white'}}>
-                                    <div className="card-body text-center" style={{padding: 'var(--space-8)'}}>
-                                        <p style={{fontSize: 'var(--text-sm)', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: 'var(--space-2)'}}>Jednorázová platba</p>
-                                        <div style={{fontSize: '3rem', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>€3.99</div>
-                                        <p style={{opacity: 0.9}}>Doživotní přístup ke všem funkcím</p>
+                                <p style={{textAlign: 'center', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-6)'}}>
+                                    Začněte zdarma, upgradujte kdykoliv
+                                </p>
+
+                                {/* Pricing Cards */}
+                                <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-6)'}}>
+                                    {/* FREE Tier */}
+                                    <div className="card" style={{border: '2px solid var(--color-border)'}}>
+                                        <div className="card-body" style={{padding: 'var(--space-6)'}}>
+                                            <div style={{textAlign: 'center', marginBottom: 'var(--space-4)'}}>
+                                                <span style={{fontSize: '2rem'}}>🆓</span>
+                                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginTop: 'var(--space-2)'}}>FREE</h3>
+                                                <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-success)', margin: 'var(--space-2) 0'}}>0 Kč</div>
+                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Navždy zdarma</p>
+                                            </div>
+                                            <ul style={{listStyle: 'none', padding: 0, marginBottom: 'var(--space-4)'}}>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>3 AI analýzy denně</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Základní návody</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Databáze 67 oprav</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', opacity: 0.5}}>
+                                                    <i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i>
+                                                    <span>Video návody</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', opacity: 0.5}}>
+                                                    <i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i>
+                                                    <span>Kontakty řemeslníků</span>
+                                                </li>
+                                            </ul>
+                                            <button className="btn btn-secondary w-full" disabled style={{opacity: 0.7}}>
+                                                Aktuální plán
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* PLUS Tier - Most Popular */}
+                                    <div className="card" style={{border: '2px solid var(--color-primary)', position: 'relative', transform: 'scale(1.02)'}}>
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: '-12px',
+                                            left: '50%',
+                                            transform: 'translateX(-50%)',
+                                            background: 'var(--color-primary)',
+                                            color: 'white',
+                                            padding: 'var(--space-1) var(--space-3)',
+                                            borderRadius: 'var(--radius-full)',
+                                            fontSize: 'var(--text-xs)',
+                                            fontWeight: 'var(--font-bold)'
+                                        }}>
+                                            NEJOBLÍBENĚJŠÍ
+                                        </div>
+                                        <div className="card-body" style={{padding: 'var(--space-6)'}}>
+                                            <div style={{textAlign: 'center', marginBottom: 'var(--space-4)'}}>
+                                                <span style={{fontSize: '2rem'}}>⭐</span>
+                                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginTop: 'var(--space-2)'}}>PLUS</h3>
+                                                <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-primary)', margin: 'var(--space-2) 0'}}>49 Kč<span style={{fontSize: 'var(--text-base)', fontWeight: 'normal'}}>/měsíc</span></div>
+                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>nebo 399 Kč/rok (ušetříte 33%)</p>
+                                            </div>
+                                            <ul style={{listStyle: 'none', padding: 0, marginBottom: 'var(--space-4)'}}>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span><strong>Neomezené</strong> AI analýzy</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Video návody</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Affiliate odkazy na materiál</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Odhady nákladů</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', opacity: 0.5}}>
+                                                    <i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i>
+                                                    <span>Prioritní podpora</span>
+                                                </li>
+                                            </ul>
+                                            <button className="btn btn-primary w-full" onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 49 Kč/měsíc\n\nZískáte:\n• Neomezené AI analýzy\n• Video návody\n• Affiliate odkazy')}>
+                                                <i className="fas fa-rocket mr-2"></i>
+                                                Začít s PLUS
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* PRO Tier */}
+                                    <div className="card" style={{border: '2px solid #f59e0b', background: 'linear-gradient(135deg, #fefce8 0%, #fef9c3 100%)'}}>
+                                        <div className="card-body" style={{padding: 'var(--space-6)'}}>
+                                            <div style={{textAlign: 'center', marginBottom: 'var(--space-4)'}}>
+                                                <span style={{fontSize: '2rem'}}>👑</span>
+                                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginTop: 'var(--space-2)'}}>PRO</h3>
+                                                <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', color: '#d97706', margin: 'var(--space-2) 0'}}>99 Kč<span style={{fontSize: 'var(--text-base)', fontWeight: 'normal'}}>/měsíc</span></div>
+                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>nebo 799 Kč/rok (ušetříte 33%)</p>
+                                            </div>
+                                            <ul style={{listStyle: 'none', padding: 0, marginBottom: 'var(--space-4)'}}>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Vše z PLUS</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span><strong>Kontakty řemeslníků</strong></span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Technická schémata</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Prioritní podpora 24/7</span>
+                                                </li>
+                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                    <span>Offline režim</span>
+                                                </li>
+                                            </ul>
+                                            <button className="btn w-full" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white'}} onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 99 Kč/měsíc\n\nZískáte VŠE:\n• Neomezené AI analýzy\n• Video návody\n• Kontakty řemeslníků\n• Technická schémata\n• Prioritní podpora')}>
+                                                <i className="fas fa-crown mr-2"></i>
+                                                Získat PRO
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -4360,64 +4892,50 @@
                                     </div>
                                 </div>
 
-                                {/* Srovnání */}
+                                {/* FAQ */}
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title">Porovnání verzí</h3>
+                                        <h3 className="card-title">
+                                            <i className="fas fa-question-circle mr-2"></i>
+                                            Časté dotazy
+                                        </h3>
                                     </div>
                                     <div className="card-body" style={{padding: 0}}>
-                                        <table style={{width: '100%', borderCollapse: 'collapse'}}>
-                                            <thead>
-                                                <tr style={{background: 'var(--color-bg-secondary)'}}>
-                                                    <th style={{padding: 'var(--space-3)', textAlign: 'left'}}>Funkce</th>
-                                                    <th style={{padding: 'var(--space-3)', textAlign: 'center'}}>Free</th>
-                                                    <th style={{padding: 'var(--space-3)', textAlign: 'center', background: 'var(--color-warning-light)'}}>Premium</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>AI analýza</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}>5/den</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}>∞</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Základní návody</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Technická schémata</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Odkazy na materiál</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Kontakty opravářů</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style={{padding: 'var(--space-3)', borderTop: '1px solid var(--color-border)'}}>Video návody</td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)'}}><i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i></td>
-                                                    <td style={{padding: 'var(--space-3)', textAlign: 'center', borderTop: '1px solid var(--color-border)', background: 'var(--color-warning-light)'}}><i className="fas fa-check" style={{color: 'var(--color-success)'}}></i></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <div style={{borderBottom: '1px solid var(--color-border)', padding: 'var(--space-4)'}}>
+                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Mohu kdykoliv zrušit předplatné?</h4>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Ano, předplatné můžete zrušit kdykoliv bez poplatků. Po zrušení budete moci používat placenou verzi do konce zaplaceného období.</p>
+                                        </div>
+                                        <div style={{borderBottom: '1px solid var(--color-border)', padding: 'var(--space-4)'}}>
+                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Jak funguje roční platba?</h4>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Při roční platbě ušetříte 33% oproti měsíční platbě. PLUS stojí 399 Kč/rok místo 588 Kč, PRO stojí 799 Kč/rok místo 1188 Kč.</p>
+                                        </div>
+                                        <div style={{borderBottom: '1px solid var(--color-border)', padding: 'var(--space-4)'}}>
+                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Existují speciální ceny pro důchodce nebo studenty?</h4>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Ano! Nabízíme 50% slevu pro seniory (65+) a studenty. Kontaktujte nás na podpora@fixo.cz s dokladem o věku nebo studiu.</p>
+                                        </div>
+                                        <div style={{padding: 'var(--space-4)'}}>
+                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Mohu si FIXO vyzkoušet před placením?</h4>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Samozřejmě! Verze FREE je navždy zdarma. Navíc nabízíme 7denní zkušební dobu na PLUS a PRO plány.</p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {/* CTA Button */}
-                                <button className="btn btn-lg w-full" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white', marginBottom: 'var(--space-6)'}}>
-                                    <i className="fas fa-crown mr-2"></i>
-                                    Získat Premium za €3.99
-                                </button>
+                                {/* Social Pricing Info */}
+                                <div className="alert" style={{background: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)', border: 'none'}}>
+                                    <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
+                                        <i className="fas fa-heart" style={{color: 'var(--color-primary)', fontSize: 'var(--text-xl)'}}></i>
+                                        <div>
+                                            <p style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>Sociální dostupnost</p>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>
+                                                FIXO věří v dostupnost pro všechny. Senioři 65+ a studenti získají 50% slevu.
+                                                Kontaktujte nás na <a href="mailto:podpora@fixo.cz" style={{color: 'var(--color-primary)'}}>podpora@fixo.cz</a>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                <div className="alert alert-info">
-                                    <p><i className="fas fa-shield-alt mr-2"></i>Bezpečná platba přes Stripe. Jednorázově, bez předplatného.</p>
+                                <div className="alert alert-info" style={{marginTop: 'var(--space-4)'}}>
+                                    <p><i className="fas fa-shield-alt mr-2"></i>Bezpečná platba přes Stripe. Zrušit můžete kdykoliv.</p>
                                 </div>
                             </div>
                         )}

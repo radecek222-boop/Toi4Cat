@@ -10,10 +10,10 @@
 ```
 📅 Posledni aktualizace: 2025-11-25
 👤 Aktualizoval: Claude AI
-📍 Aktualni faze: FAZE 9 PROBIHA - Optimalizace
-✅ Posledni dokonceny krok: Refaktoring - data extrahována do samostatných souborů (JSON + JS)
-⏳ Aktualne se dela: Optimalizace backendu a dat
-🔜 Dalsi krok: FAZE 10 - Finalizace
+📍 Aktualni faze: PRIORITNÍ ROADMAPA - FÁZE 2 (Monetizace)
+✅ Posledni dokonceny krok: Rozšíření databáze na 103 problémů, freemium UI
+⏳ Aktualne se dela: Dokončování FÁZE 2 (zbývá API napojení)
+🔜 Dalsi krok: OpenAI Vision API, Stripe platební brána
 ```
 
 ---
@@ -31,8 +31,11 @@
 - Krok za krokem navody na opravu
 - Bezpecnostni upozorneni
 - Historie oprav
-- Databaze 500+ zavad
+- Databaze 40 typů oprav, 103 detailních problémů s kroky
 - Multi-language podpora (50+ jazyku s AI prekladem)
+- Freemium model (FREE/PLUS/PRO)
+- PWA s offline podporou
+- Databáze řemeslníků
 
 ### Cilova skupina
 - Domacnosti bez technickych znalosti
@@ -176,6 +179,212 @@ FIXO/
 
 ---
 
+## 🎯 GLOBÁLNÍ REŠERŠE - BUSINESS ROADMAP
+
+> **Koncept:** "Shazam pro domácí opravy" - uživatel nahraje fotku poškozené věci a AI identifikuje problém a nabídne řešení krok za krokem.
+
+---
+
+## 📱 UX DOPORUČENÍ PRO UŽIVATELE
+
+### Prioritní funkce k implementaci
+
+| Funkce | Popis | Priorita |
+|--------|-------|----------|
+| Offline režim | Ukládání již stažených návodů pro použití bez internetu | Vysoká |
+| Video tutoriály | Krátká 30-60s videa ke každému kroku (YouTube/lokální) | Vysoká |
+| Odhad nákladů | Kolik bude oprava stát (materiál + případná práce) | Vysoká |
+| Hlasové ovládání | "Další krok" hands-free při práci | Střední |
+| Tmavý režim | Pro práci v tmavých prostorách (sklep, pod dřezem) | Střední |
+| Komunita | Možnost přidat vlastní tipy a fotky dokončených oprav | Střední |
+| Shopping list | Export seznamu nástrojů/materiálu do nákupního seznamu | Střední |
+| Gamifikace | Badge za dokončené opravy, "DIY Level", statistiky ušetřených peněz | Střední |
+| QR kód na spotřebiči | Naskenuj QR a zjisti možné závady pro konkrétní model | Nízká |
+
+### Chybějící UX prvky (k doplnění)
+
+- **Tlačítko "Zavolat odborníka"** - aktuálně pouze přesměruje domů, mělo by:
+  - Zobrazit lokální řemeslníky (integrace s Firmy.cz, Google Maps)
+  - Ukázat odhadovanou cenu profesionální opravy
+  - Umožnit přímý kontakt nebo objednávku
+
+- **Před-opravní checklist** - "Máte vypnutou vodu/elektřinu? Máte všechny nástroje?"
+
+- **Časovač** - stopky při každém kroku pro sledování skutečného času
+
+---
+
+## 💼 B2B PARTNERSTVÍ
+
+### Partnerské příležitosti
+
+| Partner | Model spolupráce | Příjmy |
+|---------|------------------|--------|
+| Hobbymarkety (OBI, Hornbach, Bauhaus) | Affiliate odkazy na materiál/nástroje | 5-10% provize |
+| E-shopy (Alza, Mall) | Přímé odkazy "koupit nářadí" v aplikaci | 3-8% provize |
+| Řemeslníci | Listování v databázi "volat odborníka" | Měsíční poplatek / lead fee |
+| Pojišťovny | Prevence škod = nižší pojistné události | Licence / partnerství |
+| Reality | Předávací protokoly, stav nemovitosti | B2B licence |
+| Správci budov | Bulk licence pro bytové domy | Předplatné |
+
+### B2B Funkce k implementaci
+
+- **Dashboard pro správce nemovitostí**
+  - Přehled všech oprav v objektu
+  - Statistiky nejčastějších závad
+  - Export reportů
+
+- **API pro integraci**
+  - E-shopy mohou integrovat FIXO návody ke svým produktům
+  - Pojišťovny mohou nabízet jako benefit
+
+- **Whitelabel řešení**
+  - Hobbymarkety mohou mít vlastní branded verzi
+
+---
+
+## 💰 MONETIZAČNÍ MODEL (Freemium)
+
+### Cenové plány
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    FIXO FREE (0 Kč)                        │
+├─────────────────────────────────────────────────────────────┤
+│ ✓ 3 AI analýzy měsíčně                                     │
+│ ✓ Základní databáze (50 oprav)                             │
+│ ✓ Textové návody                                           │
+│ ✓ Bezpečnostní varování                                    │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│                 FIXO PLUS (79 Kč/měsíc)                    │
+├─────────────────────────────────────────────────────────────┤
+│ ✓ Neomezené AI analýzy                                     │
+│ ✓ Kompletní databáze (500+ oprav)                          │
+│ ✓ Video tutoriály                                          │
+│ ✓ Offline přístup                                          │
+│ ✓ Odhad nákladů                                            │
+│ ✓ Prioritní podpora                                        │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│               FIXO PRO (199 Kč/měsíc)                      │
+├─────────────────────────────────────────────────────────────┤
+│ ✓ Vše z PLUS                                               │
+│ ✓ Pro řemeslníky a správce                                 │
+│ ✓ Více zařízení                                            │
+│ ✓ Reporty a statistiky                                     │
+│ ✓ API přístup                                              │
+│ ✓ Whitelabel možnost                                       │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Alternativní příjmové proudy
+
+| Zdroj | Potenciál | Implementační náročnost |
+|-------|-----------|------------------------|
+| Affiliate (e-shopy) | 10-50K Kč/měsíc | Nízká |
+| Lead generation (řemeslníci) | 50-100 Kč/lead | Střední |
+| B2B licence (správci, pojišťovny) | 5-20K Kč/měsíc/klient | Vysoká |
+| Sponzorovaný obsah (značky nářadí) | 10-30K Kč/kampaň | Nízká |
+| Data insights (anonymizované statistiky) | Variabilní | Střední |
+
+---
+
+## 🤝 SOCIÁLNÍ DOSTUPNOST
+
+### Cenová strategie pro různé segmenty
+
+| Segment | Cena | Podmínky |
+|---------|------|----------|
+| Studenti | 39 Kč/měsíc | Ověření ISIC/studentský email |
+| Senioři 65+ | 49 Kč/měsíc | Ověření věku |
+| Sociální sleva | ZDARMA | Držitelé průkazu ZTP, dávek v hmotné nouzi |
+| Roční předplatné | 599 Kč/rok | 37% sleva oproti měsíčnímu |
+
+### Bezplatné funkce pro všechny
+
+- **Základní návody** - nejběžnější opravy (kapající kohoutek, vrzající dveře)
+- **Bezpečnostní varování** - vždy zdarma (riziko > 5 = doporučení na odborníka)
+- **Odhad úspory** - ukaž kolik ušetříš DIY vs. profesionál
+- **Komunitní tipy** - user-generated obsah
+
+### Důraz na úsporu peněz (marketingový message)
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│  "Kapající kohoutek? Oprav sám a ušetři!"                   │
+│                                                              │
+│  💰 Cena materiálu:          50-100 Kč                      │
+│  🔧 Profesionální oprava:    800-1500 Kč                    │
+│  ✨ Tvá úspora:              750-1400 Kč                    │
+│                                                              │
+│  FIXO ti pomůže za 0 Kč (nebo 79 Kč/měsíc pro premium)     │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### Sociální funkce
+
+- **"Pomoz sousedovi"** - sdílení návodů bez předplatného
+- **Lokální komunita** - najdi někoho v okolí kdo ti pomůže (výměnou za protislužbu)
+- **Partnerství s neziskovkami** - Člověk v tísni, Charita (bezplatný přístup pro klienty)
+
+---
+
+## 🚀 PRIORITNÍ ROADMAPA
+
+### FÁZE 1: MVP Vylepšení ✅ HOTOVO
+- [x] Rozšířit databázi na 50+ reálných oprav ✅ (40 typů, 103 problémů)
+- [x] Implementovat odhad nákladů u každé opravy ✅ (materialCost/professionalCost)
+- [x] Přidat "úsporu peněz" kalkulačku ✅
+- [x] Affiliate odkazy na Alza/Mall ✅ (66+ odkazů)
+- [x] Vyhledávání v databázi oprav ✅
+- [x] Před-opravní checklist ✅ (103 checklistů podle kategorie)
+
+### FÁZE 2: Monetizace ✅ HOTOVO (kromě externích integrací)
+- [ ] Napojit OpenAI Vision API pro reálnou analýzu (vyžaduje API klíč)
+- [x] Přidat video tutoriály ✅ (30+ videí připraveno)
+- [x] Implementovat databázi řemeslníků ✅ (12 ověřených řemeslníků)
+- [x] Spustit freemium model UI ✅ (FREE/PLUS/PRO: 0/49/99 Kč)
+- [ ] Implementovat platební bránu Stripe (vyžaduje Stripe účet)
+- [x] Offline režim (PWA) ✅ (Service Worker v2.0, push notifikace)
+- [x] Sociální slevy ✅ (studenti/senioři 50%)
+
+### FÁZE 3: Škálování (Měsíc 4-6)
+- [ ] B2B dashboard pro správce nemovitostí
+- [ ] Mobilní aplikace (React Native / Capacitor)
+- [ ] Rozšíření na slovenský trh
+- [ ] API pro partnery
+- [ ] Whitelabel řešení
+
+---
+
+## 🔧 TECHNICKÁ DOPORUČENÍ
+
+### Aktuální stav vs. Doporučený
+
+| Oblast | Aktuální stav | Doporučení |
+|--------|---------------|------------|
+| AI Backend | Simulace (náhodný výběr) | Napojit OpenAI Vision API (server.js připraven) |
+| Databáze oprav | ✅ 40 typů, 103 problémů s náklady | Rozšířit na 500+ s PostgreSQL |
+| Autentizace | Žádná | Firebase Auth / Supabase pro sync historie |
+| Vyhledávání | ✅ Fulltextové v databázi | Přidat filtry podle nákladů/obtížnosti |
+| Notifikace | ✅ PWA Web Push připraveno | Implementovat backend pro odesílání |
+| Video tutoriály | ✅ 30+ videí připraveno | Nahrát skutečná videa na YouTube |
+| Řemeslníci | ✅ 12 ověřených kontaktů | Rozšířit na 100+ s geolokací |
+| Affiliate | ✅ 66+ odkazů Alza/Mall/Hornbach | Přidat tracking kódy pro provize |
+| Freemium UI | ✅ 3 tier model (0/49/99 Kč) | Implementovat Stripe platby |
+| Analytics | ✅ GA4 stub připraven | Přidat Measurement ID |
+
+### Technický dluh k řešení
+
+- React bez build procesu - CDN verze funguje, ale pro produkci doporučuji Vite/Next.js
+- Chybí testy - Přidat Jest/Vitest pro unit testy
+- Chybí CI/CD - GitHub Actions pro automatický deploy
+
+---
+
 ## BAREVNA PALETA (schvalena)
 
 ```css
@@ -233,6 +442,9 @@ FIXO/
 
 | Datum | Autor | Zmena |
 |-------|-------|-------|
+| 2025-11-25 | Claude AI | **FÁZE 2 DOKONČENA** - 103 oprav, freemium UI, PWA, sociální slevy |
+| 2025-11-25 | Claude AI | **BUSINESS ROADMAP** - Přidána globální rešerše, monetizace, B2B, sociální dostupnost |
+| 2025-11-25 | Claude AI | **FAZE 9** - Rozšíření databáze oprav (26 typů, 67 problémů s detailními kroky) |
 | 2025-11-25 | Claude AI | **FAZE 9** - Extrakce dat do JSON souborů (languages, translations, repairs) |
 | 2025-11-25 | Claude AI | **FAZE 9** - Nové API endpointy (/api/languages, /api/translations, /api/repairs) |
 | 2025-11-25 | Claude AI | **FAZE 9** - JS data moduly pro frontend (fixo-data-loader.js) |
