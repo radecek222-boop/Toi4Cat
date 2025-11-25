@@ -506,6 +506,114 @@ Odpověz POUZE ve formátu JSON bez markdown:
     }
 });
 
+// Analyzovat problém z popisu + obrázku
+app.post('/api/analyze-description', async (req, res) => {
+    try {
+        const { description, image } = req.body;
+
+        if (!description) {
+            return res.status(400).json({ error: 'Nebyl poskytnut popis problému' });
+        }
+
+        const analysisId = uuidv4();
+        console.log(`Začínám AI analýzu s popisem ${analysisId}...`);
+        console.log('Popis:', description);
+
+        // Sestavení zprávy pro AI
+        const messages = [
+            {
+                role: "system",
+                content: `Jsi expert na diagnostiku domácích závad. Na základě popisu problému (a případně obrázku) identifikuj:
+1. Co je poškozený objekt/zařízení
+2. Jaká je závada nebo problém
+3. Jak závažný je problém (1-10)
+4. Jaké kroky doporučuješ k opravě
+5. Jaké nástroje jsou potřeba
+6. Bezpečnostní varování
+
+Odpověz POUZE ve formátu JSON bez markdown:
+{
+  "object": {"name": "...", "category": "voda|elektrina|topeni|dvere_okna|nabytek|spotrebice|kuchyn|koupelna|steny_podlahy|zahrada"},
+  "issue": {"name": "...", "description": "...", "riskScore": 1-10, "difficulty": "Nízká|Střední|Vysoká"},
+  "timeEstimate": "X min",
+  "tools": ["nástroj1", "nástroj2"],
+  "steps": [{"step": 1, "action": "...", "time": "X min", "icon": "emoji"}],
+  "safetyWarnings": ["varování1", "varování2"],
+  "confidence": 0.0-1.0
+}`
+            },
+            {
+                role: "user",
+                content: image ? [
+                    { type: "text", text: `Popis problému od uživatele: "${description}"\n\nAnalyzuj tento problém a poskytni diagnostiku v JSON formátu:` },
+                    { type: "image_url", image_url: { url: image } }
+                ] : `Popis problému od uživatele: "${description}"\n\nAnalyzuj tento problém a poskytni diagnostiku v JSON formátu:`
+            }
+        ];
+
+        // Volání OpenAI API
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o",
+            messages: messages,
+            max_tokens: 1500
+        });
+
+        // Parsovat odpověď od AI
+        let aiResult;
+        try {
+            const content = response.choices[0].message.content;
+            const jsonStr = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+            aiResult = JSON.parse(jsonStr);
+        } catch (parseError) {
+            console.error('Chyba při parsování AI odpovědi:', parseError);
+            aiResult = {
+                object: { name: "Popsaný problém", category: "steny_podlahy" },
+                issue: { name: description.slice(0, 50), description: "Na základě vašeho popisu", riskScore: 5, difficulty: "Střední" },
+                timeEstimate: "30 min",
+                tools: ["Základní nářadí"],
+                steps: [{ step: 1, action: "Kontaktujte odborníka pro přesnou diagnostiku", time: "5 min", icon: "📞" }],
+                safetyWarnings: ["Buďte opatrní při jakékoliv opravě"],
+                confidence: 0.6
+            };
+        }
+
+        console.log(`AI analýza s popisem ${analysisId} dokončena:`, aiResult.object?.name);
+
+        const result = {
+            id: analysisId,
+            detection: {
+                object: {
+                    name: aiResult.object.name,
+                    category: aiResult.object.category,
+                    confidence: aiResult.confidence || 0.8
+                },
+                issue: {
+                    name: aiResult.issue.name,
+                    description: aiResult.issue.description,
+                    confidence: aiResult.confidence || 0.8,
+                    riskScore: aiResult.issue.riskScore,
+                    difficulty: aiResult.issue.difficulty
+                }
+            },
+            recommendations: {
+                timeEstimate: aiResult.timeEstimate,
+                tools: aiResult.tools,
+                steps: aiResult.steps,
+                safetyWarnings: aiResult.safetyWarnings
+            }
+        };
+
+        res.json({ success: true, data: result });
+
+    } catch (error) {
+        console.error('Chyba při AI analýze s popisem:', error);
+        res.status(500).json({
+            error: 'Chyba při zpracování',
+            message: error.message
+        });
+    }
+});
+
 // AI Překlad textu do libovolného jazyka
 app.post('/api/translate', async (req, res) => {
     try {
