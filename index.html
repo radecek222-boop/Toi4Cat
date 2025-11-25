@@ -3697,6 +3697,96 @@
                                         </div>
                                     </div>
 
+                                    {/* Video Tutorial Section */}
+                                    {selectedIssue.videoTutorial && (
+                                        <div style={{
+                                            background: 'linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%)',
+                                            padding: 'var(--space-4)',
+                                            borderBottom: '1px solid var(--color-border)'
+                                        }}>
+                                            {selectedIssue.videoTutorial.available ? (
+                                                <div>
+                                                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-3)'}}>
+                                                        <h3 style={{fontWeight: 'var(--font-semibold)', color: 'white', fontSize: 'var(--text-base)'}}>
+                                                            <i className="fas fa-play-circle mr-2" style={{color: '#ef4444'}}></i>
+                                                            Video návod
+                                                        </h3>
+                                                        <span style={{
+                                                            background: '#ef4444',
+                                                            color: 'white',
+                                                            padding: 'var(--space-1) var(--space-2)',
+                                                            borderRadius: 'var(--radius-md)',
+                                                            fontSize: 'var(--text-xs)',
+                                                            fontWeight: 'var(--font-bold)'
+                                                        }}>
+                                                            <i className="fas fa-clock mr-1"></i>
+                                                            {selectedIssue.videoTutorial.duration}
+                                                        </span>
+                                                    </div>
+                                                    <div style={{
+                                                        background: 'rgba(0,0,0,0.3)',
+                                                        borderRadius: 'var(--radius-lg)',
+                                                        padding: 'var(--space-4)',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: 'var(--space-3)'
+                                                    }}>
+                                                        <div style={{
+                                                            width: '64px',
+                                                            height: '64px',
+                                                            background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                                                            borderRadius: 'var(--radius-lg)',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            cursor: 'pointer',
+                                                            transition: 'transform 0.2s'
+                                                        }}
+                                                        onClick={() => alert('Video bude brzy dostupné!\n\n' + selectedIssue.videoTutorial.title)}
+                                                        onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                                                        onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                                                        >
+                                                            <i className="fas fa-play" style={{color: 'white', fontSize: '24px', marginLeft: '4px'}}></i>
+                                                        </div>
+                                                        <div style={{flex: 1}}>
+                                                            <p style={{color: 'white', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>
+                                                                {selectedIssue.videoTutorial.title}
+                                                            </p>
+                                                            <p style={{color: 'rgba(255,255,255,0.6)', fontSize: 'var(--text-sm)'}}>
+                                                                Sledujte krok za krokem jak opravit tento problém
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'space-between',
+                                                    gap: 'var(--space-3)'
+                                                }}>
+                                                    <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                        <i className="fas fa-video" style={{color: 'rgba(255,255,255,0.5)', fontSize: '20px'}}></i>
+                                                        <span style={{color: 'rgba(255,255,255,0.7)', fontSize: 'var(--text-sm)'}}>
+                                                            Video návod bude brzy dostupný
+                                                        </span>
+                                                    </div>
+                                                    <span style={{
+                                                        background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                                                        color: 'white',
+                                                        padding: 'var(--space-1) var(--space-2)',
+                                                        borderRadius: 'var(--radius-md)',
+                                                        fontSize: 'var(--text-xs)',
+                                                        fontWeight: 'var(--font-bold)'
+                                                    }}>
+                                                        <i className="fas fa-crown mr-1"></i>
+                                                        PRO
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
                                     {/* Tools Needed with Affiliate Links */}
                                     <div style={{background: 'var(--color-info-light)', padding: 'var(--space-6)', borderBottom: '1px solid var(--color-border)'}}>
                                         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-3)'}}>

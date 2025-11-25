@@ -162,7 +162,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Jak opravit kapající kohoutek",
+            "duration": "5:30",
+            "youtubeId": "kapajici-kohoutek",
+            "premium": false
+          }
         },
         {
           "id": "low-pressure",
@@ -300,7 +307,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Čištění perlátoru",
+            "duration": "3:15",
+            "youtubeId": "cisty-perlator",
+            "premium": false
+          }
         },
         {
           "id": "handle-loose",
@@ -420,7 +434,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Utažení páčky kohoutku",
+            "duration": "2:45",
+            "youtubeId": "utazeni-papacky",
+            "premium": false
+          }
         }
       ]
     },
@@ -554,7 +575,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "WC stále protéká - oprava",
+            "duration": "8:20",
+            "youtubeId": "wc-proteka",
+            "premium": false
+          }
         },
         {
           "id": "tank-leak",
@@ -723,7 +751,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "weak-flush",
@@ -839,7 +872,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Slabý splach WC",
+            "duration": "4:50",
+            "youtubeId": "slaby-splach",
+            "premium": false
+          }
         }
       ]
     },
@@ -981,7 +1021,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Nefunkční zásuvka - diagnostika",
+            "duration": "6:30",
+            "youtubeId": "zasuvka-nefunguje",
+            "premium": false
+          }
         },
         {
           "id": "replacement",
@@ -1169,7 +1216,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "sparking",
@@ -1301,7 +1353,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Jiskřící zásuvka - POZOR!",
+            "duration": "4:00",
+            "youtubeId": "zasuvka-jiskri",
+            "premium": false
+          }
         }
       ]
     },
@@ -1456,7 +1515,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Nefunkční vypínač",
+            "duration": "5:45",
+            "youtubeId": "vypinac-nefunguje",
+            "premium": false
+          }
         },
         {
           "id": "replacement",
@@ -1599,7 +1665,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "flickering",
@@ -1721,7 +1792,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Blikající světlo",
+            "duration": "4:30",
+            "youtubeId": "vypinac-blika",
+            "premium": false
+          }
         }
       ]
     },
@@ -1911,7 +1989,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "replacement",
@@ -2070,7 +2153,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -2215,7 +2303,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "flickering",
@@ -2346,7 +2439,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -2477,7 +2575,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Blikající žárovka",
+            "duration": "3:30",
+            "youtubeId": "svetlo-blika",
+            "premium": false
+          }
         },
         {
           "id": "bulb-replacement",
@@ -2588,7 +2693,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -2724,7 +2834,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "leak",
@@ -2849,7 +2964,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "noisy",
@@ -2967,7 +3087,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -3087,7 +3212,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Slabý tlak ve sprše",
+            "duration": "4:20",
+            "youtubeId": "sprcha-tlak",
+            "premium": false
+          }
         },
         {
           "id": "replacement",
@@ -3227,7 +3359,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "hose-leak",
@@ -3371,7 +3508,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -3499,7 +3641,14 @@
               "text": "Mám k dispozici návod",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Pračka nevypouští",
+            "duration": "7:00",
+            "youtubeId": "pracka-nevypousti",
+            "premium": false
+          }
         },
         {
           "id": "hose-replacement",
@@ -3659,7 +3808,12 @@
               "text": "Mám k dispozici návod",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "vibrating",
@@ -3780,7 +3934,14 @@
               "text": "Mám k dispozici návod",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Pračka skáče",
+            "duration": "5:15",
+            "youtubeId": "pracka-skace",
+            "premium": false
+          }
         }
       ]
     },
@@ -3937,7 +4098,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "smell",
@@ -4036,7 +4202,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -4169,7 +4340,12 @@
               "text": "Mám zajištěnou podporu pro těžké díly",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "not-closing",
@@ -4312,7 +4488,14 @@
               "text": "Mám zajištěnou podporu pro těžké díly",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Dveře se nezavírají",
+            "duration": "5:45",
+            "youtubeId": "dvere-nezaviraji",
+            "premium": false
+          }
         },
         {
           "id": "handle-loose",
@@ -4430,7 +4613,12 @@
               "text": "Mám zajištěnou podporu pro těžké díly",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -4573,7 +4761,12 @@
               "text": "Mám zajištěnou podporu pro těžké díly",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "drafty",
@@ -4715,7 +4908,12 @@
               "text": "Mám zajištěnou podporu pro těžké díly",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "broken-handle",
@@ -4818,7 +5016,12 @@
               "text": "Mám zajištěnou podporu pro těžké díly",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -4942,7 +5145,14 @@
               "text": "Mám k dispozici návod",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Myčka špatně myje",
+            "duration": "6:45",
+            "youtubeId": "mycka-nemyje",
+            "premium": false
+          }
         },
         {
           "id": "not-draining",
@@ -5068,7 +5278,14 @@
               "text": "Mám k dispozici návod",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Myčka nevypouští",
+            "duration": "7:15",
+            "youtubeId": "mycka-nevypousti",
+            "premium": false
+          }
         },
         {
           "id": "leaking",
@@ -5193,7 +5410,12 @@
               "text": "Mám k dispozici návod",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -5309,7 +5531,14 @@
               "text": "Mám k dispozici návod",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Lednice nechladí",
+            "duration": "8:30",
+            "youtubeId": "lednice-nechladni",
+            "premium": false
+          }
         },
         {
           "id": "noisy",
@@ -5428,7 +5657,14 @@
               "text": "Mám k dispozici návod",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Hlučná lednice",
+            "duration": "5:45",
+            "youtubeId": "lednice-hluk",
+            "premium": false
+          }
         },
         {
           "id": "ice-buildup",
@@ -5546,7 +5782,14 @@
               "text": "Mám k dispozici návod",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Námraza v lednici",
+            "duration": "6:00",
+            "youtubeId": "lednice-led",
+            "premium": false
+          }
         }
       ]
     },
@@ -5687,7 +5930,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Bojler netopí",
+            "duration": "7:00",
+            "youtubeId": "bojler-netopi",
+            "premium": false
+          }
         },
         {
           "id": "leaking",
@@ -5820,7 +6070,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Kapající bojler",
+            "duration": "5:30",
+            "youtubeId": "bojler-kape",
+            "premium": false
+          }
         },
         {
           "id": "pressure-valve",
@@ -5925,7 +6182,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -6073,7 +6335,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "scratch",
@@ -6198,7 +6465,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "gap",
@@ -6337,7 +6609,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -6468,7 +6745,14 @@
               "text": "Mám k dispozici návod na montáž",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Viklající se židle",
+            "duration": "3:45",
+            "youtubeId": "zidle-viklava",
+            "premium": false
+          }
         },
         {
           "id": "broken-leg",
@@ -6578,7 +6862,12 @@
               "text": "Mám k dispozici návod na montáž",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -6693,7 +6982,14 @@
               "text": "Mám k dispozici návod na montáž",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Seřízení dveří skříně",
+            "duration": "4:15",
+            "youtubeId": "dvere-skrine",
+            "premium": false
+          }
         },
         {
           "id": "drawer-stuck",
@@ -6802,7 +7098,14 @@
               "text": "Mám k dispozici návod na montáž",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Zadrhávající zásuvka",
+            "duration": "5:00",
+            "youtubeId": "zasuvka-drhnne",
+            "premium": false
+          }
         },
         {
           "id": "shelf-sagging",
@@ -6921,7 +7224,14 @@
               "text": "Mám k dispozici návod na montáž",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Prohnutá police",
+            "duration": "4:30",
+            "youtubeId": "police-prohnuta",
+            "premium": false
+          }
         }
       ]
     },
@@ -7055,7 +7365,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "electric-plate-not-heating",
@@ -7181,7 +7496,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -7299,7 +7619,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "noisy",
@@ -7428,7 +7753,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "light-not-working",
@@ -7552,7 +7882,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -7651,7 +7986,14 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Trouba nehřeje",
+            "duration": "7:00",
+            "youtubeId": "trouba-netopi",
+            "premium": false
+          }
         },
         {
           "id": "door-not-closing",
@@ -7765,7 +8107,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -7899,7 +8246,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "caulk-mold",
@@ -8039,7 +8391,12 @@
               "text": "Mám po ruce telefon pro případ nouze",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -8144,7 +8501,12 @@
               "text": "Mám zajištěnou podporu pro těžké díly",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "key-broken",
@@ -8249,7 +8611,12 @@
               "text": "Mám zajištěnou podporu pro těžké díly",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     },
@@ -8373,7 +8740,14 @@
               "text": "Mám zajištěnou podporu pro těžké díly",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Zaseknuté žaluzie",
+            "duration": "4:00",
+            "youtubeId": "zaluzie-zasekle",
+            "premium": false
+          }
         },
         {
           "id": "cord-broken",
@@ -8477,7 +8851,14 @@
               "text": "Mám zajištěnou podporu pro těžké díly",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Přetržená šňůra žaluzií",
+            "duration": "6:15",
+            "youtubeId": "zaluzie-snura",
+            "premium": false
+          }
         }
       ]
     },
@@ -8619,7 +9000,12 @@
               "text": "Mám přístup k vodě pro zalévání/čištění",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         },
         {
           "id": "blade-dull",
@@ -8761,7 +9147,12 @@
               "text": "Mám přístup k vodě pro zalévání/čištění",
               "critical": false
             }
-          ]
+          ],
+          "videoTutorial": {
+            "available": false,
+            "premium": true,
+            "comingSoon": true
+          }
         }
       ]
     }
