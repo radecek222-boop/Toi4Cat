@@ -356,6 +356,166 @@
             justify-content: space-between;
             gap: var(--space-3);
         }
+
+        /* Drawing Canvas Container - Fixed */
+        .drawing-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            touch-action: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .drawing-container canvas {
+            display: block;
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: var(--radius-lg);
+            cursor: crosshair;
+        }
+
+        /* Neon Pulsing Marker */
+        .neon-marker {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: neonPulse 1.5s ease-in-out infinite;
+            border: 3px solid #00ffff;
+            box-shadow:
+                0 0 5px #00ffff,
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                inset 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        @keyframes neonPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+                box-shadow:
+                    0 0 5px #00ffff,
+                    0 0 10px #00ffff,
+                    0 0 20px #00ffff,
+                    0 0 40px #00ffff,
+                    inset 0 0 10px rgba(0, 255, 255, 0.3);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.8;
+                box-shadow:
+                    0 0 10px #00ffff,
+                    0 0 20px #00ffff,
+                    0 0 40px #00ffff,
+                    0 0 60px #00ffff,
+                    inset 0 0 15px rgba(0, 255, 255, 0.5);
+            }
+        }
+
+        /* Neon drawing brush style */
+        .neon-brush {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            pointer-events: none;
+            border: 2px solid #00ffff;
+            box-shadow:
+                0 0 5px #00ffff,
+                0 0 10px #00ffff;
+            transform: translate(-50%, -50%);
+        }
+
+        /* PWA Mobile Layout Fixes */
+        html, body {
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Prevent elements from overflowing */
+        .container, .max-w-lg, .max-w-2xl {
+            max-width: 100%;
+            box-sizing: border-box;
+            padding-left: var(--space-4);
+            padding-right: var(--space-4);
+        }
+
+        /* Mobile-friendly buttons */
+        .btn {
+            min-height: 44px; /* iOS minimum tap target */
+            min-width: 44px;
+            padding: var(--space-3) var(--space-4);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .btn-lg {
+            min-height: 52px;
+            padding: var(--space-4) var(--space-6);
+        }
+
+        /* Flex wrap for button groups on mobile */
+        @media (max-width: 480px) {
+            .flex.gap-4, .flex.gap-3 {
+                flex-wrap: wrap;
+            }
+            .flex.gap-4 .btn, .flex.gap-3 .btn {
+                flex: 1 1 calc(50% - var(--space-2));
+                min-width: 120px;
+            }
+            .flex.gap-4 .btn.w-full, .flex.gap-3 .btn.w-full {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* Fixed position elements - safe area */
+        .pwa-install-banner {
+            padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+        }
+
+        /* Form inputs mobile sizing */
+        .input, select, textarea {
+            min-height: 44px;
+            font-size: 16px; /* Prevents iOS zoom on focus */
+            padding: var(--space-3);
+        }
+
+        /* Cards should not overflow */
+        .card {
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        /* Info boxes responsive */
+        @media (max-width: 380px) {
+            .grid-3 {
+                grid-template-columns: 1fr !important;
+            }
+            .info-box {
+                padding: var(--space-3);
+            }
+        }
+
+        /* Mobile menu touch improvements */
+        .mobile-menu-item {
+            min-height: 48px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Tool items wrapping */
+        .tool-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+        .tool-item {
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body>
@@ -1395,9 +1555,10 @@
             const canvasRef = useRef(null);
             const [isDrawingMode, setIsDrawingMode] = useState(false);
             const [isDrawing, setIsDrawing] = useState(false);
-            const [brushColor, setBrushColor] = useState('#ff0000');
+            const [brushColor, setBrushColor] = useState('#00ffff'); // Neon cyan
             const [brushSize, setBrushSize] = useState(5);
             const [annotatedImage, setAnnotatedImage] = useState(null);
+            const [neonMarkers, setNeonMarkers] = useState([]); // Placed markers [{x, y}]
 
             // Hamburger menu state
             const [menuOpen, setMenuOpen] = useState(false);
@@ -1889,6 +2050,7 @@
 
             const draw = (e) => {
                 if (!isDrawing || !isDrawingMode) return;
+                e.preventDefault();
                 const canvas = canvasRef.current;
                 if (!canvas) return;
 
@@ -1904,17 +2066,55 @@
                 const x = (clientX - rect.left) * scaleX;
                 const y = (clientY - rect.top) * scaleY;
 
+                // Neon glow effect
                 ctx.lineWidth = brushSize * 2;
                 ctx.lineCap = 'round';
                 ctx.strokeStyle = brushColor;
+                ctx.shadowColor = brushColor;
+                ctx.shadowBlur = 15;
+
                 ctx.lineTo(x, y);
                 ctx.stroke();
                 ctx.beginPath();
                 ctx.moveTo(x, y);
             };
 
+            // Place a neon marker on click/tap
+            const placeMarker = (e) => {
+                if (!isDrawingMode) return;
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                const x = ((clientX - rect.left) / rect.width) * 100;
+                const y = ((clientY - rect.top) / rect.height) * 100;
+
+                setNeonMarkers(prev => [...prev, { x, y, id: Date.now() }]);
+
+                // Also draw on canvas
+                const ctx = canvas.getContext('2d');
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const canvasX = (clientX - rect.left) * scaleX;
+                const canvasY = (clientY - rect.top) * scaleY;
+
+                // Draw neon circle marker on canvas
+                ctx.beginPath();
+                ctx.arc(canvasX, canvasY, 30, 0, 2 * Math.PI);
+                ctx.strokeStyle = '#00ffff';
+                ctx.lineWidth = 4;
+                ctx.shadowColor = '#00ffff';
+                ctx.shadowBlur = 20;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            };
+
             const clearCanvas = () => {
                 initCanvas();
+                setNeonMarkers([]);
             };
 
             const saveAnnotatedImage = () => {
@@ -2446,27 +2646,33 @@
                                         </p>
                                     </div>
 
-                                    {/* Canvas / Image container */}
-                                    <div style={{position: 'relative', marginBottom: 'var(--space-4)'}}>
+                                    {/* Canvas / Image container - Fixed for touch */}
+                                    <div className="drawing-container" style={{marginBottom: 'var(--space-4)', background: '#000', borderRadius: 'var(--radius-lg)', overflow: 'hidden'}}>
                                         {isDrawingMode ? (
-                                            <canvas
-                                                ref={canvasRef}
-                                                onMouseDown={startDrawing}
-                                                onMouseMove={draw}
-                                                onMouseUp={stopDrawing}
-                                                onMouseLeave={stopDrawing}
-                                                onTouchStart={startDrawing}
-                                                onTouchMove={draw}
-                                                onTouchEnd={stopDrawing}
-                                                style={{
-                                                    width: '100%',
-                                                    maxHeight: '400px',
-                                                    objectFit: 'contain',
-                                                    borderRadius: 'var(--radius-lg)',
-                                                    cursor: 'crosshair',
-                                                    touchAction: 'none'
-                                                }}
-                                            />
+                                            <>
+                                                <canvas
+                                                    ref={canvasRef}
+                                                    onMouseDown={(e) => { startDrawing(e); }}
+                                                    onMouseMove={(e) => { draw(e); }}
+                                                    onMouseUp={stopDrawing}
+                                                    onMouseLeave={stopDrawing}
+                                                    onTouchStart={(e) => { e.preventDefault(); startDrawing(e); }}
+                                                    onTouchMove={(e) => { e.preventDefault(); draw(e); }}
+                                                    onTouchEnd={(e) => { e.preventDefault(); stopDrawing(); }}
+                                                    onClick={placeMarker}
+                                                />
+                                                {/* Neon markers overlay */}
+                                                {neonMarkers.map(marker => (
+                                                    <div
+                                                        key={marker.id}
+                                                        className="neon-marker"
+                                                        style={{
+                                                            left: `${marker.x}%`,
+                                                            top: `${marker.y}%`
+                                                        }}
+                                                    />
+                                                ))}
+                                            </>
                                         ) : (
                                             <img
                                                 src={annotatedImage || selectedImage}
@@ -2475,7 +2681,7 @@
                                                     width: '100%',
                                                     maxHeight: '400px',
                                                     objectFit: 'contain',
-                                                    borderRadius: 'var(--radius-lg)'
+                                                    display: 'block'
                                                 }}
                                             />
                                         )}
@@ -2488,17 +2694,18 @@
                                                 <div className="flex items-center gap-3">
                                                     <label style={{fontSize: 'var(--text-sm)'}}>Barva:</label>
                                                     <div className="flex gap-2">
-                                                        {['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ffffff'].map(color => (
+                                                        {['#00ffff', '#ff00ff', '#00ff00', '#ffff00', '#ff0000'].map(color => (
                                                             <button
                                                                 key={color}
                                                                 onClick={() => setBrushColor(color)}
                                                                 style={{
-                                                                    width: '28px',
-                                                                    height: '28px',
+                                                                    width: '32px',
+                                                                    height: '32px',
                                                                     borderRadius: '50%',
                                                                     backgroundColor: color,
-                                                                    border: brushColor === color ? '3px solid var(--color-text-primary)' : '2px solid var(--color-border)',
-                                                                    cursor: 'pointer'
+                                                                    border: brushColor === color ? '3px solid #fff' : '2px solid rgba(255,255,255,0.3)',
+                                                                    cursor: 'pointer',
+                                                                    boxShadow: brushColor === color ? `0 0 10px ${color}, 0 0 20px ${color}` : 'none'
                                                                 }}
                                                             />
                                                         ))}
@@ -2652,6 +2859,67 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    {/* Possible Issues Selection */}
+                                    {analysisResult.possibleIssues && analysisResult.possibleIssues.length > 0 && (
+                                        <div style={{padding: 'var(--space-4)', background: 'var(--color-bg-secondary)', borderBottom: '1px solid var(--color-border)'}}>
+                                            <h3 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-3)', fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>
+                                                <i className="fas fa-question-circle mr-2"></i>
+                                                Vyberte váš problém:
+                                            </h3>
+                                            <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)'}}>
+                                                {analysisResult.possibleIssues.map((issue, idx) => (
+                                                    <button
+                                                        key={issue.id || idx}
+                                                        onClick={() => {
+                                                            setAnalysisResult(prev => ({
+                                                                ...prev,
+                                                                issue: {
+                                                                    ...prev.issue,
+                                                                    name: issue.name,
+                                                                    description: issue.description
+                                                                }
+                                                            }));
+                                                        }}
+                                                        style={{
+                                                            padding: 'var(--space-3)',
+                                                            borderRadius: 'var(--radius-lg)',
+                                                            border: analysisResult.issue.name === issue.name
+                                                                ? '2px solid var(--color-primary)'
+                                                                : '1px solid var(--color-border)',
+                                                            background: analysisResult.issue.name === issue.name
+                                                                ? 'var(--color-primary-light)'
+                                                                : 'var(--color-bg-primary)',
+                                                            textAlign: 'left',
+                                                            cursor: 'pointer',
+                                                            transition: 'all var(--transition-fast)'
+                                                        }}
+                                                    >
+                                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                                            <div>
+                                                                <p style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>
+                                                                    {issue.name}
+                                                                </p>
+                                                                <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)'}}>
+                                                                    {issue.description}
+                                                                </p>
+                                                            </div>
+                                                            <div style={{
+                                                                background: idx === 0 ? 'var(--color-success)' : 'var(--color-bg-tertiary)',
+                                                                color: idx === 0 ? 'white' : 'var(--color-text-secondary)',
+                                                                padding: 'var(--space-1) var(--space-2)',
+                                                                borderRadius: 'var(--radius-full)',
+                                                                fontSize: 'var(--text-xs)',
+                                                                whiteSpace: 'nowrap'
+                                                            }}>
+                                                                {Math.round(issue.probability * 100)}%
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
 
                                     {/* Issue Details */}
                                     <div className="card-body">
@@ -2842,6 +3110,44 @@
                                                 <p style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>
                                                     {selectedIssue.steps[currentStep].action}
                                                 </p>
+
+                                                {/* Detailed description */}
+                                                {selectedIssue.steps[currentStep].description && (
+                                                    <p style={{fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)', lineHeight: 1.6}}>
+                                                        {selectedIssue.steps[currentStep].description}
+                                                    </p>
+                                                )}
+
+                                                {/* Tools for this step */}
+                                                {selectedIssue.steps[currentStep].tools_for_step && selectedIssue.steps[currentStep].tools_for_step.length > 0 && (
+                                                    <div style={{background: 'var(--color-info-light)', padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)', marginBottom: 'var(--space-3)', textAlign: 'left'}}>
+                                                        <p style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)'}}>
+                                                            <i className="fas fa-wrench mr-2" style={{color: '#0369a1'}}></i>Nástroje:
+                                                        </p>
+                                                        <p style={{fontSize: 'var(--text-sm)'}}>{selectedIssue.steps[currentStep].tools_for_step.join(', ')}</p>
+                                                    </div>
+                                                )}
+
+                                                {/* Parts for this step */}
+                                                {selectedIssue.steps[currentStep].parts_for_step && selectedIssue.steps[currentStep].parts_for_step.length > 0 && (
+                                                    <div style={{background: 'var(--color-warning-light)', padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)', marginBottom: 'var(--space-3)', textAlign: 'left'}}>
+                                                        <p style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)'}}>
+                                                            <i className="fas fa-box mr-2" style={{color: '#b45309'}}></i>Potřebné díly:
+                                                        </p>
+                                                        <p style={{fontSize: 'var(--text-sm)'}}>{selectedIssue.steps[currentStep].parts_for_step.join(', ')}</p>
+                                                    </div>
+                                                )}
+
+                                                {/* Tip for this step */}
+                                                {selectedIssue.steps[currentStep].tip && (
+                                                    <div style={{background: 'var(--color-success-light)', padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)', marginBottom: 'var(--space-3)', textAlign: 'left'}}>
+                                                        <p style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)'}}>
+                                                            <i className="fas fa-lightbulb mr-2" style={{color: '#15803d'}}></i>Tip:
+                                                        </p>
+                                                        <p style={{fontSize: 'var(--text-sm)'}}>{selectedIssue.steps[currentStep].tip}</p>
+                                                    </div>
+                                                )}
+
                                                 <p className="text-secondary">
                                                     <i className="fas fa-clock mr-2"></i>
                                                     {t('timeRequired')}: {selectedIssue.steps[currentStep].time}
@@ -2904,6 +3210,32 @@
                                                     {t('completeRepair')}
                                                 </button>
                                             )}
+                                        </div>
+
+                                        {/* Option to find local repair service */}
+                                        <div style={{marginTop: 'var(--space-6)', padding: 'var(--space-4)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)', textAlign: 'center'}}>
+                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                                <i className="fas fa-question-circle mr-2"></i>
+                                                Nevyřešili jste problém? Potřebujete odbornou pomoc?
+                                            </p>
+                                            <button
+                                                onClick={() => {
+                                                    const query = encodeURIComponent(`${selectedIssue.name} opravář v mém okolí`);
+                                                    window.open(`https://www.google.com/search?q=${query}`, '_blank');
+                                                }}
+                                                className="btn btn-secondary"
+                                                style={{marginRight: 'var(--space-2)'}}
+                                            >
+                                                <i className="fas fa-search mr-2"></i>
+                                                Najít opraváře
+                                            </button>
+                                            <button
+                                                onClick={() => navigateTo('suppliers')}
+                                                className="btn btn-outline"
+                                            >
+                                                <i className="fas fa-truck mr-2"></i>
+                                                Naši partneři
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
