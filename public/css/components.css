@@ -657,3 +657,250 @@
     visibility: visible;
     margin-bottom: var(--space-2);
 }
+
+/* ==========================================
+   HINT BOX (napovedy ke krokum)
+   ========================================== */
+.hint-box {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+    position: relative;
+}
+
+.hint-box::before {
+    content: '';
+    position: absolute;
+    left: var(--space-4);
+    top: -8px;
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-left: 1px solid #bae6fd;
+    border-top: 1px solid #bae6fd;
+    transform: rotate(45deg);
+}
+
+.hint-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+    font-weight: var(--font-semibold);
+    color: #0369a1;
+}
+
+.hint-header i {
+    font-size: var(--text-lg);
+}
+
+.hint-content {
+    color: #0c4a6e;
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+}
+
+.hint-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background-color: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: var(--radius-md);
+    color: #0369a1;
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.hint-toggle:hover {
+    background-color: #e0f2fe;
+}
+
+.hint-toggle i {
+    transition: transform var(--transition-fast);
+}
+
+.hint-toggle.active i {
+    transform: rotate(180deg);
+}
+
+/* ==========================================
+   CHECK QUESTION (kontrolni otazky)
+   ========================================== */
+.check-question {
+    background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+    border: 1px solid #fde047;
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    margin-top: var(--space-4);
+}
+
+.check-question-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    font-weight: var(--font-semibold);
+    color: #854d0e;
+}
+
+.check-question-header i {
+    font-size: var(--text-xl);
+    color: #ca8a04;
+}
+
+.check-question-text {
+    font-size: var(--text-base);
+    color: #713f12;
+    margin-bottom: var(--space-4);
+}
+
+.check-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.check-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 2px solid #fde047;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: var(--text-sm);
+    color: #713f12;
+}
+
+.check-option:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-color: #facc15;
+    transform: translateX(4px);
+}
+
+.check-option.selected {
+    background-color: #fef08a;
+    border-color: #eab308;
+}
+
+.check-option.correct {
+    background-color: #dcfce7;
+    border-color: #22c55e;
+    color: #166534;
+}
+
+.check-option.incorrect {
+    background-color: #fee2e2;
+    border-color: #ef4444;
+    color: #991b1b;
+}
+
+.check-option-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    border: 2px solid #fde047;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background-color: white;
+}
+
+.check-option.selected .check-option-icon {
+    background-color: #eab308;
+    border-color: #eab308;
+    color: white;
+}
+
+.check-option.correct .check-option-icon {
+    background-color: #22c55e;
+    border-color: #22c55e;
+    color: white;
+}
+
+.check-option.incorrect .check-option-icon {
+    background-color: #ef4444;
+    border-color: #ef4444;
+    color: white;
+}
+
+/* Feedback message */
+.check-feedback {
+    margin-top: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    display: none;
+}
+
+.check-feedback.show {
+    display: block;
+}
+
+.check-feedback.success {
+    background-color: #dcfce7;
+    border: 1px solid #22c55e;
+    color: #166534;
+}
+
+.check-feedback.error {
+    background-color: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #991b1b;
+}
+
+.check-feedback i {
+    margin-right: var(--space-2);
+}
+
+/* ==========================================
+   STEP INTERACTIVE (rozsireni step-card)
+   ========================================== */
+.step-interactive {
+    border: 2px solid transparent;
+    transition: all var(--transition-normal);
+}
+
+.step-interactive.needs-answer {
+    border-color: #fde047;
+    animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+    0%, 100% {
+        border-color: #fde047;
+        box-shadow: 0 0 0 0 rgba(253, 224, 71, 0.4);
+    }
+    50% {
+        border-color: #facc15;
+        box-shadow: 0 0 0 8px rgba(253, 224, 71, 0);
+    }
+}
+
+.step-interactive.answered-correct {
+    border-color: #22c55e;
+    background-color: #f0fdf4;
+}
+
+.step-interactive.answered-incorrect {
+    border-color: #f97316;
+    background-color: #fff7ed;
+}
+
+/* Continue button after answering */
+.continue-btn {
+    margin-top: var(--space-4);
+    width: 100%;
+}
+
+.continue-btn.hidden {
+    display: none;
+}
