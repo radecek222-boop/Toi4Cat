@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: "FIXO",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.svg",
         width: 1200,
         height: 630,
         alt: "FIXO - AI diagnostika domácích závad",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     title: "FIXO - Okamžité opravy domácích závad",
     description:
       "AI analýza fotografií domácích závad s návody na opravu krok za krokem.",
-    images: ["/og-image.png"],
+    images: ["/og-image.svg"],
   },
   robots: {
     index: true,
@@ -65,9 +65,10 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/icons/icon-192x192.svg",
   },
 };
 
