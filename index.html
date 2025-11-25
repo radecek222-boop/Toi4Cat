@@ -2074,7 +2074,22 @@
                 }
             };
 
-            const getAffiliateUrl = (shop, toolName) => {
+            const getAffiliateUrl = (shop, toolName, issue = null) => {
+                // Pokud máme specifické affiliate odkazy v databázi, použijeme je
+                if (issue && issue.affiliateLinks) {
+                    const toolLink = issue.affiliateLinks.find(
+                        al => al.item.toLowerCase() === toolName.toLowerCase()
+                    );
+                    if (toolLink && toolLink.links) {
+                        const shopLink = toolLink.links.find(
+                            l => l.store.toLowerCase() === shop.toLowerCase()
+                        );
+                        if (shopLink && shopLink.url) {
+                            return shopLink.url;
+                        }
+                    }
+                }
+                // Fallback na generický vyhledávací odkaz
                 const searchTerm = encodeURIComponent(toolName);
                 return affiliateLinks[shop].baseUrl + searchTerm;
             };
@@ -3714,7 +3729,7 @@
                                                     </span>
                                                     <div style={{display: 'flex', gap: 'var(--space-1)'}}>
                                                         <a
-                                                            href={getAffiliateUrl('alza', tool)}
+                                                            href={getAffiliateUrl('alza', tool, selectedIssue)}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             style={{
@@ -3731,7 +3746,7 @@
                                                             Alza
                                                         </a>
                                                         <a
-                                                            href={getAffiliateUrl('mall', tool)}
+                                                            href={getAffiliateUrl('mall', tool, selectedIssue)}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             style={{
@@ -3748,7 +3763,7 @@
                                                             Mall
                                                         </a>
                                                         <a
-                                                            href={getAffiliateUrl('hornbach', tool)}
+                                                            href={getAffiliateUrl('hornbach', tool, selectedIssue)}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             style={{

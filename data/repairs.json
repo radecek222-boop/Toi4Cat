@@ -88,6 +88,53 @@
             "Vždy nejdříve zavřete hlavní přívod vody",
             "Mějte připravený kbelík",
             "Nepoužívejte nadměrnou sílu při utahování"
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nové těsnění",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/tesneni",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/tesneni",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
           ]
         },
         {
@@ -157,6 +204,48 @@
           "safetyWarnings": [
             "Ocet může dráždit oči",
             "Nepoužívejte agresivní chemikálie"
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Kleště",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/kleste",
+                  "price": "od 79 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/kleste",
+                  "price": "od 89 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Ocet",
+              "links": [
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/ocet-uklidovy",
+                  "price": "od 29 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Kartáček",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/dratene-kartace",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/kartace",
+                  "price": "od 35 Kč"
+                }
+              ]
+            }
           ]
         },
         {
@@ -218,7 +307,39 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Imbusový klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -293,7 +414,39 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nový plovák nebo těsnění",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/tesneni",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/tesneni",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "tank-leak",
@@ -388,7 +541,54 @@
             "min": 1000,
             "max": 2000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nové těsnění nádržky",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/tesneni",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/tesneni",
+                  "price": "od 25 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "weak-flush",
@@ -450,7 +650,34 @@
             "min": 400,
             "max": 900,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Kartáč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/dratene-kartace",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/kartace",
+                  "price": "od 35 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Ocet",
+              "links": [
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/ocet-uklidovy",
+                  "price": "od 29 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -533,7 +760,39 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nová zásuvka",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/elektro-zasuvky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/zasuvky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "replacement",
@@ -632,7 +891,69 @@
             "min": 600,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák plochý",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Šroubovák křížový",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nová zásuvka",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/elektro-zasuvky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/zasuvky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Izolační páska",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/izolacni-pasky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/izolacni-pasky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "sparking",
@@ -705,7 +1026,39 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nová zásuvka",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/elektro-zasuvky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/zasuvky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -786,7 +1139,54 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák plochý",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Šroubovák křížový",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nový vypínač",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/elektro-vypinace",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/vypinace",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "replacement",
@@ -870,7 +1270,39 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nový vypínač",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/elektro-vypinace",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/vypinace",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "flickering",
@@ -948,7 +1380,24 @@
             "min": 600,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1049,7 +1498,69 @@
             "min": 600,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Vrtačka",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/vrtacky",
+                  "price": "od 699 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/aku-vrtacky",
+                  "price": "od 799 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Hmoždinky",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/hmozdinky",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/hmozdinky",
+                  "price": "od 35 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Šrouby",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/srouby",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/srouby",
+                  "price": "od 35 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "replacement",
@@ -1149,7 +1660,39 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nové svítidlo",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/svitidla",
+                  "price": "od 199 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/svitidla",
+                  "price": "od 249 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1250,7 +1793,24 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "flickering",
@@ -1322,7 +1882,39 @@
             "min": 600,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Multimetr (volitelný)",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/multimetry",
+                  "price": "od 199 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/multimetry",
+                  "price": "od 249 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1394,7 +1986,39 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Nová žárovka",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/led-zarovky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/led-zarovky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "bulb-replacement",
@@ -1461,7 +2085,24 @@
             "min": 300,
             "max": 600,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Nová žárovka",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/led-zarovky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/led-zarovky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1538,7 +2179,39 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Odvzdušňovací klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "leak",
@@ -1604,7 +2277,39 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "noisy",
@@ -1663,7 +2368,39 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Odvzdušňovací klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Vodováha",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/vodovahy",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/vodovahy",
+                  "price": "od 119 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1729,7 +2466,34 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Ocet",
+              "links": [
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/ocet-uklidovy",
+                  "price": "od 29 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Kartáček",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/dratene-kartace",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/kartace",
+                  "price": "od 35 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "replacement",
@@ -1795,7 +2559,54 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Kleště nebo klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Teflonová páska",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/teflonove-pasky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/teflonove-pasky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "hose-leak",
@@ -1865,7 +2676,54 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Kleště",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/kleste",
+                  "price": "od 79 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/kleste",
+                  "price": "od 89 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Teflonová páska",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/teflonove-pasky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/teflonove-pasky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nová hadice (volitelně)",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/hadice",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/hadice",
+                  "price": "od 119 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -1939,7 +2797,39 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Kartáč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/dratene-kartace",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/kartace",
+                  "price": "od 35 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "hose-replacement",
@@ -2030,7 +2920,54 @@
             "min": 600,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Kleště",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/kleste",
+                  "price": "od 79 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/kleste",
+                  "price": "od 89 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nová přívodní hadice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/hadice",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/hadice",
+                  "price": "od 119 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "vibrating",
@@ -2097,7 +3034,39 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Vodováha",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/vodovahy",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/vodovahy",
+                  "price": "od 119 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -2180,7 +3149,54 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Gumové rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/pracovni-rukavice",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 35 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Kbelík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/kbeliky",
+                  "price": "od 39 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/kbeliky",
+                  "price": "od 45 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Čistič odpadů",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/cistice-odpadu",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/cistice-odpadu",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "smell",
@@ -2240,7 +3256,19 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Ocet",
+              "links": [
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/ocet-uklidovy",
+                  "price": "od 29 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -2319,7 +3347,39 @@
             "min": 300,
             "max": 600,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "WD-40 nebo olej",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/wd-40",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/wd-40",
+                  "price": "od 119 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "not-closing",
@@ -2393,7 +3453,54 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Vodováha",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/vodovahy",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/vodovahy",
+                  "price": "od 119 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Kladivo",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/kladiva",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/kladiva",
+                  "price": "od 119 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "handle-loose",
@@ -2457,7 +3564,39 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Imbusový klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -2531,7 +3670,54 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "WD-40",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/wd-40",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/wd-40",
+                  "price": "od 119 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Imbusový klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "drafty",
@@ -2604,7 +3790,54 @@
             "min": 600,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Nové těsnění",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/tesneni",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/tesneni",
+                  "price": "od 25 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nůž",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/noze",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/odlamovaci-noze",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Imbusový klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "broken-handle",
@@ -2668,7 +3901,24 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -2743,7 +3993,34 @@
             "min": 600,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Ocet",
+              "links": [
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/ocet-uklidovy",
+                  "price": "od 29 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "not-draining",
@@ -2815,7 +4092,39 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "leaking",
@@ -2886,7 +4195,39 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nové těsnění dvířek",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/tesneni",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/tesneni",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -2963,7 +4304,24 @@
             "min": 1000,
             "max": 2500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Kartáč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/dratene-kartace",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/kartace",
+                  "price": "od 35 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "noisy",
@@ -3028,7 +4386,39 @@
             "min": 500,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Vodováha",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/vodovahy",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/vodovahy",
+                  "price": "od 119 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "ice-buildup",
@@ -3107,7 +4497,24 @@
             "min": 600,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Hadříky",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -3189,7 +4596,39 @@
             "min": 1000,
             "max": 2000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Multimetr (volitelně)",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/multimetry",
+                  "price": "od 199 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/multimetry",
+                  "price": "od 249 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "leaking",
@@ -3263,7 +4702,39 @@
             "min": 1500,
             "max": 3000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "pressure-valve",
@@ -3324,7 +4795,24 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -3398,7 +4886,54 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šrouby",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/srouby",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/srouby",
+                  "price": "od 35 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Vrtačka",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/vrtacky",
+                  "price": "od 699 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/aku-vrtacky",
+                  "price": "od 799 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Mastek nebo WD-40",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/wd-40",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/wd-40",
+                  "price": "od 119 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "scratch",
@@ -3464,7 +4999,39 @@
             "min": 500,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Vosk nebo olej",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/oleje",
+                  "price": "od 69 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/oleje",
+                  "price": "od 79 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "gap",
@@ -3529,7 +5096,54 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Tmel na dřevo",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/tmely",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/tmely",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Stěrka",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sterky-spachtle",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/spachtle",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Brusný papír",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/brusne-papiry",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/brusne-papiry",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -3606,7 +5220,39 @@
             "min": 300,
             "max": 600,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Lepidlo na dřevo",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/lepidla",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/lepidla",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "broken-leg",
@@ -3677,7 +5323,24 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Lepidlo na dřevo",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/lepidla",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/lepidla",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -3753,7 +5416,24 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Křížový šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "drawer-stuck",
@@ -3823,7 +5503,24 @@
             "min": 300,
             "max": 600,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "shelf-sagging",
@@ -3888,7 +5585,39 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Vrtačka",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/vrtacky",
+                  "price": "od 699 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/aku-vrtacky",
+                  "price": "od 799 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Šrouby",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/srouby",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/srouby",
+                  "price": "od 35 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -3963,7 +5692,39 @@
             "min": 600,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Kartáček",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/dratene-kartace",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/kartace",
+                  "price": "od 35 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Hadřík",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/uterky-hadriky",
+                  "price": "od 19 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/uterky",
+                  "price": "od 25 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "electric-plate-not-heating",
@@ -4030,7 +5791,39 @@
             "min": 1000,
             "max": 2000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Multimetr (volitelně)",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/multimetry",
+                  "price": "od 199 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/multimetry",
+                  "price": "od 249 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -4104,7 +5897,24 @@
             "min": 600,
             "max": 1200,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "noisy",
@@ -4174,7 +5984,39 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "WD-40",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/wd-40",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/wd-40",
+                  "price": "od 119 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "light-not-working",
@@ -4239,7 +6081,39 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Nová žárovka",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/led-zarovky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/led-zarovky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -4381,7 +6255,24 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -4461,7 +6352,34 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Gumové rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/pracovni-rukavice",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 35 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Ocet",
+              "links": [
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/ocet-uklidovy",
+                  "price": "od 29 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "caulk-mold",
@@ -4542,7 +6460,39 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Odstraňovač silikonu",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/silikony",
+                  "price": "od 79 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/silikony",
+                  "price": "od 89 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Nový silikon",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/silikony",
+                  "price": "od 79 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/silikony",
+                  "price": "od 89 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -4608,7 +6558,24 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "WD-40 (jen krátkodobě)",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/wd-40",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/wd-40",
+                  "price": "od 119 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "key-broken",
@@ -4674,7 +6641,24 @@
             "min": 500,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Pilník nebo malý nůž",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/noze",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/odlamovaci-noze",
+                  "price": "od 39 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -4744,7 +6728,39 @@
             "min": 400,
             "max": 800,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "WD-40",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/wd-40",
+                  "price": "od 99 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/wd-40",
+                  "price": "od 119 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "cord-broken",
@@ -4809,7 +6825,24 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -4897,7 +6930,39 @@
             "min": 800,
             "max": 1500,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Klíč na svíčky",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "blade-dull",
@@ -4985,7 +7050,39 @@
             "min": 500,
             "max": 1000,
             "currency": "CZK"
-          }
+          },
+          "affiliateLinks": [
+            {
+              "item": "Klíč",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/klice",
+                  "price": "od 89 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sady-klicu",
+                  "price": "od 99 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/pracovni-rukavice",
+                  "price": "od 29 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 35 Kč"
+                }
+              ]
+            }
+          ]
         }
       ]
     }
