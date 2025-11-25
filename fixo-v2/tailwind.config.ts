@@ -17,14 +17,20 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // FIXO Brand Colors
+        // FIXO Brand Colors - Modern & Sophisticated
         fixo: {
-          primary: "#2563eb",
-          "primary-dark": "#1d4ed8",
-          "primary-light": "#dbeafe",
-          secondary: "#06b6d4",
-          "secondary-dark": "#0891b2",
-          "secondary-light": "#cffafe",
+          // Primary: Deep Indigo
+          primary: "#6366f1",
+          "primary-dark": "#4f46e5",
+          "primary-light": "#e0e7ff",
+          // Secondary: Teal
+          secondary: "#14b8a6",
+          "secondary-dark": "#0d9488",
+          "secondary-light": "#ccfbf1",
+          // Accent: Warm Amber
+          accent: "#f59e0b",
+          "accent-dark": "#d97706",
+          "accent-light": "#fef3c7",
         },
         // Semantic Colors
         border: "hsl(var(--border))",
