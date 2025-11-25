@@ -328,6 +328,18 @@
             noRepairsHint: 'Nahrajte fotografii a začněte s první opravou',
             completed: 'Dokončeno',
             inProgress: 'Probíhá',
+            filterAll: 'Vše',
+            filterCompleted: 'Dokončené',
+            filterInProgress: 'Probíhající',
+            exportCSV: 'Export CSV',
+            repairDetails: 'Detail opravy',
+            totalRepairs: 'Celkem oprav',
+            completedRepairs: 'Dokončených',
+            avgTime: 'Průměrný čas',
+            close: 'Zavřít',
+            tools: 'Nástroje',
+            steps: 'Kroky',
+            warnings: 'Upozornění',
 
             // Database
             databaseTitle: 'Databáze závad a oprav',
@@ -412,6 +424,18 @@
                 noRepairsHint: 'Upload a photo and start your first repair',
                 completed: 'Completed',
                 inProgress: 'In progress',
+                filterAll: 'All',
+                filterCompleted: 'Completed',
+                filterInProgress: 'In progress',
+                exportCSV: 'Export CSV',
+                repairDetails: 'Repair details',
+                totalRepairs: 'Total repairs',
+                completedRepairs: 'Completed',
+                avgTime: 'Average time',
+                close: 'Close',
+                tools: 'Tools',
+                steps: 'Steps',
+                warnings: 'Warnings',
                 databaseTitle: 'Repair database',
                 showing: 'Showing',
                 outOf: 'of',
@@ -485,6 +509,18 @@
                 noRepairsHint: 'Laden Sie ein Foto hoch und starten Sie Ihre erste Reparatur',
                 completed: 'Abgeschlossen',
                 inProgress: 'In Bearbeitung',
+                filterAll: 'Alle',
+                filterCompleted: 'Abgeschlossen',
+                filterInProgress: 'In Bearbeitung',
+                exportCSV: 'CSV exportieren',
+                repairDetails: 'Reparaturdetails',
+                totalRepairs: 'Gesamtreparaturen',
+                completedRepairs: 'Abgeschlossen',
+                avgTime: 'Durchschnittszeit',
+                close: 'Schließen',
+                tools: 'Werkzeuge',
+                steps: 'Schritte',
+                warnings: 'Warnungen',
                 databaseTitle: 'Reparaturdatenbank',
                 showing: 'Angezeigt',
                 outOf: 'von',
@@ -558,6 +594,18 @@
                 noRepairsHint: 'Nahrajte fotografiu a začnite s prvou opravou',
                 completed: 'Dokončené',
                 inProgress: 'Prebieha',
+                filterAll: 'Všetko',
+                filterCompleted: 'Dokončené',
+                filterInProgress: 'Prebiehajúce',
+                exportCSV: 'Export CSV',
+                repairDetails: 'Detail opravy',
+                totalRepairs: 'Celkom opráv',
+                completedRepairs: 'Dokončených',
+                avgTime: 'Priemerný čas',
+                close: 'Zavrieť',
+                tools: 'Nástroje',
+                steps: 'Kroky',
+                warnings: 'Upozornenia',
                 databaseTitle: 'Databáza porúch a opráv',
                 showing: 'Zobrazené',
                 outOf: 'z',
@@ -631,6 +679,18 @@
                 noRepairsHint: 'Prześlij zdjęcie i rozpocznij pierwszą naprawę',
                 completed: 'Zakończono',
                 inProgress: 'W trakcie',
+                filterAll: 'Wszystko',
+                filterCompleted: 'Zakończone',
+                filterInProgress: 'W trakcie',
+                exportCSV: 'Eksport CSV',
+                repairDetails: 'Szczegóły naprawy',
+                totalRepairs: 'Łączna liczba napraw',
+                completedRepairs: 'Zakończonych',
+                avgTime: 'Średni czas',
+                close: 'Zamknij',
+                tools: 'Narzędzia',
+                steps: 'Kroki',
+                warnings: 'Ostrzeżenia',
                 databaseTitle: 'Baza danych usterek i napraw',
                 showing: 'Wyświetlono',
                 outOf: 'z',
@@ -704,6 +764,18 @@
                 noRepairsHint: 'Sube una foto y comienza tu primera reparación',
                 completed: 'Completado',
                 inProgress: 'En progreso',
+                filterAll: 'Todo',
+                filterCompleted: 'Completadas',
+                filterInProgress: 'En progreso',
+                exportCSV: 'Exportar CSV',
+                repairDetails: 'Detalles de reparación',
+                totalRepairs: 'Total de reparaciones',
+                completedRepairs: 'Completadas',
+                avgTime: 'Tiempo promedio',
+                close: 'Cerrar',
+                tools: 'Herramientas',
+                steps: 'Pasos',
+                warnings: 'Advertencias',
                 databaseTitle: 'Base de datos de reparaciones',
                 showing: 'Mostrando',
                 outOf: 'de',
@@ -777,6 +849,18 @@
                 noRepairsHint: 'Téléchargez une photo et commencez votre première réparation',
                 completed: 'Terminé',
                 inProgress: 'En cours',
+                filterAll: 'Tout',
+                filterCompleted: 'Terminées',
+                filterInProgress: 'En cours',
+                exportCSV: 'Exporter CSV',
+                repairDetails: 'Détails de la réparation',
+                totalRepairs: 'Total des réparations',
+                completedRepairs: 'Terminées',
+                avgTime: 'Temps moyen',
+                close: 'Fermer',
+                tools: 'Outils',
+                steps: 'Étapes',
+                warnings: 'Avertissements',
                 databaseTitle: 'Base de données des réparations',
                 showing: 'Affichage',
                 outOf: 'sur',
@@ -1161,8 +1245,50 @@
             const [currentStep, setCurrentStep] = useState(0);
             const [isDragging, setIsDragging] = useState(false);
             const [selectedCategory, setSelectedCategory] = useState('all');
+            const [historyFilter, setHistoryFilter] = useState('all'); // 'all', 'completed', 'in_progress'
+            const [selectedRepairDetail, setSelectedRepairDetail] = useState(null);
             const fileInputRef = useRef(null);
             const dropZoneRef = useRef(null);
+
+            // Filtrovat historii podle stavu
+            const getFilteredHistory = () => {
+                if (historyFilter === 'all') return repairHistory;
+                return repairHistory.filter(item => item.status === historyFilter);
+            };
+
+            // Statistiky historie
+            const getHistoryStats = () => {
+                const total = repairHistory.length;
+                const completed = repairHistory.filter(r => r.status === 'completed').length;
+                return { total, completed, inProgress: total - completed };
+            };
+
+            // Export historie do CSV
+            const exportToCSV = () => {
+                if (repairHistory.length === 0) return;
+
+                const headers = ['ID', 'Objekt', 'Závada', 'Datum', 'Stav', 'Čas opravy'];
+                const rows = repairHistory.map(item => [
+                    item.id,
+                    item.object,
+                    item.issue,
+                    item.date,
+                    item.status === 'completed' ? 'Dokončeno' : 'Probíhá',
+                    item.timeEstimate || 'N/A'
+                ]);
+
+                const csvContent = [headers, ...rows]
+                    .map(row => row.map(cell => `"${cell}"`).join(','))
+                    .join('\n');
+
+                const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `fixo_historie_${new Date().toISOString().split('T')[0]}.csv`;
+                link.click();
+                URL.revokeObjectURL(url);
+            };
 
             // Konfigurace API - při lokálním vývoji použij backend, jinak simulaci
             const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
@@ -1444,13 +1570,18 @@
                 setCurrentStep(0);
                 setCurrentView('repair');
 
-                // Přidat do historie
+                // Přidat do historie s detaily
                 const historyItem = {
                     id: Date.now(),
                     date: new Date().toLocaleString('cs-CZ'),
                     object: analysisResult.object.name,
                     issue: issue.name,
-                    status: 'in-progress'
+                    status: 'in_progress',
+                    timeEstimate: issue.timeEstimate,
+                    tools: issue.tools || [],
+                    steps: issue.steps || [],
+                    riskScore: issue.riskScore,
+                    difficulty: issue.difficulty
                 };
                 setRepairHistory([historyItem, ...repairHistory]);
             };
@@ -1902,35 +2033,229 @@
                                         <p className="empty-state-desc">{t('noRepairsHint')}</p>
                                     </div>
                                 ) : (
-                                    <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-4)'}}>
-                                        {repairHistory.map(item => (
-                                            <div key={item.id} className="card">
-                                                <div className="card-body flex-between">
-                                                    <div>
-                                                        <h3 style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-lg)'}}>
-                                                            {item.object} - {item.issue}
-                                                        </h3>
-                                                        <p className="text-muted" style={{fontSize: 'var(--text-sm)', marginTop: 'var(--space-1)'}}>
-                                                            <i className="far fa-calendar mr-2"></i>
-                                                            {item.date}
-                                                        </p>
+                                    <>
+                                        {/* Statistiky */}
+                                        <div className="grid grid-3 gap-4 mb-6">
+                                            <div className="card" style={{padding: 'var(--space-4)', textAlign: 'center'}}>
+                                                <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-primary)'}}>
+                                                    {getHistoryStats().total}
+                                                </div>
+                                                <div className="text-muted" style={{fontSize: 'var(--text-sm)'}}>{t('totalRepairs')}</div>
+                                            </div>
+                                            <div className="card" style={{padding: 'var(--space-4)', textAlign: 'center'}}>
+                                                <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-success)'}}>
+                                                    {getHistoryStats().completed}
+                                                </div>
+                                                <div className="text-muted" style={{fontSize: 'var(--text-sm)'}}>{t('completedRepairs')}</div>
+                                            </div>
+                                            <div className="card" style={{padding: 'var(--space-4)', textAlign: 'center'}}>
+                                                <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-warning)'}}>
+                                                    {getHistoryStats().inProgress}
+                                                </div>
+                                                <div className="text-muted" style={{fontSize: 'var(--text-sm)'}}>{t('inProgress')}</div>
+                                            </div>
+                                        </div>
+
+                                        {/* Filtrování a export */}
+                                        <div className="flex-between mb-4" style={{flexWrap: 'wrap', gap: 'var(--space-2)'}}>
+                                            <div className="category-filter" style={{margin: 0}}>
+                                                <button
+                                                    onClick={() => setHistoryFilter('all')}
+                                                    className={`category-btn ${historyFilter === 'all' ? 'active' : ''}`}
+                                                >
+                                                    {t('filterAll')} ({repairHistory.length})
+                                                </button>
+                                                <button
+                                                    onClick={() => setHistoryFilter('completed')}
+                                                    className={`category-btn ${historyFilter === 'completed' ? 'active' : ''}`}
+                                                >
+                                                    <i className="fas fa-check-circle mr-1"></i>
+                                                    {t('filterCompleted')}
+                                                </button>
+                                                <button
+                                                    onClick={() => setHistoryFilter('in_progress')}
+                                                    className={`category-btn ${historyFilter === 'in_progress' ? 'active' : ''}`}
+                                                >
+                                                    <i className="fas fa-wrench mr-1"></i>
+                                                    {t('filterInProgress')}
+                                                </button>
+                                            </div>
+                                            <button
+                                                onClick={exportToCSV}
+                                                className="btn btn-secondary"
+                                                style={{whiteSpace: 'nowrap'}}
+                                            >
+                                                <i className="fas fa-download mr-2"></i>
+                                                {t('exportCSV')}
+                                            </button>
+                                        </div>
+
+                                        {/* Seznam oprav */}
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-4)'}}>
+                                            {getFilteredHistory().length === 0 ? (
+                                                <div className="text-center text-muted" style={{padding: 'var(--space-8)'}}>
+                                                    <i className="fas fa-filter" style={{fontSize: 'var(--text-3xl)', marginBottom: 'var(--space-2)', display: 'block'}}></i>
+                                                    {t('noCategoryItems')}
+                                                </div>
+                                            ) : (
+                                                getFilteredHistory().map(item => (
+                                                    <div
+                                                        key={item.id}
+                                                        className="card hover-scale"
+                                                        style={{cursor: 'pointer'}}
+                                                        onClick={() => setSelectedRepairDetail(item)}
+                                                    >
+                                                        <div className="card-body flex-between">
+                                                            <div>
+                                                                <h3 style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-lg)'}}>
+                                                                    {item.object} - {item.issue}
+                                                                </h3>
+                                                                <p className="text-muted" style={{fontSize: 'var(--text-sm)', marginTop: 'var(--space-1)'}}>
+                                                                    <i className="far fa-calendar mr-2"></i>
+                                                                    {item.date}
+                                                                    {item.timeEstimate && (
+                                                                        <span style={{marginLeft: 'var(--space-3)'}}>
+                                                                            <i className="fas fa-clock mr-1"></i>
+                                                                            {item.timeEstimate}
+                                                                        </span>
+                                                                    )}
+                                                                </p>
+                                                            </div>
+                                                            <div className="flex items-center gap-2">
+                                                                {item.status === 'completed' ? (
+                                                                    <span className="badge badge-success">
+                                                                        <i className="fas fa-check-circle mr-1"></i>
+                                                                        {t('completed')}
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="badge badge-warning">
+                                                                        <i className="fas fa-wrench mr-1"></i>
+                                                                        {t('inProgress')}
+                                                                    </span>
+                                                                )}
+                                                                <i className="fas fa-chevron-right text-muted"></i>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                ))
+                                            )}
+                                        </div>
+                                    </>
+                                )}
+
+                                {/* Detail opravy modal */}
+                                {selectedRepairDetail && (
+                                    <div className="translating-overlay" onClick={() => setSelectedRepairDetail(null)}>
+                                        <div
+                                            className="card"
+                                            style={{
+                                                maxWidth: '500px',
+                                                width: '90%',
+                                                maxHeight: '80vh',
+                                                overflow: 'auto'
+                                            }}
+                                            onClick={e => e.stopPropagation()}
+                                        >
+                                            <div className="result-header">
+                                                <div className="flex-between">
                                                     <div>
-                                                        {item.status === 'completed' ? (
-                                                            <span className="badge badge-success">
-                                                                <i className="fas fa-check-circle mr-1"></i>
-                                                                {t('completed')}
-                                                            </span>
-                                                        ) : (
-                                                            <span className="badge badge-warning">
-                                                                <i className="fas fa-wrench mr-1"></i>
-                                                                {t('inProgress')}
-                                                            </span>
-                                                        )}
+                                                        <h2 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)'}}>
+                                                            {selectedRepairDetail.object}
+                                                        </h2>
+                                                        <p style={{opacity: 0.9}}>{selectedRepairDetail.issue}</p>
                                                     </div>
+                                                    <button
+                                                        onClick={() => setSelectedRepairDetail(null)}
+                                                        style={{
+                                                            background: 'rgba(255,255,255,0.2)',
+                                                            border: 'none',
+                                                            borderRadius: '50%',
+                                                            width: '36px',
+                                                            height: '36px',
+                                                            cursor: 'pointer',
+                                                            color: 'white',
+                                                            fontSize: 'var(--text-lg)'
+                                                        }}
+                                                    >
+                                                        <i className="fas fa-times"></i>
+                                                    </button>
                                                 </div>
                                             </div>
-                                        ))}
+                                            <div className="card-body">
+                                                <div className="grid grid-2 gap-4 mb-4">
+                                                    <div>
+                                                        <div className="text-muted" style={{fontSize: 'var(--text-sm)'}}>
+                                                            <i className="far fa-calendar mr-2"></i>Datum
+                                                        </div>
+                                                        <div style={{fontWeight: 'var(--font-semibold)'}}>{selectedRepairDetail.date}</div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-muted" style={{fontSize: 'var(--text-sm)'}}>
+                                                            <i className="fas fa-clock mr-2"></i>{t('repairTime')}
+                                                        </div>
+                                                        <div style={{fontWeight: 'var(--font-semibold)'}}>
+                                                            {selectedRepairDetail.timeEstimate || 'N/A'}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="mb-4">
+                                                    <div className="text-muted" style={{fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)'}}>
+                                                        Stav
+                                                    </div>
+                                                    {selectedRepairDetail.status === 'completed' ? (
+                                                        <span className="badge badge-success">
+                                                            <i className="fas fa-check-circle mr-1"></i>
+                                                            {t('completed')}
+                                                        </span>
+                                                    ) : (
+                                                        <span className="badge badge-warning">
+                                                            <i className="fas fa-wrench mr-1"></i>
+                                                            {t('inProgress')}
+                                                        </span>
+                                                    )}
+                                                </div>
+
+                                                {selectedRepairDetail.tools && selectedRepairDetail.tools.length > 0 && (
+                                                    <div className="mb-4">
+                                                        <div className="text-muted" style={{fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)'}}>
+                                                            <i className="fas fa-toolbox mr-2"></i>{t('tools')}
+                                                        </div>
+                                                        <div className="tool-list">
+                                                            {selectedRepairDetail.tools.map((tool, idx) => (
+                                                                <span key={idx} className="tool-item">{tool}</span>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {selectedRepairDetail.steps && selectedRepairDetail.steps.length > 0 && (
+                                                    <div className="mb-4">
+                                                        <div className="text-muted" style={{fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)'}}>
+                                                            <i className="fas fa-list-ol mr-2"></i>{t('steps')}
+                                                        </div>
+                                                        <div style={{fontSize: 'var(--text-sm)'}}>
+                                                            {selectedRepairDetail.steps.map((step, idx) => (
+                                                                <div key={idx} style={{
+                                                                    padding: 'var(--space-2)',
+                                                                    borderBottom: idx < selectedRepairDetail.steps.length - 1 ? '1px solid var(--color-border)' : 'none'
+                                                                }}>
+                                                                    <span style={{marginRight: 'var(--space-2)'}}>{step.icon}</span>
+                                                                    {step.action}
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                <button
+                                                    onClick={() => setSelectedRepairDetail(null)}
+                                                    className="btn btn-primary btn-block"
+                                                >
+                                                    {t('close')}
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
                             </div>
