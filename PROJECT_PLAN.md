@@ -10,9 +10,9 @@
 ```
 📅 Poslední aktualizace: 2025-11-25
 👤 Aktualizoval: Claude AI
-📍 Aktuální fáze: MIGRACE NA NEXT.JS (fixo-v2) - TÉMĚŘ HOTOVO
-✅ Poslední dokončený krok: NextAuth.js autentizace + middleware + hooks
-⏳ Aktuálně se dělá: Finální úpravy UI komponent
+📍 Aktuální fáze: MIGRACE NA NEXT.JS (fixo-v2) - HOTOVO
+✅ Poslední dokončený krok: Kompletní UI komponenty + stránky + API
+⏳ Aktuálně se dělá: Připraveno k merge
 🔜 Další krok: Nasazení na Vercel, připojení databáze
 ⚠️ Poznámka: Platební brána Stripe až PO nasazení na skutečnou doménu
 ```
@@ -121,24 +121,29 @@ FIXO/
 - [x] Freemium UI (3 tier model)
 - [x] Sociální slevy
 
-### FÁZE 3: Migrace na Next.js ⏳ TÉMĚŘ HOTOVO
+### FÁZE 3: Migrace na Next.js ✅ KÓDOVĚ HOTOVO
 - [x] Inicializace Next.js 14 projektu
 - [x] Nastavení TypeScript
 - [x] Tailwind CSS + shadcn/ui komponenty
 - [x] Prisma databázové schéma
-- [x] Základní UI komponenty (Button, Card, Input, Badge)
+- [x] UI komponenty (Button, Card, Input, Badge, Dialog, Tabs, Select, Toast, Skeleton, DropdownMenu, AlertDialog, Label)
 - [x] Layout komponenty (Header, Footer)
 - [x] Landing page
 - [x] Dashboard stránka (upload, analýza)
 - [x] Historie oprav stránka
 - [x] Databáze oprav stránka
 - [x] Pricing stránka
+- [x] Settings stránka
+- [x] Auth stránky (login, error)
+- [x] Marketing stránky (about, terms, privacy, contact)
+- [x] 404 stránka
 - [x] CI/CD GitHub Actions
-- [x] API routes (health, repairs, analyze)
-- [x] Autentizace (NextAuth.js)
+- [x] API routes (health, repairs, repairs/[id], analyze, user, user/stats, cron/cleanup)
+- [x] Autentizace (NextAuth.js + Google/GitHub/Demo)
 - [x] Middleware pro ochranu routes
 - [x] Database seed script
-- [x] User hooks (useUser, useAnalysis)
+- [x] User hooks (useUser, useAnalysis, useToast)
+- [x] Error boundary + loading states
 - [x] Vercel deployment konfigurace
 - [ ] Nasazení na Vercel (čeká na spuštění)
 - [ ] Připojení PostgreSQL databáze
@@ -299,6 +304,14 @@ FIXO/
 | 2025-11-25 | Claude AI | Database seed script |
 | 2025-11-25 | Claude AI | User hooks: useUser, useAnalysis |
 | 2025-11-25 | Claude AI | Vercel deployment konfigurace + cron jobs |
+| 2025-11-25 | Claude AI | Toast, Skeleton, Error boundary komponenty |
+| 2025-11-25 | Claude AI | Settings stránka s user profile management |
+| 2025-11-25 | Claude AI | Marketing stránky: About, Terms, Privacy, Contact |
+| 2025-11-25 | Claude AI | 404 stránka |
+| 2025-11-25 | Claude AI | User API endpoints: GET/PATCH/DELETE /api/user |
+| 2025-11-25 | Claude AI | UI komponenty: Dialog, Tabs, Select, DropdownMenu, AlertDialog, Label |
+| 2025-11-25 | Claude AI | Oprava CI workflow pro fixo-v2 subdirectory |
+| 2025-11-25 | Claude AI | **FÁZE 3 KÓDOVĚ HOTOVO** - Připraveno k merge a nasazení |
 
 ---
 
