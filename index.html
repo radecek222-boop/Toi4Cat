@@ -1277,6 +1277,7 @@
             const [currentStep, setCurrentStep] = useState(0);
             const [isDragging, setIsDragging] = useState(false);
             const [selectedCategory, setSelectedCategory] = useState('all');
+            const [searchTerm, setSearchTerm] = useState(''); // Search in database
             const [historyFilter, setHistoryFilter] = useState('all'); // 'all', 'completed', 'in_progress'
             const [selectedRepairDetail, setSelectedRepairDetail] = useState(null);
             const fileInputRef = useRef(null);
@@ -1954,14 +1955,32 @@
                 }
             };
 
-            // Filtrování databáze podle kategorie
+            // Filtrování databáze podle kategorie a vyhledávání
             const getFilteredDatabase = () => {
-                if (selectedCategory === 'all') {
-                    return Object.entries(repairDatabase);
+                let results = Object.entries(repairDatabase);
+
+                // Filtrovat podle kategorie
+                if (selectedCategory !== 'all') {
+                    results = results.filter(([key, item]) => item.category === selectedCategory);
                 }
-                return Object.entries(repairDatabase).filter(([key, item]) =>
-                    item.category === selectedCategory
-                );
+
+                // Filtrovat podle vyhledávacího výrazu
+                if (searchTerm.trim()) {
+                    const search = searchTerm.toLowerCase().trim();
+                    results = results.filter(([key, item]) => {
+                        // Hledat v názvu opravy
+                        if (item.name?.toLowerCase().includes(search)) return true;
+                        // Hledat v issues
+                        if (item.issues?.some(issue =>
+                            issue.name?.toLowerCase().includes(search) ||
+                            issue.description?.toLowerCase().includes(search) ||
+                            issue.tools?.some(tool => tool.toLowerCase().includes(search))
+                        )) return true;
+                        return false;
+                    });
+                }
+
+                return results;
             };
 
             // Generuje checklist items na základě typu opravy
@@ -4141,6 +4160,58 @@
                         {currentView === 'knowledge' && (
                             <div className="max-w-2xl mx-auto">
                                 <h2 className="page-title">{t('databaseTitle')}</h2>
+
+                                {/* Search Input */}
+                                <div style={{marginBottom: 'var(--space-6)'}}>
+                                    <div style={{
+                                        position: 'relative',
+                                        maxWidth: '500px',
+                                        margin: '0 auto'
+                                    }}>
+                                        <i className="fas fa-search" style={{
+                                            position: 'absolute',
+                                            left: 'var(--space-4)',
+                                            top: '50%',
+                                            transform: 'translateY(-50%)',
+                                            color: 'var(--color-text-muted)'
+                                        }}></i>
+                                        <input
+                                            type="text"
+                                            placeholder="Hledat opravy, nástroje, problémy..."
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            style={{
+                                                width: '100%',
+                                                padding: 'var(--space-3) var(--space-4) var(--space-3) var(--space-10)',
+                                                borderRadius: 'var(--radius-full)',
+                                                border: '2px solid var(--color-border)',
+                                                fontSize: 'var(--text-base)',
+                                                transition: 'all var(--transition-fast)',
+                                                outline: 'none'
+                                            }}
+                                            onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
+                                            onBlur={(e) => e.target.style.borderColor = 'var(--color-border)'}
+                                        />
+                                        {searchTerm && (
+                                            <button
+                                                onClick={() => setSearchTerm('')}
+                                                style={{
+                                                    position: 'absolute',
+                                                    right: 'var(--space-4)',
+                                                    top: '50%',
+                                                    transform: 'translateY(-50%)',
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    color: 'var(--color-text-muted)',
+                                                    cursor: 'pointer',
+                                                    padding: 'var(--space-1)'
+                                                }}
+                                            >
+                                                <i className="fas fa-times"></i>
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
 
                                 {/* Category Filter */}
                                 <div className="category-filter">
