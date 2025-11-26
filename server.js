@@ -397,11 +397,15 @@ Odpověz POUZE ve formátu JSON bez markdown:
                     difficulty: aiResult.issue.difficulty
                 }
             },
+            possibleIssues: aiResult.possibleIssues || [],
             recommendations: {
                 timeEstimate: aiResult.timeEstimate,
                 tools: aiResult.tools,
+                parts: aiResult.parts || [],
                 steps: aiResult.steps,
-                safetyWarnings: aiResult.safetyWarnings
+                safetyWarnings: aiResult.safetyWarnings,
+                estimatedCost: aiResult.estimatedCost,
+                professionalRecommended: aiResult.professionalRecommended
             }
         };
 
@@ -573,23 +577,46 @@ app.post('/api/analyze-description', async (req, res) => {
         const messages = [
             {
                 role: "system",
-                content: `Jsi expert na diagnostiku domácích závad. Na základě popisu problému (a případně obrázku) identifikuj:
-1. Co je poškozený objekt/zařízení
-2. Jaká je závada nebo problém
-3. Jak závažný je problém (1-10)
-4. Jaké kroky doporučuješ k opravě
-5. Jaké nástroje jsou potřeba
-6. Bezpečnostní varování
+                content: `Jsi expert na diagnostiku a opravu domácích závad. Analyzuj popis problému (a případně obrázek) a navrhni NĚKOLIK MOŽNÝCH ZÁVAD, ze kterých si uživatel vybere tu správnou.
+
+DŮLEŽITÉ:
+1. Vrať SEZNAM 2-4 pravděpodobných problémů (possibleIssues), seřazených od nejpravděpodobnějšího
+2. Pro KAŽDÝ problém uveď název, popis a pravděpodobnost
+3. Pro nejpravděpodobnější problém poskytni KOMPLETNÍ návod k opravě s nástroji a díly
+
+Pro každý krok návodu MUSÍŠ uvést:
+- Jaké KONKRÉTNÍ nástroje jsou potřeba (s velikostí/typem)
+- Jaké KONKRÉTNÍ díly/materiál jsou potřeba s PŘESNÝM OZNAČENÍM
+- PODROBNÝ postup co přesně dělat
 
 Odpověz POUZE ve formátu JSON bez markdown:
 {
   "object": {"name": "...", "category": "voda|elektrina|topeni|dvere_okna|nabytek|spotrebice|kuchyn|koupelna|steny_podlahy|zahrada"},
+  "possibleIssues": [
+    {"id": 1, "name": "Nejpravděpodobnější problém", "description": "Popis", "probability": 0.7},
+    {"id": 2, "name": "Druhá možnost", "description": "Popis", "probability": 0.2},
+    {"id": 3, "name": "Třetí možnost", "description": "Popis", "probability": 0.1}
+  ],
   "issue": {"name": "...", "description": "...", "riskScore": 1-10, "difficulty": "Nízká|Střední|Vysoká"},
   "timeEstimate": "X min",
-  "tools": ["nástroj1", "nástroj2"],
-  "steps": [{"step": 1, "action": "...", "time": "X min", "icon": "emoji"}],
+  "tools": ["nástroj1 (velikost/typ)", "nástroj2"],
+  "parts": [{"name": "název dílu", "designation": "označení/velikost/typ", "approxPrice": "cena CZK"}],
+  "steps": [
+    {
+      "step": 1,
+      "action": "Stručný název akce",
+      "description": "PODROBNÝ popis co přesně dělat, jak na to, na co si dát pozor",
+      "tools_for_step": ["nástroj pro tento krok"],
+      "parts_for_step": ["díl potřebný v tomto kroku s označením"],
+      "time": "X min",
+      "icon": "emoji",
+      "tip": "Praktický tip nebo varování pro tento krok"
+    }
+  ],
   "safetyWarnings": ["varování1", "varování2"],
-  "confidence": 0.0-1.0
+  "confidence": 0.0-1.0,
+  "professionalRecommended": false,
+  "estimatedCost": {"min": X, "max": Y, "currency": "CZK"}
 }`
             },
             {
@@ -645,11 +672,15 @@ Odpověz POUZE ve formátu JSON bez markdown:
                     difficulty: aiResult.issue.difficulty
                 }
             },
+            possibleIssues: aiResult.possibleIssues || [],
             recommendations: {
                 timeEstimate: aiResult.timeEstimate,
                 tools: aiResult.tools,
+                parts: aiResult.parts || [],
                 steps: aiResult.steps,
-                safetyWarnings: aiResult.safetyWarnings
+                safetyWarnings: aiResult.safetyWarnings,
+                estimatedCost: aiResult.estimatedCost,
+                professionalRecommended: aiResult.professionalRecommended
             }
         };
 

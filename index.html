@@ -1707,9 +1707,13 @@
                                         difficulty: data.detection.issue.difficulty,
                                         timeEstimate: data.recommendations.timeEstimate,
                                         tools: data.recommendations.tools,
+                                        parts: data.recommendations.parts || [],
                                         steps: data.recommendations.steps,
-                                        safetyWarnings: data.recommendations.safetyWarnings
+                                        safetyWarnings: data.recommendations.safetyWarnings,
+                                        estimatedCost: data.recommendations.estimatedCost,
+                                        professionalRecommended: data.recommendations.professionalRecommended
                                     },
+                                    possibleIssues: data.possibleIssues || [],
                                     confidence: Math.round(data.detection.object.confidence * 100)
                                 });
                                 setIsAnalyzing(false);
@@ -1973,9 +1977,13 @@
                                         difficulty: data.detection.issue.difficulty,
                                         timeEstimate: data.recommendations.timeEstimate,
                                         tools: data.recommendations.tools,
+                                        parts: data.recommendations.parts || [],
                                         steps: data.recommendations.steps,
-                                        safetyWarnings: data.recommendations.safetyWarnings
+                                        safetyWarnings: data.recommendations.safetyWarnings,
+                                        estimatedCost: data.recommendations.estimatedCost,
+                                        professionalRecommended: data.recommendations.professionalRecommended
                                     },
+                                    possibleIssues: data.possibleIssues || [],
                                     confidence: Math.round(data.detection.object.confidence * 100)
                                 });
                                 setIsAnalyzing(false);
