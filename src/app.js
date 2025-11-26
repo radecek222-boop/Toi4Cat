@@ -766,6 +766,9 @@
             const [menuOpen, setMenuOpen] = useState(false);
             const [langMenuOpen, setLangMenuOpen] = useState(false);
 
+            // How it works expanded state
+            const [expandedStep, setExpandedStep] = useState(null);
+
             // PWA install state
             const [deferredPrompt, setDeferredPrompt] = useState(null);
             const [showInstallBanner, setShowInstallBanner] = useState(false);
@@ -2609,26 +2612,68 @@
                                         <i className="fas fa-magic section-title-icon"></i>
                                         Jak to funguje?
                                     </h3>
-                                    <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-4)'}}>
+                                    <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
                                         {[
-                                            { num: '1', icon: 'fa-camera', title: 'Vyfoťte', desc: 'Nafoťte poškozenou věc nebo nahrajte fotku' },
-                                            { num: '2', icon: 'fa-brain', title: 'AI Analýza', desc: 'Umělá inteligence identifikuje závadu' },
-                                            { num: '3', icon: 'fa-tools', title: 'Opravte', desc: 'Postupujte podle návodu krok za krokem' }
+                                            {
+                                                num: '1', icon: 'fa-camera', title: 'Vyfoťte',
+                                                desc: 'Nafoťte poškozenou věc nebo nahrajte fotku',
+                                                detail: 'Stačí namířit fotoaparát na závadu – rozbitý kohoutek, prasklou zásuvku, nefunkční spotřebič. Čím lépe je problém vidět, tím přesnější bude diagnóza.'
+                                            },
+                                            {
+                                                num: '2', icon: 'fa-brain', title: 'AI Analýza',
+                                                desc: 'Umělá inteligence identifikuje závadu',
+                                                detail: 'Naše AI analyzuje fotku během několika sekund. Rozpozná typ zařízení, identifikuje možné příčiny závady a navrhne nejpravděpodobnější řešení.'
+                                            },
+                                            {
+                                                num: '3', icon: 'fa-tools', title: 'Opravte',
+                                                desc: 'Postupujte podle návodu krok za krokem',
+                                                detail: 'Získáte přehledný návod s jednotlivými kroky, seznamem potřebného nářadí, bezpečnostními upozorněními a odhadovanou cenou opravy.'
+                                            }
                                         ].map((step, idx) => (
-                                            <div key={idx} className="info-box ripple" style={{flexDirection: 'row', justifyContent: 'flex-start', gap: 'var(--space-4)', textAlign: 'left', minHeight: 'auto', padding: 'var(--space-4)'}}>
-                                                <div style={{
-                                                    width: '50px', height: '50px', borderRadius: 'var(--radius-xl)',
-                                                    background: 'var(--gradient-primary)', color: 'white',
-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                    fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)',
-                                                    flexShrink: 0
-                                                }}>
-                                                    <i className={`fas ${step.icon}`}></i>
+                                            <div
+                                                key={idx}
+                                                className="info-box ripple"
+                                                onClick={() => setExpandedStep(expandedStep === idx ? null : idx)}
+                                                style={{
+                                                    flexDirection: 'column',
+                                                    alignItems: 'flex-start',
+                                                    textAlign: 'left',
+                                                    minHeight: 'auto',
+                                                    padding: 'var(--space-3)',
+                                                    cursor: 'pointer',
+                                                    transition: 'all 0.2s ease'
+                                                }}
+                                            >
+                                                <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-3)', width: '100%'}}>
+                                                    <div style={{
+                                                        width: '40px', height: '40px', borderRadius: 'var(--radius-lg)',
+                                                        background: expandedStep === idx ? 'var(--gradient-primary)' : 'var(--color-bg-tertiary)',
+                                                        color: expandedStep === idx ? 'white' : 'var(--color-primary)',
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                        fontSize: 'var(--text-base)',
+                                                        flexShrink: 0,
+                                                        transition: 'all 0.2s ease'
+                                                    }}>
+                                                        <i className={`fas ${step.icon}`}></i>
+                                                    </div>
+                                                    <div style={{flex: 1}}>
+                                                        <h4 style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', color: 'var(--color-text-primary)', margin: 0}}>{step.title}</h4>
+                                                        <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', margin: 0}}>{step.desc}</p>
+                                                    </div>
+                                                    <i className={`fas fa-chevron-${expandedStep === idx ? 'up' : 'down'}`} style={{color: 'var(--color-text-muted)', fontSize: 'var(--text-sm)'}}></i>
                                                 </div>
-                                                <div>
-                                                    <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)', color: 'var(--color-text-primary)'}}>{step.title}</h4>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', margin: 0}}>{step.desc}</p>
-                                                </div>
+                                                {expandedStep === idx && (
+                                                    <div style={{
+                                                        marginTop: 'var(--space-3)',
+                                                        paddingTop: 'var(--space-3)',
+                                                        borderTop: '1px solid var(--color-border)',
+                                                        fontSize: 'var(--text-sm)',
+                                                        color: 'var(--color-text-secondary)',
+                                                        lineHeight: 1.5
+                                                    }}>
+                                                        {step.detail}
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>
