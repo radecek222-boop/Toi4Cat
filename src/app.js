@@ -2398,38 +2398,249 @@
                         </div>
                     )}
 
-                    {/* Header s Hamburger Menu */}
-                    <header className="header" style={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100}}>
-                        <div className="container">
-                            <div className="header-content">
-                                <div className="flex items-center" style={{cursor: 'pointer'}} onClick={() => navigateTo('home')}>
-                                    <span className="logo">{t('appName')}</span>
+                    {/* Desktop Header */}
+                    <header className="desktop-header" style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        zIndex: 100,
+                        background: 'var(--color-bg-primary)',
+                        borderBottom: '1px solid var(--color-border)',
+                        padding: 'var(--space-4) var(--space-6)',
+                        boxShadow: 'var(--shadow-md)'
+                    }}>
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            maxWidth: '1400px',
+                            margin: '0 auto',
+                            gap: 'var(--space-6)'
+                        }}>
+                            {/* Logo - Left */}
+                            <div
+                                className="logo-section"
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 'var(--space-3)',
+                                    cursor: 'pointer',
+                                    flexShrink: 0
+                                }}
+                                onClick={() => navigateTo('home')}
+                            >
+                                <div style={{
+                                    fontSize: 'var(--text-3xl)',
+                                    fontWeight: 'var(--font-black)',
+                                    background: 'var(--gradient-primary)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    backgroundClip: 'text'
+                                }}>
+                                    {t('appName')}
                                 </div>
+                            </div>
 
-                                {/* Dark Mode Toggle - Desktop only */}
+                            {/* Navigation - Center */}
+                            <nav className="desktop-nav" style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 'var(--space-2)',
+                                flex: 1,
+                                justifyContent: 'center'
+                            }}>
                                 <button
-                                    className="dark-mode-toggle-desktop"
+                                    onClick={() => navigateTo('home')}
+                                    style={{
+                                        padding: 'var(--space-3) var(--space-5)',
+                                        borderRadius: 'var(--radius-xl)',
+                                        background: currentView === 'home' ? 'var(--color-primary)' : 'transparent',
+                                        color: currentView === 'home' ? 'white' : 'var(--color-text-primary)',
+                                        border: currentView === 'home' ? 'none' : '1px solid var(--color-border)',
+                                        cursor: 'pointer',
+                                        fontSize: 'var(--text-base)',
+                                        fontWeight: currentView === 'home' ? 'var(--font-semibold)' : 'var(--font-medium)',
+                                        transition: 'var(--transition-fast)',
+                                        boxShadow: currentView === 'home' ? 'var(--shadow-md)' : 'none'
+                                    }}
+                                >
+                                    Analyzovat
+                                </button>
+
+                                <button
+                                    onClick={() => navigateTo('history')}
+                                    style={{
+                                        padding: 'var(--space-3) var(--space-5)',
+                                        borderRadius: 'var(--radius-xl)',
+                                        background: currentView === 'history' ? 'var(--color-primary)' : 'transparent',
+                                        color: currentView === 'history' ? 'white' : 'var(--color-text-primary)',
+                                        border: currentView === 'history' ? 'none' : '1px solid var(--color-border)',
+                                        cursor: 'pointer',
+                                        fontSize: 'var(--text-base)',
+                                        fontWeight: currentView === 'history' ? 'var(--font-semibold)' : 'var(--font-medium)',
+                                        transition: 'var(--transition-fast)',
+                                        boxShadow: currentView === 'history' ? 'var(--shadow-md)' : 'none'
+                                    }}
+                                >
+                                    Historie
+                                </button>
+
+                                <button
+                                    onClick={() => navigateTo('knowledge')}
+                                    style={{
+                                        padding: 'var(--space-3) var(--space-5)',
+                                        borderRadius: 'var(--radius-xl)',
+                                        background: currentView === 'knowledge' ? 'var(--color-primary)' : 'transparent',
+                                        color: currentView === 'knowledge' ? 'white' : 'var(--color-text-primary)',
+                                        border: currentView === 'knowledge' ? 'none' : '1px solid var(--color-border)',
+                                        cursor: 'pointer',
+                                        fontSize: 'var(--text-base)',
+                                        fontWeight: currentView === 'knowledge' ? 'var(--font-semibold)' : 'var(--font-medium)',
+                                        transition: 'var(--transition-fast)',
+                                        boxShadow: currentView === 'knowledge' ? 'var(--shadow-md)' : 'none'
+                                    }}
+                                >
+                                    Databáze
+                                </button>
+
+                                <button
+                                    onClick={() => navigateTo('offline')}
+                                    style={{
+                                        padding: 'var(--space-3) var(--space-5)',
+                                        borderRadius: 'var(--radius-xl)',
+                                        background: currentView === 'offline' ? 'var(--color-primary)' : 'transparent',
+                                        color: currentView === 'offline' ? 'white' : 'var(--color-text-primary)',
+                                        border: currentView === 'offline' ? 'none' : '1px solid var(--color-border)',
+                                        cursor: 'pointer',
+                                        fontSize: 'var(--text-base)',
+                                        fontWeight: currentView === 'offline' ? 'var(--font-semibold)' : 'var(--font-medium)',
+                                        transition: 'var(--transition-fast)',
+                                        position: 'relative',
+                                        boxShadow: currentView === 'offline' ? 'var(--shadow-md)' : 'none'
+                                    }}
+                                >
+                                    Offline
+                                    {savedGuides.length > 0 && (
+                                        <span style={{
+                                            position: 'absolute',
+                                            top: '-6px',
+                                            right: '-6px',
+                                            background: 'var(--color-success)',
+                                            color: 'white',
+                                            padding: '3px 7px',
+                                            borderRadius: 'var(--radius-full)',
+                                            fontSize: '11px',
+                                            fontWeight: 'var(--font-bold)',
+                                            minWidth: '20px',
+                                            textAlign: 'center',
+                                            boxShadow: 'var(--shadow-md)'
+                                        }}>{savedGuides.length}</span>
+                                    )}
+                                </button>
+                            </nav>
+
+                            {/* Right Side - Language & Dark Mode */}
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 'var(--space-3)',
+                                flexShrink: 0
+                            }}>
+                                {/* Dark Mode Toggle */}
+                                <button
                                     onClick={toggleDarkMode}
                                     style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 'var(--space-2)',
-                                        padding: 'var(--space-2) var(--space-3)',
+                                        padding: 'var(--space-2)',
                                         background: 'var(--color-bg-secondary)',
                                         border: '1px solid var(--color-border)',
                                         borderRadius: 'var(--radius-lg)',
                                         cursor: 'pointer',
                                         transition: 'var(--transition-fast)',
-                                        marginLeft: 'auto',
-                                        marginRight: 'var(--space-4)'
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        width: '36px',
+                                        height: '36px'
                                     }}
                                     title={darkMode ? 'Přepnout na světlý režim' : 'Přepnout na tmavý režim'}
                                 >
                                     <i className={`fas ${darkMode ? 'fa-sun' : 'fa-moon'}`} style={{color: darkMode ? '#fbbf24' : '#6366f1', fontSize: 'var(--text-lg)'}}></i>
                                 </button>
 
-                                {/* Hamburger Button */}
-                                <button className={`hamburger-btn ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
+                                {/* Language Selector */}
+                                <div style={{position: 'relative'}}>
+                                    <button
+                                        onClick={() => setLangMenuOpen(!langMenuOpen)}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 'var(--space-2)',
+                                            padding: 'var(--space-2) var(--space-3)',
+                                            background: 'var(--color-bg-secondary)',
+                                            border: '1px solid var(--color-border)',
+                                            borderRadius: 'var(--radius-lg)',
+                                            cursor: 'pointer',
+                                            fontSize: 'var(--text-sm)',
+                                            transition: 'var(--transition-fast)',
+                                            height: '36px'
+                                        }}
+                                    >
+                                        <span style={{fontSize: 'var(--text-lg)'}}>{getCurrentLanguageData().flag}</span>
+                                        <i className={`fas fa-chevron-${langMenuOpen ? 'up' : 'down'}`} style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}></i>
+                                    </button>
+
+                                    {/* Language Dropdown */}
+                                    {langMenuOpen && (
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: 'calc(100% + 8px)',
+                                            right: 0,
+                                            background: 'var(--color-bg-primary)',
+                                            border: '1px solid var(--color-border)',
+                                            borderRadius: 'var(--radius-xl)',
+                                            boxShadow: 'var(--shadow-xl)',
+                                            padding: 'var(--space-3)',
+                                            minWidth: '320px',
+                                            maxHeight: '400px',
+                                            overflowY: 'auto',
+                                            zIndex: 1000
+                                        }}>
+                                            <div style={{
+                                                display: 'grid',
+                                                gridTemplateColumns: 'repeat(5, 1fr)',
+                                                gap: 'var(--space-2)'
+                                            }}>
+                                                {languages.map(lang => (
+                                                    <button
+                                                        key={lang.code}
+                                                        onClick={() => { changeLanguage(lang.code); setLangMenuOpen(false); }}
+                                                        style={{
+                                                            padding: 'var(--space-2)',
+                                                            borderRadius: 'var(--radius-lg)',
+                                                            border: currentLanguage === lang.code ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
+                                                            background: currentLanguage === lang.code ? 'var(--color-primary-light)' : 'var(--color-bg-secondary)',
+                                                            cursor: 'pointer',
+                                                            fontSize: 'var(--text-xl)',
+                                                            textAlign: 'center',
+                                                            transition: 'var(--transition-fast)'
+                                                        }}
+                                                        title={lang.native}
+                                                    >
+                                                        {lang.flag}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Hamburger Button - Mobile only */}
+                                <button
+                                    className={`hamburger-btn ${menuOpen ? 'open' : ''}`}
+                                    onClick={toggleMenu}
+                                    style={{display: 'none'}}
+                                >
                                     <span></span>
                                     <span></span>
                                     <span></span>
