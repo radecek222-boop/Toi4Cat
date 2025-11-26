@@ -18,9 +18,24 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(helmet());
 app.use(compression());
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+// CORS konfigurace - povolit GitHub Pages a localhost
+const corsOptions = {
+    origin: [
+        'https://radecek222-boop.github.io',
+        'http://localhost:3000',
+        'http://localhost:5500',
+        'http://127.0.0.1:3000',
+        'http://127.0.0.1:5500'
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+};
+app.use(cors(corsOptions));
+
+app.use(express.json({ limit: '10mb' })); // Zvýšit limit pro base64 obrazy
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(morgan('combined'));
 
 // Rate limiting
@@ -330,9 +345,85 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
 
     } catch (error) {
         console.error('Chyba při analýze:', error);
-        res.status(500).json({ 
+        res.status(500).json({
             error: 'Chyba při zpracování obrázku',
-            message: error.message 
+            message: error.message
+        });
+    }
+});
+
+// Analyzovat obrázek ze base64 (pro frontend)
+app.post('/api/analyze-base64', async (req, res) => {
+    try {
+        const { image } = req.body;
+
+        if (!image) {
+            return res.status(400).json({ error: 'Nebyl poskytnut base64 obrázek' });
+        }
+
+        // Validovat base64 formát
+        if (!image.startsWith('data:image/')) {
+            return res.status(400).json({ error: 'Neplatný formát obrázku (očekává se data:image/...)' });
+        }
+
+        // Simulace AI zpracování (v produkci by se volalo skutečné vision API)
+        const analysisId = uuidv4();
+
+        // Získat velikost base64 obrázku
+        const base64Length = image.split(',')[1]?.length || 0;
+        const sizeInBytes = (base64Length * 3) / 4;
+
+        // Náhodně vybrat objekt z databáze
+        const objects = Object.keys(repairDatabase);
+        const randomObjectKey = objects[Math.floor(Math.random() * objects.length)];
+        const detectedObject = repairDatabase[randomObjectKey];
+
+        // Náhodně vybrat závadu
+        const randomIssue = detectedObject.commonIssues[
+            Math.floor(Math.random() * detectedObject.commonIssues.length)
+        ];
+
+        const result = {
+            analysisId: analysisId,
+            timestamp: new Date().toISOString(),
+            image: {
+                size: sizeInBytes,
+                format: 'base64'
+            },
+            detection: {
+                object: {
+                    id: detectedObject.id,
+                    name: detectedObject.name,
+                    category: detectedObject.category,
+                    confidence: Math.random() * 0.2 + 0.8 // 0.8 - 1.0
+                },
+                issue: {
+                    id: randomIssue.id,
+                    name: randomIssue.name,
+                    description: randomIssue.description,
+                    confidence: Math.random() * 0.15 + 0.85, // 0.85 - 1.0
+                    severity: randomIssue.severity,
+                    riskScore: randomIssue.riskScore
+                }
+            },
+            recommendations: {
+                canDIY: !randomIssue.professionalNeeded,
+                difficulty: randomIssue.difficulty,
+                timeEstimate: randomIssue.timeEstimate,
+                costEstimate: randomIssue.costEstimate,
+                requiredTools: randomIssue.requiredTools,
+                steps: randomIssue.steps,
+                safetyWarnings: randomIssue.safetyWarnings
+            }
+        };
+
+        res.json({ success: true, data: result });
+
+    } catch (error) {
+        console.error('Chyba při analýze base64:', error);
+        res.status(500).json({
+            error: 'Chyba při zpracování base64 obrázku',
+            message: error.message
         });
     }
 });
@@ -520,7 +611,8 @@ app.listen(PORT, () => {
     console.log('API Endpoints:');
     console.log('  GET  /api/health         - Health check');
     console.log('  GET  /api/categories     - Seznam kategorií');
-    console.log('  POST /api/analyze        - Analyzovat obrázek');
+    console.log('  POST /api/analyze        - Analyzovat obrázek (multipart)');
+    console.log('  POST /api/analyze-base64 - Analyzovat obrázek (base64)');
     console.log('  GET  /api/repair/:id/:id - Detail opravy');
     console.log('  GET  /api/objects        - Seznam objektů');
     console.log('  GET  /api/search         - Vyhledávání');
