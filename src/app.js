@@ -2867,14 +2867,6 @@
                                         </p>
                                     </div>
 
-                                    <button
-                                        onClick={() => fileInputRef.current.click()}
-                                        className="btn btn-primary btn-xl btn-block hover-scale"
-                                    >
-                                        <i className="fas fa-camera mr-2"></i>
-                                        {t('uploadBtn')}
-                                    </button>
-
                                     <div className="grid grid-3 mt-6 gap-2">
                                         <div className="quick-stat">
                                             <i className="fas fa-clock" style={{color: 'var(--color-primary)', marginBottom: 'var(--space-1)', display: 'block'}}></i>
