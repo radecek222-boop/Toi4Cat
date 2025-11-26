@@ -457,14 +457,56 @@
             "Hadřík"
           ],
           "steps": [
-            { "step": 1, "action": "Uzavřete přívod vody a vypusťte zbytek", "time": "2 min", "icon": "🚰" },
-            { "step": 2, "action": "Sejměte krytku a povolte zajišťovací šroub páky", "time": "3 min", "icon": "🔧", "hint": "Použijte správný imbus, ať se šroub nestrhne." },
-            { "step": 3, "action": "Sundejte páku a dekorativní kryt", "time": "3 min", "icon": "🧰" },
-            { "step": 4, "action": "Vyjměte starou kartuši", "time": "4 min", "icon": "⚙️", "hint": "Poznamenejte si orientaci výstupků." },
-            { "step": 5, "action": "Vyčistěte sedlo hadříkem a odstraňte vodní kámen", "time": "3 min", "icon": "🧼" },
-            { "step": 6, "action": "Vložte novou kartuši a zarovnejte zarážky", "time": "4 min", "icon": "🔩" },
-            { "step": 7, "action": "Sestavte kohoutek zpět a dotáhněte šroub", "time": "4 min", "icon": "✅" },
-            { "step": 8, "action": "Otevřete vodu a otestujte plynulost", "time": "2 min", "icon": "💧" }
+            {
+              "step": 1,
+              "action": "Uzavřete přívod vody a vypusťte zbytek",
+              "time": "2 min",
+              "icon": "🚰"
+            },
+            {
+              "step": 2,
+              "action": "Sejměte krytku a povolte zajišťovací šroub páky",
+              "time": "3 min",
+              "icon": "🔧",
+              "hint": "Použijte správný imbus, ať se šroub nestrhne."
+            },
+            {
+              "step": 3,
+              "action": "Sundejte páku a dekorativní kryt",
+              "time": "3 min",
+              "icon": "🧰"
+            },
+            {
+              "step": 4,
+              "action": "Vyjměte starou kartuši",
+              "time": "4 min",
+              "icon": "⚙️",
+              "hint": "Poznamenejte si orientaci výstupků."
+            },
+            {
+              "step": 5,
+              "action": "Vyčistěte sedlo hadříkem a odstraňte vodní kámen",
+              "time": "3 min",
+              "icon": "🧼"
+            },
+            {
+              "step": 6,
+              "action": "Vložte novou kartuši a zarovnejte zarážky",
+              "time": "4 min",
+              "icon": "🔩"
+            },
+            {
+              "step": 7,
+              "action": "Sestavte kohoutek zpět a dotáhněte šroub",
+              "time": "4 min",
+              "icon": "✅"
+            },
+            {
+              "step": 8,
+              "action": "Otevřete vodu a otestujte plynulost",
+              "time": "2 min",
+              "icon": "💧"
+            }
           ],
           "safetyWarnings": [
             "Uzavřete vodu před demontáží",
@@ -486,14 +528,55 @@
             "Odvápňovač"
           ],
           "steps": [
-            { "step": 1, "action": "Ověřte, že je zapnutý ohřev vody a tlak v systému", "time": "2 min", "icon": "📊" },
-            { "step": 2, "action": "Zavřete rohový ventil teplé vody", "time": "1 min", "icon": "🚰" },
-            { "step": 3, "action": "Demontujte páku a kryt kartuše", "time": "4 min", "icon": "🔧" },
-            { "step": 4, "action": "Vyjměte kartuši a zkontrolujte usazeniny", "time": "4 min", "icon": "🔍" },
-            { "step": 5, "action": "Očistěte vstupní sítka a kanálky odvápňovačem", "time": "10 min", "icon": "🧴", "hint": "Nechte působit a následně propláchněte čistou vodou." },
-            { "step": 6, "action": "V případě poškození vložte novou kartuši", "time": "5 min", "icon": "⚙️" },
-            { "step": 7, "action": "Sestavte kohoutek a otevřete ventil", "time": "3 min", "icon": "✅" },
-            { "step": 8, "action": "Pusťte teplou vodu a otestujte mísení", "time": "2 min", "icon": "💧" }
+            {
+              "step": 1,
+              "action": "Ověřte, že je zapnutý ohřev vody a tlak v systému",
+              "time": "2 min",
+              "icon": "📊"
+            },
+            {
+              "step": 2,
+              "action": "Zavřete rohový ventil teplé vody",
+              "time": "1 min",
+              "icon": "🚰"
+            },
+            {
+              "step": 3,
+              "action": "Demontujte páku a kryt kartuše",
+              "time": "4 min",
+              "icon": "🔧"
+            },
+            {
+              "step": 4,
+              "action": "Vyjměte kartuši a zkontrolujte usazeniny",
+              "time": "4 min",
+              "icon": "🔍"
+            },
+            {
+              "step": 5,
+              "action": "Očistěte vstupní sítka a kanálky odvápňovačem",
+              "time": "10 min",
+              "icon": "🧴",
+              "hint": "Nechte působit a následně propláchněte čistou vodou."
+            },
+            {
+              "step": 6,
+              "action": "V případě poškození vložte novou kartuši",
+              "time": "5 min",
+              "icon": "⚙️"
+            },
+            {
+              "step": 7,
+              "action": "Sestavte kohoutek a otevřete ventil",
+              "time": "3 min",
+              "icon": "✅"
+            },
+            {
+              "step": 8,
+              "action": "Pusťte teplou vodu a otestujte mísení",
+              "time": "2 min",
+              "icon": "💧"
+            }
           ],
           "safetyWarnings": [
             "Pozor na horkou vodu při testování",
@@ -946,15 +1029,48 @@
           "riskScore": 2,
           "difficulty": "Nízká",
           "timeEstimate": "15 min",
-          "tools": ["Šroubovák", "Sprej na silikon", "Hadřík"],
-          "steps": [
-            { "step": 1, "action": "Sundejte víko nádržky", "time": "1 min", "icon": "📦" },
-            { "step": 2, "action": "Odpojte tlačítko od táhla nebo tyčky", "time": "2 min", "icon": "⚙️" },
-            { "step": 3, "action": "Vyčistěte vedení tlačítka od vodního kamene", "time": "5 min", "icon": "🧹", "hint": "Použijte hadřík a teplou vodu." },
-            { "step": 4, "action": "Lehce promažte pohyblivé části silikonovým sprejem", "time": "2 min", "icon": "🧴" },
-            { "step": 5, "action": "Znovu sestavte a otestujte pružnost", "time": "3 min", "icon": "✅" }
+          "tools": [
+            "Šroubovák",
+            "Sprej na silikon",
+            "Hadřík"
           ],
-          "safetyWarnings": ["Manipulujte opatrně s porcelánovým víkem", "Nepoužívejte oleje, které lepí nečistoty"]
+          "steps": [
+            {
+              "step": 1,
+              "action": "Sundejte víko nádržky",
+              "time": "1 min",
+              "icon": "📦"
+            },
+            {
+              "step": 2,
+              "action": "Odpojte tlačítko od táhla nebo tyčky",
+              "time": "2 min",
+              "icon": "⚙️"
+            },
+            {
+              "step": 3,
+              "action": "Vyčistěte vedení tlačítka od vodního kamene",
+              "time": "5 min",
+              "icon": "🧹",
+              "hint": "Použijte hadřík a teplou vodu."
+            },
+            {
+              "step": 4,
+              "action": "Lehce promažte pohyblivé části silikonovým sprejem",
+              "time": "2 min",
+              "icon": "🧴"
+            },
+            {
+              "step": 5,
+              "action": "Znovu sestavte a otestujte pružnost",
+              "time": "3 min",
+              "icon": "✅"
+            }
+          ],
+          "safetyWarnings": [
+            "Manipulujte opatrně s porcelánovým víkem",
+            "Nepoužívejte oleje, které lepí nečistoty"
+          ]
         },
         {
           "id": "toilet-odor-codex",
@@ -963,15 +1079,49 @@
           "riskScore": 2,
           "difficulty": "Nízká",
           "timeEstimate": "20 min",
-          "tools": ["Klíč", "Tmel na sanitu", "Čistící kartáč", "Ochranné rukavice"],
-          "steps": [
-            { "step": 1, "action": "Zkontrolujte vodu ve WC sifonu a případně dolijte", "time": "1 min", "icon": "💧" },
-            { "step": 2, "action": "Přitáhněte šrouby spojující mísu s odpadem", "time": "3 min", "icon": "🔧" },
-            { "step": 3, "action": "Vyčistěte a odmaštěte okolí napojení na odpad", "time": "5 min", "icon": "🧹" },
-            { "step": 4, "action": "Naneste tenký pruh sanitárního tmelu kolem spoje", "time": "5 min", "icon": "🧴", "hint": "Nechte tmel alespoň 10 minut zaschnout." },
-            { "step": 5, "action": "Propláchněte WC a ověřte, zda zápach mizí", "time": "3 min", "icon": "✅" }
+          "tools": [
+            "Klíč",
+            "Tmel na sanitu",
+            "Čistící kartáč",
+            "Ochranné rukavice"
           ],
-          "safetyWarnings": ["Používejte rukavice a větrejte", "Nepoužívejte agresivní chemii na silikon"]
+          "steps": [
+            {
+              "step": 1,
+              "action": "Zkontrolujte vodu ve WC sifonu a případně dolijte",
+              "time": "1 min",
+              "icon": "💧"
+            },
+            {
+              "step": 2,
+              "action": "Přitáhněte šrouby spojující mísu s odpadem",
+              "time": "3 min",
+              "icon": "🔧"
+            },
+            {
+              "step": 3,
+              "action": "Vyčistěte a odmaštěte okolí napojení na odpad",
+              "time": "5 min",
+              "icon": "🧹"
+            },
+            {
+              "step": 4,
+              "action": "Naneste tenký pruh sanitárního tmelu kolem spoje",
+              "time": "5 min",
+              "icon": "🧴",
+              "hint": "Nechte tmel alespoň 10 minut zaschnout."
+            },
+            {
+              "step": 5,
+              "action": "Propláchněte WC a ověřte, zda zápach mizí",
+              "time": "3 min",
+              "icon": "✅"
+            }
+          ],
+          "safetyWarnings": [
+            "Používejte rukavice a větrejte",
+            "Nepoužívejte agresivní chemii na silikon"
+          ]
         }
       ]
     },
@@ -1461,16 +1611,56 @@
           "riskScore": 9,
           "difficulty": "Vysoká",
           "timeEstimate": "25 min",
-          "tools": ["Tester napětí", "Šroubovák", "Momentový šroubovák", "Nová zásuvka"],
-          "steps": [
-            { "step": 1, "action": "Vypněte jistič a ověřte beznapěťový stav", "time": "3 min", "icon": "⚡" },
-            { "step": 2, "action": "Demontujte kryt a zkontrolujte přitažení svorek", "time": "5 min", "icon": "🔍" },
-            { "step": 3, "action": "Dotáhněte uvolněné spoje momentovým šroubovákem", "time": "5 min", "icon": "🔩", "hint": "Použijte doporučený moment výrobce." },
-            { "step": 4, "action": "Pokud jsou vodiče spálené, zkraťte a znovu odizolujte", "time": "6 min", "icon": "✂️" },
-            { "step": 5, "action": "V případě poškození vyměňte celou zásuvku", "time": "5 min", "icon": "⚙️" },
-            { "step": 6, "action": "Zapněte jistič a sledujte ohřev při zátěži", "time": "3 min", "icon": "✅" }
+          "tools": [
+            "Tester napětí",
+            "Šroubovák",
+            "Momentový šroubovák",
+            "Nová zásuvka"
           ],
-          "safetyWarnings": ["⚠️ Přehřátá zásuvka může způsobit požár", "Vždy pracujte s vypnutým okruhem", "Pokud si nejste jisti, volejte elektrikáře"]
+          "steps": [
+            {
+              "step": 1,
+              "action": "Vypněte jistič a ověřte beznapěťový stav",
+              "time": "3 min",
+              "icon": "⚡"
+            },
+            {
+              "step": 2,
+              "action": "Demontujte kryt a zkontrolujte přitažení svorek",
+              "time": "5 min",
+              "icon": "🔍"
+            },
+            {
+              "step": 3,
+              "action": "Dotáhněte uvolněné spoje momentovým šroubovákem",
+              "time": "5 min",
+              "icon": "🔩",
+              "hint": "Použijte doporučený moment výrobce."
+            },
+            {
+              "step": 4,
+              "action": "Pokud jsou vodiče spálené, zkraťte a znovu odizolujte",
+              "time": "6 min",
+              "icon": "✂️"
+            },
+            {
+              "step": 5,
+              "action": "V případě poškození vyměňte celou zásuvku",
+              "time": "5 min",
+              "icon": "⚙️"
+            },
+            {
+              "step": 6,
+              "action": "Zapněte jistič a sledujte ohřev při zátěži",
+              "time": "3 min",
+              "icon": "✅"
+            }
+          ],
+          "safetyWarnings": [
+            "⚠️ Přehřátá zásuvka může způsobit požár",
+            "Vždy pracujte s vypnutým okruhem",
+            "Pokud si nejste jisti, volejte elektrikáře"
+          ]
         },
         {
           "id": "loose-box-codex",
@@ -1479,16 +1669,55 @@
           "riskScore": 6,
           "difficulty": "Střední",
           "timeEstimate": "20 min",
-          "tools": ["Šroubovák", "Rozpěrné šrouby", "Montážní pěna", "Vodováha"],
-          "steps": [
-            { "step": 1, "action": "Vypněte jistič a ověřte beznapěťový stav", "time": "3 min", "icon": "⚡" },
-            { "step": 2, "action": "Vyšroubujte rámeček a vyjměte zásuvku z krabice", "time": "4 min", "icon": "🔧" },
-            { "step": 3, "action": "Zkontrolujte, zda drží rozpěrné packy nebo šrouby", "time": "3 min", "icon": "🔍" },
-            { "step": 4, "action": "Dotáhněte nebo nahraďte rozpěrné šrouby, případně doplňte montážní pěnu", "time": "5 min", "icon": "🔩" },
-            { "step": 5, "action": "Vyrovnejte zásuvku vodováhou a připevněte rámeček", "time": "3 min", "icon": "📏" },
-            { "step": 6, "action": "Zapněte jistič a otestujte pevnost i funkčnost", "time": "2 min", "icon": "✅" }
+          "tools": [
+            "Šroubovák",
+            "Rozpěrné šrouby",
+            "Montážní pěna",
+            "Vodováha"
           ],
-          "safetyWarnings": ["Pracujte opatrně v blízkosti omítky", "Nepřetahujte šrouby v plastové krabici", "Zkontrolujte, že vodiče nejsou namáhané"]
+          "steps": [
+            {
+              "step": 1,
+              "action": "Vypněte jistič a ověřte beznapěťový stav",
+              "time": "3 min",
+              "icon": "⚡"
+            },
+            {
+              "step": 2,
+              "action": "Vyšroubujte rámeček a vyjměte zásuvku z krabice",
+              "time": "4 min",
+              "icon": "🔧"
+            },
+            {
+              "step": 3,
+              "action": "Zkontrolujte, zda drží rozpěrné packy nebo šrouby",
+              "time": "3 min",
+              "icon": "🔍"
+            },
+            {
+              "step": 4,
+              "action": "Dotáhněte nebo nahraďte rozpěrné šrouby, případně doplňte montážní pěnu",
+              "time": "5 min",
+              "icon": "🔩"
+            },
+            {
+              "step": 5,
+              "action": "Vyrovnejte zásuvku vodováhou a připevněte rámeček",
+              "time": "3 min",
+              "icon": "📏"
+            },
+            {
+              "step": 6,
+              "action": "Zapněte jistič a otestujte pevnost i funkčnost",
+              "time": "2 min",
+              "icon": "✅"
+            }
+          ],
+          "safetyWarnings": [
+            "Pracujte opatrně v blízkosti omítky",
+            "Nepřetahujte šrouby v plastové krabici",
+            "Zkontrolujte, že vodiče nejsou namáhané"
+          ]
         }
       ]
     },
@@ -3229,16 +3458,55 @@
           "riskScore": 3,
           "difficulty": "Střední",
           "timeEstimate": "30 min",
-          "tools": ["Odvzdušňovací klíč", "Hadice na proplach", "Kbelík", "Klíč na šroubení"],
-          "steps": [
-            { "step": 1, "action": "Vypněte kotel a nechte systém vychladnout", "time": "15 min", "icon": "🌡️" },
-            { "step": 2, "action": "Odvzdušněte radiátor standardním způsobem", "time": "5 min", "icon": "🔧" },
-            { "step": 3, "action": "Uzavřete přívod i zpátečku radiátoru", "time": "2 min", "icon": "🚰" },
-            { "step": 4, "action": "Odpojte radiátor na šroubeních a přeneste k odpadu", "time": "6 min", "icon": "🧰" },
-            { "step": 5, "action": "Propláchněte radiátor hadicí, dokud neteče čistá voda", "time": "8 min", "icon": "💦" },
-            { "step": 6, "action": "Namontujte zpět, otevřete ventily a doplňte tlak", "time": "6 min", "icon": "✅" }
+          "tools": [
+            "Odvzdušňovací klíč",
+            "Hadice na proplach",
+            "Kbelík",
+            "Klíč na šroubení"
           ],
-          "safetyWarnings": ["Radiátor může být těžký - zvedejte ve dvou", "Zabraňte úniku špinavé vody na podlahu", "Zkontrolujte těsnost po znovuzapojení"]
+          "steps": [
+            {
+              "step": 1,
+              "action": "Vypněte kotel a nechte systém vychladnout",
+              "time": "15 min",
+              "icon": "🌡️"
+            },
+            {
+              "step": 2,
+              "action": "Odvzdušněte radiátor standardním způsobem",
+              "time": "5 min",
+              "icon": "🔧"
+            },
+            {
+              "step": 3,
+              "action": "Uzavřete přívod i zpátečku radiátoru",
+              "time": "2 min",
+              "icon": "🚰"
+            },
+            {
+              "step": 4,
+              "action": "Odpojte radiátor na šroubeních a přeneste k odpadu",
+              "time": "6 min",
+              "icon": "🧰"
+            },
+            {
+              "step": 5,
+              "action": "Propláchněte radiátor hadicí, dokud neteče čistá voda",
+              "time": "8 min",
+              "icon": "💦"
+            },
+            {
+              "step": 6,
+              "action": "Namontujte zpět, otevřete ventily a doplňte tlak",
+              "time": "6 min",
+              "icon": "✅"
+            }
+          ],
+          "safetyWarnings": [
+            "Radiátor může být těžký - zvedejte ve dvou",
+            "Zabraňte úniku špinavé vody na podlahu",
+            "Zkontrolujte těsnost po znovuzapojení"
+          ]
         },
         {
           "id": "vent-leak-codex",
@@ -3247,16 +3515,55 @@
           "riskScore": 3,
           "difficulty": "Nízká",
           "timeEstimate": "15 min",
-          "tools": ["Odvzdušňovací klíč", "Teflonová páska", "Malý štětec", "Nádoba"],
-          "steps": [
-            { "step": 1, "action": "Uzavřete ventily radiátoru a snižte tlak otevřením odvzdušňováku", "time": "3 min", "icon": "🚰" },
-            { "step": 2, "action": "Vyšroubujte odvzdušňovací ventil z těla radiátoru", "time": "3 min", "icon": "🔧" },
-            { "step": 3, "action": "Očistěte závit i sedlo ventilku štětcem", "time": "3 min", "icon": "🧹" },
-            { "step": 4, "action": "Omotejte závit dvěma vrstvami teflonové pásky", "time": "2 min", "icon": "🩹" },
-            { "step": 5, "action": "Vraťte ventil, dotáhněte a znovu napusťte radiátor", "time": "3 min", "icon": "✅" },
-            { "step": 6, "action": "Zkontrolujte, zda po zahřátí neprosakuje", "time": "4 min", "icon": "👀" }
+          "tools": [
+            "Odvzdušňovací klíč",
+            "Teflonová páska",
+            "Malý štětec",
+            "Nádoba"
           ],
-          "safetyWarnings": ["Pracujte s vychladlým radiátorem", "Nepřetahujte mosazné díly", "Při větším úniku vypněte kotel"]
+          "steps": [
+            {
+              "step": 1,
+              "action": "Uzavřete ventily radiátoru a snižte tlak otevřením odvzdušňováku",
+              "time": "3 min",
+              "icon": "🚰"
+            },
+            {
+              "step": 2,
+              "action": "Vyšroubujte odvzdušňovací ventil z těla radiátoru",
+              "time": "3 min",
+              "icon": "🔧"
+            },
+            {
+              "step": 3,
+              "action": "Očistěte závit i sedlo ventilku štětcem",
+              "time": "3 min",
+              "icon": "🧹"
+            },
+            {
+              "step": 4,
+              "action": "Omotejte závit dvěma vrstvami teflonové pásky",
+              "time": "2 min",
+              "icon": "🩹"
+            },
+            {
+              "step": 5,
+              "action": "Vraťte ventil, dotáhněte a znovu napusťte radiátor",
+              "time": "3 min",
+              "icon": "✅"
+            },
+            {
+              "step": 6,
+              "action": "Zkontrolujte, zda po zahřátí neprosakuje",
+              "time": "4 min",
+              "icon": "👀"
+            }
+          ],
+          "safetyWarnings": [
+            "Pracujte s vychladlým radiátorem",
+            "Nepřetahujte mosazné díly",
+            "Při větším úniku vypněte kotel"
+          ]
         }
       ]
     },
@@ -9553,6 +9860,127 @@
             "comingSoon": true
           },
           "affiliateLinks": []
+        },
+        {
+          "id": "boiler-pressure-fluct-codex",
+          "name": "Kolísá tlak v kotli (codex)",
+          "description": "Nedostatek vody nebo expanzní problém způsobuje nárazové změny tlaku.",
+          "riskScore": 4,
+          "difficulty": "Střední",
+          "timeEstimate": "30 min",
+          "materialCost": {
+            "min": 150,
+            "max": 500,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 1200,
+            "max": 2500,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Manometr",
+            "Pumpička",
+            "Hadice"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Zkontrolujte tlak na manometru kotle",
+              "time": "1 min",
+              "icon": "📈",
+              "hint": "Optimální bývá 1-1.5 bar."
+            },
+            {
+              "step": 2,
+              "action": "Doplňte vodu přes plnicí ventil na doporučenou hodnotu",
+              "time": "3 min",
+              "icon": "💧",
+              "hint": "Doplňujte pomalu a průběžně sledujte ručičku."
+            },
+            {
+              "step": 3,
+              "action": "Změřte tlak v expanzní nádobě a případně dofoukněte",
+              "time": "10 min",
+              "icon": "🎈",
+              "hint": "Měřte při vypuštěném systému bez tlaku."
+            },
+            {
+              "step": 4,
+              "action": "Odvzdušněte radiátory a sledujte stabilitu tlaku",
+              "time": "10 min",
+              "icon": "💨",
+              "hint": "Po odvzdušnění znovu doplňte vodu."
+            },
+            {
+              "step": 5,
+              "action": "Při rychlém poklesu tlaku hledejte úniky nebo volejte servis",
+              "time": "6 min",
+              "icon": "✅",
+              "hint": "Únik může být na pojistném ventilu nebo výměníku."
+            }
+          ],
+          "safetyWarnings": [
+            "Pracujte na vychladlém kotli.",
+            "Nepřekračujte max. tlak uvedený výrobcem.",
+            "Úpravy plynových částí svěřte odborníkovi."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Stabilizace tlaku v kotli",
+            "duration": "4:30",
+            "youtubeId": "stabilizace-tlaku-v-kotli-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -9770,6 +10198,127 @@
             "comingSoon": true
           },
           "affiliateLinks": []
+        },
+        {
+          "id": "ac-condensate-drip-codex",
+          "name": "Kape kondenzát z klimatizace (codex)",
+          "description": "Ucpaný odtok nebo špatný sklon hadice vede k přetečení vaničky.",
+          "riskScore": 3,
+          "difficulty": "Střední",
+          "timeEstimate": "25 min",
+          "materialCost": {
+            "min": 50,
+            "max": 220,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 900,
+            "max": 1900,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Vysavač na vodu",
+            "Hadice",
+            "Stahovací pásky"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Vypněte klimatizaci a odpojte ji od sítě",
+              "time": "1 min",
+              "icon": "🔌",
+              "hint": "Zabráníte spouštění ventilátoru."
+            },
+            {
+              "step": 2,
+              "action": "Sejměte kryt a zkontrolujte vaničku kondenzátu",
+              "time": "4 min",
+              "icon": "🔍",
+              "hint": "Odstraňte listí a prach."
+            },
+            {
+              "step": 3,
+              "action": "Profoukněte nebo vysajte odtokovou hadici",
+              "time": "8 min",
+              "icon": "🧽",
+              "hint": "Zkontrolujte, že voda odtéká do odpadu."
+            },
+            {
+              "step": 4,
+              "action": "Zajistěte správný sklon hadice pomocí stahovacích pásek",
+              "time": "4 min",
+              "icon": "📏",
+              "hint": "Hadice nesmí být zalomená."
+            },
+            {
+              "step": 5,
+              "action": "Zapněte jednotku a ověřte, že kondenzát odtéká",
+              "time": "8 min",
+              "icon": "✅",
+              "hint": "Sledujte prvních pár minut chlazení."
+            }
+          ],
+          "safetyWarnings": [
+            "Vždy pracujte s odpojeným napájením.",
+            "Kondenzát může obsahovat plísně, používejte rukavice.",
+            "Nemanipulujte s chladivovým okruhem."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Zastavení kapání klimatizace",
+            "duration": "4:30",
+            "youtubeId": "zastaven-kap-n-klimatizace-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -10068,6 +10617,127 @@
             }
           ],
           "affiliateLinks": []
+        },
+        {
+          "id": "garage-door-squeak-codex",
+          "name": "Vrata skřípou (codex)",
+          "description": "Suché pojezdy nebo uvolněné šrouby způsobují skřípání při otevírání.",
+          "riskScore": 1,
+          "difficulty": "Nízká",
+          "timeEstimate": "15 min",
+          "materialCost": {
+            "min": 40,
+            "max": 160,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 500,
+            "max": 1100,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Mazivo na pojezdy",
+            "Klíč",
+            "Hadřík"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Vyčistěte kolejnice od prachu a pavučin",
+              "time": "4 min",
+              "icon": "🧹",
+              "hint": "Použijte suchý hadřík."
+            },
+            {
+              "step": 2,
+              "action": "Dotáhněte upevňovací šrouby držáků a pantů",
+              "time": "4 min",
+              "icon": "🔧",
+              "hint": "Vrtule se nesmí viklat."
+            },
+            {
+              "step": 3,
+              "action": "Naneste mazivo na pojezdy a pružiny",
+              "time": "3 min",
+              "icon": "🛢️",
+              "hint": "Nepřemazávejte, kapky mohou stékat."
+            },
+            {
+              "step": 4,
+              "action": "Několikrát vrata otevřete a zavřete pro rozprostření maziva",
+              "time": "2 min",
+              "icon": "🚪",
+              "hint": "Hluk by měl mizet."
+            },
+            {
+              "step": 5,
+              "action": "Setřete přebytek a zkontrolujte bezpečnostní pružiny",
+              "time": "2 min",
+              "icon": "✅",
+              "hint": "Pružiny nesmí být popraskané."
+            }
+          ],
+          "safetyWarnings": [
+            "Pracujte mimo dráhu vrat, mohou sjíždět.",
+            "Nezasahujte do napínaných pružin bez zkušeností.",
+            "Používejte mazivo vhodné pro kovové pojezdy."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Odstranění skřípání garážových vrat",
+            "duration": "4:30",
+            "youtubeId": "odstran-n-sk-p-n-gar-ov-ch-vrat-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -10298,6 +10968,127 @@
             "comingSoon": true
           },
           "affiliateLinks": []
+        },
+        {
+          "id": "drying-rack-loose-codex",
+          "name": "Uvolněný držák sušáku (codex)",
+          "description": "Šrouby ve zdi povolily nebo hmoždinka nedrží, sušák padá.",
+          "riskScore": 1,
+          "difficulty": "Nízká",
+          "timeEstimate": "20 min",
+          "materialCost": {
+            "min": 30,
+            "max": 150,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 400,
+            "max": 900,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Vrtačka",
+            "Hmoždinky",
+            "Vodováha"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Demontujte držák a zhodnoťte stav otvorů",
+              "time": "4 min",
+              "icon": "🔍",
+              "hint": "Vyviklané otvory potřebují větší hmoždinku."
+            },
+            {
+              "step": 2,
+              "action": "Vyvrtejte nový otvor s odpovídajícím průměrem",
+              "time": "5 min",
+              "icon": "🛠️",
+              "hint": "Použijte vrták vhodný pro materiál zdi."
+            },
+            {
+              "step": 3,
+              "action": "Vložte kvalitní hmoždinku a zašroubujte šroub",
+              "time": "5 min",
+              "icon": "🔩",
+              "hint": "Šroub dotahujte rovnoměrně."
+            },
+            {
+              "step": 4,
+              "action": "Zavěste držák zpět a dorovnejte ho vodováhou",
+              "time": "4 min",
+              "icon": "📐",
+              "hint": "Před dotažením zkontrolujte rovinu."
+            },
+            {
+              "step": 5,
+              "action": "Otestujte zátěž pověšením prádla",
+              "time": "2 min",
+              "icon": "✅",
+              "hint": "Držák se nesmí hnout."
+            }
+          ],
+          "safetyWarnings": [
+            "Nedrťte staré hmoždinky, raději zvolte novou pozici.",
+            "Vrtání provádějte s ochrannými brýlemi.",
+            "Zkontrolujte, zda ve zdi nevedou kabely."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Zpevnění držáku sušáku",
+            "duration": "4:30",
+            "youtubeId": "zpevn-n-dr-ku-su-ku-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -10455,6 +11246,127 @@
             "comingSoon": true
           },
           "affiliateLinks": []
+        },
+        {
+          "id": "gate-release-fail-codex",
+          "name": "Zvonková soustava neotevře branku (codex)",
+          "description": "Vadné relé nebo uvolněné vodiče k elektrickému zámku brání otevření.",
+          "riskScore": 3,
+          "difficulty": "Střední",
+          "timeEstimate": "25 min",
+          "materialCost": {
+            "min": 80,
+            "max": 320,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 900,
+            "max": 2000,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Multimetr",
+            "Šroubovák",
+            "Kontaktní sprej"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Ověřte napájení zdroje zvonku",
+              "time": "3 min",
+              "icon": "🔌",
+              "hint": "Na výstupu musí být jmenovité napětí."
+            },
+            {
+              "step": 2,
+              "action": "Rozmontujte sluchátko a zkontrolujte vodiče k tlačítku zámku",
+              "time": "6 min",
+              "icon": "🔎",
+              "hint": "Dotáhněte povolené svorky."
+            },
+            {
+              "step": 3,
+              "action": "Změřte napětí na cívce zámku při stisku tlačítka",
+              "time": "6 min",
+              "icon": "📏",
+              "hint": "Pokud napětí nedorazí, hledejte vadné relé nebo přerušený kabel."
+            },
+            {
+              "step": 4,
+              "action": "Vyčistěte kontakty relé sprejem a opakujte test",
+              "time": "4 min",
+              "icon": "🧴",
+              "hint": "Zoxidované kontakty mohou klást odpor."
+            },
+            {
+              "step": 5,
+              "action": "Vyměňte relé nebo vrátnici, pokud napětí stále nedorazí",
+              "time": "6 min",
+              "icon": "✅",
+              "hint": "Použijte kompatibilní modul stejného napětí."
+            }
+          ],
+          "safetyWarnings": [
+            "Pracujte na vypnutém napájení.",
+            "Slaboproudé vodiče jsou křehké, nelámejte je.",
+            "Nepřekračujte doporučené napětí zámku."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Zprovoznění otevírání branky",
+            "duration": "4:30",
+            "youtubeId": "zprovozn-n-otev-r-n-branky-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -10682,6 +11594,127 @@
             "comingSoon": true
           },
           "affiliateLinks": []
+        },
+        {
+          "id": "intercom-whine-codex",
+          "name": "Interkom píská (codex)",
+          "description": "Společný vodič nebo zemění je uvolněné a vytváří rušení.",
+          "riskScore": 2,
+          "difficulty": "Střední",
+          "timeEstimate": "20 min",
+          "materialCost": {
+            "min": 40,
+            "max": 200,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 700,
+            "max": 1500,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Multimetr",
+            "Šroubovák",
+            "Stíněný kabel"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Otevřete jednotku interkomu a zkontrolujte svorky",
+              "time": "4 min",
+              "icon": "🔍",
+              "hint": "Hledejte uvolněné nebo zoxidované spoje."
+            },
+            {
+              "step": 2,
+              "action": "Dotáhněte společný vodič a zemnění",
+              "time": "3 min",
+              "icon": "🔧",
+              "hint": "Špatný kontakt způsobuje zpětnou vazbu."
+            },
+            {
+              "step": 3,
+              "action": "Změřte napětí napájecího zdroje, zda je stabilní",
+              "time": "4 min",
+              "icon": "📏",
+              "hint": "Kolísání může vytvářet šum."
+            },
+            {
+              "step": 4,
+              "action": "Vyměňte poškozený úsek kabelu za stíněný",
+              "time": "6 min",
+              "icon": "🧵",
+              "hint": "Stínění zapojte na společný vodič."
+            },
+            {
+              "step": 5,
+              "action": "Otestujte hovor a otevření dveří",
+              "time": "3 min",
+              "icon": "✅",
+              "hint": "Zvuk musí být čistý bez pískání."
+            }
+          ],
+          "safetyWarnings": [
+            "Odpojte napájení před manipulací.",
+            "Respektujte polaritu vodičů.",
+            "Nepřehýbejte tenké vodiče, snadno se lámou."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Odstranění pískání interkomu",
+            "duration": "4:30",
+            "youtubeId": "odstran-n-p-sk-n-interkomu-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -10847,6 +11880,127 @@
             "comingSoon": true
           },
           "affiliateLinks": []
+        },
+        {
+          "id": "pool-green-water-codex",
+          "name": "Zelená voda v bazénu (codex)",
+          "description": "Rozmnožené řasy kvůli nedostatku chloru a filtrace.",
+          "riskScore": 3,
+          "difficulty": "Střední",
+          "timeEstimate": "45 min",
+          "materialCost": {
+            "min": 200,
+            "max": 800,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 1200,
+            "max": 2400,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Bazénový tester",
+            "Chlorová chemie",
+            "Kartáč"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Změřte pH a volný chlor testerem",
+              "time": "5 min",
+              "icon": "🧪",
+              "hint": "Ideální pH 7.2-7.6."
+            },
+            {
+              "step": 2,
+              "action": "Proveďte šokovou chloraci podle objemu vody",
+              "time": "10 min",
+              "icon": "🌊",
+              "hint": "Rozpusťte chlor ve vodě a nalijte u výtoku filtrace."
+            },
+            {
+              "step": 3,
+              "action": "Kartáčem očistěte stěny a dno od povlaku",
+              "time": "12 min",
+              "icon": "🧹",
+              "hint": "Uvolníte řasy pro filtraci."
+            },
+            {
+              "step": 4,
+              "action": "Filtrujte nepřetržitě alespoň 24 hodin",
+              "time": "24 h",
+              "icon": "⏳",
+              "hint": "Pravidelně proplachujte filtr."
+            },
+            {
+              "step": 5,
+              "action": "Znovu změřte hodnoty a dolaďte pH i chlor",
+              "time": "8 min",
+              "icon": "✅",
+              "hint": "Udržujte stabilní úroveň, aby se řasy nevrátily."
+            }
+          ],
+          "safetyWarnings": [
+            "Nepřekračujte dávku chloru uvedenou výrobcem.",
+            "Chemii vždy rozmíchejte ve vodě, ne naopak.",
+            "Při práci používejte rukavice a brýle."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Zprůhlednění zelené vody v bazénu",
+            "duration": "4:30",
+            "youtubeId": "zpr-hledn-n-zelen-vody-v-baz-nu-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -11017,6 +12171,127 @@
             "comingSoon": true
           },
           "affiliateLinks": []
+        },
+        {
+          "id": "fence-rust-codex",
+          "name": "Rezavé pletivo plotu (codex)",
+          "description": "Odlupující se nátěr a koroze oslabují drátěné pletivo.",
+          "riskScore": 2,
+          "difficulty": "Nízká",
+          "timeEstimate": "35 min",
+          "materialCost": {
+            "min": 150,
+            "max": 500,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 900,
+            "max": 1800,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Drátěný kartáč",
+            "Antikorozní nátěr",
+            "Štětec"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Mechanicky odstraňte uvolněnou rez kartáčem",
+              "time": "10 min",
+              "icon": "🧽",
+              "hint": "Chraňte oči brýlemi."
+            },
+            {
+              "step": 2,
+              "action": "Otřete povrch od prachu a mastnoty",
+              "time": "5 min",
+              "icon": "🧴",
+              "hint": "Použijte odmašťovač na kov."
+            },
+            {
+              "step": 3,
+              "action": "Naneste základní antikorozní nátěr",
+              "time": "10 min",
+              "icon": "🎨",
+              "hint": "Dbejte na pokrytí všech spojů."
+            },
+            {
+              "step": 4,
+              "action": "Po zaschnutí přetřete vrchní barvou na kov",
+              "time": "8 min",
+              "icon": "🖌️",
+              "hint": "Vyberte odstín původního plotu."
+            },
+            {
+              "step": 5,
+              "action": "Nechte vytvrdnout a zkontrolujte kritická místa",
+              "time": "2 min",
+              "icon": "✅",
+              "hint": "Případně doplňte další vrstvu."
+            }
+          ],
+          "safetyWarnings": [
+            "Pracujte za sucha.",
+            "Barvu nevdechujte, použijte respirátor.",
+            "Nenanášejte barvu na mokrou rez, neuchytí se."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Ochrana pletiva proti korozi",
+            "duration": "4:30",
+            "youtubeId": "ochrana-pletiva-proti-korozi-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -11187,6 +12462,127 @@
             "comingSoon": true
           },
           "affiliateLinks": []
+        },
+        {
+          "id": "carpet-wrinkle-codex",
+          "name": "Zvlněný koberec (codex)",
+          "description": "Koberec se posunul nebo povolila oboustranná páska.",
+          "riskScore": 1,
+          "difficulty": "Nízká",
+          "timeEstimate": "25 min",
+          "materialCost": {
+            "min": 60,
+            "max": 200,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 500,
+            "max": 1200,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Napínací válec",
+            "Oboustranná páska",
+            "Nůž"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Zvedněte koberec v místě vlny a očistěte podklad",
+              "time": "5 min",
+              "icon": "🧹",
+              "hint": "Prach brání přilnutí pásky."
+            },
+            {
+              "step": 2,
+              "action": "Nalepte novou oboustrannou pásku",
+              "time": "4 min",
+              "icon": "🩹",
+              "hint": "Pásku přitlačte po celé délce."
+            },
+            {
+              "step": 3,
+              "action": "Koberec napněte směrem k pásce pomocí válečku",
+              "time": "6 min",
+              "icon": "📏",
+              "hint": "Vyžeňte vzduch a vrásky."
+            },
+            {
+              "step": 4,
+              "action": "Ořízněte přebytečný materiál ostrým nožem",
+              "time": "5 min",
+              "icon": "🔪",
+              "hint": "Řežte podél stěny."
+            },
+            {
+              "step": 5,
+              "action": "Přejděte plochu několikrát pro jisté přilepení",
+              "time": "5 min",
+              "icon": "✅",
+              "hint": "Vlny by měly zmizet."
+            }
+          ],
+          "safetyWarnings": [
+            "Používejte ostrý nůž směrem od těla.",
+            "Při práci větrejte, lepidlo může vydávat pach.",
+            "Nenechávejte pásku na prachu, nedrží."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Vyrovnání zvlněného koberce",
+            "duration": "4:30",
+            "youtubeId": "vyrovn-n-zvln-n-ho-koberce-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -11351,6 +12747,127 @@
             "comingSoon": true
           },
           "affiliateLinks": []
+        },
+        {
+          "id": "terrace-loose-tiles-codex",
+          "name": "Hýbající se dlaždice na terase (codex)",
+          "description": "Podklad povolil nebo se dostala voda pod dlaždice.",
+          "riskScore": 2,
+          "difficulty": "Střední",
+          "timeEstimate": "40 min",
+          "materialCost": {
+            "min": 200,
+            "max": 700,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 1200,
+            "max": 2400,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Sekáč",
+            "Flexi lepidlo",
+            "Gumová palička"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Vyjměte uvolněné dlaždice a očistěte je od starého lepidla",
+              "time": "10 min",
+              "icon": "🧽",
+              "hint": "Pracujte opatrně, aby se neulomily hrany."
+            },
+            {
+              "step": 2,
+              "action": "Očistěte podklad a zkontrolujte spád",
+              "time": "6 min",
+              "icon": "📐",
+              "hint": "Voda musí odtékat od domu."
+            },
+            {
+              "step": 3,
+              "action": "Naneste nové flexibilní lepidlo",
+              "time": "8 min",
+              "icon": "🧴",
+              "hint": "Použijte zubovou stěrku pro rovnoměrnou vrstvu."
+            },
+            {
+              "step": 4,
+              "action": "Usaďte dlaždici a poklepejte gumovou paličkou",
+              "time": "6 min",
+              "icon": "🔨",
+              "hint": "Zkontrolujte rovinu s okolím."
+            },
+            {
+              "step": 5,
+              "action": "Po vytvrdnutí vyspárujte a zameťte přebytek",
+              "time": "10 min",
+              "icon": "✅",
+              "hint": "Nechte spáry schnout dle návodu."
+            }
+          ],
+          "safetyWarnings": [
+            "Pracujte za suchého počasí.",
+            "Nepoužívejte křehké nástroje, dlaždice může prasknout.",
+            "Flexi lepidlo chraňte před deštěm při zrání."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Zafixování hýbajících se dlaždic",
+            "duration": "4:30",
+            "youtubeId": "zafixov-n-h-baj-c-ch-se-dla-dic-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -11521,6 +13038,127 @@
             "comingSoon": true
           },
           "affiliateLinks": []
+        },
+        {
+          "id": "sink-silicone-crack-codex",
+          "name": "Prasklý silikon kolem umyvadla (codex)",
+          "description": "Vlhkost proniká za umyvadlo kvůli popraskanému spoji.",
+          "riskScore": 2,
+          "difficulty": "Nízká",
+          "timeEstimate": "25 min",
+          "materialCost": {
+            "min": 100,
+            "max": 320,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 800,
+            "max": 1600,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Řezák na silikon",
+            "Sanitární silikon",
+            "Maskovací páska"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Odřízněte starý silikon kolem umyvadla",
+              "time": "8 min",
+              "icon": "🔪",
+              "hint": "Chraňte glazuru ostrý řez veďte pod úhlem."
+            },
+            {
+              "step": 2,
+              "action": "Vyčistěte spáru a osušte ji",
+              "time": "5 min",
+              "icon": "🧽",
+              "hint": "Zbytky silikonu odstraňte mechanicky."
+            },
+            {
+              "step": 3,
+              "action": "Olepte hrany maskovací páskou",
+              "time": "3 min",
+              "icon": "🩹",
+              "hint": "Zajistíte rovný okraj."
+            },
+            {
+              "step": 4,
+              "action": "Naneste nový sanitární silikon a uhlaďte",
+              "time": "6 min",
+              "icon": "🧴",
+              "hint": "Vyhlazujte navlhčeným prstem."
+            },
+            {
+              "step": 5,
+              "action": "Po vytvrdnutí sundejte pásku a otestujte těsnost",
+              "time": "3 min",
+              "icon": "✅",
+              "hint": "Pusťte vodu a sledujte, zda neprosakuje."
+            }
+          ],
+          "safetyWarnings": [
+            "Používejte rukavice, silikon lepí.",
+            "Neaplikujte na mokré nebo mastné povrchy.",
+            "Prostor větrejte."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Obnova silikonu kolem umyvadla",
+            "duration": "4:30",
+            "youtubeId": "obnova-silikonu-kolem-umyvadla-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -11771,6 +13409,127 @@
             }
           ],
           "affiliateLinks": []
+        },
+        {
+          "id": "stairs-squeak-codex",
+          "name": "Vrzající dřevěné schody (codex)",
+          "description": "Uvolněné stupně nebo třecí spoje vydávají zvuky při chůzi.",
+          "riskScore": 2,
+          "difficulty": "Střední",
+          "timeEstimate": "30 min",
+          "materialCost": {
+            "min": 80,
+            "max": 260,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 900,
+            "max": 1800,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Vruty do dřeva",
+            "Aku vrtačka",
+            "Tmel na dřevo"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Identifikujte vrzající stupně a označte je",
+              "time": "4 min",
+              "icon": "📍",
+              "hint": "Projít schody shora i zdola."
+            },
+            {
+              "step": 2,
+              "action": "Předvrtejte otvory a zašroubujte vruty do nosných lišt",
+              "time": "10 min",
+              "icon": "🔩",
+              "hint": "Vrut táhne stupnici k liště a utlumí pohyb."
+            },
+            {
+              "step": 3,
+              "action": "Spoje natřete tenkou vrstvou tmelu na dřevo",
+              "time": "5 min",
+              "icon": "🧴",
+              "hint": "Zabrání tření dřevo na dřevo."
+            },
+            {
+              "step": 4,
+              "action": "Zbrousíte přebytek tmelu po zaschnutí",
+              "time": "6 min",
+              "icon": "🪵",
+              "hint": "Použijte jemný smirek."
+            },
+            {
+              "step": 5,
+              "action": "Otestujte chůzí, vrzání by mělo ustat",
+              "time": "5 min",
+              "icon": "✅",
+              "hint": "Případně přidejte další vrut zespodu."
+            }
+          ],
+          "safetyWarnings": [
+            "Nepoškoďte krycí lišty, vruty veďte šikmo.",
+            "Používejte ochranné brýle při vrtání.",
+            "Nezatěžujte schod, dokud tmel nezatuhne."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Ztišení vrzajících schodů",
+            "duration": "4:30",
+            "youtubeId": "zti-en-vrzaj-c-ch-schod--codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -11940,6 +13699,127 @@
             }
           ],
           "affiliateLinks": []
+        },
+        {
+          "id": "chimney-downdraft-codex",
+          "name": "Zpětný tah komína (codex)",
+          "description": "Vítr nebo ucpaný průduch vrací kouř zpět do místnosti.",
+          "riskScore": 4,
+          "difficulty": "Střední",
+          "timeEstimate": "35 min",
+          "materialCost": {
+            "min": 150,
+            "max": 600,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 1400,
+            "max": 2600,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Komínový kartáč",
+            "Zátka",
+            "Kouřová bombička"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Zkontrolujte průchodnost komína kartáčem",
+              "time": "10 min",
+              "icon": "🧹",
+              "hint": "Odstraňte saze a pavučiny."
+            },
+            {
+              "step": 2,
+              "action": "Vyzkoušejte tah pomocí kouřové bombičky",
+              "time": "5 min",
+              "icon": "💨",
+              "hint": "Sledujte směr kouře."
+            },
+            {
+              "step": 3,
+              "action": "Instalujte větrnou hlavici nebo deflektor na ústí komína",
+              "time": "12 min",
+              "icon": "🛠️",
+              "hint": "Zlepší tah za větru."
+            },
+            {
+              "step": 4,
+              "action": "Utěsněte nepoužívané průduchy zátkou",
+              "time": "4 min",
+              "icon": "🧱",
+              "hint": "Zamezíte falešnému přisávání."
+            },
+            {
+              "step": 5,
+              "action": "Ověřte tah při rozhoření ohně",
+              "time": "4 min",
+              "icon": "✅",
+              "hint": "Kouř musí stoupat plynule nahoru."
+            }
+          ],
+          "safetyWarnings": [
+            "Práce na střeše vyžaduje jištění.",
+            "Při čištění noste respirátor proti sazi.",
+            "Dodržujte revizní intervaly komína."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Řešení zpětného tahu komína",
+            "duration": "4:30",
+            "youtubeId": "-e-en-zp-tn-ho-tahu-kom-na-codex",
+            "premium": false
+          }
         }
       ]
     },
@@ -12185,6 +14065,127 @@
             }
           ],
           "affiliateLinks": []
+        },
+        {
+          "id": "roof-loose-tile-codex",
+          "name": "Uvolněná střešní taška (codex)",
+          "description": "Silný vítr posunul tašku a hrozí zatékání.",
+          "riskScore": 4,
+          "difficulty": "Střední",
+          "timeEstimate": "30 min",
+          "materialCost": {
+            "min": 100,
+            "max": 400,
+            "currency": "CZK"
+          },
+          "professionalCost": {
+            "min": 1200,
+            "max": 2300,
+            "currency": "CZK"
+          },
+          "tools": [
+            "Žebřík",
+            "Hák na tašky",
+            "Tmel"
+          ],
+          "steps": [
+            {
+              "step": 1,
+              "action": "Vylezte na střechu se zajištěním a lokalizujte uvolněnou tašku",
+              "time": "6 min",
+              "icon": "🪜",
+              "hint": "Používejte bezpečnostní postroj."
+            },
+            {
+              "step": 2,
+              "action": "Zvedněte sousední tašky a posuňte uvolněnou na místo",
+              "time": "6 min",
+              "icon": "🔧",
+              "hint": "Taška musí zapadnout do zámků."
+            },
+            {
+              "step": 3,
+              "action": "Připevněte tašku hákem nebo vrutem dle typu střechy",
+              "time": "8 min",
+              "icon": "🔩",
+              "hint": "Nevrtejte do těsnící roviny."
+            },
+            {
+              "step": 4,
+              "action": "Utěsněte případné vlasové trhliny střešním tmelem",
+              "time": "6 min",
+              "icon": "🧴",
+              "hint": "Tmel nanášejte na suchý povrch."
+            },
+            {
+              "step": 5,
+              "action": "Zkontrolujte okolí na další posunuté tašky",
+              "time": "4 min",
+              "icon": "✅",
+              "hint": "Projděte celou řadu."
+            }
+          ],
+          "safetyWarnings": [
+            "Pracujte pouze za sucha a s jištěním.",
+            "Nepohybujte se po mokrých taškách.",
+            "Nad hlavou mějte přilbu při manipulaci s taškami."
+          ],
+          "affiliateLinks": [
+            {
+              "item": "Ochranné rukavice",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/ochranne-rukavice",
+                  "price": "od 49 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/pracovni-rukavice",
+                  "price": "od 39 Kč"
+                }
+              ]
+            },
+            {
+              "item": "Univerzální šroubovák",
+              "links": [
+                {
+                  "store": "Alza",
+                  "url": "https://www.alza.cz/hobby/sroubovaky",
+                  "price": "od 59 Kč"
+                },
+                {
+                  "store": "Mall",
+                  "url": "https://www.mall.cz/sroubovaky",
+                  "price": "od 59 Kč"
+                }
+              ]
+            }
+          ],
+          "preRepairChecklist": [
+            {
+              "id": "power-off",
+              "text": "Přívod elektřiny/vody je bezpečně vypnutý podle potřeby",
+              "critical": true
+            },
+            {
+              "id": "tools-ready",
+              "text": "Mám připravené základní nástroje a ochranné pomůcky",
+              "critical": false
+            },
+            {
+              "id": "manual-checked",
+              "text": "Seznámil jsem se s doporučeními výrobce",
+              "critical": false
+            }
+          ],
+          "videoTutorial": {
+            "available": true,
+            "title": "Zajištění uvolněné střešní tašky",
+            "duration": "4:30",
+            "youtubeId": "zaji-t-n-uvoln-n-st-e-n-ta-ky-codex",
+            "premium": false
+          }
         }
       ]
     }
