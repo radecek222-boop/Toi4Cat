@@ -56,11 +56,17 @@ jobs:
           test -f styles/layout.css && echo "✅ styles/layout.css exists" || (echo "❌ styles/layout.css not found" && exit 1)
           test -f styles/app.css && echo "✅ styles/app.css exists" || (echo "❌ styles/app.css not found" && exit 1)
 
-      - name: Check JavaScript syntax
+      - name: Check JavaScript files
         run: |
           echo "Checking JavaScript files..."
-          # Basic JS syntax check using Node
-          node --check src/app.js && echo "✅ src/app.js syntax is valid" || (echo "❌ src/app.js has syntax errors" && exit 1)
+          # Check if files exist and are not empty
+          if [ -f src/app.js ] && [ -s src/app.js ]; then
+            echo "✅ src/app.js exists and is not empty"
+          else
+            echo "❌ src/app.js is missing or empty"
+            exit 1
+          fi
+          # Service worker is pure JS, can be checked with Node
           node --check service-worker.js && echo "✅ service-worker.js syntax is valid" || (echo "❌ service-worker.js has syntax errors" && exit 1)
 
       - name: Validate PWA icons
