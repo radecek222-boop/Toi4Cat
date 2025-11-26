@@ -244,7 +244,7 @@
 
 /* Hamburger Menu */
 .hamburger-btn {
-    display: none; /* Hidden on desktop */
+    display: flex; /* Visible on all screen sizes */
     flex-direction: column;
     justify-content: space-around;
     width: 2rem;
@@ -338,14 +338,7 @@
     text-align: center;
 }
 
-/* Show hamburger on mobile */
-@media (max-width: 768px) {
-    .hamburger-btn {
-        display: flex;
-    }
-
-    /* Hide desktop navigation if exists */
-    .desktop-nav {
-        display: none;
-    }
+/* Hide desktop navigation if exists - hamburger menu is now used on all screen sizes */
+.desktop-nav {
+    display: none;
 }
