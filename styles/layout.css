@@ -581,13 +581,25 @@
   }
 
   /* ==========================================
-     FOOTER - Kompaktní
+     FOOTER - Kompaktní, stejná šířka jako bottom-nav
      ========================================== */
   .footer {
     background-color: var(--color-bg-dark);
     color: var(--color-text-inverse);
     padding-block: var(--space-10);
     text-align: center;
+  }
+
+  .footer > .container {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+  }
+
+  @media (min-width: 1024px) {
+    .footer > .container {
+      max-width: 84%;
+    }
   }
 
   .footer-grid {
