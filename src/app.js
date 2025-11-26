@@ -2475,12 +2475,12 @@
                                     <p className="text-sm text-secondary mb-3">
                                         Pokročilá umělá inteligence analyzuje vaše fotografie a identifikuje závady s vysokou přesností.
                                     </p>
-                                    <ul className="text-sm text-secondary m-0 p-0 pl-4 space-y-2">
-                                        <li>✓ Rozpoznávání 50+ typů spotřebičů a zařízení</li>
-                                        <li>✓ Detekce konkrétních závad a poruch</li>
-                                        <li>✓ Automatická kategorizace problémů</li>
-                                        <li>✓ Samoučící se systém - přesnost se neustále zlepšuje</li>
-                                        <li>✓ Okamžitá analýza - výsledky za sekundy</li>
+                                    <ul className="text-sm text-secondary m-0 p-0 pl-4 space-y-2 list-none">
+                                        <li><i className="fas fa-check text-success mr-2"></i>Rozpoznávání 50+ typů spotřebičů a zařízení</li>
+                                        <li><i className="fas fa-check text-success mr-2"></i>Detekce konkrétních závad a poruch</li>
+                                        <li><i className="fas fa-check text-success mr-2"></i>Automatická kategorizace problémů</li>
+                                        <li><i className="fas fa-check text-success mr-2"></i>Samoučící se systém - přesnost se neustále zlepšuje</li>
+                                        <li><i className="fas fa-check text-success mr-2"></i>Okamžitá analýza - výsledky za sekundy</li>
                                     </ul>
                                 </div>
 
@@ -2493,15 +2493,15 @@
                                     <p className="text-sm text-secondary mb-3">
                                         Rozsáhlá databáze krok za krokem návodů pro opravy domácích spotřebičů a zařízení.
                                     </p>
-                                    <ul className="text-sm text-secondary m-0 p-0 pl-4 space-y-2">
-                                        <li>✓ Kuchyňské spotřebiče (lednice, trouby, mikrovlnky, myčky...)</li>
-                                        <li>✓ Pračky, sušičky a praní</li>
-                                        <li>✓ Elektronika (TV, audio, počítače...)</li>
-                                        <li>✓ Topení, klimatizace a ventilace</li>
-                                        <li>✓ Voda, elektřina a instalace</li>
-                                        <li>✓ Podrobné kroky s ilustracemi</li>
-                                        <li>✓ Časové odhady a potřebné nářadí</li>
-                                        <li>✓ Tipy od zkušených techniků</li>
+                                    <ul className="text-sm text-secondary m-0 p-0 pl-4 space-y-2 list-none">
+                                        <li><i className="fas fa-check text-success mr-2"></i>Kuchyňské spotřebiče (lednice, trouby, mikrovlnky, myčky...)</li>
+                                        <li><i className="fas fa-check text-success mr-2"></i>Pračky, sušičky a praní</li>
+                                        <li><i className="fas fa-check text-success mr-2"></i>Elektronika (TV, audio, počítače...)</li>
+                                        <li><i className="fas fa-check text-success mr-2"></i>Topení, klimatizace a ventilace</li>
+                                        <li><i className="fas fa-check text-success mr-2"></i>Voda, elektřina a instalace</li>
+                                        <li><i className="fas fa-check text-success mr-2"></i>Podrobné kroky s ilustracemi</li>
+                                        <li><i className="fas fa-check text-success mr-2"></i>Časové odhady a potřebné nářadí</li>
+                                        <li><i className="fas fa-check text-success mr-2"></i>Tipy od zkušených techniků</li>
                                     </ul>
                                 </div>
 
@@ -2514,14 +2514,14 @@
                                     <p className="text-sm text-secondary mb-3">
                                         FIXO vás chrání před nebezpečnými situacemi a radí, kdy je nutné zavolat odborníka.
                                     </p>
-                                    <ul className="text-sm text-secondary m-0 p-0 pl-4 space-y-2">
-                                        <li>⚡ Varování při práci s elektřinou (vysoké napětí, zkraty)</li>
-                                        <li>🔥 Upozornění na riziko požáru nebo výbuchu</li>
-                                        <li>💧 Varování před únikem vody nebo plynu</li>
-                                        <li>☠️ Identifikace toxických látek (chladiva, azbestů...)</li>
-                                        <li>👨‍🔧 Doporučení, kdy je nutný certifikovaný technik</li>
-                                        <li>📋 Právní požadavky a záruční podmínky</li>
-                                        <li>🛡️ Ochranné pomůcky a bezpečnostní postupy</li>
+                                    <ul className="text-sm text-secondary m-0 p-0 pl-4 space-y-2 list-none">
+                                        <li><i className="fas fa-bolt text-warning mr-2"></i>Varování při práci s elektřinou (vysoké napětí, zkraty)</li>
+                                        <li><i className="fas fa-fire text-danger mr-2"></i>Upozornění na riziko požáru nebo výbuchu</li>
+                                        <li><i className="fas fa-tint text-info mr-2"></i>Varování před únikem vody nebo plynu</li>
+                                        <li><i className="fas fa-skull-crossbones text-danger mr-2"></i>Identifikace toxických látek (chladiva, azbestů...)</li>
+                                        <li><i className="fas fa-user-cog text-primary mr-2"></i>Doporučení, kdy je nutný certifikovaný technik</li>
+                                        <li><i className="fas fa-clipboard-list text-primary mr-2"></i>Právní požadavky a záruční podmínky</li>
+                                        <li><i className="fas fa-shield-alt text-primary mr-2"></i>Ochranné pomůcky a bezpečnostní postupy</li>
                                     </ul>
                                 </div>
 
