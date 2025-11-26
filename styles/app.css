@@ -1697,6 +1697,35 @@
     opacity: 0.9;
 }
 
+/* Offline stats grid - mobile first */
+.analyze-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+}
+
+/* Offline desktop layout - mobile first */
+.offline-desktop-layout {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+/* Results desktop layout - mobile first */
+.results-desktop-layout {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+/* Knowledge grid - mobile first */
+.knowledge-grid-desktop {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+}
+
 /* Desktop breakpoint - 1024px+ */
 @media (min-width: 1024px) {
     /* Kompaktnější hero na desktopu */
@@ -1931,9 +1960,8 @@
         padding: var(--space-3);
     }
 
-    /* Grid pro analyze stats */
-    .analyze-stats-desktop {
-        display: grid;
+    /* Grid pro analyze stats - 6 sloupců na desktopu */
+    .analyze-stats-grid {
         grid-template-columns: repeat(6, 1fr);
         gap: var(--space-3);
     }

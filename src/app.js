@@ -5333,7 +5333,7 @@
                                                         AI Učení
                                                     </h3>
                                                     {/* Desktop: 6 sloupců, mobil: 3 */}
-                                                    <div className="analyze-stats-desktop" style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-2)', marginBottom: 'var(--space-3)'}}>
+                                                    <div className="analyze-stats-grid">
                                                         <div style={{textAlign: 'center', padding: 'var(--space-2)', background: 'var(--color-success-light)', borderRadius: 'var(--radius-md)'}}>
                                                             <div style={{fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--color-success)'}}>
                                                                 {analyzerStats.cacheHits || 0}
