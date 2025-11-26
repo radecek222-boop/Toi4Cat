@@ -3025,8 +3025,7 @@
                                 {/* Copy button */}
                                 <button
                                     onClick={() => copyShareText(shareData)}
-                                    className="btn btn-secondary w-full mb-4"
-                                    className="text-sm"
+                                    className="btn btn-secondary w-full mb-4 text-sm"
                                 >
                                     <i className="fas fa-copy mr-2"></i>
                                     Zkopírovat text
@@ -4569,7 +4568,7 @@
                                 {/* Social Pricing Info */}
                                 <div className="alert bg-primary-light border-none">
                                     <div className="flex items-start gap-3">
-                                        <i className="fas fa-heart" className="text-primary text-xl"></i>
+                                        <i className="fas fa-heart text-primary text-xl"></i>
                                         <div>
                                             <p className="font-semibold mb-1">Sociální dostupnost</p>
                                             <p className="text-sm text-secondary">
@@ -4580,7 +4579,7 @@
                                     </div>
                                 </div>
 
-                                <div className="alert alert-info" className="mt-4">
+                                <div className="alert alert-info mt-4">
                                     <p><i className="fas fa-shield-alt mr-2"></i>Bezpečná platba přes Stripe. Zrušit můžete kdykoliv.</p>
                                 </div>
                             </div>
@@ -4595,7 +4594,7 @@
                                 </h2>
 
                                 {/* Hero banner */}
-                                <div className="card mb-6" className="gradient-primary text-white">
+                                <div className="card mb-6 gradient-primary text-white">
                                     <div className="card-body text-center p-8">
                                         <div className="text-6xl mb-4"><i className="fas fa-handshake"></i></div>
                                         <h3 className="text-xl font-bold mb-2">Staňte se partnerem FIXO</h3>
@@ -4610,7 +4609,7 @@
                                     </div>
                                     <div className="card-body">
                                         <div className="flex flex-col gap-4">
-                                            <div className="card" className="bg-secondary">
+                                            <div className="card bg-secondary">
                                                 <div className="card-body">
                                                     <div className="flex items-start gap-3">
                                                         <div className="text-4xl"><i className="fas fa-wrench"></i></div>
@@ -4625,7 +4624,7 @@
                                                 </div>
                                             </div>
 
-                                            <div className="card" className="bg-secondary">
+                                            <div className="card bg-secondary">
                                                 <div className="card-body">
                                                     <div className="flex items-start gap-3">
                                                         <div className="text-4xl"><i className="fas fa-store"></i></div>
@@ -4640,7 +4639,7 @@
                                                 </div>
                                             </div>
 
-                                            <div className="card" className="bg-secondary">
+                                            <div className="card bg-secondary">
                                                 <div className="card-body">
                                                     <div className="flex items-start gap-3">
                                                         <div className="text-4xl"><i className="fas fa-bullhorn"></i></div>
@@ -4666,19 +4665,19 @@
                                     <div className="card-body">
                                         <div className="grid grid-2 gap-4">
                                             <div className="flex items-center gap-2">
-                                                <i className="fas fa-check-circle" className="text-success"></i>
+                                                <i className="fas fa-check-circle text-success"></i>
                                                 <span className="text-sm">Pravidelné výplaty</span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <i className="fas fa-check-circle" className="text-success"></i>
+                                                <i className="fas fa-check-circle text-success"></i>
                                                 <span className="text-sm">Marketing materiály</span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <i className="fas fa-check-circle" className="text-success"></i>
+                                                <i className="fas fa-check-circle text-success"></i>
                                                 <span className="text-sm">Detailní statistiky</span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <i className="fas fa-check-circle" className="text-success"></i>
+                                                <i className="fas fa-check-circle text-success"></i>
                                                 <span className="text-sm">Dedikovaná podpora</span>
                                             </div>
                                         </div>
@@ -4742,7 +4741,7 @@
                                 {/* Kategorie dodavatelů */}
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-faucet mr-2" className="text-info"></i>Vodoinstalace</h3>
+                                        <h3 className="card-title"><i className="fas fa-faucet mr-2 text-info"></i>Vodoinstalace</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="flex flex-col gap-3">
@@ -4766,7 +4765,7 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-bolt mr-2" className="text-warning"></i>Elektroinstalace</h3>
+                                        <h3 className="card-title"><i className="fas fa-bolt mr-2 text-warning"></i>Elektroinstalace</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="flex flex-col gap-3">
@@ -4790,7 +4789,7 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-tools mr-2" className="text-success"></i>Nářadí a stavební materiál</h3>
+                                        <h3 className="card-title"><i className="fas fa-tools mr-2 text-success"></i>Nářadí a stavební materiál</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="flex flex-col gap-3">
@@ -4821,7 +4820,7 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-fire mr-2" className="text-danger"></i>Topení a klimatizace</h3>
+                                        <h3 className="card-title"><i className="fas fa-fire mr-2 text-danger"></i>Topení a klimatizace</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="flex flex-col gap-3">
@@ -4844,8 +4843,8 @@
                                 </div>
 
                                 {/* Chci být dodavatelem */}
-                                <div className="card mb-6" className="border-primary border-2">
-                                    <div className="card-body text-center" className="p-6">
+                                <div className="card mb-6 border-primary border-2">
+                                    <div className="card-body text-center p-6">
                                         <div className="text-5xl mb-3"><i className="fas fa-handshake"></i></div>
                                         <h3 className="font-bold mb-2">Chcete být náš partner?</h3>
                                         <p className="text-sm text-secondary mb-4">
@@ -5084,5 +5083,6 @@
             );
         }
 
-        // Render aplikace
-        ReactDOM.render(<FixoApp />, document.getElementById('root'));
+        // Render aplikace - React 18 API
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<FixoApp />);
