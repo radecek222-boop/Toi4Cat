@@ -840,6 +840,107 @@
             const [speechSupported, setSpeechSupported] = useState(false);
             const recognitionRef = useRef(null);
 
+            // Upřesňující kroky pro textový popis
+            const [clarificationStep, setClarificationStep] = useState(0);
+            const [selectedProblemCategory, setSelectedProblemCategory] = useState(null);
+            const [selectedProblemObject, setSelectedProblemObject] = useState(null);
+            const [suggestedIssues, setSuggestedIssues] = useState([]);
+
+            // Kategorie problémů pro upřesnění
+            const problemCategories = [
+                { id: 'plumbing', name: 'Voda a instalatérství', icon: 'fa-tint', examples: ['Teče voda', 'Ucpaný odpad', 'Neteče voda', 'Kapající kohoutek'] },
+                { id: 'electrical', name: 'Elektřina', icon: 'fa-bolt', examples: ['Nefunguje zásuvka', 'Bliká světlo', 'Vypadávají jističe'] },
+                { id: 'furniture', name: 'Nábytek', icon: 'fa-couch', examples: ['Rozbitá židle', 'Vrže postel', 'Padají dvířka'] },
+                { id: 'doors_windows', name: 'Dveře a okna', icon: 'fa-door-open', examples: ['Nejdou zavřít', 'Drhnou', 'Netěsní'] },
+                { id: 'heating', name: 'Topení', icon: 'fa-thermometer-half', examples: ['Netopí', 'Hučí radiátor', 'Uniká voda'] },
+                { id: 'appliances', name: 'Spotřebiče', icon: 'fa-plug', examples: ['Myčka', 'Pračka', 'Lednice', 'Sporák'] },
+                { id: 'walls_floors', name: 'Stěny a podlahy', icon: 'fa-layer-group', examples: ['Praskliny', 'Vlhkost', 'Odlepená dlažba'] },
+                { id: 'other', name: 'Jiné', icon: 'fa-question-circle', examples: ['Ostatní problémy'] }
+            ];
+
+            // Inteligentní vyhledávání v databázi podle popisu
+            const findMatchingIssues = (description, category = null) => {
+                const searchTerms = description.toLowerCase().split(' ').filter(t => t.length > 2);
+                const results = [];
+
+                Object.entries(repairDatabase).forEach(([key, obj]) => {
+                    // Filtrovat podle kategorie pokud je zadána
+                    if (category && obj.category !== category) return;
+
+                    obj.issues.forEach(issue => {
+                        let score = 0;
+                        const issueName = issue.name.toLowerCase();
+                        const issueDesc = (issue.description || '').toLowerCase();
+
+                        searchTerms.forEach(term => {
+                            if (issueName.includes(term)) score += 3;
+                            if (issueDesc.includes(term)) score += 2;
+                            if (obj.name.toLowerCase().includes(term)) score += 1;
+                        });
+
+                        // Bonus za shodu kategorie
+                        if (category && obj.category === category) score += 2;
+
+                        if (score > 0 || (category && obj.category === category)) {
+                            results.push({
+                                ...issue,
+                                objectName: obj.name,
+                                objectKey: key,
+                                category: obj.category,
+                                matchScore: score || 1
+                            });
+                        }
+                    });
+                });
+
+                return results.sort((a, b) => b.matchScore - a.matchScore).slice(0, 8);
+            };
+
+            // Resetovat upřesňující kroky
+            const resetClarification = () => {
+                setClarificationStep(0);
+                setSelectedProblemCategory(null);
+                setSelectedProblemObject(null);
+                setSuggestedIssues([]);
+                setProblemDescription('');
+            };
+
+            // Zpracovat textový popis a najít odpovídající problémy
+            const processDescription = () => {
+                if (!problemDescription.trim() && !selectedProblemCategory) {
+                    alert('Prosím popište problém nebo vyberte kategorii');
+                    return;
+                }
+
+                const matches = findMatchingIssues(problemDescription, selectedProblemCategory);
+                setSuggestedIssues(matches);
+
+                if (matches.length > 0) {
+                    setClarificationStep(2); // Zobrazit nalezené problémy
+                } else {
+                    setClarificationStep(1); // Vybrat kategorii pro upřesnění
+                }
+            };
+
+            // Vybrat konkrétní problém z návrhů
+            const selectSuggestedIssue = (issue) => {
+                setShowDescribeModal(false);
+                resetClarification();
+
+                // Nastavit jako výsledek analýzy
+                setAnalysisResult({
+                    object: {
+                        name: issue.objectName,
+                        category: issue.category,
+                        icon: getCategoryIcon(issue.category)
+                    },
+                    issue: issue,
+                    confidence: 85,
+                    _meta: { source: 'text_description' }
+                });
+                navigateTo('results');
+            };
+
             // Dark mode state
             const [darkMode, setDarkMode] = useState(() => {
                 const saved = localStorage.getItem('fixo-dark-mode');
@@ -2111,73 +2212,258 @@
                         </div>
                     )}
 
-                    {/* Modal pro popis problému */}
+                    {/* Modal pro popis problému - s upřesňujícími kroky */}
                     {showDescribeModal && (
-                        <div className="translating-overlay" onClick={() => setShowDescribeModal(false)}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()}>
-                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)'}}>
-                                    <i className="fas fa-comment-alt mr-2" style={{color: 'var(--color-primary)'}}></i>
-                                    Popište problém
-                                </h3>
+                        <div className="translating-overlay" onClick={() => { setShowDescribeModal(false); resetClarification(); }}>
+                            <div className="translating-box" onClick={e => e.stopPropagation()} style={{maxWidth: '500px', maxHeight: '85vh', overflow: 'auto'}}>
 
-                                {/* Náhled fotky */}
-                                {selectedImage && (
-                                    <img
-                                        src={annotatedImage || selectedImage}
-                                        alt="Fotka"
-                                        style={{width: '100%', maxHeight: '150px', objectFit: 'contain', borderRadius: 'var(--radius-lg)', marginBottom: 'var(--space-4)'}}
-                                    />
+                                {/* Krok 0: Úvodní popis + volba kategorie */}
+                                {clarificationStep === 0 && (
+                                    <>
+                                        <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                            <i className="fas fa-keyboard" style={{color: '#6366f1'}}></i>
+                                            Popište problém
+                                        </h3>
+
+                                        <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)'}}>
+                                            Napište co se děje - napopsat můžete cokoliv, co nejde vyfotit.
+                                        </p>
+
+                                        {/* Text input */}
+                                        <textarea
+                                            value={problemDescription}
+                                            onChange={(e) => setProblemDescription(e.target.value)}
+                                            placeholder="Např: Neteče voda z kohoutku, jak rozložit sedačku, dveře drhnou o podlahu, ze zásuvky jiskří..."
+                                            style={{
+                                                width: '100%',
+                                                minHeight: '80px',
+                                                padding: 'var(--space-3)',
+                                                borderRadius: 'var(--radius-lg)',
+                                                border: '2px solid var(--color-border)',
+                                                fontSize: 'var(--text-base)',
+                                                resize: 'vertical',
+                                                marginBottom: 'var(--space-4)'
+                                            }}
+                                        />
+
+                                        {/* Voice input button */}
+                                        {speechSupported && (
+                                            <button
+                                                onClick={isListening ? stopListening : startListening}
+                                                className={`btn w-full mb-4 ${isListening ? 'btn-danger' : 'btn-secondary'}`}
+                                                style={isListening ? {animation: 'pulse 1s infinite'} : {}}
+                                            >
+                                                <i className={`fas ${isListening ? 'fa-stop' : 'fa-microphone'} mr-2`}></i>
+                                                {isListening ? 'Nahrávám... (klikni pro stop)' : 'Namluvit hlasem'}
+                                            </button>
+                                        )}
+
+                                        {/* Nebo vybrat kategorii */}
+                                        <div style={{marginBottom: 'var(--space-4)'}}>
+                                            <p style={{fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)', color: 'var(--color-text-secondary)'}}>
+                                                Nebo vyberte kategorii problému:
+                                            </p>
+                                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-2)'}}>
+                                                {problemCategories.map(cat => (
+                                                    <button
+                                                        key={cat.id}
+                                                        onClick={() => setSelectedProblemCategory(selectedProblemCategory === cat.id ? null : cat.id)}
+                                                        style={{
+                                                            padding: 'var(--space-2)',
+                                                            borderRadius: 'var(--radius-lg)',
+                                                            border: selectedProblemCategory === cat.id ? '2px solid #6366f1' : '1px solid var(--color-border)',
+                                                            background: selectedProblemCategory === cat.id ? '#e0e7ff' : 'var(--color-bg-secondary)',
+                                                            cursor: 'pointer',
+                                                            textAlign: 'left',
+                                                            fontSize: 'var(--text-sm)'
+                                                        }}
+                                                    >
+                                                        <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                            <i className={`fas ${cat.icon}`} style={{color: selectedProblemCategory === cat.id ? '#6366f1' : 'var(--color-text-muted)'}}></i>
+                                                            <span style={{fontWeight: 'var(--font-medium)'}}>{cat.name}</span>
+                                                        </div>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Action buttons */}
+                                        <div className="flex gap-3">
+                                            <button
+                                                onClick={() => { setShowDescribeModal(false); resetClarification(); }}
+                                                className="btn btn-secondary flex-1"
+                                            >
+                                                Zrušit
+                                            </button>
+                                            <button
+                                                onClick={processDescription}
+                                                className="btn btn-primary flex-1"
+                                                disabled={!problemDescription.trim() && !selectedProblemCategory}
+                                            >
+                                                <i className="fas fa-search mr-2"></i>
+                                                Najít řešení
+                                            </button>
+                                        </div>
+                                    </>
                                 )}
 
-                                {/* Text input */}
-                                <textarea
-                                    value={problemDescription}
-                                    onChange={(e) => setProblemDescription(e.target.value)}
-                                    placeholder="Např: Teče voda zpod umyvadla, kohoutek nejde zavřít, ze zásuvky jiskří..."
-                                    style={{
-                                        width: '100%',
-                                        minHeight: '100px',
-                                        padding: 'var(--space-3)',
-                                        borderRadius: 'var(--radius-lg)',
-                                        border: '2px solid var(--color-border)',
-                                        fontSize: 'var(--text-base)',
-                                        resize: 'vertical',
-                                        marginBottom: 'var(--space-4)'
-                                    }}
-                                />
+                                {/* Krok 1: Vybrat kategorii (pokud nic nenalezeno) */}
+                                {clarificationStep === 1 && (
+                                    <>
+                                        <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                            <i className="fas fa-question-circle" style={{color: 'var(--color-warning)'}}></i>
+                                            Upřesněte problém
+                                        </h3>
 
-                                {/* Voice input button */}
-                                {speechSupported && (
-                                    <button
-                                        onClick={isListening ? stopListening : startListening}
-                                        className={`btn w-full mb-4 ${isListening ? 'btn-danger' : 'btn-secondary'}`}
-                                        style={isListening ? {animation: 'pulse 1s infinite'} : {}}
-                                    >
-                                        <i className={`fas ${isListening ? 'fa-stop' : 'fa-microphone'} mr-2`}></i>
-                                        {isListening ? 'Nahrávám... (klikni pro stop)' : 'Namluvit hlasem'}
-                                    </button>
+                                        <div style={{
+                                            background: 'var(--color-warning-light)',
+                                            padding: 'var(--space-3)',
+                                            borderRadius: 'var(--radius-lg)',
+                                            marginBottom: 'var(--space-4)',
+                                            fontSize: 'var(--text-sm)'
+                                        }}>
+                                            <p style={{margin: 0}}>
+                                                <strong>Váš popis:</strong> "{problemDescription}"
+                                            </p>
+                                            <p style={{margin: '8px 0 0 0', color: 'var(--color-text-secondary)'}}>
+                                                Nenašli jsme přesnou shodu. Vyberte kategorii pro upřesnění:
+                                            </p>
+                                        </div>
+
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginBottom: 'var(--space-4)'}}>
+                                            {problemCategories.map(cat => (
+                                                <button
+                                                    key={cat.id}
+                                                    onClick={() => {
+                                                        setSelectedProblemCategory(cat.id);
+                                                        const matches = findMatchingIssues(problemDescription, cat.id);
+                                                        setSuggestedIssues(matches);
+                                                        setClarificationStep(2);
+                                                    }}
+                                                    style={{
+                                                        padding: 'var(--space-3)',
+                                                        borderRadius: 'var(--radius-lg)',
+                                                        border: '1px solid var(--color-border)',
+                                                        background: 'var(--color-bg-secondary)',
+                                                        cursor: 'pointer',
+                                                        textAlign: 'left'
+                                                    }}
+                                                >
+                                                    <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-3)'}}>
+                                                        <i className={`fas ${cat.icon}`} style={{fontSize: 'var(--text-xl)', color: 'var(--color-primary)', width: '30px'}}></i>
+                                                        <div>
+                                                            <div style={{fontWeight: 'var(--font-semibold)'}}>{cat.name}</div>
+                                                            <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                                {cat.examples.slice(0, 3).join(' • ')}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            ))}
+                                        </div>
+
+                                        <button
+                                            onClick={() => setClarificationStep(0)}
+                                            className="btn btn-secondary w-full"
+                                        >
+                                            <i className="fas fa-arrow-left mr-2"></i>
+                                            Zpět k popisu
+                                        </button>
+                                    </>
                                 )}
 
-                                {/* Action buttons */}
-                                <div className="flex gap-3">
-                                    <button
-                                        onClick={() => {
-                                            setShowDescribeModal(false);
-                                            setProblemDescription('');
-                                        }}
-                                        className="btn btn-secondary flex-1"
-                                    >
-                                        Zrušit
-                                    </button>
-                                    <button
-                                        onClick={analyzeWithDescription}
-                                        className="btn btn-primary flex-1"
-                                        disabled={!problemDescription.trim()}
-                                    >
-                                        <i className="fas fa-search mr-2"></i>
-                                        Analyzovat
-                                    </button>
-                                </div>
+                                {/* Krok 2: Zobrazit nalezené problémy */}
+                                {clarificationStep === 2 && (
+                                    <>
+                                        <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                            <i className="fas fa-list-ul" style={{color: 'var(--color-success)'}}></i>
+                                            Vyberte problém
+                                        </h3>
+
+                                        {problemDescription && (
+                                            <div style={{
+                                                background: 'var(--color-bg-secondary)',
+                                                padding: 'var(--space-2) var(--space-3)',
+                                                borderRadius: 'var(--radius-lg)',
+                                                marginBottom: 'var(--space-3)',
+                                                fontSize: 'var(--text-sm)'
+                                            }}>
+                                                <strong>Hledáme:</strong> "{problemDescription}"
+                                            </div>
+                                        )}
+
+                                        <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                            Nalezeno {suggestedIssues.length} možných problémů. Vyberte ten správný:
+                                        </p>
+
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginBottom: 'var(--space-4)', maxHeight: '300px', overflow: 'auto'}}>
+                                            {suggestedIssues.length > 0 ? suggestedIssues.map((issue, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() => selectSuggestedIssue(issue)}
+                                                    style={{
+                                                        padding: 'var(--space-3)',
+                                                        borderRadius: 'var(--radius-lg)',
+                                                        border: '1px solid var(--color-border)',
+                                                        background: 'var(--color-bg-primary)',
+                                                        cursor: 'pointer',
+                                                        textAlign: 'left',
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                >
+                                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
+                                                        <div style={{flex: 1}}>
+                                                            <div style={{fontWeight: 'var(--font-semibold)', marginBottom: '4px'}}>
+                                                                {issue.name}
+                                                            </div>
+                                                            <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                                {issue.objectName}
+                                                            </div>
+                                                        </div>
+                                                        <div style={{textAlign: 'right'}}>
+                                                            <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                                <i className="fas fa-clock mr-1"></i>{issue.timeEstimate}
+                                                            </div>
+                                                            <span style={{
+                                                                fontSize: '10px',
+                                                                padding: '2px 6px',
+                                                                borderRadius: 'var(--radius-full)',
+                                                                background: issue.riskScore > 5 ? 'var(--color-danger-light)' : issue.riskScore > 2 ? 'var(--color-warning-light)' : 'var(--color-success-light)',
+                                                                color: issue.riskScore > 5 ? 'var(--color-danger)' : issue.riskScore > 2 ? 'var(--color-warning)' : 'var(--color-success)'
+                                                            }}>
+                                                                Riziko: {issue.riskScore}/10
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            )) : (
+                                                <div style={{textAlign: 'center', padding: 'var(--space-6)', color: 'var(--color-text-muted)'}}>
+                                                    <i className="fas fa-search" style={{fontSize: 'var(--text-3xl)', marginBottom: 'var(--space-2)', display: 'block', opacity: 0.5}}></i>
+                                                    <p>Žádné problémy v této kategorii nenalezeny.</p>
+                                                    <p style={{fontSize: 'var(--text-xs)'}}>Zkuste upravit popis nebo vybrat jinou kategorii.</p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        <div className="flex gap-3">
+                                            <button
+                                                onClick={() => setClarificationStep(selectedProblemCategory ? 1 : 0)}
+                                                className="btn btn-secondary flex-1"
+                                            >
+                                                <i className="fas fa-arrow-left mr-2"></i>
+                                                Zpět
+                                            </button>
+                                            <button
+                                                onClick={analyzeWithDescription}
+                                                className="btn btn-primary flex-1"
+                                                disabled={!problemDescription.trim()}
+                                            >
+                                                <i className="fas fa-robot mr-2"></i>
+                                                AI analýza
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
                     )}
@@ -3128,14 +3414,6 @@
                         </button>
 
                         <button
-                            className={`bottom-nav-item ${currentView === 'history' ? 'active' : ''}`}
-                            onClick={() => navigateTo('history')}
-                        >
-                            <i className="fas fa-history bottom-nav-icon"></i>
-                            <span className="bottom-nav-label">Historie</span>
-                        </button>
-
-                        <button
                             className={`bottom-nav-item ${currentView === 'offline' ? 'active' : ''}`}
                             onClick={() => navigateTo('offline')}
                         >
@@ -3179,95 +3457,84 @@
                         {/* Home View - Single Page s Hero */}
                         {currentView === 'home' && (
                             <div className="app-container">
-                                {/* Desktop: Hero + Upload vedle sebe */}
-                                <div className="home-desktop-layout desktop-compact-spacing">
-                                    {/* Hero Section - Animated */}
-                                    <div className="hero-section home-hero-compact">
-                                        <h1 className="hero-title">
-                                            FIXO
-                                        </h1>
-                                        <p className="hero-subtitle">
-                                            {t('appSlogan')}
-                                        </p>
-                                        <div className="desktop-stats-inline" style={{display: 'flex', justifyContent: 'center', gap: 'var(--space-6)', flexWrap: 'wrap', marginTop: 'var(--space-4)'}}>
-                                            <div style={{textAlign: 'center'}}>
-                                                <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)'}}>500+</div>
-                                                <div style={{fontSize: 'var(--text-xs)', opacity: 0.8}}>Závad</div>
-                                            </div>
-                                            <div style={{textAlign: 'center'}}>
-                                                <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)'}}>30s</div>
-                                                <div style={{fontSize: 'var(--text-xs)', opacity: 0.8}}>Analýza</div>
-                                            </div>
-                                            <div style={{textAlign: 'center'}}>
-                                                <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)'}}>AI</div>
-                                                <div style={{fontSize: 'var(--text-xs)', opacity: 0.8}}>Powered</div>
-                                            </div>
-                                        </div>
+                                {/* Stats Bar - pod headerem, užší */}
+                                <div className="stats-bar" style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    gap: 'var(--space-8)',
+                                    padding: 'var(--space-3) var(--space-4)',
+                                    background: 'var(--gradient-primary)',
+                                    borderRadius: 'var(--radius-xl)',
+                                    maxWidth: '400px',
+                                    margin: '0 auto var(--space-4)',
+                                    color: 'white'
+                                }}>
+                                    <div style={{textAlign: 'center'}}>
+                                        <div style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)'}}>500+</div>
+                                        <div style={{fontSize: 'var(--text-xs)', opacity: 0.9}}>Závad</div>
                                     </div>
+                                    <div style={{textAlign: 'center'}}>
+                                        <div style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)'}}>30s</div>
+                                        <div style={{fontSize: 'var(--text-xs)', opacity: 0.9}}>Analýza</div>
+                                    </div>
+                                    <div style={{textAlign: 'center'}}>
+                                        <div style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)'}}>AI</div>
+                                        <div style={{fontSize: 'var(--text-xs)', opacity: 0.9}}>Powered</div>
+                                    </div>
+                                </div>
 
+                                {/* Desktop: Upload + Jak to funguje vedle sebe */}
+                                <div className="home-two-columns" style={{
+                                    display: 'grid',
+                                    gridTemplateColumns: '1fr',
+                                    gap: 'var(--space-4)'
+                                }}>
                                     {/* Main Upload Section */}
                                     <div className="upload-card glass-card upload-card-compact">
-                                        <div className="text-center mb-6">
+                                        <div className="text-center mb-4">
                                             <h2 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-text-primary)', marginBottom: 'var(--space-2)'}}>
                                                 {t('homeTitle')}
                                             </h2>
-                                            <p className="text-secondary">
+                                            <p className="text-secondary" style={{fontSize: 'var(--text-sm)'}}>
                                                 {t('homeSubtitle')}
                                             </p>
                                         </div>
 
-                                    <input
-                                        ref={fileInputRef}
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={handleImageUpload}
-                                        className="hidden"
-                                    />
+                                        <input
+                                            ref={fileInputRef}
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleImageUpload}
+                                            className="hidden"
+                                        />
 
-                                    {/* Drag & Drop Zone */}
-                                    <div
-                                        ref={dropZoneRef}
-                                        className={`drop-zone ${isDragging ? 'drag-over' : ''}`}
-                                        onDragOver={handleDragOver}
-                                        onDragLeave={handleDragLeave}
-                                        onDrop={handleDrop}
-                                        onClick={() => fileInputRef.current.click()}
-                                    >
-                                        <div className="drop-zone-icon">
-                                            {isDragging ? (
-                                                <i className="fas fa-cloud-upload-alt"></i>
-                                            ) : (
-                                                <i className="fas fa-camera"></i>
-                                            )}
+                                        {/* Drag & Drop Zone */}
+                                        <div
+                                            ref={dropZoneRef}
+                                            className={`drop-zone ${isDragging ? 'drag-over' : ''}`}
+                                            onDragOver={handleDragOver}
+                                            onDragLeave={handleDragLeave}
+                                            onDrop={handleDrop}
+                                            onClick={() => fileInputRef.current.click()}
+                                            style={{padding: 'var(--space-6)'}}
+                                        >
+                                            <div className="drop-zone-icon">
+                                                {isDragging ? (
+                                                    <i className="fas fa-cloud-upload-alt"></i>
+                                                ) : (
+                                                    <i className="fas fa-camera"></i>
+                                                )}
+                                            </div>
+                                            <p style={{fontSize: 'var(--text-base)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)', color: 'var(--color-text-primary)'}}>
+                                                {isDragging ? t('dropzoneDrop') : t('dropzoneText')}
+                                            </p>
+                                            <p className="text-secondary" style={{fontSize: 'var(--text-sm)'}}>
+                                                {t('dropzoneHint')}
+                                            </p>
                                         </div>
-                                        <p style={{fontSize: 'var(--text-lg)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)', color: 'var(--color-text-primary)'}}>
-                                            {isDragging ? t('dropzoneDrop') : t('dropzoneText')}
-                                        </p>
-                                        <p className="text-secondary" style={{fontSize: 'var(--text-sm)'}}>
-                                            {t('dropzoneHint')}
-                                        </p>
-                                        <p className="text-muted" style={{fontSize: 'var(--text-xs)', marginTop: 'var(--space-2)'}}>
-                                            {t('dropzoneFormats')}
-                                        </p>
-                                    </div>
 
-                                    <div className="grid grid-3 mt-6 gap-2">
-                                        <div className="quick-stat">
-                                            <i className="fas fa-clock" style={{color: 'var(--color-primary)', marginBottom: 'var(--space-1)', display: 'block'}}></i>
-                                            <div style={{fontSize: 'var(--text-sm)'}}>{t('stat30sec')}</div>
-                                        </div>
-                                        <div className="quick-stat">
-                                            <i className="fas fa-shield-alt" style={{color: 'var(--color-success)', marginBottom: 'var(--space-1)', display: 'block'}}></i>
-                                            <div style={{fontSize: 'var(--text-sm)'}}>{t('statSafe')}</div>
-                                        </div>
-                                        <div className="quick-stat">
-                                            <i className="fas fa-tools" style={{color: 'var(--color-warning)', marginBottom: 'var(--space-1)', display: 'block'}}></i>
-                                            <div style={{fontSize: 'var(--text-sm)'}}>{t('stat500repairs')}</div>
-                                        </div>
-                                    </div>
-
-                                    {/* Quick Examples - více na desktopu */}
-                                    <div className="grid grid-4 examples-desktop mt-6 gap-3">
+                                        {/* Quick Examples - kompaktní */}
+                                        <div className="grid grid-6 mt-4 gap-2" style={{gridTemplateColumns: 'repeat(6, 1fr)'}}>
                                             {[
                                                 { icon: 'fa-tint', name: 'Kohoutek' },
                                                 { icon: 'fa-toilet', name: 'WC' },
@@ -3276,95 +3543,119 @@
                                                 { icon: 'fa-lightbulb', name: 'Světlo' },
                                                 { icon: 'fa-thermometer-half', name: 'Topení' }
                                             ].map((item, idx) => (
-                                                <div key={idx} className="example-card">
-                                                    <i className={`fas ${item.icon}`} style={{fontSize: 'var(--text-2xl)', color: 'var(--color-primary)'}}></i>
-                                                    <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)'}}>{item.name}</div>
+                                                <div key={idx} className="example-card" style={{padding: 'var(--space-2)'}}>
+                                                    <i className={`fas ${item.icon}`} style={{fontSize: 'var(--text-lg)', color: 'var(--color-primary)'}}></i>
+                                                    <div style={{fontSize: '10px', color: 'var(--color-text-secondary)'}}>{item.name}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Nelze vyfotit? - integrováno */}
+                                        <div
+                                            onClick={() => {
+                                                resetClarification();
+                                                setShowDescribeModal(true);
+                                            }}
+                                            style={{
+                                                marginTop: 'var(--space-3)',
+                                                padding: 'var(--space-3)',
+                                                background: 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%)',
+                                                borderRadius: 'var(--radius-lg)',
+                                                cursor: 'pointer',
+                                                textAlign: 'center',
+                                                border: '1px dashed #6366f1'
+                                            }}
+                                        >
+                                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)'}}>
+                                                <i className="fas fa-keyboard" style={{fontSize: 'var(--text-lg)', color: '#6366f1'}}></i>
+                                                <span style={{fontWeight: 'var(--font-semibold)', color: '#4338ca', fontSize: 'var(--text-sm)'}}>
+                                                    Nelze vyfotit? Popište problém
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Jak to funguje - stejná výška */}
+                                    <div className="glass-card" style={{display: 'flex', flexDirection: 'column'}}>
+                                        <h3 className="section-title section-title-compact" style={{justifyContent: 'center', marginBottom: 'var(--space-3)'}}>
+                                            <i className="fas fa-magic section-title-icon"></i>
+                                            Jak to funguje?
+                                        </h3>
+                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', flex: 1}}>
+                                            {[
+                                                {
+                                                    num: '1', icon: 'fa-camera', title: 'Vyfoťte',
+                                                    desc: 'Nafoťte poškozenou věc nebo nahrajte fotku',
+                                                    detail: 'Stačí namířit fotoaparát na závadu – rozbitý kohoutek, prasklou zásuvku, nefunkční spotřebič.'
+                                                },
+                                                {
+                                                    num: '2', icon: 'fa-brain', title: 'AI Analýza',
+                                                    desc: 'Umělá inteligence identifikuje závadu',
+                                                    detail: 'Naše AI analyzuje fotku během několika sekund. Rozpozná typ zařízení a identifikuje příčinu.'
+                                                },
+                                                {
+                                                    num: '3', icon: 'fa-tools', title: 'Opravte',
+                                                    desc: 'Postupujte podle návodu krok za krokem',
+                                                    detail: 'Získáte přehledný návod s jednotlivými kroky a seznamem potřebného nářadí.'
+                                                }
+                                            ].map((step, idx) => (
+                                                <div
+                                                    key={idx}
+                                                    className="info-box ripple"
+                                                    onClick={() => setExpandedStep(expandedStep === idx ? null : idx)}
+                                                    style={{
+                                                        flexDirection: 'column',
+                                                        alignItems: 'flex-start',
+                                                        textAlign: 'left',
+                                                        minHeight: 'auto',
+                                                        padding: 'var(--space-3)',
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s ease',
+                                                        flex: expandedStep === idx ? 'auto' : '1'
+                                                    }}
+                                                >
+                                                    <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-3)', width: '100%'}}>
+                                                        <div style={{
+                                                            width: '36px', height: '36px', borderRadius: 'var(--radius-lg)',
+                                                            background: expandedStep === idx ? 'var(--gradient-primary)' : 'var(--color-bg-tertiary)',
+                                                            color: expandedStep === idx ? 'white' : 'var(--color-primary)',
+                                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                            fontSize: 'var(--text-sm)',
+                                                            flexShrink: 0
+                                                        }}>
+                                                            <i className={`fas ${step.icon}`}></i>
+                                                        </div>
+                                                        <div style={{flex: 1}}>
+                                                            <h4 style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', color: 'var(--color-text-primary)', margin: 0}}>{step.title}</h4>
+                                                            <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', margin: 0}}>{step.desc}</p>
+                                                        </div>
+                                                        <i className={`fas fa-chevron-${expandedStep === idx ? 'up' : 'down'}`} style={{color: 'var(--color-text-muted)', fontSize: 'var(--text-xs)'}}></i>
+                                                    </div>
+                                                    {expandedStep === idx && (
+                                                        <div style={{
+                                                            marginTop: 'var(--space-2)',
+                                                            paddingTop: 'var(--space-2)',
+                                                            borderTop: '1px solid var(--color-border)',
+                                                            fontSize: 'var(--text-xs)',
+                                                            color: 'var(--color-text-secondary)',
+                                                            lineHeight: 1.4
+                                                        }}>
+                                                            {step.detail}
+                                                        </div>
+                                                    )}
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* Info Section - Jak to funguje - desktop: všechny vedle sebe */}
-                                <div className="glass-card desktop-compact-spacing" style={{marginTop: 'var(--space-4)'}}>
-                                    <h3 className="section-title section-title-compact" style={{justifyContent: 'center'}}>
-                                        <i className="fas fa-magic section-title-icon"></i>
-                                        Jak to funguje?
-                                    </h3>
-                                    <div className="collapsible-desktop-row" style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
-                                        {[
-                                            {
-                                                num: '1', icon: 'fa-camera', title: 'Vyfoťte',
-                                                desc: 'Nafoťte poškozenou věc nebo nahrajte fotku',
-                                                detail: 'Stačí namířit fotoaparát na závadu – rozbitý kohoutek, prasklou zásuvku, nefunkční spotřebič. Čím lépe je problém vidět, tím přesnější bude diagnóza.'
-                                            },
-                                            {
-                                                num: '2', icon: 'fa-brain', title: 'AI Analýza',
-                                                desc: 'Umělá inteligence identifikuje závadu',
-                                                detail: 'Naše AI analyzuje fotku během několika sekund. Rozpozná typ zařízení, identifikuje možné příčiny závady a navrhne nejpravděpodobnější řešení.'
-                                            },
-                                            {
-                                                num: '3', icon: 'fa-tools', title: 'Opravte',
-                                                desc: 'Postupujte podle návodu krok za krokem',
-                                                detail: 'Získáte přehledný návod s jednotlivými kroky, seznamem potřebného nářadí, bezpečnostními upozorněními a odhadovanou cenou opravy.'
-                                            }
-                                        ].map((step, idx) => (
-                                            <div
-                                                key={idx}
-                                                className="info-box ripple"
-                                                onClick={() => setExpandedStep(expandedStep === idx ? null : idx)}
-                                                style={{
-                                                    flexDirection: 'column',
-                                                    alignItems: 'flex-start',
-                                                    textAlign: 'left',
-                                                    minHeight: 'auto',
-                                                    padding: 'var(--space-3)',
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.2s ease'
-                                                }}
-                                            >
-                                                <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-3)', width: '100%'}}>
-                                                    <div style={{
-                                                        width: '40px', height: '40px', borderRadius: 'var(--radius-lg)',
-                                                        background: expandedStep === idx ? 'var(--gradient-primary)' : 'var(--color-bg-tertiary)',
-                                                        color: expandedStep === idx ? 'white' : 'var(--color-primary)',
-                                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                        fontSize: 'var(--text-base)',
-                                                        flexShrink: 0,
-                                                        transition: 'all 0.2s ease'
-                                                    }}>
-                                                        <i className={`fas ${step.icon}`}></i>
-                                                    </div>
-                                                    <div style={{flex: 1}}>
-                                                        <h4 style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', color: 'var(--color-text-primary)', margin: 0}}>{step.title}</h4>
-                                                        <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', margin: 0}}>{step.desc}</p>
-                                                    </div>
-                                                    <i className={`fas fa-chevron-${expandedStep === idx ? 'up' : 'down'}`} style={{color: 'var(--color-text-muted)', fontSize: 'var(--text-sm)'}}></i>
-                                                </div>
-                                                {expandedStep === idx && (
-                                                    <div style={{
-                                                        marginTop: 'var(--space-3)',
-                                                        paddingTop: 'var(--space-3)',
-                                                        borderTop: '1px solid var(--color-border)',
-                                                        fontSize: 'var(--text-sm)',
-                                                        color: 'var(--color-text-secondary)',
-                                                        lineHeight: 1.5
-                                                    }}>
-                                                        {step.detail}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
                                 {/* Footer - Kompaktní */}
-                                <div className="app-footer" style={{marginTop: 'var(--space-6)', background: 'transparent', padding: 'var(--space-8) 0'}}>
-                                    <div className="footer-logo">FIXO</div>
-                                    <p className="footer-text">
+                                <div className="app-footer" style={{marginTop: 'var(--space-4)', background: 'transparent', padding: 'var(--space-4) 0'}}>
+                                    <div className="footer-logo" style={{fontSize: 'var(--text-lg)'}}>FIXO</div>
+                                    <p className="footer-text" style={{fontSize: 'var(--text-xs)'}}>
                                         "Fix Anything. Anywhere. Instantly."
                                     </p>
-                                    <p className="footer-copyright">
+                                    <p className="footer-copyright" style={{fontSize: 'var(--text-xs)'}}>
                                         © 2025 FIXO • Váš domácí pomocník
                                     </p>
                                 </div>
@@ -4327,252 +4618,6 @@
                             </div>
                         )}
 
-                        {/* History View */}
-                        {currentView === 'history' && (
-                            <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
-                                <h2 className="section-title" style={{marginBottom: 'var(--space-4)'}}>
-                                    <i className="fas fa-history section-title-icon"></i>
-                                    {t('historyTitle')}
-                                </h2>
-
-                                {repairHistory.length === 0 ? (
-                                    <div className="empty-state card">
-                                        <div className="empty-state-icon"><i className="fas fa-history"></i></div>
-                                        <p className="empty-state-title">{t('noRepairsYet')}</p>
-                                        <p className="empty-state-desc">{t('noRepairsHint')}</p>
-                                    </div>
-                                ) : (
-                                    <>
-                                        {/* Desktop: Statistiky + filtry v jednom řádku */}
-                                        <div className="history-header-desktop mb-4">
-                                            {/* Statistiky - kompaktní */}
-                                            <div className="grid grid-3 history-stats-compact gap-3">
-                                                <div className="card card-compact" style={{padding: 'var(--space-3)', textAlign: 'center'}}>
-                                                    <div style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-primary)'}}>
-                                                        {getHistoryStats().total}
-                                                    </div>
-                                                    <div className="text-muted" style={{fontSize: 'var(--text-xs)'}}>{t('totalRepairs')}</div>
-                                                </div>
-                                                <div className="card card-compact" style={{padding: 'var(--space-3)', textAlign: 'center'}}>
-                                                    <div style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-success)'}}>
-                                                        {getHistoryStats().completed}
-                                                    </div>
-                                                    <div className="text-muted" style={{fontSize: 'var(--text-xs)'}}>{t('completedRepairs')}</div>
-                                                </div>
-                                                <div className="card card-compact" style={{padding: 'var(--space-3)', textAlign: 'center'}}>
-                                                    <div style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-warning)'}}>
-                                                        {getHistoryStats().inProgress}
-                                                    </div>
-                                                    <div className="text-muted" style={{fontSize: 'var(--text-xs)'}}>{t('inProgress')}</div>
-                                                </div>
-                                            </div>
-
-                                            {/* Filtrování a export */}
-                                            <div className="flex-between" style={{flexWrap: 'wrap', gap: 'var(--space-2)', marginTop: 'var(--space-3)'}}>
-                                                <div className="category-filter category-filter-desktop" style={{margin: 0}}>
-                                                    <button
-                                                        onClick={() => setHistoryFilter('all')}
-                                                        className={`category-btn ${historyFilter === 'all' ? 'active' : ''}`}
-                                                    >
-                                                        {t('filterAll')} ({repairHistory.length})
-                                                    </button>
-                                                    <button
-                                                        onClick={() => setHistoryFilter('completed')}
-                                                        className={`category-btn ${historyFilter === 'completed' ? 'active' : ''}`}
-                                                    >
-                                                        <i className="fas fa-check-circle mr-1"></i>
-                                                        {t('filterCompleted')}
-                                                    </button>
-                                                    <button
-                                                        onClick={() => setHistoryFilter('in_progress')}
-                                                        className={`category-btn ${historyFilter === 'in_progress' ? 'active' : ''}`}
-                                                    >
-                                                        <i className="fas fa-wrench mr-1"></i>
-                                                        {t('filterInProgress')}
-                                                    </button>
-                                                </div>
-                                                <button
-                                                    onClick={exportToCSV}
-                                                    className="btn btn-secondary"
-                                                    style={{whiteSpace: 'nowrap', padding: 'var(--space-2) var(--space-3)', fontSize: 'var(--text-sm)'}}
-                                                >
-                                                    <i className="fas fa-download mr-2"></i>
-                                                    {t('exportCSV')}
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        {/* Seznam oprav - 2-3 sloupce na desktopu */}
-                                        <div className="history-list-desktop" style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
-                                            {getFilteredHistory().length === 0 ? (
-                                                <div className="text-center text-muted" style={{padding: 'var(--space-8)'}}>
-                                                    <i className="fas fa-filter" style={{fontSize: 'var(--text-3xl)', marginBottom: 'var(--space-2)', display: 'block'}}></i>
-                                                    {t('noCategoryItems')}
-                                                </div>
-                                            ) : (
-                                                getFilteredHistory().map(item => (
-                                                    <div
-                                                        key={item.id}
-                                                        className="card hover-scale"
-                                                        style={{cursor: 'pointer'}}
-                                                        onClick={() => setSelectedRepairDetail(item)}
-                                                    >
-                                                        <div className="card-body flex-between">
-                                                            <div>
-                                                                <h3 style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-lg)'}}>
-                                                                    {item.object} - {item.issue}
-                                                                </h3>
-                                                                <p className="text-muted" style={{fontSize: 'var(--text-sm)', marginTop: 'var(--space-1)'}}>
-                                                                    <i className="far fa-calendar mr-2"></i>
-                                                                    {item.date}
-                                                                    {item.timeEstimate && (
-                                                                        <span style={{marginLeft: 'var(--space-3)'}}>
-                                                                            <i className="fas fa-clock mr-1"></i>
-                                                                            {item.timeEstimate}
-                                                                        </span>
-                                                                    )}
-                                                                </p>
-                                                            </div>
-                                                            <div className="flex items-center gap-2">
-                                                                {item.status === 'completed' ? (
-                                                                    <span className="badge badge-success">
-                                                                        <i className="fas fa-check-circle mr-1"></i>
-                                                                        {t('completed')}
-                                                                    </span>
-                                                                ) : (
-                                                                    <span className="badge badge-warning">
-                                                                        <i className="fas fa-wrench mr-1"></i>
-                                                                        {t('inProgress')}
-                                                                    </span>
-                                                                )}
-                                                                <i className="fas fa-chevron-right text-muted"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                ))
-                                            )}
-                                        </div>
-                                    </>
-                                )}
-
-                                {/* Detail opravy modal */}
-                                {selectedRepairDetail && (
-                                    <div className="translating-overlay" onClick={() => setSelectedRepairDetail(null)}>
-                                        <div
-                                            className="card"
-                                            style={{
-                                                maxWidth: '500px',
-                                                width: '90%',
-                                                maxHeight: '80vh',
-                                                overflow: 'auto'
-                                            }}
-                                            onClick={e => e.stopPropagation()}
-                                        >
-                                            <div className="result-header">
-                                                <div className="flex-between">
-                                                    <div>
-                                                        <h2 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)'}}>
-                                                            {selectedRepairDetail.object}
-                                                        </h2>
-                                                        <p style={{opacity: 0.9}}>{selectedRepairDetail.issue}</p>
-                                                    </div>
-                                                    <button
-                                                        onClick={() => setSelectedRepairDetail(null)}
-                                                        style={{
-                                                            background: 'rgba(255,255,255,0.2)',
-                                                            border: 'none',
-                                                            borderRadius: '50%',
-                                                            width: '36px',
-                                                            height: '36px',
-                                                            cursor: 'pointer',
-                                                            color: 'white',
-                                                            fontSize: 'var(--text-lg)'
-                                                        }}
-                                                    >
-                                                        <i className="fas fa-times"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div className="card-body">
-                                                <div className="grid grid-2 gap-4 mb-4">
-                                                    <div>
-                                                        <div className="text-muted" style={{fontSize: 'var(--text-sm)'}}>
-                                                            <i className="far fa-calendar mr-2"></i>Datum
-                                                        </div>
-                                                        <div style={{fontWeight: 'var(--font-semibold)'}}>{selectedRepairDetail.date}</div>
-                                                    </div>
-                                                    <div>
-                                                        <div className="text-muted" style={{fontSize: 'var(--text-sm)'}}>
-                                                            <i className="fas fa-clock mr-2"></i>{t('repairTime')}
-                                                        </div>
-                                                        <div style={{fontWeight: 'var(--font-semibold)'}}>
-                                                            {selectedRepairDetail.timeEstimate || 'N/A'}
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div className="mb-4">
-                                                    <div className="text-muted" style={{fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)'}}>
-                                                        Stav
-                                                    </div>
-                                                    {selectedRepairDetail.status === 'completed' ? (
-                                                        <span className="badge badge-success">
-                                                            <i className="fas fa-check-circle mr-1"></i>
-                                                            {t('completed')}
-                                                        </span>
-                                                    ) : (
-                                                        <span className="badge badge-warning">
-                                                            <i className="fas fa-wrench mr-1"></i>
-                                                            {t('inProgress')}
-                                                        </span>
-                                                    )}
-                                                </div>
-
-                                                {selectedRepairDetail.tools && selectedRepairDetail.tools.length > 0 && (
-                                                    <div className="mb-4">
-                                                        <div className="text-muted" style={{fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)'}}>
-                                                            <i className="fas fa-toolbox mr-2"></i>{t('tools')}
-                                                        </div>
-                                                        <div className="tool-list">
-                                                            {selectedRepairDetail.tools.map((tool, idx) => (
-                                                                <span key={idx} className="tool-item">{tool}</span>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-
-                                                {selectedRepairDetail.steps && selectedRepairDetail.steps.length > 0 && (
-                                                    <div className="mb-4">
-                                                        <div className="text-muted" style={{fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)'}}>
-                                                            <i className="fas fa-list-ol mr-2"></i>{t('steps')}
-                                                        </div>
-                                                        <div style={{fontSize: 'var(--text-sm)'}}>
-                                                            {selectedRepairDetail.steps.map((step, idx) => (
-                                                                <div key={idx} style={{
-                                                                    padding: 'var(--space-2)',
-                                                                    borderBottom: idx < selectedRepairDetail.steps.length - 1 ? '1px solid var(--color-border)' : 'none'
-                                                                }}>
-                                                                    <span style={{marginRight: 'var(--space-2)'}}>{step.icon}</span>
-                                                                    {step.action}
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-
-                                                <button
-                                                    onClick={() => setSelectedRepairDetail(null)}
-                                                    className="btn btn-primary btn-block"
-                                                >
-                                                    {t('close')}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
                         {/* Knowledge Base View */}
                         {currentView === 'knowledge' && (
                             <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
@@ -5484,7 +5529,6 @@
                                         <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('home'); }}>• {t('footerAI')}</a></li>
                                         <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('knowledge'); }}>• {t('footer500guides')}</a></li>
                                         <li><a href="#" onClick={(e) => { e.preventDefault(); alert(t('safetyDisclaimer')); }}>• {t('footerSafety')}</a></li>
-                                        <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('history'); }}>• {t('footerHistory')}</a></li>
                                     </ul>
                                 </div>
                                 <div>
