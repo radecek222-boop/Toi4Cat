@@ -3660,41 +3660,38 @@
 
                         {/* Results View */}
                         {currentView === 'results' && analysisResult && (
-                            <div className="app-container pt-4">
-                                {/* Desktop: Obrazek vlevo, vysledky vpravo */}
-                                <div className="results-desktop-layout">
-                                    {/* Levy sloupec - analyzovany obrazek (pouze desktop) */}
+                            <div className="content-two-columns">
+                                {/* Blok A - Fotka */}
+                                <div className="content-left">
                                     {selectedImage && (
-                                        <div className="results-image-section hidden">
-                                            <div className="glass-card p-4 mb-4">
-                                                <h3 className="text-sm font-semibold mb-3 text-secondary">
-                                                    <i className="fas fa-image mr-2"></i>
-                                                    Analyzovaný obrázek
-                                                </h3>
-                                                <img
-                                                    src={selectedImage}
-                                                    alt="Analyzovaný obrázek"
-                                                    className="w-full rounded-lg bg-secondary"
-                                                />
-                                                <div className="mt-3 flex gap-2 justify-center">
-                                                    <button
-                                                        onClick={() => navigateTo('home')}
-                                                        className="btn btn-secondary"
-                                                        className="text-sm py-2 px-3"
-                                                    >
-                                                        <i className="fas fa-camera mr-1"></i>
-                                                        Nová fotka
-                                                    </button>
-                                                </div>
-                                            </div>
+                                        <div className="glass-card">
+                                            <h3 className="text-sm font-semibold mb-3 text-secondary">
+                                                <i className="fas fa-image mr-2"></i>
+                                                Analyzovaný obrázek
+                                            </h3>
+                                            <img
+                                                src={selectedImage}
+                                                alt="Analyzovaný obrázek"
+                                                className="w-full rounded-lg bg-secondary mb-4"
+                                                style={{maxHeight: '400px', objectFit: 'contain'}}
+                                            />
+                                            <button
+                                                onClick={() => navigateTo('home')}
+                                                className="btn btn-secondary w-full"
+                                            >
+                                                <i className="fas fa-camera mr-2"></i>
+                                                Nová fotka
+                                            </button>
                                         </div>
                                     )}
+                                </div>
 
-                                    {/* Pravy sloupec - vysledky analyzy */}
-                                    <div>
-                                        <div className="glass-card p-0 overflow-hidden">
-                                            {/* Detection Header */}
-                                            <div className="result-header">
+                                {/* Blok I - Výsledky a akce */}
+                                <div className="content-right">
+                                    {/* Horní box - Diagnostika */}
+                                    <div className="glass-card p-0 overflow-hidden">
+                                        {/* Detection Header */}
+                                        <div className="result-header">
                                                 <div className="flex-between">
                                                     <div>
                                                         <h2 className="text-xl font-bold mb-2">
@@ -3905,9 +3902,18 @@
                                                 </ul>
                                             </div>
                                         )}
+                                    </div>
+                                </div>
 
-                                        {/* Action Buttons - Nový obchodní model */}
-                                        <div className="flex flex-col gap-3">
+                                {/* Spodní box - Akce a volby */}
+                                <div className="glass-card">
+                                    <h3 className="section-title mb-4">
+                                        <i className="fas fa-toolbox"></i>
+                                        Co dál?
+                                    </h3>
+
+                                    {/* Action Buttons - Nový obchodní model */}
+                                    <div className="flex flex-col gap-3">
                                             {/* Základní návod - ZDARMA */}
                                             <button
                                                 onClick={() => startRepair(analysisResult.issue)}
@@ -3965,32 +3971,30 @@
                                             </button>
                                         </div>
 
-                                        {/* Affiliate odkazy na e-shopy */}
-                                        <div className="mt-4 p-3 bg-secondary rounded-lg">
-                                            <p className="text-xs text-secondary mb-2 text-center">
-                                                <i className="fas fa-shopping-cart mr-1"></i>
-                                                Nakupte potřebný materiál:
-                                            </p>
-                                            <div className="flex flex-wrap gap-2 justify-center">
-                                                {Object.entries(affiliateLinks).filter(([_, shop]) => shop.hasAffiliate).map(([key, shop]) => (
-                                                    <a
-                                                        key={key}
-                                                        href={shop.baseUrl + encodeURIComponent(analysisResult.issue.name)}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="rounded-md"
-                                                    >
-                                                        <i className={`fas ${shop.icon}`}></i>
-                                                        {shop.name}
-                                                    </a>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {/* Affiliate odkazy na e-shopy */}
+                                    <div className="mt-4 p-3 bg-secondary rounded-lg">
+                                        <p className="text-xs text-secondary mb-2 text-center">
+                                            <i className="fas fa-shopping-cart mr-1"></i>
+                                            Nakupte potřebný materiál:
+                                        </p>
+                                        <div className="flex flex-wrap gap-2 justify-center">
+                                            {Object.entries(affiliateLinks).filter(([_, shop]) => shop.hasAffiliate).map(([key, shop]) => (
+                                                <a
+                                                    key={key}
+                                                    href={shop.baseUrl + encodeURIComponent(analysisResult.issue.name)}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="rounded-md"
+                                                >
+                                                    <i className={`fas ${shop.icon}`}></i>
+                                                    {shop.name}
+                                                </a>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         )}
 
                         {/* Repair Steps View */}
