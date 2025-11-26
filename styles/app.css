@@ -36,10 +36,10 @@
     }
 }
 
-/* Desktop - 80% šířky obrazovky */
+/* Desktop - 84% šířky obrazovky */
 @media (min-width: 1024px) {
     .app-container {
-        max-width: 80%;
+        max-width: 84%;
         padding: 0 var(--space-8);
     }
 }
@@ -782,7 +782,7 @@
 
 @media (min-width: 1024px) {
     .bottom-sheet {
-        max-width: 80%;
+        max-width: 84%;
     }
 }
 
@@ -881,7 +881,7 @@
 
 @media (min-width: 1024px) {
     .translating-box {
-        max-width: 80%;
+        max-width: 84%;
     }
 }
 
@@ -985,7 +985,7 @@
 
 @media (min-width: 1024px) {
     .bottom-nav {
-        max-width: 80%;
+        max-width: 84%;
     }
 }
 
@@ -1093,7 +1093,7 @@
 
 @media (min-width: 1024px) {
     .fab {
-        right: calc(50% - 40% + var(--space-4));
+        right: calc(50% - 42% + var(--space-4));
     }
 }
 
@@ -1150,7 +1150,7 @@
 
 @media (min-width: 1024px) {
     .top-header {
-        max-width: 80%;
+        max-width: 84%;
     }
 }
 
@@ -1344,7 +1344,7 @@
 
 @media (min-width: 1024px) {
     .toast-container {
-        max-width: 80%;
+        max-width: 84%;
     }
 }
 
@@ -1476,7 +1476,7 @@
 
 @media (min-width: 1024px) {
     .install-banner {
-        max-width: calc(80% - var(--space-8));
+        max-width: calc(84% - var(--space-8));
     }
 }
 
@@ -1547,6 +1547,11 @@
     text-align: center;
     padding: var(--space-10) var(--space-6);
     color: var(--color-text-muted);
+    width: 100%;
+}
+
+.empty-state.card {
+    width: 100%;
 }
 
 .empty-state-icon {
@@ -1608,7 +1613,7 @@
 }
 
 .footer-text {
-    color: var(--color-text-muted);
+    color: rgba(255, 255, 255, 0.85);
     font-size: var(--text-sm);
     margin-bottom: var(--space-4);
 }
@@ -1621,17 +1626,17 @@
 }
 
 .footer-link {
-    color: var(--color-text-secondary);
+    color: rgba(255, 255, 255, 0.85);
     font-size: var(--text-sm);
     transition: color var(--transition-fast);
 }
 
 .footer-link:hover {
-    color: var(--color-primary);
+    color: white;
 }
 
 .footer-copyright {
-    color: var(--color-text-light);
+    color: rgba(255, 255, 255, 0.7);
     font-size: var(--text-xs);
 }
 

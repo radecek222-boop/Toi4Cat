@@ -692,19 +692,19 @@
             }
         })();
 
-        // Kategorie (fallback)
+        // Kategorie (fallback) - Font Awesome ikony
         const defaultCategories = [
-            { id: 'all', name: 'Vše', icon: '📋' },
-            { id: 'voda', name: 'Voda', icon: '🚰' },
-            { id: 'elektrina', name: 'Elektřina', icon: '⚡' },
-            { id: 'topeni', name: 'Topení', icon: '🌡️' },
-            { id: 'dvere_okna', name: 'Dveře & Okna', icon: '🚪' },
-            { id: 'nabytek', name: 'Nábytek', icon: '🪑' },
-            { id: 'spotrebice', name: 'Spotřebiče', icon: '🔌' },
-            { id: 'kuchyn', name: 'Kuchyň', icon: '🍳' },
-            { id: 'koupelna', name: 'Koupelna', icon: '🚿' },
-            { id: 'steny_podlahy', name: 'Stěny', icon: '🏠' },
-            { id: 'zahrada', name: 'Zahrada', icon: '🌱' }
+            { id: 'all', name: 'Vše', icon: 'fa-th-large' },
+            { id: 'voda', name: 'Voda', icon: 'fa-tint' },
+            { id: 'elektrina', name: 'Elektřina', icon: 'fa-bolt' },
+            { id: 'topeni', name: 'Topení', icon: 'fa-thermometer-half' },
+            { id: 'dvere_okna', name: 'Dveře & Okna', icon: 'fa-door-open' },
+            { id: 'nabytek', name: 'Nábytek', icon: 'fa-couch' },
+            { id: 'spotrebice', name: 'Spotřebiče', icon: 'fa-plug' },
+            { id: 'kuchyn', name: 'Kuchyň', icon: 'fa-utensils' },
+            { id: 'koupelna', name: 'Koupelna', icon: 'fa-shower' },
+            { id: 'steny_podlahy', name: 'Stěny', icon: 'fa-home' },
+            { id: 'zahrada', name: 'Zahrada', icon: 'fa-leaf' }
         ];
 
         // Getter pro databázi (používá načtená data nebo prázdný objekt)
@@ -765,6 +765,9 @@
             // Hamburger menu state
             const [menuOpen, setMenuOpen] = useState(false);
             const [langMenuOpen, setLangMenuOpen] = useState(false);
+
+            // How it works expanded state
+            const [expandedStep, setExpandedStep] = useState(null);
 
             // PWA install state
             const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -1228,14 +1231,14 @@
                 setCurrentView('results');
             };
 
-            // Pomocná funkce pro získání ikony kategorie
+            // Pomocná funkce pro získání ikony kategorie (Font Awesome)
             const getCategoryIcon = (category) => {
                 const icons = {
-                    voda: '🚰', elektrina: '⚡', topeni: '🌡️',
-                    dvere_okna: '🚪', nabytek: '🪑', spotrebice: '🔌',
-                    kuchyn: '🍳', koupelna: '🚿', steny_podlahy: '🏠', zahrada: '🌱'
+                    voda: 'fa-tint', elektrina: 'fa-bolt', topeni: 'fa-thermometer-half',
+                    dvere_okna: 'fa-door-open', nabytek: 'fa-couch', spotrebice: 'fa-plug',
+                    kuchyn: 'fa-utensils', koupelna: 'fa-shower', steny_podlahy: 'fa-home', zahrada: 'fa-leaf'
                 };
-                return icons[category] || '🔧';
+                return icons[category] || 'fa-wrench';
             };
 
             // === KRESLENÍ NA FOTKU ===
@@ -1946,98 +1949,59 @@
                         </div>
                     )}
 
-                    {/* Před-opravní checklist modal */}
+                    {/* Před-opravní checklist modal - Compact */}
                     {showChecklist && pendingIssue && (
                         <div className="translating-overlay" onClick={cancelChecklist}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()}>
-                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                            <div className="translating-box" onClick={e => e.stopPropagation()} style={{padding: 'var(--space-4)'}}>
+                                <h3 style={{fontSize: 'var(--text-base)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-3)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
                                     <i className="fas fa-clipboard-check" style={{color: 'var(--color-primary)'}}></i>
                                     Před zahájením opravy
                                 </h3>
-                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)'}}>
-                                    Zkontrolujte prosím tyto body před začátkem práce:
-                                </p>
 
-                                {/* Checklist items */}
-                                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', marginBottom: 'var(--space-6)'}}>
+                                {/* Checklist items - compact */}
+                                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginBottom: 'var(--space-3)'}}>
                                     {generateChecklistItems(pendingIssue).map(item => (
                                         <label
                                             key={item.id}
                                             style={{
                                                 display: 'flex',
                                                 alignItems: 'center',
-                                                gap: 'var(--space-3)',
-                                                padding: 'var(--space-3)',
-                                                background: item.important
-                                                    ? (checklistItems[item.id] ? 'var(--color-success-light)' : 'var(--color-warning-light)')
-                                                    : (checklistItems[item.id] ? 'var(--color-success-light)' : 'var(--color-bg-secondary)'),
-                                                borderRadius: 'var(--radius-lg)',
+                                                gap: 'var(--space-2)',
+                                                padding: 'var(--space-2)',
+                                                background: checklistItems[item.id] ? 'var(--color-success-light)' : (item.important ? 'var(--color-warning-light)' : 'var(--color-bg-secondary)'),
+                                                borderRadius: 'var(--radius-md)',
                                                 cursor: 'pointer',
-                                                border: item.important ? '2px solid' : '1px solid',
-                                                borderColor: item.important
-                                                    ? (checklistItems[item.id] ? 'var(--color-success)' : 'var(--color-warning)')
-                                                    : 'var(--color-border)',
-                                                transition: 'var(--transition-fast)'
+                                                fontSize: 'var(--text-sm)'
                                             }}
                                         >
                                             <input
                                                 type="checkbox"
                                                 checked={checklistItems[item.id] || false}
                                                 onChange={() => setChecklistItems(prev => ({...prev, [item.id]: !prev[item.id]}))}
-                                                style={{
-                                                    width: '20px',
-                                                    height: '20px',
-                                                    accentColor: 'var(--color-success)'
-                                                }}
+                                                style={{width: '16px', height: '16px', accentColor: 'var(--color-success)'}}
                                             />
-                                            <i className={`fas ${item.icon}`} style={{
-                                                fontSize: 'var(--text-lg)',
-                                                color: item.important ? 'var(--color-warning)' : 'var(--color-primary)',
-                                                width: '24px'
-                                            }}></i>
                                             <span style={{
                                                 flex: 1,
-                                                fontSize: 'var(--text-sm)',
-                                                fontWeight: item.important ? 'var(--font-semibold)' : 'var(--font-normal)',
                                                 textDecoration: checklistItems[item.id] ? 'line-through' : 'none',
-                                                opacity: checklistItems[item.id] ? 0.7 : 1
+                                                opacity: checklistItems[item.id] ? 0.6 : 1
                                             }}>
                                                 {item.text}
-                                                {item.important && <span style={{color: 'var(--color-danger)', marginLeft: 'var(--space-1)'}}>*</span>}
+                                                {item.important && <span style={{color: 'var(--color-danger)'}}>*</span>}
                                             </span>
                                         </label>
                                     ))}
                                 </div>
 
-                                {/* Nářadí k připravení */}
+                                {/* Nářadí - inline compact */}
                                 {pendingIssue.tools && pendingIssue.tools.length > 0 && (
-                                    <div style={{
-                                        background: 'var(--color-info-light)',
-                                        padding: 'var(--space-4)',
-                                        borderRadius: 'var(--radius-lg)',
-                                        marginBottom: 'var(--space-4)'
-                                    }}>
-                                        <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)', fontSize: 'var(--text-sm)'}}>
-                                            <i className="fas fa-toolbox mr-2"></i>
-                                            Potřebné nářadí:
-                                        </h4>
-                                        <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)'}}>
-                                            {pendingIssue.tools.map((tool, idx) => (
-                                                <span key={idx} style={{
-                                                    background: 'var(--color-bg-primary)',
-                                                    padding: 'var(--space-1) var(--space-2)',
-                                                    borderRadius: 'var(--radius-md)',
-                                                    fontSize: 'var(--text-xs)'
-                                                }}>{tool}</span>
-                                            ))}
-                                        </div>
+                                    <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                        <strong>Nářadí:</strong> {pendingIssue.tools.join(', ')}
                                     </div>
                                 )}
 
                                 {/* Action buttons */}
-                                <div className="flex gap-3">
-                                    <button onClick={cancelChecklist} className="btn btn-secondary flex-1">
-                                        <i className="fas fa-times mr-2"></i>
+                                <div className="flex gap-2">
+                                    <button onClick={cancelChecklist} className="btn btn-secondary flex-1" style={{padding: 'var(--space-2)'}}>
                                         Zrušit
                                     </button>
                                     <button
@@ -2045,20 +2009,14 @@
                                         className="btn btn-success flex-1"
                                         disabled={generateChecklistItems(pendingIssue).filter(i => i.important).some(i => !checklistItems[i.id])}
                                         style={{
+                                            padding: 'var(--space-2)',
                                             opacity: generateChecklistItems(pendingIssue).filter(i => i.important).some(i => !checklistItems[i.id]) ? 0.5 : 1
                                         }}
                                     >
-                                        <i className="fas fa-play mr-2"></i>
-                                        Začít opravu
+                                        <i className="fas fa-play mr-1"></i>
+                                        Začít
                                     </button>
                                 </div>
-
-                                {generateChecklistItems(pendingIssue).filter(i => i.important).some(i => !checklistItems[i.id]) && (
-                                    <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-warning)', textAlign: 'center', marginTop: 'var(--space-2)'}}>
-                                        <i className="fas fa-info-circle mr-1"></i>
-                                        Zaškrtni všechny důležité položky (*) pro pokračování
-                                    </p>
-                                )}
                             </div>
                         </div>
                     )}
@@ -2634,13 +2592,13 @@
                                     {/* Quick Examples */}
                                     <div className="grid grid-4 mt-6 gap-3">
                                             {[
-                                                { icon: '🚰', name: 'Kohoutek' },
-                                                { icon: '🚽', name: 'WC' },
-                                                { icon: '🔌', name: 'Zásuvka' },
-                                                { icon: '🚪', name: 'Dveře' }
+                                                { icon: 'fa-tint', name: 'Kohoutek' },
+                                                { icon: 'fa-toilet', name: 'WC' },
+                                                { icon: 'fa-plug', name: 'Zásuvka' },
+                                                { icon: 'fa-door-open', name: 'Dveře' }
                                             ].map((item, idx) => (
                                                 <div key={idx} className="example-card">
-                                                    <div style={{fontSize: 'var(--text-2xl)'}}>{ item.icon}</div>
+                                                    <i className={`fas ${item.icon}`} style={{fontSize: 'var(--text-2xl)', color: 'var(--color-primary)'}}></i>
                                                     <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)'}}>{item.name}</div>
                                                 </div>
                                             ))}
@@ -2654,26 +2612,68 @@
                                         <i className="fas fa-magic section-title-icon"></i>
                                         Jak to funguje?
                                     </h3>
-                                    <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-4)'}}>
+                                    <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
                                         {[
-                                            { num: '1', icon: 'fa-camera', title: 'Vyfoťte', desc: 'Nafoťte poškozenou věc nebo nahrajte fotku' },
-                                            { num: '2', icon: 'fa-brain', title: 'AI Analýza', desc: 'Umělá inteligence identifikuje závadu' },
-                                            { num: '3', icon: 'fa-tools', title: 'Opravte', desc: 'Postupujte podle návodu krok za krokem' }
+                                            {
+                                                num: '1', icon: 'fa-camera', title: 'Vyfoťte',
+                                                desc: 'Nafoťte poškozenou věc nebo nahrajte fotku',
+                                                detail: 'Stačí namířit fotoaparát na závadu – rozbitý kohoutek, prasklou zásuvku, nefunkční spotřebič. Čím lépe je problém vidět, tím přesnější bude diagnóza.'
+                                            },
+                                            {
+                                                num: '2', icon: 'fa-brain', title: 'AI Analýza',
+                                                desc: 'Umělá inteligence identifikuje závadu',
+                                                detail: 'Naše AI analyzuje fotku během několika sekund. Rozpozná typ zařízení, identifikuje možné příčiny závady a navrhne nejpravděpodobnější řešení.'
+                                            },
+                                            {
+                                                num: '3', icon: 'fa-tools', title: 'Opravte',
+                                                desc: 'Postupujte podle návodu krok za krokem',
+                                                detail: 'Získáte přehledný návod s jednotlivými kroky, seznamem potřebného nářadí, bezpečnostními upozorněními a odhadovanou cenou opravy.'
+                                            }
                                         ].map((step, idx) => (
-                                            <div key={idx} className="info-box ripple" style={{flexDirection: 'row', justifyContent: 'flex-start', gap: 'var(--space-4)', textAlign: 'left', minHeight: 'auto', padding: 'var(--space-4)'}}>
-                                                <div style={{
-                                                    width: '50px', height: '50px', borderRadius: 'var(--radius-xl)',
-                                                    background: 'var(--gradient-primary)', color: 'white',
-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                    fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)',
-                                                    flexShrink: 0
-                                                }}>
-                                                    <i className={`fas ${step.icon}`}></i>
+                                            <div
+                                                key={idx}
+                                                className="info-box ripple"
+                                                onClick={() => setExpandedStep(expandedStep === idx ? null : idx)}
+                                                style={{
+                                                    flexDirection: 'column',
+                                                    alignItems: 'flex-start',
+                                                    textAlign: 'left',
+                                                    minHeight: 'auto',
+                                                    padding: 'var(--space-3)',
+                                                    cursor: 'pointer',
+                                                    transition: 'all 0.2s ease'
+                                                }}
+                                            >
+                                                <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-3)', width: '100%'}}>
+                                                    <div style={{
+                                                        width: '40px', height: '40px', borderRadius: 'var(--radius-lg)',
+                                                        background: expandedStep === idx ? 'var(--gradient-primary)' : 'var(--color-bg-tertiary)',
+                                                        color: expandedStep === idx ? 'white' : 'var(--color-primary)',
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                        fontSize: 'var(--text-base)',
+                                                        flexShrink: 0,
+                                                        transition: 'all 0.2s ease'
+                                                    }}>
+                                                        <i className={`fas ${step.icon}`}></i>
+                                                    </div>
+                                                    <div style={{flex: 1}}>
+                                                        <h4 style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', color: 'var(--color-text-primary)', margin: 0}}>{step.title}</h4>
+                                                        <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', margin: 0}}>{step.desc}</p>
+                                                    </div>
+                                                    <i className={`fas fa-chevron-${expandedStep === idx ? 'up' : 'down'}`} style={{color: 'var(--color-text-muted)', fontSize: 'var(--text-sm)'}}></i>
                                                 </div>
-                                                <div>
-                                                    <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)', color: 'var(--color-text-primary)'}}>{step.title}</h4>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', margin: 0}}>{step.desc}</p>
-                                                </div>
+                                                {expandedStep === idx && (
+                                                    <div style={{
+                                                        marginTop: 'var(--space-3)',
+                                                        paddingTop: 'var(--space-3)',
+                                                        borderTop: '1px solid var(--color-border)',
+                                                        fontSize: 'var(--text-sm)',
+                                                        color: 'var(--color-text-secondary)',
+                                                        lineHeight: 1.5
+                                                    }}>
+                                                        {step.detail}
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>
@@ -2899,12 +2899,8 @@
                                                     {t('detectedWith')} {analysisResult.confidence}% {t('confidence')}
                                                 </p>
                                             </div>
-                                            <div style={{fontSize: 'var(--text-5xl)'}}>
-                                                {analysisResult.issue.id === 'leak' && '🚰'}
-                                                {analysisResult.issue.id === 'running' && '🚽'}
-                                                {analysisResult.issue.id === 'not-working' && '🔌'}
-                                                {analysisResult.issue.id === 'squeaking' && '🚪'}
-                                                {analysisResult.issue.id === 'cold' && '🌡️'}
+                                            <div style={{fontSize: 'var(--text-4xl)'}}>
+                                                <i className={`fas ${getCategoryIcon(analysisResult.issue.category)}`} style={{opacity: 0.9}}></i>
                                             </div>
                                         </div>
                                     </div>
@@ -3119,83 +3115,37 @@
                                         </div>
                                     </div>
 
-                                    {/* Premium Section */}
-                                    <div style={{
-                                        background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
-                                        padding: 'var(--space-6)',
-                                        borderTop: '2px solid #f59e0b'
-                                    }}>
-                                        <div className="flex-between mb-4">
-                                            <h3 style={{fontWeight: 'var(--font-bold)', color: '#92400e'}}>
-                                                <i className="fas fa-crown mr-2" style={{color: '#f59e0b'}}></i>
-                                                FIXO Premium
-                                            </h3>
-                                            <span className="badge" style={{background: '#f59e0b', color: 'white', fontSize: 'var(--text-lg)', padding: 'var(--space-2) var(--space-4)'}}>
-                                                3,99 €
-                                            </span>
+                                    {/* Premium Banner - Compact */}
+                                    <button
+                                        style={{
+                                            width: '100%',
+                                            background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                                            color: 'white',
+                                            padding: 'var(--space-3) var(--space-4)',
+                                            border: 'none',
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            gap: 'var(--space-3)'
+                                        }}
+                                        onClick={() => alert('Platební brána bude dostupná brzy!\n\nCena: 3,99 €/měsíc\n\nZískáte:\n• Detailní schéma\n• Odkazy na produkty\n• Kontakty na opraváře\n• Video návod')}
+                                    >
+                                        <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                            <i className="fas fa-crown"></i>
+                                            <span style={{fontWeight: 'var(--font-semibold)'}}>FIXO Premium</span>
+                                            <span style={{fontSize: 'var(--text-sm)', opacity: 0.9}}>— schéma, video, e-shop odkazy</span>
                                         </div>
-
-                                        <div style={{display: 'grid', gap: 'var(--space-3)'}}>
-                                            {/* Detailní schéma */}
-                                            <div className="flex items-center gap-3" style={{padding: 'var(--space-3)', background: 'rgba(255,255,255,0.7)', borderRadius: 'var(--radius-lg)'}}>
-                                                <i className="fas fa-project-diagram" style={{fontSize: 'var(--text-xl)', color: '#6366f1'}}></i>
-                                                <div>
-                                                    <strong>Detailní schéma opravy</strong>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', margin: 0}}>
-                                                        Interaktivní diagram s rozloženým pohledem
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            {/* Doporučené produkty */}
-                                            <div className="flex items-center gap-3" style={{padding: 'var(--space-3)', background: 'rgba(255,255,255,0.7)', borderRadius: 'var(--radius-lg)'}}>
-                                                <i className="fas fa-shopping-cart" style={{fontSize: 'var(--text-xl)', color: '#16a34a'}}></i>
-                                                <div>
-                                                    <strong>Doporučené produkty</strong>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', margin: 0}}>
-                                                        Nástroje a materiály s odkazy na e-shopy
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            {/* Místní opraváři */}
-                                            <div className="flex items-center gap-3" style={{padding: 'var(--space-3)', background: 'rgba(255,255,255,0.7)', borderRadius: 'var(--radius-lg)'}}>
-                                                <i className="fas fa-map-marker-alt" style={{fontSize: 'var(--text-xl)', color: '#dc2626'}}></i>
-                                                <div>
-                                                    <strong>Opraváři ve vašem okolí</strong>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', margin: 0}}>
-                                                        Kontakty na ověřené odborníky poblíž
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            {/* Video návod */}
-                                            <div className="flex items-center gap-3" style={{padding: 'var(--space-3)', background: 'rgba(255,255,255,0.7)', borderRadius: 'var(--radius-lg)'}}>
-                                                <i className="fas fa-video" style={{fontSize: 'var(--text-xl)', color: '#9333ea'}}></i>
-                                                <div>
-                                                    <strong>Video návod</strong>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', margin: 0}}>
-                                                        Krok za krokem s profesionálem
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <button
-                                            className="btn w-full mt-4"
-                                            style={{
-                                                background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-                                                color: 'white',
-                                                fontWeight: 'var(--font-bold)',
-                                                fontSize: 'var(--text-lg)',
-                                                padding: 'var(--space-4)'
-                                            }}
-                                            onClick={() => alert('Platební brána bude dostupná brzy!\n\nCena: 3,99 €\n\nZískáte:\n• Detailní schéma\n• Odkazy na produkty\n• Kontakty na opraváře\n• Video návod')}
-                                        >
-                                            <i className="fas fa-unlock mr-2"></i>
-                                            Odemknout Premium
-                                        </button>
-                                    </div>
+                                        <span style={{
+                                            background: 'rgba(255,255,255,0.2)',
+                                            padding: 'var(--space-1) var(--space-3)',
+                                            borderRadius: 'var(--radius-full)',
+                                            fontWeight: 'var(--font-bold)',
+                                            fontSize: 'var(--text-sm)'
+                                        }}>
+                                            3,99 €
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
                         )}
@@ -3953,7 +3903,7 @@
                                             onClick={() => setSelectedCategory(cat.id)}
                                             className={`category-btn ${selectedCategory === cat.id ? 'active' : ''}`}
                                         >
-                                            <span style={{marginRight: 'var(--space-1)'}}>{cat.icon}</span>
+                                            <i className={`fas ${cat.icon}`} style={{marginRight: 'var(--space-1)'}}></i>
                                             {cat.name}
                                         </button>
                                     ))}
@@ -3970,7 +3920,7 @@
                                             <div className="knowledge-card-header">
                                                 <div className="flex-between items-center">
                                                     <h3 style={{fontWeight: 'var(--font-bold)', fontSize: 'var(--text-lg)'}}>{item.name}</h3>
-                                                    <span style={{fontSize: 'var(--text-2xl)'}}>{item.icon}</span>
+                                                    <i className={`fas ${getCategoryIcon(item.category)}`} style={{fontSize: 'var(--text-2xl)', opacity: 0.9}}></i>
                                                 </div>
                                             </div>
                                             <div className="p-4">
