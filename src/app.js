@@ -2236,7 +2236,7 @@
                                     {t('translating')}
                                 </h3>
                                 <p className="text-secondary">Vytvářím slovník pro tento jazyk...</p>
-                                <p className="text-muted" className="text-sm mt-2">
+                                <p className="text-muted text-sm mt-2">
                                     (příště bude přepnutí okamžité)
                                 </p>
                             </div>
@@ -2246,13 +2246,13 @@
                     {/* Modal pro popis problému - s upřesňujícími kroky */}
                     {showDescribeModal && (
                         <div className="translating-overlay" onClick={() => { setShowDescribeModal(false); resetClarification(); }}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} className="max-w-[500px] max-h-[85vh] overflow-auto">
+                            <div className="translating-box max-w-[500px] max-h-[85vh] overflow-auto" onClick={e => e.stopPropagation()}>
 
                                 {/* Krok 0: Úvodní popis + volba kategorie */}
                                 {clarificationStep === 0 && (
                                     <>
                                         <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                            <i className="fas fa-keyboard" className="text-primary"></i>
+                                            <i className="fas fa-keyboard text-primary"></i>
                                             Popište problém
                                         </h3>
 
@@ -2293,7 +2293,7 @@
                                                         className="p-2 rounded-lg text-sm cursor-pointer text-left"
                                                     >
                                                         <div className="flex items-center gap-2">
-                                                            <i className={`fas ${cat.icon}`} className={selectedProblemCategory === cat.id ? "text-primary" : "text-muted"}></i>
+                                                            <i className={`fas ${cat.icon} ${selectedProblemCategory === cat.id ? "text-primary" : "text-muted"}`}></i>
                                                             <span className="font-medium">{cat.name}</span>
                                                         </div>
                                                     </button>
@@ -2325,7 +2325,7 @@
                                 {clarificationStep === 1 && (
                                     <>
                                         <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                            <i className="fas fa-question-circle" className="text-warning"></i>
+                                            <i className="fas fa-question-circle text-warning"></i>
                                             Upřesněte problém
                                         </h3>
 
@@ -2351,7 +2351,7 @@
                                                     className="p-3 rounded-lg border border-border bg-secondary cursor-pointer text-left"
                                                 >
                                                     <div className="flex items-center gap-3">
-                                                        <i className={`fas ${cat.icon}`} className="text-xl text-primary w-8"></i>
+                                                        <i className={`fas ${cat.icon} text-xl text-primary w-8`}></i>
                                                         <div>
                                                             <div className="font-semibold">{cat.name}</div>
                                                             <div className="text-xs text-muted">
@@ -2377,7 +2377,7 @@
                                 {clarificationStep === 2 && (
                                     <>
                                         <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                            <i className="fas fa-list-ul" className="text-success"></i>
+                                            <i className="fas fa-list-ul text-success"></i>
                                             Vyberte problém
                                         </h3>
 
@@ -2419,7 +2419,7 @@
                                                 </button>
                                             )) : (
                                                 <div className="text-center p-6 text-muted">
-                                                    <i className="fas fa-search" className="text-3xl mb-2 block opacity-50"></i>
+                                                    <i className="fas fa-search text-3xl mb-2 block opacity-50"></i>
                                                     <p>Žádné problémy v této kategorii nenalezeny.</p>
                                                     <p className="text-xs">Zkuste upravit popis nebo vybrat jinou kategorii.</p>
                                                 </div>
@@ -2452,9 +2452,9 @@
                     {/* Modal pro opravu špatné analýzy (Feedback) */}
                     {showFeedbackModal && (
                         <div className="translating-overlay" onClick={() => setShowFeedbackModal(false)}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} className="max-h-[80vh] overflow-auto">
+                            <div className="translating-box max-h-[80vh] overflow-auto" onClick={e => e.stopPropagation()}>
                                 <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                    <i className="fas fa-edit" className="text-warning"></i>
+                                    <i className="fas fa-edit text-warning"></i>
                                     Opravit analýzu
                                 </h3>
 
@@ -2520,7 +2520,7 @@
                                                             className="w-full rounded-md border border-border text-sm cursor-pointer text-left"
                                                         >
                                                             <span>{issue.name}</span>
-                                                            <i className="fas fa-chevron-right" className="text-muted text-xs"></i>
+                                                            <i className="fas fa-chevron-right text-muted text-xs"></i>
                                                         </button>
                                                     ))
                                                 }
@@ -2543,9 +2543,9 @@
                     {/* Modal pro platbu za detailní návod */}
                     {showDetailedGuidePayment && analysisResult && (
                         <div className="translating-overlay" onClick={() => setShowDetailedGuidePayment(false)}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} className="max-w-md text-center">
+                            <div className="translating-box max-w-md text-center" onClick={e => e.stopPropagation()}>
                                 <div className="text-6xl mb-4">
-                                    <i className="fas fa-crown" className="text-purple-600"></i>
+                                    <i className="fas fa-crown text-purple-600"></i>
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">
                                     Detailní návod
@@ -2597,14 +2597,14 @@
                     {/* Overlay pro nejbližší dodavatele/opraváře */}
                     {showNearbySuppliers && (
                         <div className="translating-overlay" onClick={() => setShowNearbySuppliers(false)}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} className="max-w-lg max-h-[80vh] overflow-auto">
+                            <div className="translating-box max-w-lg max-h-[80vh] overflow-auto" onClick={e => e.stopPropagation()}>
                                 <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                    <i className="fas fa-map-marker-alt" className="text-primary"></i>
+                                    <i className="fas fa-map-marker-alt text-primary"></i>
                                     Odborníci ve vašem okolí
                                 </h3>
 
                                 <div className="p-3 mb-4 rounded-lg bg-info-light text-sm">
-                                    <i className="fas fa-info-circle mr-2" className="text-info"></i>
+                                    <i className="fas fa-info-circle mr-2 text-info"></i>
                                     Zobrazujeme ověřené odborníky seřazené podle vzdálenosti od vaší polohy.
                                 </div>
 
@@ -2686,9 +2686,9 @@
                     {/* Modal pro registraci dodavatelů/opravářů */}
                     {showSupplierRegistration && (
                         <div className="translating-overlay" onClick={() => setShowSupplierRegistration(false)}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} className="max-w-[500px] max-h-[85vh] overflow-auto">
+                            <div className="translating-box max-w-[500px] max-h-[85vh] overflow-auto" onClick={e => e.stopPropagation()}>
                                 <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                    <i className="fas fa-briefcase" className="text-primary"></i>
+                                    <i className="fas fa-briefcase text-primary"></i>
                                     Registrace odborníka
                                 </h3>
 
@@ -2774,9 +2774,9 @@
                     {/* Před-opravní checklist modal - Compact */}
                     {showChecklist && pendingIssue && (
                         <div className="translating-overlay" onClick={cancelChecklist}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} className="p-4">
+                            <div className="translating-box p-4" onClick={e => e.stopPropagation()}>
                                 <h3 className="text-base font-bold mb-3 flex items-center gap-2">
-                                    <i className="fas fa-clipboard-check" className="text-primary"></i>
+                                    <i className="fas fa-clipboard-check text-primary"></i>
                                     Před zahájením opravy
                                 </h3>
 
@@ -2810,7 +2810,7 @@
 
                                 {/* Action buttons */}
                                 <div className="flex gap-2">
-                                    <button onClick={cancelChecklist} className="btn btn-secondary flex-1" className="p-2">
+                                    <button onClick={cancelChecklist} className="btn btn-secondary flex-1 p-2">
                                         Zrušit
                                     </button>
                                     <button
@@ -2833,7 +2833,7 @@
                             <div className="translating-box" onClick={e => e.stopPropagation()}>
                                 <div className="flex justify-between items-center mb-4">
                                     <h3 className="text-xl font-bold flex items-center gap-2">
-                                        <i className="fas fa-hard-hat" className="text-primary"></i>
+                                        <i className="fas fa-hard-hat text-primary"></i>
                                         Najít řemeslníka
                                     </h3>
                                     <button onClick={() => setShowCraftsmen(false)} className="bg-none border-none text-xl cursor-pointer text-secondary">
@@ -2869,7 +2869,7 @@
                                                     <h4 className="font-bold text-base mb-1">
                                                         {craftsman.name}
                                                         {craftsman.verified && (
-                                                            <i className="fas fa-check-circle ml-2" className="text-success text-sm"></i>
+                                                            <i className="fas fa-check-circle ml-2 text-success text-sm"></i>
                                                         )}
                                                     </h4>
                                                     <p className="text-sm text-secondary">{craftsman.company}</p>
@@ -2925,7 +2925,7 @@
 
                                     {getFilteredCraftsmen().length === 0 && (
                                         <div className="text-center p-8 text-secondary">
-                                            <i className="fas fa-search" className="text-4xl mb-2 block"></i>
+                                            <i className="fas fa-search text-4xl mb-2 block"></i>
                                             <p>Pro tuto kategorii zatím nemáme řemeslníky.</p>
                                             <p className="text-sm">Zkuste vybrat jinou kategorii.</p>
                                         </div>
@@ -3075,7 +3075,7 @@
                                     onClick={toggleDarkMode}
                                     title={darkMode ? 'Světlý režim' : 'Tmavý režim'}
                                 >
-                                    <i className={`fas ${darkMode ? 'fa-sun' : 'fa-moon'}`} className={darkMode ? "text-warning" : "text-primary"}></i>
+                                    <i className={`fas ${darkMode ? 'fa-sun' : 'fa-moon'} ${darkMode ? "text-warning" : "text-primary"}`}></i>
                                 </button>
 
                                 {/* Language Selector */}
@@ -3357,7 +3357,7 @@
 
                         {/* Preview View - Náhled s možností kreslení */}
                         {currentView === 'preview' && selectedImage && (
-                            <div className="app-container" className="pt-4">
+                            <div className="app-container pt-4">
                                 <div className="upload-card glass-card">
                                     <div className="text-center mb-4">
                                         <h2 className="text-xl font-bold mb-2">
@@ -3370,7 +3370,7 @@
                                     </div>
 
                                     {/* Canvas / Image container - Fixed for touch */}
-                                    <div className="drawing-container" className="mb-4 bg-black rounded-lg overflow-hidden">
+                                    <div className="drawing-container mb-4 bg-black rounded-lg overflow-hidden">
                                         {isDrawingMode ? (
                                             <>
                                                 <canvas
@@ -3396,7 +3396,7 @@
 
                                     {/* Kreslící nástroje */}
                                     {isDrawingMode && (
-                                        <div className="card mb-4" className="p-3 bg-secondary">
+                                        <div className="card mb-4 p-3 bg-secondary">
                                             <div className="flex-between flex-wrap gap-3">
                                                 <div className="flex items-center gap-3">
                                                     <label className="text-sm">Barva:</label>
@@ -3429,7 +3429,7 @@
                                                         className="w-20"
                                                     />
                                                 </div>
-                                                <button onClick={clearCanvas} className="btn btn-secondary" className="py-2 px-3">
+                                                <button onClick={clearCanvas} className="btn btn-secondary py-2 px-3">
                                                     <i className="fas fa-eraser mr-1"></i> Smazat
                                                 </button>
                                             </div>
@@ -3437,7 +3437,7 @@
                                     )}
 
                                     {/* Akční tlačítka */}
-                                    <div className="flex gap-3" className="flex-wrap">
+                                    <div className="flex gap-3 flex-wrap">
                                         {!isDrawingMode ? (
                                             <>
                                                 <button
@@ -3523,13 +3523,13 @@
                                         <h2 className="text-xl font-bold mb-2">
                                             {t('analyzingTitle')}
                                         </h2>
-                                        <div className="text-secondary" className="flex flex-col gap-2">
+                                        <div className="text-secondary flex flex-col gap-2">
                                             <div className="flex-center">
-                                                <i className="fas fa-check-circle mr-2" className="text-success"></i>
+                                                <i className="fas fa-check-circle mr-2 text-success"></i>
                                                 {t('analyzingStep1')}
                                             </div>
                                             <div className="flex-center animate-pulse">
-                                                <i className="fas fa-spinner fa-spin mr-2" className="text-primary"></i>
+                                                <i className="fas fa-spinner fa-spin mr-2 text-primary"></i>
                                                 {t('analyzingStep2')}
                                             </div>
                                             <div className="flex-center text-muted">
@@ -3544,13 +3544,13 @@
 
                         {/* Results View */}
                         {currentView === 'results' && analysisResult && (
-                            <div className="app-container" className="pt-4">
+                            <div className="app-container pt-4">
                                 {/* Desktop: Obrázek vlevo, výsledky vpravo */}
                                 <div className="results-desktop-layout">
                                     {/* Levý sloupec - analyzovaný obrázek (pouze desktop) */}
                                     {selectedImage && (
-                                        <div className="results-image-section" className="hidden">
-                                            <div className="glass-card" className="p-4 mb-4">
+                                        <div className="results-image-section hidden">
+                                            <div className="glass-card p-4 mb-4">
                                                 <h3 className="text-sm font-semibold mb-3 text-secondary">
                                                     <i className="fas fa-image mr-2"></i>
                                                     Analyzovaný obrázek
@@ -3576,7 +3576,7 @@
 
                                     {/* Pravý sloupec - výsledky analýzy */}
                                     <div>
-                                        <div className="glass-card" className="p-0 overflow-hidden">
+                                        <div className="glass-card p-0 overflow-hidden">
                                             {/* Detection Header */}
                                             <div className="result-header">
                                                 <div className="flex-between">
@@ -3622,7 +3622,7 @@
                                                 )}
                                             </div>
                                             <div className="text-5xl">
-                                                <i className={`fas ${getCategoryIcon(analysisResult.issue.category)}`} className="opacity-90"></i>
+                                                <i className={`fas ${getCategoryIcon(analysisResult.issue.category)} opacity-90`}></i>
                                             </div>
                                         </div>
                                     </div>
@@ -3708,17 +3708,17 @@
                                         {/* Quick Info */}
                                         <div className="grid grid-3 gap-4 mb-6">
                                             <div className="info-box">
-                                                <i className="fas fa-clock" className="text-primary text-2xl mb-2 block"></i>
+                                                <i className="fas fa-clock text-primary text-2xl mb-2 block"></i>
                                                 <div className="text-sm text-secondary">{t('repairTime')}</div>
                                                 <div className="font-semibold">{analysisResult.issue.timeEstimate}</div>
                                             </div>
                                             <div className="info-box">
-                                                <i className="fas fa-signal" className="text-warning text-2xl mb-2 block"></i>
+                                                <i className="fas fa-signal text-warning text-2xl mb-2 block"></i>
                                                 <div className="text-sm text-secondary">{t('difficulty')}</div>
                                                 <div className="font-semibold">{analysisResult.issue.difficulty}</div>
                                             </div>
                                             <div className="info-box">
-                                                <i className="fas fa-exclamation-triangle" className="text-danger text-2xl mb-2 block"></i>
+                                                <i className="fas fa-exclamation-triangle text-danger text-2xl mb-2 block"></i>
                                                 <div className="text-sm text-secondary">{t('risk')}</div>
                                                 <div className="font-semibold">{analysisResult.issue.riskScore}/10</div>
                                             </div>
@@ -3728,7 +3728,7 @@
                                         {analysisResult.issue.materialCost && analysisResult.issue.professionalCost && (
                                             <div className="p-6">
                                                 <h3 className="mb-4">
-                                                    <i className="fas fa-piggy-bank" className="text-xl"></i>
+                                                    <i className="fas fa-piggy-bank text-xl"></i>
                                                     Kolik ušetříš?
                                                 </h3>
 
@@ -3879,10 +3879,10 @@
 
                         {/* Repair Steps View */}
                         {currentView === 'repair' && selectedIssue && (
-                            <div className="app-container" className="pt-4">
-                                <div className="glass-card" className="p-0 overflow-hidden">
+                            <div className="app-container pt-4">
+                                <div className="glass-card p-0 overflow-hidden">
                                     {/* Progress Bar */}
-                                    <div className="progress" className="rounded-none">
+                                    <div className="progress rounded-none">
                                         <div
                                             className="progress-bar"
                                             style={{ width: `${((currentStep + 1) / selectedIssue.steps.length) * 100}%` }}
@@ -3946,7 +3946,7 @@
                                             {selectedIssue.tools.map((tool, idx) => (
                                                 <div key={idx} className="rounded-lg border border-border">
                                                     <span className="font-medium text-sm">
-                                                        <i className="fas fa-wrench mr-2" className="text-primary opacity-70"></i>
+                                                        <i className="fas fa-wrench mr-2 text-primary opacity-70"></i>
                                                         {tool}
                                                     </span>
                                                     {/* Affiliate odkazy - pouze e-shopy s affiliate programem */}
@@ -3963,7 +3963,7 @@
                                                                 className="rounded-md"
                                                                 title={`Koupit na ${shop.name}`}
                                                             >
-                                                                <i className={`fas ${shop.icon}`} className="text-[10px]"></i>
+                                                                <i className={`fas ${shop.icon} text-[10px]`}></i>
                                                                 {shop.name.length > 5 ? shop.name.slice(0, 4) : shop.name}
                                                             </a>
                                                         ))}
@@ -3999,7 +3999,7 @@
                                                 {selectedIssue.steps[currentStep].tools_for_step && selectedIssue.steps[currentStep].tools_for_step.length > 0 && (
                                                     <div className="bg-info-light p-3 rounded-lg mb-3 text-left">
                                                         <p className="font-semibold text-sm mb-1">
-                                                            <i className="fas fa-wrench mr-2" className="text-info"></i>Nástroje:
+                                                            <i className="fas fa-wrench mr-2 text-info"></i>Nástroje:
                                                         </p>
                                                         <p className="text-sm">{selectedIssue.steps[currentStep].tools_for_step.join(', ')}</p>
                                                     </div>
@@ -4009,7 +4009,7 @@
                                                 {selectedIssue.steps[currentStep].parts_for_step && selectedIssue.steps[currentStep].parts_for_step.length > 0 && (
                                                     <div className="bg-warning-light p-3 rounded-lg mb-3 text-left">
                                                         <p className="font-semibold text-sm mb-1">
-                                                            <i className="fas fa-box mr-2" className="text-warning"></i>Potřebné díly:
+                                                            <i className="fas fa-box mr-2 text-warning"></i>Potřebné díly:
                                                         </p>
                                                         <p className="text-sm">{selectedIssue.steps[currentStep].parts_for_step.join(', ')}</p>
                                                     </div>
@@ -4019,7 +4019,7 @@
                                                 {selectedIssue.steps[currentStep].tip && (
                                                     <div className="bg-success-light p-3 rounded-lg mb-3 text-left">
                                                         <p className="font-semibold text-sm mb-1">
-                                                            <i className="fas fa-lightbulb mr-2" className="text-success"></i>Tip:
+                                                            <i className="fas fa-lightbulb mr-2 text-success"></i>Tip:
                                                         </p>
                                                         <p className="text-sm">{selectedIssue.steps[currentStep].tip}</p>
                                                     </div>
@@ -4048,11 +4048,11 @@
                                                         }`}
                                                     >
                                                         <span className="mr-3 text-2xl">{step.icon}</span>
-                                                        <span className="flex-1" className={idx === currentStep ? "font-semibold" : "font-normal"}>
+                                                        <span className={`flex-1 ${idx === currentStep ? "font-semibold" : "font-normal"}`}>
                                                             {step.step}. {step.action}
                                                         </span>
                                                         {idx < currentStep && (
-                                                            <i className="fas fa-check-circle" className="text-success"></i>
+                                                            <i className="fas fa-check-circle text-success"></i>
                                                         )}
                                                     </div>
                                                 ))}
@@ -4131,7 +4131,7 @@
 
                                         <div className="card mb-4">
                                             <div className="max-w-lg">
-                                                <i className="fas fa-search" className="text-muted"></i>
+                                                <i className="fas fa-search text-muted"></i>
                                                 <input
                                                     type="text"
                                                     placeholder="Hledat opravy, nástroje, problémy..."
@@ -4159,13 +4159,13 @@
                                                     onClick={() => setSelectedCategory(cat.id)}
                                                     className={`category-btn ${selectedCategory === cat.id ? 'active' : ''}`}
                                                 >
-                                                    <i className={`fas ${cat.icon}`} className="mr-1"></i>
+                                                    <i className={`fas ${cat.icon} mr-1`}></i>
                                                     {cat.name}
                                                 </button>
                                             ))}
                                         </div>
 
-                                        <p className="text-center text-secondary mb-0" className="text-sm">
+                                        <p className="text-center text-secondary mb-0 text-sm">
                                             {t('showing')} {getFilteredDatabase().length} {t('outOf')} {Object.keys(repairDatabase).length} {t('items')}
                                         </p>
 
@@ -4280,14 +4280,14 @@
 
                         {/* About Page View */}
                         {currentView === 'about' && (
-                            <div className="app-container" className="pt-4">
-                                <h2 className="section-title" className="mb-4">
+                            <div className="app-container pt-4">
+                                <h2 className="section-title mb-4">
                                     <i className="fas fa-info-circle section-title-icon"></i>
                                     O nás
                                 </h2>
 
                                 <div className="card mb-6">
-                                    <div className="card-body text-center" className="p-8">
+                                    <div className="card-body text-center p-8">
                                         <div className="text-6xl mb-4"><i className="fas fa-wrench"></i></div>
                                         <h3 className="text-2xl font-bold mb-4">FIXO</h3>
                                         <p className="text-lg text-secondary mb-6">
@@ -4298,7 +4298,7 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-lightbulb mr-2" className="text-warning"></i>Náš příběh</h3>
+                                        <h3 className="card-title"><i className="fas fa-lightbulb mr-2 text-warning"></i>Náš příběh</h3>
                                     </div>
                                     <div className="card-body">
                                         <p className="leading-relaxed mb-4">
@@ -4315,16 +4315,16 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-users mr-2" className="text-primary"></i>Náš tým</h3>
+                                        <h3 className="card-title"><i className="fas fa-users mr-2 text-primary"></i>Náš tým</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="grid grid-2 gap-4">
-                                            <div className="text-center" className="p-4 bg-secondary rounded-lg">
+                                            <div className="text-center p-4 bg-secondary rounded-lg">
                                                 <div className="text-5xl mb-2">👨‍<i className="fas fa-laptop"></i></div>
                                                 <p className="font-semibold">Vývojáři</p>
                                                 <p className="text-sm text-secondary">AI & technologie</p>
                                             </div>
-                                            <div className="text-center" className="p-4 bg-secondary rounded-lg">
+                                            <div className="text-center p-4 bg-secondary rounded-lg">
                                                 <div className="text-5xl mb-2"><i className="fas fa-wrench"></i></div>
                                                 <p className="font-semibold">Odborníci</p>
                                                 <p className="text-sm text-secondary">Řemeslníci & technici</p>
@@ -4335,16 +4335,16 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-envelope mr-2" className="text-success"></i>Kontakt</h3>
+                                        <h3 className="card-title"><i className="fas fa-envelope mr-2 text-success"></i>Kontakt</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="flex flex-col gap-3">
                                             <div className="flex items-center gap-3">
-                                                <i className="fas fa-envelope" className="text-primary w-5"></i>
+                                                <i className="fas fa-envelope text-primary w-5"></i>
                                                 <span>support@fixo.app</span>
                                             </div>
                                             <div className="flex items-center gap-3">
-                                                <i className="fas fa-globe" className="text-primary w-5"></i>
+                                                <i className="fas fa-globe text-primary w-5"></i>
                                                 <span>www.fixo.app</span>
                                             </div>
                                         </div>
@@ -4352,16 +4352,16 @@
                                 </div>
 
                                 <div className="alert alert-info">
-                                    <p><i className="fas fa-heart mr-2" className="text-danger"></i>Děkujeme, že používáte FIXO!</p>
+                                    <p><i className="fas fa-heart mr-2 text-danger"></i>Děkujeme, že používáte FIXO!</p>
                                 </div>
                             </div>
                         )}
 
                         {/* Premium Page View - Freemium Tiers */}
                         {currentView === 'premium' && (
-                            <div className="app-container" className="pt-4">
-                                <h2 className="section-title" className="mb-4">
-                                    <i className="fas fa-crown section-title-icon" className="text-warning"></i>
+                            <div className="app-container pt-4">
+                                <h2 className="section-title mb-4">
+                                    <i className="fas fa-crown section-title-icon text-warning"></i>
                                     Vyberte si plán
                                 </h2>
 
@@ -4372,8 +4372,8 @@
                                 {/* Pricing Cards */}
                                 <div className="grid grid-cols-auto-fit gap-4 mb-6">
                                     {/* FREE Tier */}
-                                    <div className="card" className="border-2 border-border">
-                                        <div className="card-body" className="p-6">
+                                    <div className="card border-2 border-border">
+                                        <div className="card-body p-6">
                                             <div className="text-center mb-4">
                                                 <span className="text-4xl">🆓</span>
                                                 <h3 className="text-xl font-bold mt-2">FREE</h3>
@@ -4382,30 +4382,30 @@
                                             </div>
                                             <ul className="list-none p-0 mb-4">
                                                 <li className="py-2 flex items-center gap-2">
-                                                    <i className="fas fa-check" className="text-success"></i>
+                                                    <i className="fas fa-check text-success"></i>
                                                     <span>3 AI analýzy denně</span>
                                                 </li>
                                                 <li className="py-2 flex items-center gap-2">
-                                                    <i className="fas fa-check" className="text-success"></i>
+                                                    <i className="fas fa-check text-success"></i>
                                                     <span>Základní návody</span>
                                                 </li>
                                                 <li className="py-2 flex items-center gap-2">
-                                                    <i className="fas fa-check" className="text-success"></i>
+                                                    <i className="fas fa-check text-success"></i>
                                                     <span>Databáze 67 oprav</span>
                                                 </li>
                                                 <li className="py-2 flex items-center gap-2 opacity-50">
-                                                    <i className="fas fa-times" className="text-muted"></i>
+                                                    <i className="fas fa-times text-muted"></i>
                                                     <span>Kontakty řemeslníků</span>
                                                 </li>
                                             </ul>
-                                            <button className="btn btn-secondary w-full" disabled className="opacity-70">
+                                            <button className="btn btn-secondary w-full opacity-70" disabled>
                                                 Aktuální plán
                                             </button>
                                         </div>
                                     </div>
 
                                     {/* PLUS Tier - Most Popular */}
-                                    <div className="card" className="border-2 border-primary relative scale-105">
+                                    <div className="card border-2 border-primary relative scale-105">
                                         <div style={{
                                             position: 'absolute',
                                             top: '-12px',
@@ -4420,7 +4420,7 @@
                                         }}>
                                             NEJOBLÍBENĚJŠÍ
                                         </div>
-                                        <div className="card-body" className="p-6">
+                                        <div className="card-body p-6">
                                             <div className="text-center mb-4">
                                                 <span className="text-4xl">⭐</span>
                                                 <h3 className="text-xl font-bold mt-2">PLUS</h3>
@@ -4429,19 +4429,19 @@
                                             </div>
                                             <ul className="list-none p-0 mb-4">
                                                 <li className="py-2 flex items-center gap-2">
-                                                    <i className="fas fa-check" className="text-success"></i>
+                                                    <i className="fas fa-check text-success"></i>
                                                     <span><strong>Neomezené</strong> AI analýzy</span>
                                                 </li>
                                                 <li className="py-2 flex items-center gap-2">
-                                                    <i className="fas fa-check" className="text-success"></i>
+                                                    <i className="fas fa-check text-success"></i>
                                                     <span>Affiliate odkazy na materiál</span>
                                                 </li>
                                                 <li className="py-2 flex items-center gap-2">
-                                                    <i className="fas fa-check" className="text-success"></i>
+                                                    <i className="fas fa-check text-success"></i>
                                                     <span>Odhady nákladů</span>
                                                 </li>
                                                 <li className="py-2 flex items-center gap-2 opacity-50">
-                                                    <i className="fas fa-times" className="text-muted"></i>
+                                                    <i className="fas fa-times text-muted"></i>
                                                     <span>Prioritní podpora</span>
                                                 </li>
                                             </ul>
@@ -4453,8 +4453,8 @@
                                     </div>
 
                                     {/* PRO Tier */}
-                                    <div className="card" className="border-2 border-warning gradient-yellow">
-                                        <div className="card-body" className="p-6">
+                                    <div className="card border-2 border-warning gradient-yellow">
+                                        <div className="card-body p-6">
                                             <div className="text-center mb-4">
                                                 <span className="text-4xl"><i className="fas fa-crown"></i></span>
                                                 <h3 className="text-xl font-bold mt-2">PRO</h3>
@@ -4463,27 +4463,27 @@
                                             </div>
                                             <ul className="list-none p-0 mb-4">
                                                 <li className="py-2 flex items-center gap-2">
-                                                    <i className="fas fa-check" className="text-success"></i>
+                                                    <i className="fas fa-check text-success"></i>
                                                     <span>Vše z PLUS</span>
                                                 </li>
                                                 <li className="py-2 flex items-center gap-2">
-                                                    <i className="fas fa-check" className="text-success"></i>
+                                                    <i className="fas fa-check text-success"></i>
                                                     <span><strong>Kontakty řemeslníků</strong></span>
                                                 </li>
                                                 <li className="py-2 flex items-center gap-2">
-                                                    <i className="fas fa-check" className="text-success"></i>
+                                                    <i className="fas fa-check text-success"></i>
                                                     <span>Technická schémata</span>
                                                 </li>
                                                 <li className="py-2 flex items-center gap-2">
-                                                    <i className="fas fa-check" className="text-success"></i>
+                                                    <i className="fas fa-check text-success"></i>
                                                     <span>Prioritní podpora 24/7</span>
                                                 </li>
                                                 <li className="py-2 flex items-center gap-2">
-                                                    <i className="fas fa-check" className="text-success"></i>
+                                                    <i className="fas fa-check text-success"></i>
                                                     <span>Offline režim</span>
                                                 </li>
                                             </ul>
-                                            <button className="btn w-full" className="gradient-orange text-white" onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 99 Kč/měsíc\n\nZískáte VŠE:\n• Neomezené AI analýzy\n• Kontakty řemeslníků\n• Technická schémata\n• Prioritní podpora')}>
+                                            <button className="btn w-full gradient-orange text-white" onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 99 Kč/měsíc\n\nZískáte VŠE:\n• Neomezené AI analýzy\n• Kontakty řemeslníků\n• Technická schémata\n• Prioritní podpora')}>
                                                 <i className="fas fa-crown mr-2"></i>
                                                 Získat PRO
                                             </button>
@@ -4546,7 +4546,7 @@
                                             Časté dotazy
                                         </h3>
                                     </div>
-                                    <div className="card-body" className="p-0">
+                                    <div className="card-body p-0">
                                         <div className="border-b border-border p-4">
                                             <h4 className="font-semibold mb-2">Mohu kdykoliv zrušit předplatné?</h4>
                                             <p className="text-sm text-secondary">Ano, předplatné můžete zrušit kdykoliv bez poplatků. Po zrušení budete moci používat placenou verzi do konce zaplaceného období.</p>
@@ -4567,7 +4567,7 @@
                                 </div>
 
                                 {/* Social Pricing Info */}
-                                <div className="alert" className="bg-primary-light border-none">
+                                <div className="alert bg-primary-light border-none">
                                     <div className="flex items-start gap-3">
                                         <i className="fas fa-heart" className="text-primary text-xl"></i>
                                         <div>
@@ -4588,15 +4588,15 @@
 
                         {/* Partnership Page View */}
                         {currentView === 'partnership' && (
-                            <div className="app-container" className="pt-4">
-                                <h2 className="section-title" className="mb-4">
+                            <div className="app-container pt-4">
+                                <h2 className="section-title mb-4">
                                     <i className="fas fa-handshake section-title-icon"></i>
                                     Partnerský program
                                 </h2>
 
                                 {/* Hero banner */}
                                 <div className="card mb-6" className="gradient-primary text-white">
-                                    <div className="card-body text-center" className="p-8">
+                                    <div className="card-body text-center p-8">
                                         <div className="text-6xl mb-4"><i className="fas fa-handshake"></i></div>
                                         <h3 className="text-xl font-bold mb-2">Staňte se partnerem FIXO</h3>
                                         <p className="opacity-90">Získejte provize z doporučení a rozšiřte svůj byznys</p>
@@ -4729,8 +4729,8 @@
 
                         {/* Suppliers Page View */}
                         {currentView === 'suppliers' && (
-                            <div className="app-container" className="pt-4">
-                                <h2 className="section-title" className="mb-4">
+                            <div className="app-container pt-4">
+                                <h2 className="section-title mb-4">
                                     <i className="fas fa-truck section-title-icon"></i>
                                     Dodavatelé a partneři
                                 </h2>
