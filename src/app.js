@@ -780,6 +780,27 @@
             const [deferredPrompt, setDeferredPrompt] = useState(null);
             const [showInstallBanner, setShowInstallBanner] = useState(false);
 
+            // Smart Analyzer - AI Learning System
+            const [smartAnalyzer, setSmartAnalyzer] = useState(null);
+            const [analyzerStats, setAnalyzerStats] = useState(null);
+
+            // Inicializace SmartAnalyzer
+            useEffect(() => {
+                const initSmartAnalyzer = async () => {
+                    if (window.SmartAnalyzer) {
+                        const analyzer = new window.SmartAnalyzer(API_URL);
+                        await analyzer.init();
+                        setSmartAnalyzer(analyzer);
+                        console.log('🧠 SmartAnalyzer inicializován');
+
+                        // Načíst statistiky
+                        const stats = await analyzer.getStats();
+                        setAnalyzerStats(stats);
+                    }
+                };
+                initSmartAnalyzer();
+            }, []);
+
             // Manual description & voice input
             const [showDescribeModal, setShowDescribeModal] = useState(false);
             const [problemDescription, setProblemDescription] = useState('');
@@ -1146,31 +1167,58 @@
                 return langCode === 'cs' || !!prebuiltTranslations[langCode] || !!translations[langCode];
             };
 
-            // AI analýza fotky - použije backend API nebo simulaci
+            // AI analýza fotky - používá SmartAnalyzer s učením
             const analyzeImage = async (imageData) => {
                 setIsAnalyzing(true);
                 setCurrentView('analyzing');
 
                 try {
-                    // Pokud běžíme s backendem, použij skutečné AI
+                    // Použít SmartAnalyzer pokud je dostupný
+                    if (smartAnalyzer && imageData) {
+                        console.log('🧠 Používám SmartAnalyzer s učením...');
+
+                        const result = await smartAnalyzer.analyze(imageData);
+
+                        if (result) {
+                            // Zobrazit zdroj výsledku
+                            const sourceLabels = {
+                                cache: '📦 Cache (naučeno)',
+                                embedding: '🔗 Podobný obrázek',
+                                classifier: '🤖 Lokální AI',
+                                api: '🌐 Cloud AI',
+                                simulation: '⚠️ Simulace'
+                            };
+                            console.log(`✅ Výsledek ze zdroje: ${sourceLabels[result._meta?.source] || 'neznámý'}`);
+
+                            setAnalysisResult({
+                                object: result.object,
+                                issue: result.issue,
+                                confidence: result.confidence,
+                                _meta: result._meta
+                            });
+
+                            // Aktualizovat statistiky
+                            const stats = await smartAnalyzer.getStats();
+                            setAnalyzerStats(stats);
+
+                            setIsAnalyzing(false);
+                            setCurrentView('results');
+                            return;
+                        }
+                    }
+
+                    // Fallback: Původní API volání (pokud SmartAnalyzer není dostupný)
                     if (API_URL && imageData) {
-                        console.log('🚀 Odesílám na API:', API_URL);
-                        console.log('📦 Velikost obrázku:', Math.round(imageData.length / 1024), 'KB');
+                        console.log('🚀 Fallback: Odesílám přímo na API:', API_URL);
 
                         const response = await fetch(`${API_URL}/api/analyze-base64`, {
                             method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
+                            headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ image: imageData })
                         });
 
-                        console.log('📡 Response status:', response.status);
-
                         if (response.ok) {
                             const result = await response.json();
-                            console.log('✅ API odpověď:', result);
-
                             if (result.success) {
                                 const data = result.data;
                                 setAnalysisResult({
@@ -1194,20 +1242,13 @@
                                 setIsAnalyzing(false);
                                 setCurrentView('results');
                                 return;
-                            } else {
-                                console.error('❌ API vrátilo success: false', result);
                             }
-                        } else {
-                            const errorText = await response.text();
-                            console.error('❌ API error:', response.status, errorText);
                         }
-                    } else {
-                        console.log('⚠️ API_URL není nastaveno nebo chybí obrázek');
                     }
 
-                    // Fallback: Simulovaná analýza (pro GitHub Pages nebo při chybě API)
-                    console.log('🔄 Používám SIMULACI (API selhalo nebo není dostupné)');
-                    await new Promise(resolve => setTimeout(resolve, 2500));
+                    // Fallback: Simulovaná analýza
+                    console.log('🔄 Používám SIMULACI');
+                    await new Promise(resolve => setTimeout(resolve, 2000));
                     const objects = Object.keys(repairDatabase);
                     const randomObject = objects[Math.floor(Math.random() * objects.length)];
                     const objectData = repairDatabase[randomObject];
@@ -1216,7 +1257,8 @@
                     setAnalysisResult({
                         object: objectData,
                         issue: randomIssue,
-                        confidence: Math.floor(Math.random() * 20) + 80
+                        confidence: Math.floor(Math.random() * 20) + 80,
+                        _meta: { source: 'simulation' }
                     });
                 } catch (error) {
                     console.error('Chyba při analýze:', error);
@@ -1230,7 +1272,8 @@
                     setAnalysisResult({
                         object: objectData,
                         issue: randomIssue,
-                        confidence: Math.floor(Math.random() * 20) + 80
+                        confidence: Math.floor(Math.random() * 20) + 80,
+                        _meta: { source: 'error' }
                     });
                 }
 
@@ -2905,6 +2948,39 @@
                                                 <p style={{opacity: 0.9}}>
                                                     {t('detectedWith')} {analysisResult.confidence}% {t('confidence')}
                                                 </p>
+                                                {analysisResult._meta && (
+                                                    <span style={{
+                                                        display: 'inline-flex',
+                                                        alignItems: 'center',
+                                                        gap: 'var(--space-1)',
+                                                        marginTop: 'var(--space-2)',
+                                                        padding: 'var(--space-1) var(--space-2)',
+                                                        borderRadius: 'var(--radius-full)',
+                                                        fontSize: 'var(--text-xs)',
+                                                        fontWeight: 'var(--font-medium)',
+                                                        background: analysisResult._meta.source === 'cache' || analysisResult._meta.source === 'embedding'
+                                                            ? 'rgba(34, 197, 94, 0.2)'
+                                                            : analysisResult._meta.source === 'classifier'
+                                                                ? 'rgba(59, 130, 246, 0.2)'
+                                                                : analysisResult._meta.source === 'api'
+                                                                    ? 'rgba(168, 85, 247, 0.2)'
+                                                                    : 'rgba(251, 191, 36, 0.2)',
+                                                        color: 'white'
+                                                    }}>
+                                                        <i className={`fas ${
+                                                            analysisResult._meta.source === 'cache' ? 'fa-database' :
+                                                            analysisResult._meta.source === 'embedding' ? 'fa-brain' :
+                                                            analysisResult._meta.source === 'classifier' ? 'fa-robot' :
+                                                            analysisResult._meta.source === 'api' ? 'fa-cloud' : 'fa-question'
+                                                        }`}></i>
+                                                        {analysisResult._meta.source === 'cache' && 'Z paměti'}
+                                                        {analysisResult._meta.source === 'embedding' && 'Podobný obrázek'}
+                                                        {analysisResult._meta.source === 'classifier' && 'Lokální AI'}
+                                                        {analysisResult._meta.source === 'api' && 'Cloud AI'}
+                                                        {analysisResult._meta.source === 'simulation' && 'Demo režim'}
+                                                        {analysisResult._meta.cached && ` (${analysisResult._meta.duration}ms)`}
+                                                    </span>
+                                                )}
                                             </div>
                                             <div style={{fontSize: 'var(--text-4xl)'}}>
                                                 <i className={`fas ${getCategoryIcon(analysisResult.issue.category)}`} style={{opacity: 0.9}}></i>
@@ -4470,6 +4546,59 @@
                         {/* Offline Guides View */}
                         {currentView === 'offline' && (
                             <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
+                                {/* AI Learning Stats */}
+                                {analyzerStats && (
+                                    <div className="card mb-6">
+                                        <div className="card-body">
+                                            <h3 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                                <i className="fas fa-brain" style={{color: 'var(--color-primary)'}}></i>
+                                                AI Učení
+                                            </h3>
+                                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-4)', marginBottom: 'var(--space-4)'}}>
+                                                <div style={{textAlign: 'center', padding: 'var(--space-3)', background: 'var(--color-success-light)', borderRadius: 'var(--radius-lg)'}}>
+                                                    <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-success)'}}>
+                                                        {analyzerStats.cacheHits || 0}
+                                                    </div>
+                                                    <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)'}}>Z cache</div>
+                                                </div>
+                                                <div style={{textAlign: 'center', padding: 'var(--space-3)', background: 'var(--color-info-light)', borderRadius: 'var(--radius-lg)'}}>
+                                                    <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-info)'}}>
+                                                        {analyzerStats.localClassifications || 0}
+                                                    </div>
+                                                    <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)'}}>Lokální AI</div>
+                                                </div>
+                                                <div style={{textAlign: 'center', padding: 'var(--space-3)', background: 'rgba(168, 85, 247, 0.1)', borderRadius: 'var(--radius-lg)'}}>
+                                                    <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: '#a855f7'}}>
+                                                        {analyzerStats.apiCalls || 0}
+                                                    </div>
+                                                    <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)'}}>Cloud AI</div>
+                                                </div>
+                                            </div>
+                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                                <span style={{fontSize: 'var(--text-sm)'}}>
+                                                    <i className="fas fa-database mr-2"></i>
+                                                    {analyzerStats.cache?.totalAnalyses || 0} naučených závad
+                                                </span>
+                                                <span style={{
+                                                    padding: 'var(--space-1) var(--space-2)',
+                                                    background: analyzerStats.efficiency > 50 ? 'var(--color-success)' : 'var(--color-warning)',
+                                                    color: 'white',
+                                                    borderRadius: 'var(--radius-full)',
+                                                    fontSize: 'var(--text-xs)',
+                                                    fontWeight: 'var(--font-bold)'
+                                                }}>
+                                                    {analyzerStats.efficiency || 0}% úspora API
+                                                </span>
+                                            </div>
+                                            {analyzerStats.cache?.totalSizeKB > 0 && (
+                                                <div style={{marginTop: 'var(--space-2)', fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', textAlign: 'right'}}>
+                                                    Využitá paměť: {analyzerStats.cache.totalSizeKB} KB
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
                                 <h2 className="section-title" style={{marginBottom: 'var(--space-4)'}}>
                                     <i className="fas fa-cloud-download-alt section-title-icon"></i>
                                     Offline návody
