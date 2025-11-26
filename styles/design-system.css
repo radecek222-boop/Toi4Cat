@@ -74,50 +74,50 @@
     --color-info-text: oklch(75% 0.18 var(--color-info-h)); /* Bright text for dark bg */
 
     /* ==========================================
-       BARVY - Dark Indigo Theme (Default)
+       BARVY - Light Theme s bílou (Default)
        ========================================== */
-    --color-text-primary: oklch(98% 0.005 264);
-    --color-text-secondary: oklch(85% 0.01 264);
-    --color-text-muted: oklch(70% 0.01 264);
-    --color-text-light: oklch(55% 0.02 264);
-    --color-text-inverse: oklch(10% 0.03 264);
+    --color-text-primary: oklch(20% 0.01 264);
+    --color-text-secondary: oklch(45% 0.01 264);
+    --color-text-muted: oklch(60% 0.01 264);
+    --color-text-light: oklch(70% 0.01 264);
+    --color-text-inverse: oklch(98% 0.005 264);
 
-    --color-bg-primary: oklch(8% 0.04 264);
-    --color-bg-secondary: oklch(12% 0.05 264);
-    --color-bg-tertiary: oklch(16% 0.06 264);
-    --color-bg-elevated: oklch(10% 0.04 264);
-    --color-bg-dark: oklch(5% 0.03 264);
-    --color-bg-darker: oklch(2% 0.02 264);
+    --color-bg-primary: oklch(100% 0 0);
+    --color-bg-secondary: oklch(98% 0.002 264);
+    --color-bg-tertiary: oklch(96% 0.004 264);
+    --color-bg-elevated: oklch(100% 0 0);
+    --color-bg-dark: oklch(18% 0.03 264);
+    --color-bg-darker: oklch(12% 0.04 264);
 
-    --color-border: oklch(25% 0.05 264);
-    --color-border-light: oklch(20% 0.04 264);
-    --color-border-dark: oklch(30% 0.06 264);
+    --color-border: oklch(90% 0.005 264);
+    --color-border-light: oklch(94% 0.003 264);
+    --color-border-dark: oklch(85% 0.008 264);
 
     /* ==========================================
-       GRADIENTY - Dark Indigo mesh gradienty
+       GRADIENTY - Light Indigo gradienty
        ========================================== */
     --gradient-primary: linear-gradient(
       135deg,
-      oklch(35% 0.18 264) 0%,
-      oklch(45% 0.15 280) 100%
+      oklch(60% 0.20 264) 0%,
+      oklch(65% 0.18 280) 100%
     );
 
     --gradient-mesh: radial-gradient(
       ellipse at 20% 0%,
-      oklch(18% 0.12 264) 0%,
+      oklch(95% 0.02 264) 0%,
       transparent 50%
     ),
     radial-gradient(
       ellipse at 80% 100%,
-      oklch(15% 0.10 280) 0%,
+      oklch(96% 0.015 280) 0%,
       transparent 50%
     ),
-    oklch(8% 0.04 264);
+    oklch(100% 0 0);
 
     --gradient-glass: linear-gradient(
       135deg,
-      oklch(12% 0.05 264 / 0.9) 0%,
-      oklch(8% 0.04 264 / 0.6) 100%
+      oklch(100% 0 0 / 0.95) 0%,
+      oklch(98% 0.002 264 / 0.9) 100%
     );
 
     /* ==========================================
@@ -202,30 +202,30 @@
     --radius-full: 9999px;
 
     /* ==========================================
-       SHADOWS - Jemné, moderní stíny
+       SHADOWS - Světlé, jemné stíny
        ========================================== */
-    --shadow-color: 264deg 50% 2%;
+    --shadow-color: 264deg 15% 15%;
 
-    --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.2);
-    --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.3),
-                 0 1px 3px hsl(var(--shadow-color) / 0.2);
-    --shadow-md: 0 2px 4px -1px hsl(var(--shadow-color) / 0.3),
-                 0 1px 3px -1px hsl(var(--shadow-color) / 0.2);
-    --shadow-lg: 0 4px 6px -1px hsl(var(--shadow-color) / 0.4),
-                 0 2px 4px -2px hsl(var(--shadow-color) / 0.3);
-    --shadow-xl: 0 8px 10px -2px hsl(var(--shadow-color) / 0.45),
-                 0 4px 6px -3px hsl(var(--shadow-color) / 0.35);
-    --shadow-2xl: 0 12px 24px -6px hsl(var(--shadow-color) / 0.5);
-    --shadow-inner: inset 0 2px 4px hsl(var(--shadow-color) / 0.25);
+    --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.04);
+    --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.05),
+                 0 1px 3px hsl(var(--shadow-color) / 0.03);
+    --shadow-md: 0 2px 4px -1px hsl(var(--shadow-color) / 0.06),
+                 0 1px 3px -1px hsl(var(--shadow-color) / 0.04);
+    --shadow-lg: 0 4px 6px -1px hsl(var(--shadow-color) / 0.08),
+                 0 2px 4px -2px hsl(var(--shadow-color) / 0.05);
+    --shadow-xl: 0 8px 10px -2px hsl(var(--shadow-color) / 0.1),
+                 0 4px 6px -3px hsl(var(--shadow-color) / 0.06);
+    --shadow-2xl: 0 12px 24px -6px hsl(var(--shadow-color) / 0.12);
+    --shadow-inner: inset 0 2px 4px hsl(var(--shadow-color) / 0.04);
 
-    /* Colored shadows & glows - jemnější */
-    --shadow-primary: 0 4px 16px -4px oklch(40% 0.22 264 / 0.3);
-    --shadow-success: 0 4px 16px -4px oklch(40% 0.18 145 / 0.3);
-    --shadow-danger: 0 4px 16px -4px oklch(40% 0.22 25 / 0.3);
+    /* Colored shadows & glows - světlé */
+    --shadow-primary: 0 4px 16px -4px oklch(60% 0.20 264 / 0.15);
+    --shadow-success: 0 4px 16px -4px oklch(58% 0.18 145 / 0.15);
+    --shadow-danger: 0 4px 16px -4px oklch(58% 0.22 25 / 0.15);
 
-    /* Glow efekty - jemnější, modernější */
-    --glow-primary: 0 0 20px oklch(50% 0.22 264 / 0.35);
-    --glow-success: 0 0 20px oklch(50% 0.18 145 / 0.35);
+    /* Glow efekty - jemné pro světlý režim */
+    --glow-primary: 0 0 20px oklch(60% 0.20 264 / 0.2);
+    --glow-success: 0 0 20px oklch(58% 0.18 145 / 0.2);
 
     /* ==========================================
        TRANSITIONS & ANIMATIONS
@@ -306,10 +306,10 @@
     --blur-3xl: 64px;
 
     /* ==========================================
-       GLASSMORPHISM - Dark theme
+       GLASSMORPHISM - Light theme
        ========================================== */
-    --glass-bg: oklch(12% 0.05 264 / 0.8);
-    --glass-border: oklch(30% 0.08 264 / 0.3);
+    --glass-bg: oklch(100% 0 0 / 0.7);
+    --glass-border: oklch(90% 0.005 264 / 0.3);
     --glass-blur: var(--blur-xl);
   }
 
@@ -450,7 +450,7 @@
     font-size: var(--text-base);
     line-height: var(--leading-normal);
     color: var(--color-text-primary);
-    background-color: var(--color-bg-secondary);
+    background-color: oklch(98% 0.002 264);
     min-height: 100dvh; /* Dynamic viewport height */
 
     /* Prevent layout shifts */
@@ -596,7 +596,7 @@
 
   /* Selection */
   ::selection {
-    background-color: var(--color-primary);
+    background-color: oklch(85% 0.15 264);
     color: var(--color-text-inverse);
   }
 
@@ -607,17 +607,17 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--color-bg-tertiary);
+    background: var(--color-bg-secondary);
   }
 
   ::-webkit-scrollbar-thumb {
     background: var(--color-border-dark);
     border-radius: var(--radius-full);
-    border: 2px solid var(--color-bg-tertiary);
+    border: 2px solid var(--color-bg-secondary);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-text-muted);
+    background: var(--color-primary);
   }
 }
 
