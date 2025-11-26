@@ -3229,66 +3229,63 @@
                                         </div>
                                     </div>
 
-                                    {/* Jak to funguje - stejná výška */}
-                                    <div className="glass-card" className="flex flex-col">
-                                        <h3 className="section-title section-title-compact" className="justify-center mb-3">
-                                            <i className="fas fa-magic section-title-icon"></i>
-                                            Jak to funguje?
-                                        </h3>
-                                        <div className="flex flex-col gap-2 flex-1">
-                                            {[
-                                                {
-                                                    num: '1', icon: 'fa-camera', title: 'Vyfoťte',
-                                                    desc: 'Nafoťte poškozenou věc nebo nahrajte fotku',
-                                                    detail: 'Stačí namířit fotoaparát na závadu – rozbitý kohoutek, prasklou zásuvku, nefunkční spotřebič.'
-                                                },
-                                                {
-                                                    num: '2', icon: 'fa-brain', title: 'AI Analýza',
-                                                    desc: 'Umělá inteligence identifikuje závadu',
-                                                    detail: 'Naše AI analyzuje fotku během několika sekund. Rozpozná typ zařízení a identifikuje příčinu.'
-                                                },
-                                                {
-                                                    num: '3', icon: 'fa-tools', title: 'Opravte',
-                                                    desc: 'Postupujte podle návodu krok za krokem',
-                                                    detail: 'Získáte přehledný návod s jednotlivými kroky a seznamem potřebného nářadí.'
-                                                }
-                                            ].map((step, idx) => (
-                                                <div
-                                                    key={idx}
-                                                    className="info-box ripple"
-                                                    onClick={() => setExpandedStep(expandedStep === idx ? null : idx)}
-                                                    className="p-3 cursor-pointer text-left"
-                                                >
-                                                    <div className="flex items-center gap-3 w-full">
-                                                        <div className="rounded-lg text-sm">
-                                                            <i className={`fas ${step.icon}`}></i>
+                                    {/* Pravý sloupec: Jak to funguje + Footer */}
+                                    <div className="flex flex-col gap-4">
+                                        {/* Jak to funguje */}
+                                        <div className="glass-card flex flex-col">
+                                            <h3 className="section-title mb-4">
+                                                <i className="fas fa-magic"></i>
+                                                Jak to funguje?
+                                            </h3>
+                                            <div className="flex flex-col gap-3 flex-1">
+                                                {[
+                                                    {
+                                                        icon: 'fa-camera',
+                                                        title: 'Vyfoťte',
+                                                        desc: 'Nafoťte poškozenou věc nebo nahrajte fotku'
+                                                    },
+                                                    {
+                                                        icon: 'fa-brain',
+                                                        title: 'AI Analýza',
+                                                        desc: 'Umělá inteligence identifikuje závadu'
+                                                    },
+                                                    {
+                                                        icon: 'fa-tools',
+                                                        title: 'Opravte',
+                                                        desc: 'Postupujte podle návodu krok za krokem'
+                                                    }
+                                                ].map((step, idx) => (
+                                                    <div key={idx} className="flex items-start gap-3">
+                                                        <div className="flex-none w-10 h-10 rounded-lg bg-primary-light flex items-center justify-center">
+                                                            <i className={`fas ${step.icon} text-lg text-primary`}></i>
                                                         </div>
                                                         <div className="flex-1">
-                                                            <h4 className="font-semibold text-sm text-primary m-0">{step.title}</h4>
-                                                            <p className="text-xs text-muted m-0">{step.desc}</p>
+                                                            <h4 className="font-semibold text-base mb-1">{step.title}</h4>
+                                                            <p className="text-sm text-secondary m-0">{step.desc}</p>
                                                         </div>
-                                                        <i className={`fas fa-chevron-${expandedStep === idx ? 'up' : 'down'}`} className="text-muted text-xs"></i>
                                                     </div>
-                                                    {expandedStep === idx && (
-                                                        <div className="text-secondary">
-                                                            {step.detail}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            ))}
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Footer uvnitř pravého sloupce */}
+                                        <div className="text-center py-6">
+                                            <div className="text-2xl font-bold mb-2">
+                                                <span className="bg-gradient-primary" style={{
+                                                    background: 'var(--gradient-primary)',
+                                                    WebkitBackgroundClip: 'text',
+                                                    WebkitTextFillColor: 'transparent',
+                                                    backgroundClip: 'text'
+                                                }}>FIXO</span>
+                                            </div>
+                                            <p className="text-sm text-secondary mb-3">
+                                                "Fix Anything. Anywhere. Instantly."
+                                            </p>
+                                            <p className="text-xs text-muted">
+                                                © 2025 FIXO • Váš domácí pomocník
+                                            </p>
                                         </div>
                                     </div>
-                                </div>
-
-                                {/* Footer - Kompaktní */}
-                                <div className="app-footer" className="mt-4 bg-transparent py-4">
-                                    <div className="footer-logo" className="text-lg">FIXO</div>
-                                    <p className="footer-text" className="text-xs">
-                                        "Fix Anything. Anywhere. Instantly."
-                                    </p>
-                                    <p className="footer-copyright" className="text-xs">
-                                        © 2025 FIXO • Váš domácí pomocník
-                                    </p>
                                 </div>
                             </div>
                         )}
