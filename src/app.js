@@ -3136,12 +3136,12 @@
                                             justifyContent: 'space-between',
                                             gap: 'var(--space-3)'
                                         }}
-                                        onClick={() => alert('Platební brána bude dostupná brzy!\n\nCena: 3,99 €/měsíc\n\nZískáte:\n• Detailní schéma\n• Odkazy na produkty\n• Kontakty na opraváře\n• Video návod')}
+                                        onClick={() => alert('Platební brána bude dostupná brzy!\n\nCena: 3,99 €/měsíc\n\nZískáte:\n• Detailní schéma\n• Odkazy na produkty\n• Kontakty na opraváře')}
                                     >
                                         <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
                                             <i className="fas fa-crown"></i>
                                             <span style={{fontWeight: 'var(--font-semibold)'}}>FIXO Premium</span>
-                                            <span style={{fontSize: 'var(--text-sm)', opacity: 0.9}}>— schéma, video, e-shop odkazy</span>
+                                            <span style={{fontSize: 'var(--text-sm)', opacity: 0.9}}>— schéma, e-shop odkazy</span>
                                         </div>
                                         <span style={{
                                             background: 'rgba(255,255,255,0.2)',
@@ -3261,96 +3261,6 @@
                                             </button>
                                         </div>
                                     </div>
-
-                                    {/* Video Tutorial Section */}
-                                    {selectedIssue.videoTutorial && (
-                                        <div style={{
-                                            background: 'linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%)',
-                                            padding: 'var(--space-4)',
-                                            borderBottom: '1px solid var(--color-border)'
-                                        }}>
-                                            {selectedIssue.videoTutorial.available ? (
-                                                <div>
-                                                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-3)'}}>
-                                                        <h3 style={{fontWeight: 'var(--font-semibold)', color: 'white', fontSize: 'var(--text-base)'}}>
-                                                            <i className="fas fa-play-circle mr-2" style={{color: '#ef4444'}}></i>
-                                                            Video návod
-                                                        </h3>
-                                                        <span style={{
-                                                            background: '#ef4444',
-                                                            color: 'white',
-                                                            padding: 'var(--space-1) var(--space-2)',
-                                                            borderRadius: 'var(--radius-md)',
-                                                            fontSize: 'var(--text-xs)',
-                                                            fontWeight: 'var(--font-bold)'
-                                                        }}>
-                                                            <i className="fas fa-clock mr-1"></i>
-                                                            {selectedIssue.videoTutorial.duration}
-                                                        </span>
-                                                    </div>
-                                                    <div style={{
-                                                        background: 'rgba(0,0,0,0.3)',
-                                                        borderRadius: 'var(--radius-lg)',
-                                                        padding: 'var(--space-4)',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        gap: 'var(--space-3)'
-                                                    }}>
-                                                        <div style={{
-                                                            width: '64px',
-                                                            height: '64px',
-                                                            background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
-                                                            borderRadius: 'var(--radius-lg)',
-                                                            display: 'flex',
-                                                            alignItems: 'center',
-                                                            justifyContent: 'center',
-                                                            cursor: 'pointer',
-                                                            transition: 'transform 0.2s'
-                                                        }}
-                                                        onClick={() => alert('Video bude brzy dostupné!\n\n' + selectedIssue.videoTutorial.title)}
-                                                        onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                                                        onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                                                        >
-                                                            <i className="fas fa-play" style={{color: 'white', fontSize: '24px', marginLeft: '4px'}}></i>
-                                                        </div>
-                                                        <div style={{flex: 1}}>
-                                                            <p style={{color: 'white', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>
-                                                                {selectedIssue.videoTutorial.title}
-                                                            </p>
-                                                            <p style={{color: 'rgba(255,255,255,0.6)', fontSize: 'var(--text-sm)'}}>
-                                                                Sledujte krok za krokem jak opravit tento problém
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                <div style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'space-between',
-                                                    gap: 'var(--space-3)'
-                                                }}>
-                                                    <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                        <i className="fas fa-video" style={{color: 'rgba(255,255,255,0.5)', fontSize: '20px'}}></i>
-                                                        <span style={{color: 'rgba(255,255,255,0.7)', fontSize: 'var(--text-sm)'}}>
-                                                            Video návod bude brzy dostupný
-                                                        </span>
-                                                    </div>
-                                                    <span style={{
-                                                        background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-                                                        color: 'white',
-                                                        padding: 'var(--space-1) var(--space-2)',
-                                                        borderRadius: 'var(--radius-md)',
-                                                        fontSize: 'var(--text-xs)',
-                                                        fontWeight: 'var(--font-bold)'
-                                                    }}>
-                                                        <i className="fas fa-crown mr-1"></i>
-                                                        PRO
-                                                    </span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
 
                                     {/* Tools Needed with Affiliate Links */}
                                     <div style={{background: 'var(--color-info-light)', padding: 'var(--space-6)', borderBottom: '1px solid var(--color-border)'}}>
@@ -4088,10 +3998,6 @@
                                                 </li>
                                                 <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', opacity: 0.5}}>
                                                     <i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i>
-                                                    <span>Video návody</span>
-                                                </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', opacity: 0.5}}>
-                                                    <i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i>
                                                     <span>Kontakty řemeslníků</span>
                                                 </li>
                                             </ul>
@@ -4131,10 +4037,6 @@
                                                 </li>
                                                 <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
                                                     <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
-                                                    <span>Video návody</span>
-                                                </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
                                                     <span>Affiliate odkazy na materiál</span>
                                                 </li>
                                                 <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
@@ -4146,7 +4048,7 @@
                                                     <span>Prioritní podpora</span>
                                                 </li>
                                             </ul>
-                                            <button className="btn btn-primary w-full" onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 49 Kč/měsíc\n\nZískáte:\n• Neomezené AI analýzy\n• Video návody\n• Affiliate odkazy')}>
+                                            <button className="btn btn-primary w-full" onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 49 Kč/měsíc\n\nZískáte:\n• Neomezené AI analýzy\n• Affiliate odkazy')}>
                                                 <i className="fas fa-rocket mr-2"></i>
                                                 Začít s PLUS
                                             </button>
@@ -4184,7 +4086,7 @@
                                                     <span>Offline režim</span>
                                                 </li>
                                             </ul>
-                                            <button className="btn w-full" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white'}} onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 99 Kč/měsíc\n\nZískáte VŠE:\n• Neomezené AI analýzy\n• Video návody\n• Kontakty řemeslníků\n• Technická schémata\n• Prioritní podpora')}>
+                                            <button className="btn w-full" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white'}} onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 99 Kč/měsíc\n\nZískáte VŠE:\n• Neomezené AI analýzy\n• Kontakty řemeslníků\n• Technická schémata\n• Prioritní podpora')}>
                                                 <i className="fas fa-crown mr-2"></i>
                                                 Získat PRO
                                             </button>
@@ -4224,15 +4126,6 @@
                                                 <div>
                                                     <p style={{fontWeight: 'var(--font-semibold)'}}>Kontakty na místní opraváře</p>
                                                     <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>AI vyhledá ověřené řemeslníky ve vašem okolí</p>
-                                                </div>
-                                            </div>
-                                            <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
-                                                <div style={{background: 'var(--color-danger-light)', color: 'var(--color-danger)', padding: 'var(--space-2)', borderRadius: 'var(--radius-lg)'}}>
-                                                    <i className="fas fa-video"></i>
-                                                </div>
-                                                <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Video návody</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Odkazy na profesionální video tutoriály</p>
                                                 </div>
                                             </div>
                                             <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
