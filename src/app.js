@@ -756,6 +756,7 @@
             const [isDragging, setIsDragging] = useState(false);
             const [selectedCategory, setSelectedCategory] = useState('all');
             const [searchTerm, setSearchTerm] = useState(''); // Search in database
+            const [expandedSections, setExpandedSections] = useState({}); // Databázové sekce (action_block friendly)
             const [checkedItems, setCheckedItems] = useState({}); // Pre-repair checklist items
             const [checklistPhase, setChecklistPhase] = useState(false); // Show checklist before repair
             const [historyFilter, setHistoryFilter] = useState('all'); // 'all', 'completed', 'in_progress'
@@ -894,6 +895,19 @@
                 });
 
                 return results.sort((a, b) => b.matchScore - a.matchScore).slice(0, 8);
+            };
+
+            // Toggle detailní karty v databázi (information_block obsahuje otevřené sekce)
+            const toggleDatabaseSection = (sectionKey) => {
+                setExpandedSections(prev => ({
+                    ...prev,
+                    [sectionKey]: !prev[sectionKey]
+                }));
+            };
+
+            const getCategoryLabel = (categoryId) => {
+                const found = getCategories().find(cat => cat.id === categoryId);
+                return found ? found.name : categoryId;
             };
 
             // Resetovat upřesňující kroky
@@ -3013,7 +3027,7 @@
                     )}
 
                     {/* NEW: Top Header - Kompaktní, centralizovaný */}
-                    <header className="top-header">
+                    <header className="top-header header-block" data-block="header">
                         <div className="top-header-content">
                             {/* Logo */}
                             <div className="logo" onClick={() => navigateTo('home')}>
@@ -3079,8 +3093,32 @@
                         </div>
                     </header>
 
+                    {/* Sub-header info bar se stats */}
+                    <div className="sub-header-bar header-block" data-block="header">
+                        <div className="sub-header-content">
+                            <div className="sub-header-info">
+                                <span className="sub-header-brand">FIXO</span>
+                                <span className="sub-header-tagline">První světový standard pro vizuální diagnostiku domácích závad</span>
+                            </div>
+                            <div className="sub-header-stats">
+                                <div className="sub-header-stat">
+                                    <span className="sub-header-stat-value">500+</span>
+                                    <span className="sub-header-stat-label">Závad</span>
+                                </div>
+                                <div className="sub-header-stat">
+                                    <span className="sub-header-stat-value">30s</span>
+                                    <span className="sub-header-stat-label">Analýza</span>
+                                </div>
+                                <div className="sub-header-stat">
+                                    <span className="sub-header-stat-value">AI</span>
+                                    <span className="sub-header-stat-label">Powered</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* NEW: Bottom Navigation Bar */}
-                    <nav className="bottom-nav">
+                    <nav className="bottom-nav navigation-block" data-block="navigation_block">
                         <button
                             className={`bottom-nav-item ${currentView === 'home' || currentView === 'preview' || currentView === 'analyze' || currentView === 'repair' ? 'active' : ''}`}
                             onClick={() => navigateTo('home')}
@@ -3141,89 +3179,89 @@
                         {/* Home View - Single Page s Hero */}
                         {currentView === 'home' && (
                             <div className="app-container">
-                                {/* Desktop: Upload + Jak to funguje vedle sebe */}
-                                <div className="home-two-columns">
-                                    {/* Main Upload Section */}
-                                    <div className="upload-card glass-card upload-card-compact">
-                                        <div className="text-center mb-4">
-                                            <h2 className="text-xl font-bold text-primary mb-2">
-                                                {t('homeTitle')}
-                                            </h2>
-                                            <p className="text-secondary" className="text-sm">
-                                                {t('homeSubtitle')}
-                                            </p>
-                                        </div>
-
-                                        <input
-                                            ref={fileInputRef}
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handleImageUpload}
-                                            className="hidden"
-                                        />
-
-                                        {/* Drag & Drop Zone */}
-                                        <div
-                                            ref={dropZoneRef}
-                                            className={`drop-zone ${isDragging ? 'drag-over' : ''}`}
-                                            onDragOver={handleDragOver}
-                                            onDragLeave={handleDragLeave}
-                                            onDrop={handleDrop}
-                                            onClick={() => fileInputRef.current.click()}
-                                            className="p-6"
-                                        >
-                                            <div className="drop-zone-icon">
-                                                {isDragging ? (
-                                                    <i className="fas fa-cloud-upload-alt"></i>
-                                                ) : (
-                                                    <i className="fas fa-camera"></i>
-                                                )}
+                                <div className="page-frame" data-block="layout_shell">
+                                    {/* action_block */}
+                                    <section className="action-block" data-block="action_block">
+                                        <div className="upload-card glass-card upload-card-compact">
+                                            <div className="text-center mb-4">
+                                                <h2 className="text-xl font-bold text-primary mb-2">
+                                                    {t('homeTitle')}
+                                                </h2>
+                                                <p className="text-secondary" className="text-sm">
+                                                    {t('homeSubtitle')}
+                                                </p>
                                             </div>
-                                            <p className="text-base font-semibold mb-1 text-primary">
-                                                {isDragging ? t('dropzoneDrop') : t('dropzoneText')}
-                                            </p>
-                                            <p className="text-secondary" className="text-sm">
-                                                {t('dropzoneHint')}
-                                            </p>
-                                        </div>
 
-                                        {/* Quick Examples - kompaktní */}
-                                        <div className="grid grid-6 mt-4 gap-2" className="grid-cols-6">
-                                            {[
-                                                { icon: 'fa-tint', name: 'Kohoutek' },
-                                                { icon: 'fa-toilet', name: 'WC' },
-                                                { icon: 'fa-plug', name: 'Zásuvka' },
-                                                { icon: 'fa-door-open', name: 'Dveře' },
-                                                { icon: 'fa-lightbulb', name: 'Světlo' },
-                                                { icon: 'fa-thermometer-half', name: 'Topení' }
-                                            ].map((item, idx) => (
-                                                <div key={idx} className="example-card" className="p-2">
-                                                    <i className={`fas ${item.icon}`} className="text-lg text-primary"></i>
-                                                    <div className="text-xs text-secondary">{item.name}</div>
+                                            <input
+                                                ref={fileInputRef}
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={handleImageUpload}
+                                                className="hidden"
+                                            />
+
+                                            {/* Drag & Drop Zone */}
+                                            <div
+                                                ref={dropZoneRef}
+                                                className={`drop-zone ${isDragging ? 'drag-over' : ''}`}
+                                                onDragOver={handleDragOver}
+                                                onDragLeave={handleDragLeave}
+                                                onDrop={handleDrop}
+                                                onClick={() => fileInputRef.current.click()}
+                                                className="p-6"
+                                            >
+                                                <div className="drop-zone-icon">
+                                                    {isDragging ? (
+                                                        <i className="fas fa-cloud-upload-alt"></i>
+                                                    ) : (
+                                                        <i className="fas fa-camera"></i>
+                                                    )}
                                                 </div>
-                                            ))}
-                                        </div>
+                                                <p className="text-base font-semibold mb-1 text-primary">
+                                                    {isDragging ? t('dropzoneDrop') : t('dropzoneText')}
+                                                </p>
+                                                <p className="text-secondary" className="text-sm">
+                                                    {t('dropzoneHint')}
+                                                </p>
+                                            </div>
 
-                                        {/* Nelze vyfotit? - integrováno */}
-                                        <div
-                                            onClick={() => {
-                                                resetClarification();
-                                                setShowDescribeModal(true);
-                                            }}
-                                            className="p-3 rounded-lg bg-primary-light cursor-pointer text-center"
-                                        >
-                                            <div className="flex items-center justify-center gap-2">
-                                                <i className="fas fa-keyboard" className="text-lg text-primary"></i>
-                                                <span className="font-semibold text-primary-dark text-sm">
-                                                    Nelze vyfotit? Popište problém
-                                                </span>
+                                            {/* Quick Examples - kompaktní */}
+                                            <div className="grid grid-6 mt-4 gap-2" className="grid-cols-6">
+                                                {[
+                                                    { icon: 'fa-tint', name: 'Kohoutek' },
+                                                    { icon: 'fa-toilet', name: 'WC' },
+                                                    { icon: 'fa-plug', name: 'Zásuvka' },
+                                                    { icon: 'fa-door-open', name: 'Dveře' },
+                                                    { icon: 'fa-lightbulb', name: 'Světlo' },
+                                                    { icon: 'fa-thermometer-half', name: 'Topení' }
+                                                ].map((item, idx) => (
+                                                    <div key={idx} className="example-card" className="p-2">
+                                                        <i className={`fas ${item.icon}`} className="text-lg text-primary"></i>
+                                                        <div className="text-xs text-secondary">{item.name}</div>
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            {/* Nelze vyfotit? - integrováno */}
+                                            <div
+                                                onClick={() => {
+                                                    resetClarification();
+                                                    setShowDescribeModal(true);
+                                                }}
+                                                className="p-3 rounded-lg bg-primary-light cursor-pointer text-center"
+                                            >
+                                                <div className="flex items-center justify-center gap-2">
+                                                    <i className="fas fa-keyboard" className="text-lg text-primary"></i>
+                                                    <span className="font-semibold text-primary-dark text-sm">
+                                                        Nelze vyfotit? Popište problém
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </section>
 
-                                    {/* Pravý sloupec: Jak to funguje + Footer */}
-                                    <div className="flex flex-col gap-4">
-                                        {/* Jak to funguje */}
+                                    {/* information_block */}
+                                    <section className="information-block" data-block="information_block">
                                         <div className="glass-card flex flex-col">
                                             <h3 className="section-title mb-4">
                                                 <i className="fas fa-magic"></i>
@@ -3260,7 +3298,6 @@
                                             </div>
                                         </div>
 
-                                        {/* Footer uvnitř pravého sloupce - horizontální layout */}
                                         <div className="glass-card">
                                             <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
                                                 {/* FIXO sekce */}
@@ -3297,7 +3334,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </section>
                                 </div>
                             </div>
                         )}
@@ -4068,100 +4105,123 @@
 
                         {/* Knowledge Base View */}
                         {currentView === 'knowledge' && (
-                            <div className="app-container" className="pt-4">
-                                <h2 className="section-title" className="mb-4">
-                                    <i className="fas fa-book section-title-icon"></i>
-                                    {t('databaseTitle')}
-                                </h2>
+                            <div className="app-container">
+                                <div className="page-frame" data-block="layout_shell">
+                                    <section className="action-block" data-block="action_block">
+                                        <h2 className="section-title mb-4">
+                                            <i className="fas fa-book section-title-icon"></i>
+                                            {t('databaseTitle')}
+                                        </h2>
 
-                                {/* Search Input */}
-                                <div className="mb-6">
-                                    <div className="max-w-lg">
-                                        <i className="fas fa-search" className="text-muted"></i>
-                                        <input
-                                            type="text"
-                                            placeholder="Hledat opravy, nástroje, problémy..."
-                                            value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                            className="w-full text-base"
-                                            onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
-                                            onBlur={(e) => e.target.style.borderColor = 'var(--color-border)'}
-                                        />
-                                        {searchTerm && (
-                                            <button
-                                                onClick={() => setSearchTerm('')}
-                                                className="p-1 border-none text-muted cursor-pointer"
-                                            >
-                                                <i className="fas fa-times"></i>
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Category Filter - kompaktní na desktopu */}
-                                <div className="category-filter category-filter-desktop">
-                                    {categories.map(cat => (
-                                        <button
-                                            key={cat.id}
-                                            onClick={() => setSelectedCategory(cat.id)}
-                                            className={`category-btn ${selectedCategory === cat.id ? 'active' : ''}`}
-                                        >
-                                            <i className={`fas ${cat.icon}`} className="mr-1"></i>
-                                            {cat.name}
-                                        </button>
-                                    ))}
-                                </div>
-
-                                {/* Results count */}
-                                <p className="text-center text-secondary mb-4" className="text-sm">
-                                    {t('showing')} {getFilteredDatabase().length} {t('outOf')} {Object.keys(repairDatabase).length} {t('items')}
-                                </p>
-
-                                {/* Knowledge Grid - 4-6 sloupců na desktopu */}
-                                <div className="grid grid-3 knowledge-grid-desktop gap-4">
-                                    {getFilteredDatabase().map(([key, item]) => (
-                                        <div key={key} className="knowledge-card knowledge-card-compact">
-                                            <div className="knowledge-card-header">
-                                                <div className="flex-between items-center">
-                                                    <h3 className="font-bold text-base">{item.name}</h3>
-                                                    <i className={`fas ${getCategoryIcon(item.category)}`} className="text-xl opacity-90"></i>
-                                                </div>
-                                            </div>
-                                            <div className="p-3 scrollable-content" className="max-h-[180px]">
-                                                <div className="flex flex-col gap-2">
-                                                    {item.issues.map(issue => (
-                                                        <div key={issue.id} className="issue-item" className="p-2 pl-3">
-                                                            <p className="font-semibold text-sm">{issue.name}</p>
-                                                            <div className="mt-1 flex gap-3 text-xs text-muted flex-wrap">
-                                                                <span><i className="fas fa-clock mr-1"></i>{issue.timeEstimate}</span>
-                                                                <span className={`badge badge-${issue.riskScore > 5 ? 'danger' : issue.riskScore > 2 ? 'warning' : 'success'}`} className="text-[10px] px-1.5 py-[1px]">
-                                                                    {issue.riskScore}/10
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
+                                        <div className="card mb-4">
+                                            <div className="max-w-lg">
+                                                <i className="fas fa-search" className="text-muted"></i>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Hledat opravy, nástroje, problémy..."
+                                                    value={searchTerm}
+                                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                                    className="w-full text-base"
+                                                    onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
+                                                    onBlur={(e) => e.target.style.borderColor = 'var(--color-border)'}
+                                                />
+                                                {searchTerm && (
+                                                    <button
+                                                        onClick={() => setSearchTerm('')}
+                                                        className="p-1 border-none text-muted cursor-pointer"
+                                                    >
+                                                        <i className="fas fa-times"></i>
+                                                    </button>
+                                                )}
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
 
-                                {getFilteredDatabase().length === 0 && (
-                                    <div className="empty-state card">
-                                        <div className="empty-state-icon"><i className="fas fa-search"></i></div>
-                                        <p className="empty-state-title">{t('noCategoryItems')}</p>
-                                        <p className="empty-state-desc">{t('tryCategoryHint')}</p>
-                                    </div>
-                                )}
+                                        <div className="category-filter category-filter-desktop">
+                                            {categories.map(cat => (
+                                                <button
+                                                    key={cat.id}
+                                                    onClick={() => setSelectedCategory(cat.id)}
+                                                    className={`category-btn ${selectedCategory === cat.id ? 'active' : ''}`}
+                                                >
+                                                    <i className={`fas ${cat.icon}`} className="mr-1"></i>
+                                                    {cat.name}
+                                                </button>
+                                            ))}
+                                        </div>
 
-                                <div className="alert alert-info mt-8">
-                                    <p className="alert-title">
-                                        <i className="fas fa-info-circle mr-2"></i>
-                                        {t('aboutDatabase')}
-                                    </p>
-                                    <p>
-                                        {t('databaseInfo')}
-                                    </p>
+                                        <p className="text-center text-secondary mb-0" className="text-sm">
+                                            {t('showing')} {getFilteredDatabase().length} {t('outOf')} {Object.keys(repairDatabase).length} {t('items')}
+                                        </p>
+                                    </section>
+
+                                    <section className="information-block" data-block="information_block">
+                                        <div className="database-card-grid">
+                                            {getFilteredDatabase().map(([key, item]) => {
+                                                const isOpen = expandedSections[key];
+                                                return (
+                                                    <div key={key} className={`database-card ${isOpen ? 'open' : ''}`}>
+                                                        <button className="database-card-toggle" onClick={() => toggleDatabaseSection(key)}>
+                                                            <div className="database-card-headline">
+                                                                <div className="database-card-icon">
+                                                                    <i className={`fas ${getCategoryIcon(item.category)}`}></i>
+                                                                </div>
+                                                                <div>
+                                                                    <div className="database-card-title">{item.name}</div>
+                                                                    <p className="database-card-subtitle">
+                                                                        {getCategoryLabel(item.category)} · {item.issues.length} řešení
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <i className={`fas ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+                                                        </button>
+
+                                                        {isOpen && (
+                                                            <div className="database-card-body">
+                                                                {item.issues.map(issue => (
+                                                                    <div key={issue.id} className="database-issue">
+                                                                        <div className="database-issue-header">
+                                                                            <div className="database-issue-title">
+                                                                                <i className="fas fa-screwdriver-wrench"></i>
+                                                                                <span>{issue.name}</span>
+                                                                            </div>
+                                                                            <span className={`badge badge-${issue.riskScore > 5 ? 'danger' : issue.riskScore > 2 ? 'warning' : 'success'}`}>
+                                                                                {issue.riskScore}/10
+                                                                            </span>
+                                                                        </div>
+                                                                        <p className="database-issue-description">
+                                                                            {issue.description || 'Rychlý náhled postupu a nástrojů.'}
+                                                                        </p>
+                                                                        <div className="database-issue-meta">
+                                                                            <span><i className="fas fa-clock"></i> {issue.timeEstimate}</span>
+                                                                            <span><i className="fas fa-layer-group"></i> {getCategoryLabel(item.category)}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+
+                                        {getFilteredDatabase().length === 0 && (
+                                            <div className="empty-state card">
+                                                <div className="empty-state-icon"><i className="fas fa-search"></i></div>
+                                                <p className="empty-state-title">{t('noCategoryItems')}</p>
+                                                <p className="empty-state-desc">{t('tryCategoryHint')}</p>
+                                            </div>
+                                        )}
+
+                                        <div className="alert alert-info mt-4">
+                                            <p className="alert-title">
+                                                <i className="fas fa-info-circle mr-2"></i>
+                                                {t('aboutDatabase')}
+                                            </p>
+                                            <p>
+                                                {t('databaseInfo')}
+                                            </p>
+                                        </div>
+                                    </section>
                                 </div>
                             </div>
                         )}
