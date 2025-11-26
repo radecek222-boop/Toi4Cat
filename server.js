@@ -330,6 +330,7 @@ app.post('/api/analyze', upload.single('image'), async (req, res) => {
                     riskScore: randomIssue.riskScore
                 }
             },
+            possibleIssues: [],
             recommendations: {
                 canDIY: !randomIssue.professionalNeeded,
                 difficulty: randomIssue.difficulty,

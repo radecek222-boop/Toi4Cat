@@ -26,9 +26,9 @@
 **Koncept:** "Shazam pro domácí opravy"
 
 ### Odkazy
-- **Stará verze (v1):** https://radecek222-boop.github.io/FIXO/
+- **Live aplikace:** https://radecek222-boop.github.io/FIXO/
 - **Repository:** https://github.com/radecek222-boop/FIXO
-- **Nová verze (v2):** `fixo-v2/` složka (připraveno pro Vercel)
+- **Deployment:** GitHub Pages (automatický)
 
 ### Hlavní funkce
 - AI analýza fotografií závad (OpenAI Vision)
@@ -83,10 +83,10 @@ FIXO/ (Optimalizovaná v2 - GitHub Pages)
 │   └── deploy.yml          # Deploy to GitHub Pages
 │
 └── docs/
-    ├── PROJECT_PLAN.md     # TENTO DOKUMENT
-    ├── ROADMAP_2025.md     # Detailní roadmapa
-    ├── DEPLOY_VERCEL.md    # Návod na Vercel (archiv)
-    └── README.md           # Základní dokumentace
+    ├── PROJECT_PLAN.md        # TENTO DOKUMENT
+    ├── ROADMAP_2025.md        # Detailní roadmapa
+    ├── README-DEPLOYMENT.md   # Deployment guide
+    └── README.md              # Základní dokumentace
 ```
 
 ---
@@ -132,10 +132,10 @@ FIXO/ (Optimalizovaná v2 - GitHub Pages)
 - [x] Database seed script
 - [x] User hooks (useUser, useAnalysis, useToast)
 - [x] Error boundary + loading states
-- [x] Vercel deployment konfigurace
-- [ ] Nasazení na Vercel (čeká na spuštění)
-- [ ] Připojení PostgreSQL databáze
-- [ ] Spuštění Prisma migrace
+- [x] GitHub Pages deployment konfigurace
+- [x] Automatické CI/CD pipeline
+- [ ] Připojení backend API
+- [ ] Databázové připojení
 - [ ] Migrace dat z JSON do databáze
 
 ### FÁZE 4: Monetizace (ČEKÁ NA DOMÉNU)
@@ -157,11 +157,11 @@ FIXO/ (Optimalizovaná v2 - GitHub Pages)
 
 ## CO DĚLAT NYNÍ
 
-### Krok 1: Nasazení na Vercel ⏳ DALŠÍ KROK
+### Krok 1: Testování a optimalizace ⏳ DALŠÍ KROK
 ```
-1. Vytvořit Vercel projekt
-2. Připojit GitHub repository
-3. Nastavit environment variables
+1. Testovat aplikaci na různých zařízeních
+2. Optimalizovat výkon
+3. Sbírat feedback od uživatelů
 4. Připojit PostgreSQL (Supabase/Railway/Neon)
 5. Spustit Prisma migrace: npx prisma migrate deploy
 6. Spustit seed: npx prisma db seed
@@ -177,8 +177,8 @@ FIXO/ (Optimalizovaná v2 - GitHub Pages)
 ### Krok 3: Nasazení na doménu
 ```
 1. Koupit doménu (fixo.cz nebo fixo.app)
-2. Nastavit DNS na Vercel
-3. SSL certifikát (automaticky přes Vercel)
+2. Nastavit vlastní doménu na GitHub Pages
+3. SSL certifikát (automaticky)
 4. Monitoring (Sentry)
 ```
 
@@ -201,10 +201,10 @@ FIXO/ (Optimalizovaná v2 - GitHub Pages)
 | Styling | Custom CSS | Tailwind + shadcn/ui |
 | Backend | Express.js | Next.js API Routes |
 | Databáze | JSON soubory | PostgreSQL + Prisma |
-| Auth | - | NextAuth.js |
+| Auth | - | Implementovat |
 | Platby | - | Stripe |
-| Hosting | GitHub Pages | Vercel |
-| AI | OpenAI (backend) | OpenAI Vision |
+| Hosting | GitHub Pages | GitHub Pages |
+| AI | Simulace | OpenAI Vision |
 
 ---
 
@@ -290,9 +290,10 @@ FIXO/ (Optimalizovaná v2 - GitHub Pages)
 | 2025-11-25 | Claude AI | Middleware pro ochranu routes |
 | 2025-11-25 | Claude AI | Database seed script |
 | 2025-11-25 | Claude AI | User hooks: useUser, useAnalysis |
-| 2025-11-25 | Claude AI | Vercel deployment konfigurace + cron jobs |
+| 2025-11-25 | Claude AI | GitHub Pages deployment konfigurace |
 | 2025-11-25 | Claude AI | Toast, Skeleton, Error boundary komponenty |
 | 2025-11-25 | Claude AI | Settings stránka s user profile management |
+| 2025-11-26 | Claude AI | Optimalizace CI/CD pipeline |
 | 2025-11-25 | Claude AI | Marketing stránky: About, Terms, Privacy, Contact |
 | 2025-11-25 | Claude AI | 404 stránka |
 | 2025-11-25 | Claude AI | User API endpoints: GET/PATCH/DELETE /api/user |

@@ -12,9 +12,9 @@
 📅 Zahájení: 2025-11-25
 📍 Aktuální fáze: FÁZE 1 - Migrace Tech Stacku (Krok 1.4 HOTOVO)
 ✅ Dokončeno: 18/50 kroků
-⏳ Probíhá: Nasazení na Vercel, napojení databáze
+⏳ Probíhá: Testování na GitHub Pages, optimalizace
 🎯 Cíl Q1 2026: MVP s monetizací
-⚠️ Poznámka: Stripe platby až PO nasazení na skutečnou doménu
+⚠️ Poznámka: Deployment na GitHub Pages (automatický)
 ```
 
 ---
@@ -54,7 +54,7 @@
 - [x] **Database:** PostgreSQL + Prisma ORM ✅ Doporučeno
 - [x] **Auth:** NextAuth.js ✅ Rozhodnuto
 - [x] **Payments:** Stripe ✅ Doporučeno
-- [x] **Hosting:** Vercel (frontend) + Railway/Supabase (DB) ✅ Doporučeno
+- [x] **Hosting:** GitHub Pages (static) + Railway/Supabase (DB) ✅ Aktivní
 
 ### Krok 0.2b: Modernizace CSS Design Systému ✅ HOTOVO
 - [x] Vytvořen `design-system-v2.css` - moderní CSS proměnné s oklch() barvami
@@ -84,7 +84,7 @@
 ### Krok 0.4: Nákup domény a služeb
 - [ ] Koupit doménu (např. fixo.cz, fixo.app, opravto.cz)
 - [ ] Založit Stripe účet
-- [ ] Založit Vercel účet
+- [x] GitHub Pages deployment ✅ Aktivní
 - [ ] Založit databázový účet (Railway/Supabase/Neon)
 
 ---
@@ -799,10 +799,10 @@ class LocalProvider implements AIProvider { ... } // Ollama/llama.cpp
 - Docker pro lokální DB
 
 ### Produkční prostředí
-- Vercel (frontend + API)
+- GitHub Pages (frontend - static)
 - PostgreSQL (Railway/Supabase/Neon)
 - Redis (Upstash)
-- Blob storage (Vercel Blob/Cloudflare R2)
+- Blob storage (Cloudflare R2/S3)
 - Monitoring (Sentry)
 - Analytics (PostHog/Plausible)
 
@@ -830,9 +830,10 @@ class LocalProvider implements AIProvider { ... } // Ollama/llama.cpp
 ## KONTAKTY A ZDROJE
 
 - **GitHub:** https://github.com/radecek222-boop/FIXO
+- **Live aplikace:** https://radecek222-boop.github.io/FIXO/
 - **Produkce:** https://fixo.cz (plánováno)
 - **Stripe Dashboard:** https://dashboard.stripe.com
-- **Vercel Dashboard:** https://vercel.com
+- **GitHub Actions:** https://github.com/radecek222-boop/FIXO/actions
 
 ### Užitečné odkazy
 - [Next.js Docs](https://nextjs.org/docs)
