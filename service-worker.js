@@ -1,6 +1,6 @@
-// FIXO Service Worker - PWA Offline Support v3.0
-const CACHE_NAME = 'fixo-cache-v3';
-const DATA_CACHE_NAME = 'fixo-data-cache-v2';
+// FIXO Service Worker - PWA Offline Support v4.0
+const CACHE_NAME = 'fixo-cache-v4';
+const DATA_CACHE_NAME = 'fixo-data-cache-v3';
 
 // Static assets to cache
 const STATIC_ASSETS = [
@@ -29,7 +29,7 @@ const EXTERNAL_ASSETS = [
 
 // Install - cache all files
 self.addEventListener('install', (event) => {
-    console.log('FIXO SW: Installing v3.0...');
+    console.log('FIXO SW: Installing v4.0...');
     event.waitUntil(
         Promise.all([
             // Cache static assets
