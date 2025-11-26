@@ -89,6 +89,58 @@
   justify-content: center;
 }
 
+/* Page frame layout - pro knowledge, offline a další stránky */
+.page-frame {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  height: 100%;
+  max-width: var(--container-2xl);
+  margin: 0 auto;
+}
+
+/* Desktop: Fixní dva sloupce pro page-frame */
+@media (min-width: 1024px) {
+  .page-frame {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Action block (levý sloupec) a Information block (pravý sloupec) */
+.action-block,
+.information-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  overflow-y: auto;
+  padding-right: var(--space-2);
+}
+
+/* Desktop - fixní velikosti bloků pro VŠECHNY views */
+@media (min-width: 1024px) {
+  .content-left,
+  .content-right,
+  .action-block,
+  .information-block {
+    height: 600px;
+    min-height: 600px;
+    max-height: 600px;
+    justify-content: flex-start;
+  }
+
+  .content-left > .glass-card,
+  .content-right {
+    height: 100%;
+  }
+
+  /* Boxy v pravém bloku - každý zabírá 50% mínus mezera */
+  .content-right > .glass-card {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
 /* Na mobilu - jeden sloupec, scrolluje celý obsah */
 @media (max-width: 1023px) {
   .content-left,
