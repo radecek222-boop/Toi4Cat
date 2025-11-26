@@ -692,10 +692,10 @@
                     const data = await response.json();
                     repairDatabase = data.repairs || {};
                     categoriesData = data.categories || [];
-                    console.log('✅ Databáze načtena:', Object.keys(repairDatabase).length, 'položek');
+                    console.log('<i className="fas fa-check-circle"></i> Databáze načtena:', Object.keys(repairDatabase).length, 'položek');
                 }
             } catch (error) {
-                console.error('❌ Chyba při načítání databáze:', error);
+                console.error('<i className="fas fa-times-circle"></i> Chyba při načítání databáze:', error);
             }
         })();
 
@@ -736,10 +736,10 @@
                             categoriesData = data.categories || [];
                             setCategories(categoriesData.length > 0 ? categoriesData : defaultCategories);
                             setDbLoaded(true);
-                            console.log('✅ Databáze načtena v React:', Object.keys(repairDatabase).length, 'položek');
+                            console.log('<i className="fas fa-check-circle"></i> Databáze načtena v React:', Object.keys(repairDatabase).length, 'položek');
                         }
                     } catch (error) {
-                        console.error('❌ Chyba při načítání databáze:', error);
+                        console.error('<i className="fas fa-times-circle"></i> Chyba při načítání databáze:', error);
                         setDbLoaded(true); // I při chybě pokračuj s prázdnou databází
                     }
                 };
@@ -796,7 +796,7 @@
                         const analyzer = new window.SmartAnalyzer(API_URL);
                         await analyzer.init();
                         setSmartAnalyzer(analyzer);
-                        console.log('🧠 SmartAnalyzer inicializován');
+                        console.log('<i className="fas fa-brain"></i> SmartAnalyzer inicializován');
 
                         // Načíst statistiky
                         const stats = await analyzer.getStats();
@@ -1196,7 +1196,7 @@
                     // Fallback - simulace s popisem
                     await new Promise(resolve => setTimeout(resolve, 2000));
                     setAnalysisResult({
-                        object: { name: 'Popsaný problém', category: 'steny_podlahy', icon: '🔧' },
+                        object: { name: 'Popsaný problém', category: 'steny_podlahy', icon: '<i className="fas fa-wrench"></i>' },
                         issue: {
                             name: problemDescription.slice(0, 50) + '...',
                             description: 'Na základě vašeho popisu doporučujeme následující postup.',
@@ -1205,10 +1205,10 @@
                             timeEstimate: '30 min',
                             tools: ['Základní nářadí', 'Ochranné pomůcky'],
                             steps: [
-                                { step: 1, action: 'Prohlédněte problémové místo', time: '5 min', icon: '🔍' },
-                                { step: 2, action: 'Připravte potřebné nástroje', time: '5 min', icon: '🔧' },
-                                { step: 3, action: 'Proveďte opravu podle popisu', time: '15 min', icon: '⚙️' },
-                                { step: 4, action: 'Zkontrolujte výsledek', time: '5 min', icon: '✅' }
+                                { step: 1, action: 'Prohlédněte problémové místo', time: '5 min', icon: '<i className="fas fa-search"></i>' },
+                                { step: 2, action: 'Připravte potřebné nástroje', time: '5 min', icon: '<i className="fas fa-wrench"></i>' },
+                                { step: 3, action: 'Proveďte opravu podle popisu', time: '15 min', icon: '<i className="fas fa-cog"></i>' },
+                                { step: 4, action: 'Zkontrolujte výsledek', time: '5 min', icon: '<i className="fas fa-check-circle"></i>' }
                             ],
                             safetyWarnings: ['Buďte opatrní při práci', 'V případě pochybností kontaktujte odborníka']
                         },
@@ -1318,7 +1318,7 @@
             const translateTexts = async (targetLang) => {
                 // Pokud máme předgenerované překlady, použij je (funguje i offline!)
                 if (prebuiltTranslations[targetLang]) {
-                    console.log(`🚀 Používám předgenerovaný překlad pro ${targetLang}`);
+                    console.log(`<i className="fas fa-rocket"></i> Používám předgenerovaný překlad pro ${targetLang}`);
                     setCurrentLanguage(targetLang);
                     localStorage.setItem('fixo_language', targetLang);
                     return;
@@ -1326,7 +1326,7 @@
 
                 // Pokud už máme překlady v cache, použij je (instant!)
                 if (translations[targetLang]) {
-                    console.log(`📚 Používám cache pro ${targetLang}`);
+                    console.log(`<i className="fas fa-books"></i> Používám cache pro ${targetLang}`);
                     setCurrentLanguage(targetLang);
                     localStorage.setItem('fixo_language', targetLang);
                     return;
@@ -1380,7 +1380,7 @@
                             setCurrentLanguage(targetLang);
                             localStorage.setItem('fixo_language', targetLang);
 
-                            console.log(`✅ ${langData?.name || targetLang} přidán do slovníku! Celkem jazyků: ${Object.keys(newTranslations).length}`);
+                            console.log(`<i className="fas fa-check-circle"></i> ${langData?.name || targetLang} přidán do slovníku! Celkem jazyků: ${Object.keys(newTranslations).length}`);
                         }
                     }
                 } catch (error) {
@@ -1415,20 +1415,20 @@
                 try {
                     // Použít SmartAnalyzer pokud je dostupný
                     if (smartAnalyzer && imageData) {
-                        console.log('🧠 Používám SmartAnalyzer s učením...');
+                        console.log('<i className="fas fa-brain"></i> Používám SmartAnalyzer s učením...');
 
                         const result = await smartAnalyzer.analyze(imageData);
 
                         if (result) {
                             // Zobrazit zdroj výsledku
                             const sourceLabels = {
-                                cache: '📦 Cache (naučeno)',
+                                cache: '<i className="fas fa-box"></i> Cache (naučeno)',
                                 embedding: '🔗 Podobný obrázek',
                                 classifier: '🤖 Lokální AI',
                                 api: '🌐 Cloud AI',
-                                simulation: '⚠️ Simulace'
+                                simulation: '<i className="fas fa-exclamation-triangle"></i> Simulace'
                             };
-                            console.log(`✅ Výsledek ze zdroje: ${sourceLabels[result._meta?.source] || 'neznámý'}`);
+                            console.log(`<i className="fas fa-check-circle"></i> Výsledek ze zdroje: ${sourceLabels[result._meta?.source] || 'neznámý'}`);
 
                             setAnalysisResult({
                                 object: result.object,
@@ -1449,7 +1449,7 @@
 
                     // Fallback: Původní API volání (pokud SmartAnalyzer není dostupný)
                     if (API_URL && imageData) {
-                        console.log('🚀 Fallback: Odesílám přímo na API:', API_URL);
+                        console.log('<i className="fas fa-rocket"></i> Fallback: Odesílám přímo na API:', API_URL);
 
                         const response = await fetch(`${API_URL}/api/analyze-base64`, {
                             method: 'POST',
@@ -1958,8 +1958,8 @@
                 if (!issue || !issue.tools) return;
 
                 const listText = [
-                    `🛠️ FIXO - Nákupní seznam`,
-                    `📋 Oprava: ${issue.name}`,
+                    `<i className="fas fa-tools"></i> FIXO - Nákupní seznam`,
+                    `<i className="fas fa-clipboard"></i> Oprava: ${issue.name}`,
                     `📅 ${new Date().toLocaleDateString('cs-CZ')}`,
                     ``,
                     `Potřebné nástroje a materiál:`,
@@ -1987,7 +1987,7 @@
 
             const copyToClipboard = (text) => {
                 navigator.clipboard.writeText(text).then(() => {
-                    alert('✅ Nákupní seznam zkopírován do schránky!\n\nMůžeš ho vložit do poznámek nebo poslat SMS.');
+                    alert('<i className="fas fa-check-circle"></i> Nákupní seznam zkopírován do schránky!\n\nMůžeš ho vložit do poznámek nebo poslat SMS.');
                 }).catch(() => {
                     // Fallback for older browsers
                     const textarea = document.createElement('textarea');
@@ -1996,7 +1996,7 @@
                     textarea.select();
                     document.execCommand('copy');
                     document.body.removeChild(textarea);
-                    alert('✅ Nákupní seznam zkopírován do schránky!');
+                    alert('<i className="fas fa-check-circle"></i> Nákupní seznam zkopírován do schránky!');
                 });
             };
 
@@ -2038,7 +2038,7 @@
 
                 setSavedGuides(newGuides);
                 localStorage.setItem('fixo-saved-guides', JSON.stringify(newGuides));
-                alert('✅ Návod uložen pro offline použití!\n\nNajdeš ho v sekci "Uložené návody" v menu.');
+                alert('<i className="fas fa-check-circle"></i> Návod uložen pro offline použití!\n\nNajdeš ho v sekci "Uložené návody" v menu.');
             };
 
             const deleteOfflineGuide = (guideId) => {
@@ -2123,7 +2123,7 @@
                     title: `Opravil/a jsem: ${issue?.name || 'závadu'}`,
                     text: `Právě jsem opravil/a "${issue?.name || 'závadu'}" za ${timeText}! Ušetřil/a jsem ${savingsMin}-${savingsMax} Kč díky #FIXO. DIY je pecka!`,
                     hashtags: ['FIXO', 'DIY', 'oprava', 'šikovnost', 'ušetřeno'],
-                    emoji: '🔧✅💪',
+                    emoji: '<i className="fas fa-wrench"></i><i className="fas fa-check-circle"></i><i className="fas fa-dumbbell"></i>',
                     url: 'https://fixo.cz'
                 };
             };
@@ -2161,7 +2161,7 @@
             const copyShareText = (content) => {
                 const fullText = `${content.emoji} ${content.text}\n\n#${content.hashtags.join(' #')}\n${content.url}`;
                 navigator.clipboard.writeText(fullText).then(() => {
-                    alert('✅ Text zkopírován do schránky!\n\nMůžeš ho vložit kamkoliv na sociální sítě.');
+                    alert('<i className="fas fa-check-circle"></i> Text zkopírován do schránky!\n\nMůžeš ho vložit kamkoliv na sociální sítě.');
                 });
             };
 
@@ -2201,11 +2201,11 @@
                         <div className="translating-overlay">
                             <div className="translating-box">
                                 <div className="spinner spinner-lg mb-4"></div>
-                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>
+                                <h3 className="text-xl font-bold mb-2">
                                     {t('translating')}
                                 </h3>
                                 <p className="text-secondary">Vytvářím slovník pro tento jazyk...</p>
-                                <p className="text-muted" style={{fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)'}}>
+                                <p className="text-muted" className="text-sm mt-2">
                                     (příště bude přepnutí okamžité)
                                 </p>
                             </div>
@@ -2215,17 +2215,17 @@
                     {/* Modal pro popis problému - s upřesňujícími kroky */}
                     {showDescribeModal && (
                         <div className="translating-overlay" onClick={() => { setShowDescribeModal(false); resetClarification(); }}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} style={{maxWidth: '500px', maxHeight: '85vh', overflow: 'auto'}}>
+                            <div className="translating-box" onClick={e => e.stopPropagation()} className="max-w-[500px] max-h-[85vh] overflow-auto">
 
                                 {/* Krok 0: Úvodní popis + volba kategorie */}
                                 {clarificationStep === 0 && (
                                     <>
-                                        <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                            <i className="fas fa-keyboard" style={{color: 'var(--color-primary)'}}></i>
+                                        <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                            <i className="fas fa-keyboard" className="text-primary"></i>
                                             Popište problém
                                         </h3>
 
-                                        <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)'}}>
+                                        <p className="text-sm text-secondary mb-4">
                                             Napište co se děje - napopsat můžete cokoliv, co nejde vyfotit.
                                         </p>
 
@@ -2234,16 +2234,7 @@
                                             value={problemDescription}
                                             onChange={(e) => setProblemDescription(e.target.value)}
                                             placeholder="Např: Neteče voda z kohoutku, jak rozložit sedačku, dveře drhnou o podlahu, ze zásuvky jiskří..."
-                                            style={{
-                                                width: '100%',
-                                                minHeight: '80px',
-                                                padding: 'var(--space-3)',
-                                                borderRadius: 'var(--radius-lg)',
-                                                border: '2px solid var(--color-border)',
-                                                fontSize: 'var(--text-base)',
-                                                resize: 'vertical',
-                                                marginBottom: 'var(--space-4)'
-                                            }}
+                                            className="w-full min-h-[80px] p-3 mb-4 rounded-lg text-base resize-vertical"
                                         />
 
                                         {/* Voice input button */}
@@ -2259,28 +2250,20 @@
                                         )}
 
                                         {/* Nebo vybrat kategorii */}
-                                        <div style={{marginBottom: 'var(--space-4)'}}>
-                                            <p style={{fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)', color: 'var(--color-text-secondary)'}}>
+                                        <div className="mb-4">
+                                            <p className="text-sm font-semibold mb-2 text-secondary">
                                                 Nebo vyberte kategorii problému:
                                             </p>
-                                            <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--space-2)'}}>
+                                            <div className="grid grid-cols-2 gap-2">
                                                 {problemCategories.map(cat => (
                                                     <button
                                                         key={cat.id}
                                                         onClick={() => setSelectedProblemCategory(selectedProblemCategory === cat.id ? null : cat.id)}
-                                                        style={{
-                                                            padding: 'var(--space-2)',
-                                                            borderRadius: 'var(--radius-lg)',
-                                                            border: selectedProblemCategory === cat.id ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
-                                                            background: selectedProblemCategory === cat.id ? 'var(--color-primary-light)' : 'var(--color-bg-secondary)',
-                                                            cursor: 'pointer',
-                                                            textAlign: 'left',
-                                                            fontSize: 'var(--text-sm)'
-                                                        }}
+                                                        className="p-2 rounded-lg text-sm cursor-pointer text-left"
                                                     >
-                                                        <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                            <i className={`fas ${cat.icon}`} style={{color: selectedProblemCategory === cat.id ? 'var(--color-primary)' : 'var(--color-text-muted)'}}></i>
-                                                            <span style={{fontWeight: 'var(--font-medium)'}}>{cat.name}</span>
+                                                        <div className="flex items-center gap-2">
+                                                            <i className={`fas ${cat.icon}`} className={selectedProblemCategory === cat.id ? "text-primary" : "text-muted"}></i>
+                                                            <span className="font-medium">{cat.name}</span>
                                                         </div>
                                                     </button>
                                                 ))}
@@ -2310,27 +2293,21 @@
                                 {/* Krok 1: Vybrat kategorii (pokud nic nenalezeno) */}
                                 {clarificationStep === 1 && (
                                     <>
-                                        <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                            <i className="fas fa-question-circle" style={{color: 'var(--color-warning)'}}></i>
+                                        <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                            <i className="fas fa-question-circle" className="text-warning"></i>
                                             Upřesněte problém
                                         </h3>
 
-                                        <div style={{
-                                            background: 'var(--color-warning-light)',
-                                            padding: 'var(--space-3)',
-                                            borderRadius: 'var(--radius-lg)',
-                                            marginBottom: 'var(--space-4)',
-                                            fontSize: 'var(--text-sm)'
-                                        }}>
-                                            <p style={{margin: 0}}>
+                                        <div className="p-3 mb-4 rounded-lg bg-warning-light text-sm">
+                                            <p className="m-0">
                                                 <strong>Váš popis:</strong> "{problemDescription}"
                                             </p>
-                                            <p style={{margin: '8px 0 0 0', color: 'var(--color-text-secondary)'}}>
+                                            <p className="mt-2 text-secondary">
                                                 Nenašli jsme přesnou shodu. Vyberte kategorii pro upřesnění:
                                             </p>
                                         </div>
 
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginBottom: 'var(--space-4)'}}>
+                                        <div className="flex flex-col gap-2 mb-4">
                                             {problemCategories.map(cat => (
                                                 <button
                                                     key={cat.id}
@@ -2340,20 +2317,13 @@
                                                         setSuggestedIssues(matches);
                                                         setClarificationStep(2);
                                                     }}
-                                                    style={{
-                                                        padding: 'var(--space-3)',
-                                                        borderRadius: 'var(--radius-lg)',
-                                                        border: '1px solid var(--color-border)',
-                                                        background: 'var(--color-bg-secondary)',
-                                                        cursor: 'pointer',
-                                                        textAlign: 'left'
-                                                    }}
+                                                    className="p-3 rounded-lg border border-border bg-secondary cursor-pointer text-left"
                                                 >
-                                                    <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-3)'}}>
-                                                        <i className={`fas ${cat.icon}`} style={{fontSize: 'var(--text-xl)', color: 'var(--color-primary)', width: '30px'}}></i>
+                                                    <div className="flex items-center gap-3">
+                                                        <i className={`fas ${cat.icon}`} className="text-xl text-primary w-8"></i>
                                                         <div>
-                                                            <div style={{fontWeight: 'var(--font-semibold)'}}>{cat.name}</div>
-                                                            <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                            <div className="font-semibold">{cat.name}</div>
+                                                            <div className="text-xs text-muted">
                                                                 {cat.examples.slice(0, 3).join(' • ')}
                                                             </div>
                                                         </div>
@@ -2375,72 +2345,52 @@
                                 {/* Krok 2: Zobrazit nalezené problémy */}
                                 {clarificationStep === 2 && (
                                     <>
-                                        <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                            <i className="fas fa-list-ul" style={{color: 'var(--color-success)'}}></i>
+                                        <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                            <i className="fas fa-list-ul" className="text-success"></i>
                                             Vyberte problém
                                         </h3>
 
                                         {problemDescription && (
-                                            <div style={{
-                                                background: 'var(--color-bg-secondary)',
-                                                padding: 'var(--space-2) var(--space-3)',
-                                                borderRadius: 'var(--radius-lg)',
-                                                marginBottom: 'var(--space-3)',
-                                                fontSize: 'var(--text-sm)'
-                                            }}>
+                                            <div className="mb-3 rounded-lg bg-secondary text-sm">
                                                 <strong>Hledáme:</strong> "{problemDescription}"
                                             </div>
                                         )}
 
-                                        <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                        <p className="text-sm text-secondary mb-3">
                                             Nalezeno {suggestedIssues.length} možných problémů. Vyberte ten správný:
                                         </p>
 
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginBottom: 'var(--space-4)', maxHeight: '300px', overflow: 'auto'}}>
+                                        <div className="flex flex-col gap-2 mb-4 max-h-[300px] overflow-auto">
                                             {suggestedIssues.length > 0 ? suggestedIssues.map((issue, idx) => (
                                                 <button
                                                     key={idx}
                                                     onClick={() => selectSuggestedIssue(issue)}
-                                                    style={{
-                                                        padding: 'var(--space-3)',
-                                                        borderRadius: 'var(--radius-lg)',
-                                                        border: '1px solid var(--color-border)',
-                                                        background: 'var(--color-bg-primary)',
-                                                        cursor: 'pointer',
-                                                        textAlign: 'left',
-                                                        transition: 'all 0.2s ease'
-                                                    }}
+                                                    className="p-3 rounded-lg border border-border cursor-pointer text-left"
                                                 >
-                                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
-                                                        <div style={{flex: 1}}>
-                                                            <div style={{fontWeight: 'var(--font-semibold)', marginBottom: '4px'}}>
+                                                    <div className="flex justify-between items-start">
+                                                        <div className="flex-1">
+                                                            <div className="font-semibold mb-1">
                                                                 {issue.name}
                                                             </div>
-                                                            <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                            <div className="text-xs text-muted">
                                                                 {issue.objectName}
                                                             </div>
                                                         </div>
-                                                        <div style={{textAlign: 'right'}}>
-                                                            <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                        <div className="text-right">
+                                                            <div className="text-xs text-muted">
                                                                 <i className="fas fa-clock mr-1"></i>{issue.timeEstimate}
                                                             </div>
-                                                            <span style={{
-                                                                fontSize: '10px',
-                                                                padding: '2px 6px',
-                                                                borderRadius: 'var(--radius-full)',
-                                                                background: issue.riskScore > 5 ? 'var(--color-danger-light)' : issue.riskScore > 2 ? 'var(--color-warning-light)' : 'var(--color-success-light)',
-                                                                color: issue.riskScore > 5 ? 'var(--color-danger)' : issue.riskScore > 2 ? 'var(--color-warning)' : 'var(--color-success)'
-                                                            }}>
+                                                            <span className={`text-[10px] px-1.5 py-[2px] rounded-full ${issue.riskScore > 5 ? "bg-danger-light text-danger" : issue.riskScore > 2 ? "bg-warning-light text-warning" : "bg-success-light text-success"}`}>
                                                                 Riziko: {issue.riskScore}/10
                                                             </span>
                                                         </div>
                                                     </div>
                                                 </button>
                                             )) : (
-                                                <div style={{textAlign: 'center', padding: 'var(--space-6)', color: 'var(--color-text-muted)'}}>
-                                                    <i className="fas fa-search" style={{fontSize: 'var(--text-3xl)', marginBottom: 'var(--space-2)', display: 'block', opacity: 0.5}}></i>
+                                                <div className="text-center p-6 text-muted">
+                                                    <i className="fas fa-search" className="text-3xl mb-2 block opacity-50"></i>
                                                     <p>Žádné problémy v této kategorii nenalezeny.</p>
-                                                    <p style={{fontSize: 'var(--text-xs)'}}>Zkuste upravit popis nebo vybrat jinou kategorii.</p>
+                                                    <p className="text-xs">Zkuste upravit popis nebo vybrat jinou kategorii.</p>
                                                 </div>
                                             )}
                                         </div>
@@ -2471,46 +2421,32 @@
                     {/* Modal pro opravu špatné analýzy (Feedback) */}
                     {showFeedbackModal && (
                         <div className="translating-overlay" onClick={() => setShowFeedbackModal(false)}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} style={{maxHeight: '80vh', overflow: 'auto'}}>
-                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                    <i className="fas fa-edit" style={{color: 'var(--color-warning)'}}></i>
+                            <div className="translating-box" onClick={e => e.stopPropagation()} className="max-h-[80vh] overflow-auto">
+                                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                    <i className="fas fa-edit" className="text-warning"></i>
                                     Opravit analýzu
                                 </h3>
 
-                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)'}}>
+                                <p className="text-sm text-secondary mb-4">
                                     Vyberte správnou závadu z databáze. Vaše oprava pomůže zlepšit rozpoznávání pro všechny.
                                 </p>
 
                                 {/* Vyhledávání */}
-                                <div style={{marginBottom: 'var(--space-4)'}}>
+                                <div className="mb-4">
                                     <input
                                         type="text"
                                         placeholder="Hledat závadu..."
                                         value={feedbackSearch}
                                         onChange={(e) => setFeedbackSearch(e.target.value)}
-                                        style={{
-                                            width: '100%',
-                                            padding: 'var(--space-3)',
-                                            borderRadius: 'var(--radius-lg)',
-                                            border: '2px solid var(--color-border)',
-                                            fontSize: 'var(--text-sm)'
-                                        }}
+                                        className="w-full p-3 rounded-lg text-sm"
                                     />
                                 </div>
 
                                 {/* Filtry kategorií */}
-                                <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', marginBottom: 'var(--space-4)'}}>
+                                <div className="flex flex-wrap gap-2 mb-4">
                                     <button
                                         onClick={() => setFeedbackCategory('all')}
-                                        style={{
-                                            padding: 'var(--space-1) var(--space-2)',
-                                            borderRadius: 'var(--radius-full)',
-                                            border: 'none',
-                                            fontSize: 'var(--text-xs)',
-                                            background: feedbackCategory === 'all' ? 'var(--color-primary)' : 'var(--color-bg-tertiary)',
-                                            color: feedbackCategory === 'all' ? 'white' : 'var(--color-text-secondary)',
-                                            cursor: 'pointer'
-                                        }}
+                                        className="border-none cursor-pointer"
                                     >
                                         Vše
                                     </button>
@@ -2518,15 +2454,7 @@
                                         <button
                                             key={cat.id}
                                             onClick={() => setFeedbackCategory(cat.id)}
-                                            style={{
-                                                padding: 'var(--space-1) var(--space-2)',
-                                                borderRadius: 'var(--radius-full)',
-                                                border: 'none',
-                                                fontSize: 'var(--text-xs)',
-                                                background: feedbackCategory === cat.id ? 'var(--color-primary)' : 'var(--color-bg-tertiary)',
-                                                color: feedbackCategory === cat.id ? 'white' : 'var(--color-text-secondary)',
-                                                cursor: 'pointer'
-                                            }}
+                                            className="border-none cursor-pointer"
                                         >
                                             <i className={`fas ${cat.icon} mr-1`}></i>
                                             {cat.name}
@@ -2535,7 +2463,7 @@
                                 </div>
 
                                 {/* Seznam závad */}
-                                <div style={{maxHeight: '300px', overflow: 'auto', marginBottom: 'var(--space-4)'}}>
+                                <div className="max-h-[300px] overflow-auto mb-4">
                                     {Object.entries(repairDatabase)
                                         .filter(([key, obj]) => {
                                             if (feedbackCategory !== 'all' && obj.category !== feedbackCategory) return false;
@@ -2547,16 +2475,8 @@
                                             return true;
                                         })
                                         .map(([key, obj]) => (
-                                            <div key={key} style={{marginBottom: 'var(--space-3)'}}>
-                                                <div style={{
-                                                    fontSize: 'var(--text-sm)',
-                                                    fontWeight: 'var(--font-semibold)',
-                                                    color: 'var(--color-text-secondary)',
-                                                    marginBottom: 'var(--space-1)',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: 'var(--space-1)'
-                                                }}>
+                                            <div key={key} className="mb-3">
+                                                <div className="text-sm text-secondary">
                                                     <i className={`fas ${getCategoryIcon(obj.category)}`}></i>
                                                     {obj.name}
                                                 </div>
@@ -2566,23 +2486,10 @@
                                                         <button
                                                             key={idx}
                                                             onClick={() => submitFeedback(obj, issue)}
-                                                            style={{
-                                                                width: '100%',
-                                                                padding: 'var(--space-2) var(--space-3)',
-                                                                marginBottom: 'var(--space-1)',
-                                                                borderRadius: 'var(--radius-md)',
-                                                                border: '1px solid var(--color-border)',
-                                                                background: 'var(--color-bg-primary)',
-                                                                textAlign: 'left',
-                                                                cursor: 'pointer',
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'space-between',
-                                                                fontSize: 'var(--text-sm)'
-                                                            }}
+                                                            className="w-full rounded-md border border-border text-sm cursor-pointer text-left"
                                                         >
                                                             <span>{issue.name}</span>
-                                                            <i className="fas fa-chevron-right" style={{color: 'var(--color-text-muted)', fontSize: 'var(--text-xs)'}}></i>
+                                                            <i className="fas fa-chevron-right" className="text-muted text-xs"></i>
                                                         </button>
                                                     ))
                                                 }
@@ -2605,38 +2512,25 @@
                     {/* Modal pro platbu za detailní návod */}
                     {showDetailedGuidePayment && analysisResult && (
                         <div className="translating-overlay" onClick={() => setShowDetailedGuidePayment(false)}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} style={{maxWidth: '400px', textAlign: 'center'}}>
-                                <div style={{fontSize: '4rem', marginBottom: 'var(--space-4)'}}>
-                                    <i className="fas fa-crown" style={{color: '#8b5cf6'}}></i>
+                            <div className="translating-box" onClick={e => e.stopPropagation()} className="max-w-md text-center">
+                                <div className="text-6xl mb-4">
+                                    <i className="fas fa-crown" className="text-purple-600"></i>
                                 </div>
-                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>
+                                <h3 className="text-xl font-bold mb-2">
                                     Detailní návod
                                 </h3>
-                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)'}}>
+                                <p className="text-sm text-secondary mb-4">
                                     Získejte kompletní návod s detailními kroky, schématy a tipy odborníků.
                                 </p>
 
-                                <div style={{
-                                    background: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)',
-                                    color: 'white',
-                                    padding: 'var(--space-4)',
-                                    borderRadius: 'var(--radius-lg)',
-                                    marginBottom: 'var(--space-4)'
-                                }}>
-                                    <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)'}}>
+                                <div className="p-4 mb-4 rounded-lg">
+                                    <div className="text-3xl font-bold">
                                         {PRICING.detailedGuide} {PRICING.currency}
                                     </div>
-                                    <div style={{fontSize: 'var(--text-sm)', opacity: 0.9}}>jednorázová platba</div>
+                                    <div className="text-sm opacity-90">jednorázová platba</div>
                                 </div>
 
-                                <ul style={{
-                                    textAlign: 'left',
-                                    fontSize: 'var(--text-sm)',
-                                    marginBottom: 'var(--space-4)',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    gap: 'var(--space-2)'
-                                }}>
+                                <ul className="mb-4 text-sm text-left">
                                     <li><i className="fas fa-check text-success mr-2"></i>Kompletní postup s 10+ kroky</li>
                                     <li><i className="fas fa-check text-success mr-2"></i>Technická schémata a diagramy</li>
                                     <li><i className="fas fa-check text-success mr-2"></i>Tipy od profesionálů</li>
@@ -2644,7 +2538,7 @@
                                     <li><i className="fas fa-check text-success mr-2"></i>Offline přístup navždy</li>
                                 </ul>
 
-                                <div style={{display: 'flex', gap: 'var(--space-3)'}}>
+                                <div className="flex gap-3">
                                     <button
                                         onClick={() => setShowDetailedGuidePayment(false)}
                                         className="btn btn-secondary flex-1"
@@ -2654,14 +2548,14 @@
                                     <button
                                         onClick={() => purchaseDetailedGuide(analysisResult.issue)}
                                         className="btn btn-primary flex-1"
-                                        style={{background: 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)'}}
+                                        className="gradient-purple"
                                     >
                                         <i className="fas fa-credit-card mr-2"></i>
                                         Koupit
                                     </button>
                                 </div>
 
-                                <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', marginTop: 'var(--space-3)'}}>
+                                <p className="text-xs text-muted mt-3">
                                     <i className="fas fa-lock mr-1"></i>
                                     Bezpečná platba přes Stripe
                                 </p>
@@ -2672,81 +2566,52 @@
                     {/* Overlay pro nejbližší dodavatele/opraváře */}
                     {showNearbySuppliers && (
                         <div className="translating-overlay" onClick={() => setShowNearbySuppliers(false)}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} style={{maxWidth: '500px', maxHeight: '80vh', overflow: 'auto'}}>
-                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                    <i className="fas fa-map-marker-alt" style={{color: 'var(--color-primary)'}}></i>
+                            <div className="translating-box" onClick={e => e.stopPropagation()} className="max-w-lg max-h-[80vh] overflow-auto">
+                                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                    <i className="fas fa-map-marker-alt" className="text-primary"></i>
                                     Odborníci ve vašem okolí
                                 </h3>
 
-                                <div style={{
-                                    background: 'var(--color-info-light)',
-                                    padding: 'var(--space-3)',
-                                    borderRadius: 'var(--radius-lg)',
-                                    marginBottom: 'var(--space-4)',
-                                    fontSize: 'var(--text-sm)'
-                                }}>
-                                    <i className="fas fa-info-circle mr-2" style={{color: 'var(--color-info)'}}></i>
+                                <div className="p-3 mb-4 rounded-lg bg-info-light text-sm">
+                                    <i className="fas fa-info-circle mr-2" className="text-info"></i>
                                     Zobrazujeme ověřené odborníky seřazené podle vzdálenosti od vaší polohy.
                                 </div>
 
                                 {/* Seznam dodavatelů */}
-                                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
+                                <div className="flex flex-col gap-3">
                                     {[
                                         { id: 1, name: 'Jan Novák - Instalatér', category: 'Instalatérství', phone: '+420 123 456 789', rating: 4.8, distance: 1.2, isPremium: true },
                                         { id: 2, name: 'Elektro Servis Praha', category: 'Elektrikář', phone: '+420 987 654 321', rating: 4.5, distance: 2.5, isPremium: true },
                                         { id: 3, name: 'Truhlářství Koval', category: 'Truhlář', phone: '+420 555 666 777', rating: 4.9, distance: 3.1, isPremium: true }
                                     ].map(supplier => (
-                                        <div key={supplier.id} style={{
-                                            padding: 'var(--space-4)',
-                                            background: supplier.isPremium ? 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' : 'var(--color-bg-secondary)',
-                                            borderRadius: 'var(--radius-lg)',
-                                            border: supplier.isPremium ? '2px solid var(--color-warning)' : '1px solid var(--color-border)'
-                                        }}>
-                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-2)'}}>
+                                        <div key={supplier.id} className="p-4 rounded-lg">
+                                            <div className="flex justify-between items-start mb-2">
                                                 <div>
-                                                    <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                        <span style={{fontWeight: 'var(--font-bold)'}}>{supplier.name}</span>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="font-bold">{supplier.name}</span>
                                                         {supplier.isPremium && (
-                                                            <span style={{
-                                                                background: 'var(--color-warning)',
-                                                                color: 'white',
-                                                                padding: '2px 6px',
-                                                                borderRadius: 'var(--radius-full)',
-                                                                fontSize: '10px',
-                                                                fontWeight: 'var(--font-bold)'
-                                                            }}>
+                                                            <span className="bg-warning text-white px-1.5 py-[2px] rounded-full text-[10px] font-bold">
                                                                 <i className="fas fa-star mr-1"></i>PREMIUM
                                                             </span>
                                                         )}
                                                     </div>
-                                                    <div style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>
+                                                    <div className="text-sm text-secondary">
                                                         {supplier.category}
                                                     </div>
                                                 </div>
-                                                <div style={{textAlign: 'right'}}>
-                                                    <div style={{display: 'flex', alignItems: 'center', gap: '2px', color: 'var(--color-warning)', fontSize: 'var(--text-sm)'}}>
+                                                <div className="text-right">
+                                                    <div className="flex items-center gap-[2px] text-warning text-sm">
                                                         <i className="fas fa-star"></i>
-                                                        <span style={{fontWeight: 'var(--font-bold)'}}>{supplier.rating}</span>
+                                                        <span className="font-bold">{supplier.rating}</span>
                                                     </div>
-                                                    <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                    <div className="text-xs text-muted">
                                                         <i className="fas fa-map-marker-alt mr-1"></i>{supplier.distance} km
                                                     </div>
                                                 </div>
                                             </div>
                                             <a
                                                 href={`tel:${supplier.phone}`}
-                                                style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    gap: 'var(--space-2)',
-                                                    padding: 'var(--space-3)',
-                                                    background: 'var(--color-success)',
-                                                    color: 'white',
-                                                    borderRadius: 'var(--radius-lg)',
-                                                    textDecoration: 'none',
-                                                    fontWeight: 'var(--font-semibold)'
-                                                }}
+                                                className="p-3 rounded-lg"
                                             >
                                                 <i className="fas fa-phone"></i>
                                                 {supplier.phone}
@@ -2756,18 +2621,12 @@
                                 </div>
 
                                 {/* Registrace pro dodavatele */}
-                                <div style={{
-                                    marginTop: 'var(--space-6)',
-                                    padding: 'var(--space-4)',
-                                    background: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)',
-                                    borderRadius: 'var(--radius-lg)',
-                                    textAlign: 'center'
-                                }}>
-                                    <p style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>
+                                <div className="p-4 rounded-lg text-center">
+                                    <p className="font-semibold mb-2">
                                         <i className="fas fa-user-tie mr-2"></i>
                                         Jste odborník nebo firma?
                                     </p>
-                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                    <p className="text-sm text-secondary mb-3">
                                         Registrujte se a získejte nové zakázky od zákazníků ve vašem okolí.
                                     </p>
                                     <button
@@ -2785,7 +2644,7 @@
                                 <button
                                     onClick={() => setShowNearbySuppliers(false)}
                                     className="btn btn-secondary w-full"
-                                    style={{marginTop: 'var(--space-4)'}}
+                                    className="mt-4"
                                 >
                                     Zavřít
                                 </button>
@@ -2796,91 +2655,61 @@
                     {/* Modal pro registraci dodavatelů/opravářů */}
                     {showSupplierRegistration && (
                         <div className="translating-overlay" onClick={() => setShowSupplierRegistration(false)}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} style={{maxWidth: '500px', maxHeight: '85vh', overflow: 'auto'}}>
-                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                    <i className="fas fa-briefcase" style={{color: 'var(--color-primary)'}}></i>
+                            <div className="translating-box" onClick={e => e.stopPropagation()} className="max-w-[500px] max-h-[85vh] overflow-auto">
+                                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                    <i className="fas fa-briefcase" className="text-primary"></i>
                                     Registrace odborníka
                                 </h3>
 
-                                <div style={{
-                                    background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-                                    color: 'white',
-                                    padding: 'var(--space-4)',
-                                    borderRadius: 'var(--radius-lg)',
-                                    marginBottom: 'var(--space-4)',
-                                    textAlign: 'center'
-                                }}>
-                                    <p style={{fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)'}}>
+                                <div className="p-4 mb-4 rounded-lg text-center">
+                                    <p className="text-sm mb-2">
                                         Získejte zakázky od zákazníků ve vašem okolí
                                     </p>
-                                    <div style={{fontSize: 'var(--text-xs)', opacity: 0.9}}>
+                                    <div className="text-xs opacity-90">
                                         Budete zobrazeni uživatelům podle geolokace - nejbližší k zakázce
                                     </div>
                                 </div>
 
                                 {/* Cenové plány */}
-                                <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-3)', marginBottom: 'var(--space-4)'}}>
+                                <div className="grid grid-cols-2 gap-3 mb-4">
                                     {/* Měsíční plán */}
-                                    <div style={{
-                                        padding: 'var(--space-4)',
-                                        border: '2px solid var(--color-border)',
-                                        borderRadius: 'var(--radius-lg)',
-                                        textAlign: 'center'
-                                    }}>
-                                        <div style={{fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>
+                                    <div className="p-4 rounded-lg text-center">
+                                        <div className="text-sm font-semibold mb-2">
                                             Měsíční
                                         </div>
-                                        <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-primary)'}}>
+                                        <div className="text-2xl font-bold text-primary">
                                             {PRICING.supplierMonthly} {PRICING.currency}
                                         </div>
-                                        <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                        <div className="text-xs text-muted">
                                             /měsíc
                                         </div>
                                         <button
                                             onClick={() => alert('Platební brána bude brzy dostupná.\n\nMěsíční členství: ' + PRICING.supplierMonthly + ' ' + PRICING.currency)}
                                             className="btn btn-secondary w-full"
-                                            style={{marginTop: 'var(--space-3)', fontSize: 'var(--text-sm)'}}
+                                            className="mt-3 text-sm"
                                         >
                                             Vybrat
                                         </button>
                                     </div>
 
                                     {/* Roční plán - zvýhodněný */}
-                                    <div style={{
-                                        padding: 'var(--space-4)',
-                                        border: '2px solid var(--color-success)',
-                                        borderRadius: 'var(--radius-lg)',
-                                        textAlign: 'center',
-                                        background: 'var(--color-success-light)',
-                                        position: 'relative'
-                                    }}>
-                                        <div style={{
-                                            position: 'absolute',
-                                            top: '-10px',
-                                            left: '50%',
-                                            transform: 'translateX(-50%)',
-                                            background: 'var(--color-success)',
-                                            color: 'white',
-                                            padding: '2px 10px',
-                                            borderRadius: 'var(--radius-full)',
-                                            fontSize: '10px',
-                                            fontWeight: 'var(--font-bold)'
-                                        }}>
+                                    <div className="p-4 rounded-lg text-center">
+                                        <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-success text-white px-2.5 py-[2px] rounded-full text-[10px] font-bold">
                                             2 MĚSÍCE ZDARMA
                                         </div>
-                                        <div style={{fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>
+                                        <div className="text-sm font-semibold mb-2">
                                             Roční
                                         </div>
-                                        <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-success)'}}>
+                                        <div className="text-2xl font-bold text-success">
                                             {PRICING.supplierYearly} {PRICING.currency}
                                         </div>
-                                        <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                        <div className="text-xs text-muted">
                                             /rok ({(PRICING.supplierYearly / 12).toFixed(2)} {PRICING.currency}/měs)
                                         </div>
                                         <button
                                             onClick={() => alert('Platební brána bude brzy dostupná.\n\nRoční členství: ' + PRICING.supplierYearly + ' ' + PRICING.currency + '\n\nÚspora: ' + ((PRICING.supplierMonthly * 12) - PRICING.supplierYearly).toFixed(2) + ' ' + PRICING.currency + ' (2 měsíce zdarma)')}
                                             className="btn btn-success w-full"
-                                            style={{marginTop: 'var(--space-3)', fontSize: 'var(--text-sm)'}}
+                                            className="mt-3 text-sm"
                                         >
                                             <i className="fas fa-star mr-1"></i>Vybrat
                                         </button>
@@ -2888,11 +2717,11 @@
                                 </div>
 
                                 {/* Co získáte */}
-                                <div style={{marginBottom: 'var(--space-4)'}}>
-                                    <h4 style={{fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>
+                                <div className="mb-4">
+                                    <h4 className="text-sm font-semibold mb-2">
                                         Co získáte:
                                     </h4>
-                                    <ul style={{fontSize: 'var(--text-sm)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)'}}>
+                                    <ul className="text-sm flex flex-col gap-2">
                                         <li><i className="fas fa-check text-success mr-2"></i>Zobrazení uživatelům v okolí</li>
                                         <li><i className="fas fa-check text-success mr-2"></i>Prioritní pozice (podle geolokace)</li>
                                         <li><i className="fas fa-check text-success mr-2"></i>PREMIUM badge pro větší důvěru</li>
@@ -2914,41 +2743,28 @@
                     {/* Před-opravní checklist modal - Compact */}
                     {showChecklist && pendingIssue && (
                         <div className="translating-overlay" onClick={cancelChecklist}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()} style={{padding: 'var(--space-4)'}}>
-                                <h3 style={{fontSize: 'var(--text-base)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-3)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                    <i className="fas fa-clipboard-check" style={{color: 'var(--color-primary)'}}></i>
+                            <div className="translating-box" onClick={e => e.stopPropagation()} className="p-4">
+                                <h3 className="text-base font-bold mb-3 flex items-center gap-2">
+                                    <i className="fas fa-clipboard-check" className="text-primary"></i>
                                     Před zahájením opravy
                                 </h3>
 
                                 {/* Checklist items - compact */}
-                                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginBottom: 'var(--space-3)'}}>
+                                <div className="flex flex-col gap-2 mb-3">
                                     {generateChecklistItems(pendingIssue).map(item => (
                                         <label
                                             key={item.id}
-                                            style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: 'var(--space-2)',
-                                                padding: 'var(--space-2)',
-                                                background: checklistItems[item.id] ? 'var(--color-success-light)' : (item.important ? 'var(--color-warning-light)' : 'var(--color-bg-secondary)'),
-                                                borderRadius: 'var(--radius-md)',
-                                                cursor: 'pointer',
-                                                fontSize: 'var(--text-sm)'
-                                            }}
+                                            className="p-2 rounded-md text-sm cursor-pointer"
                                         >
                                             <input
                                                 type="checkbox"
                                                 checked={checklistItems[item.id] || false}
                                                 onChange={() => setChecklistItems(prev => ({...prev, [item.id]: !prev[item.id]}))}
-                                                style={{width: '16px', height: '16px', accentColor: 'var(--color-success)'}}
+                                                className="w-4 h-4 accent-success"
                                             />
-                                            <span style={{
-                                                flex: 1,
-                                                textDecoration: checklistItems[item.id] ? 'line-through' : 'none',
-                                                opacity: checklistItems[item.id] ? 0.6 : 1
-                                            }}>
+                                            <span className={`flex-1 ${checklistItems[item.id] ? "line-through opacity-60" : ""}`}>
                                                 {item.text}
-                                                {item.important && <span style={{color: 'var(--color-danger)'}}>*</span>}
+                                                {item.important && <span className="text-danger">*</span>}
                                             </span>
                                         </label>
                                     ))}
@@ -2956,24 +2772,21 @@
 
                                 {/* Nářadí - inline compact */}
                                 {pendingIssue.tools && pendingIssue.tools.length > 0 && (
-                                    <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                    <div className="text-xs text-secondary mb-3">
                                         <strong>Nářadí:</strong> {pendingIssue.tools.join(', ')}
                                     </div>
                                 )}
 
                                 {/* Action buttons */}
                                 <div className="flex gap-2">
-                                    <button onClick={cancelChecklist} className="btn btn-secondary flex-1" style={{padding: 'var(--space-2)'}}>
+                                    <button onClick={cancelChecklist} className="btn btn-secondary flex-1" className="p-2">
                                         Zrušit
                                     </button>
                                     <button
                                         onClick={confirmChecklist}
                                         className="btn btn-success flex-1"
                                         disabled={generateChecklistItems(pendingIssue).filter(i => i.important).some(i => !checklistItems[i.id])}
-                                        style={{
-                                            padding: 'var(--space-2)',
-                                            opacity: generateChecklistItems(pendingIssue).filter(i => i.important).some(i => !checklistItems[i.id]) ? 0.5 : 1
-                                        }}
+                                        className="p-2"
                                     >
                                         <i className="fas fa-play mr-1"></i>
                                         Začít
@@ -2987,30 +2800,21 @@
                     {showCraftsmen && craftsmenData && (
                         <div className="translating-overlay" onClick={() => setShowCraftsmen(false)}>
                             <div className="translating-box" onClick={e => e.stopPropagation()}>
-                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)'}}>
-                                    <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                        <i className="fas fa-hard-hat" style={{color: 'var(--color-primary)'}}></i>
+                                <div className="flex justify-between items-center mb-4">
+                                    <h3 className="text-xl font-bold flex items-center gap-2">
+                                        <i className="fas fa-hard-hat" className="text-primary"></i>
                                         Najít řemeslníka
                                     </h3>
-                                    <button onClick={() => setShowCraftsmen(false)} style={{background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: 'var(--color-text-secondary)'}}>
+                                    <button onClick={() => setShowCraftsmen(false)} className="bg-none border-none text-xl cursor-pointer text-secondary">
                                         <i className="fas fa-times"></i>
                                     </button>
                                 </div>
 
                                 {/* Category filter */}
-                                <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', marginBottom: 'var(--space-4)'}}>
+                                <div className="flex flex-wrap gap-2 mb-4">
                                     <button
                                         onClick={() => setSelectedCraftsmanCategory('all')}
-                                        style={{
-                                            padding: 'var(--space-1) var(--space-3)',
-                                            borderRadius: 'var(--radius-full)',
-                                            border: 'none',
-                                            background: selectedCraftsmanCategory === 'all' ? 'var(--color-primary)' : 'var(--color-bg-secondary)',
-                                            color: selectedCraftsmanCategory === 'all' ? 'white' : 'var(--color-text-primary)',
-                                            cursor: 'pointer',
-                                            fontSize: 'var(--text-sm)',
-                                            fontWeight: 'var(--font-medium)'
-                                        }}
+                                        className="border-none text-sm cursor-pointer"
                                     >
                                         Všichni
                                     </button>
@@ -3018,16 +2822,7 @@
                                         <button
                                             key={cat.id}
                                             onClick={() => setSelectedCraftsmanCategory(cat.id)}
-                                            style={{
-                                                padding: 'var(--space-1) var(--space-3)',
-                                                borderRadius: 'var(--radius-full)',
-                                                border: 'none',
-                                                background: selectedCraftsmanCategory === cat.id ? 'var(--color-primary)' : 'var(--color-bg-secondary)',
-                                                color: selectedCraftsmanCategory === cat.id ? 'white' : 'var(--color-text-primary)',
-                                                cursor: 'pointer',
-                                                fontSize: 'var(--text-sm)',
-                                                fontWeight: 'var(--font-medium)'
-                                            }}
+                                            className="border-none text-sm cursor-pointer"
                                         >
                                             {cat.icon} {cat.name}
                                         </button>
@@ -3035,89 +2830,60 @@
                                 </div>
 
                                 {/* Craftsmen list */}
-                                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
+                                <div className="flex flex-col gap-3">
                                     {getFilteredCraftsmen().map(craftsman => (
-                                        <div key={craftsman.id} style={{
-                                            background: 'var(--color-bg-secondary)',
-                                            borderRadius: 'var(--radius-lg)',
-                                            padding: 'var(--space-4)',
-                                            border: '1px solid var(--color-border)'
-                                        }}>
-                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-2)'}}>
+                                        <div key={craftsman.id} className="p-4 rounded-lg border border-border bg-secondary">
+                                            <div className="flex justify-between items-start mb-2">
                                                 <div>
-                                                    <h4 style={{fontWeight: 'var(--font-bold)', fontSize: 'var(--text-base)', marginBottom: 'var(--space-1)'}}>
+                                                    <h4 className="font-bold text-base mb-1">
                                                         {craftsman.name}
                                                         {craftsman.verified && (
-                                                            <i className="fas fa-check-circle ml-2" style={{color: 'var(--color-success)', fontSize: 'var(--text-sm)'}}></i>
+                                                            <i className="fas fa-check-circle ml-2" className="text-success text-sm"></i>
                                                         )}
                                                     </h4>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>{craftsman.company}</p>
+                                                    <p className="text-sm text-secondary">{craftsman.company}</p>
                                                 </div>
-                                                <div style={{textAlign: 'right'}}>
-                                                    <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-1)', color: 'var(--color-warning)'}}>
+                                                <div className="text-right">
+                                                    <div className="flex items-center gap-1 text-warning">
                                                         <i className="fas fa-star"></i>
-                                                        <span style={{fontWeight: 'var(--font-bold)'}}>{craftsman.rating}</span>
-                                                        <span style={{color: 'var(--color-text-secondary)', fontSize: 'var(--text-xs)'}}>
+                                                        <span className="font-bold">{craftsman.rating}</span>
+                                                        <span className="text-secondary text-xs">
                                                             ({craftsman.reviewCount})
                                                         </span>
                                                     </div>
-                                                    <span style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)'}}>
+                                                    <span className="text-xs text-secondary">
                                                         {craftsman.city}
                                                     </span>
                                                 </div>
                                             </div>
 
-                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                            <p className="text-sm text-secondary mb-3">
                                                 {craftsman.description}
                                             </p>
 
-                                            <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', marginBottom: 'var(--space-3)'}}>
-                                                <span style={{
-                                                    display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)',
-                                                    background: 'var(--color-info-light)', padding: 'var(--space-1) var(--space-2)',
-                                                    borderRadius: 'var(--radius-md)', fontSize: 'var(--text-xs)'
-                                                }}>
+                                            <div className="flex flex-wrap gap-2 mb-3">
+                                                <span className="rounded-md bg-info-light">
                                                     <i className="fas fa-clock"></i> {craftsman.responseTime}
                                                 </span>
-                                                <span style={{
-                                                    display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)',
-                                                    background: 'var(--color-success-light)', padding: 'var(--space-1) var(--space-2)',
-                                                    borderRadius: 'var(--radius-md)', fontSize: 'var(--text-xs)'
-                                                }}>
+                                                <span className="rounded-md">
                                                     <i className="fas fa-calendar"></i> {craftsman.availability}
                                                 </span>
-                                                <span style={{
-                                                    display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)',
-                                                    background: 'var(--color-warning-light)', padding: 'var(--space-1) var(--space-2)',
-                                                    borderRadius: 'var(--radius-md)', fontSize: 'var(--text-xs)'
-                                                }}>
+                                                <span className="rounded-md bg-warning-light">
                                                     <i className="fas fa-money-bill"></i> {craftsman.priceRange.min}-{craftsman.priceRange.max} {craftsman.priceRange.currency}/{craftsman.priceRange.unit}
                                                 </span>
                                             </div>
 
-                                            <div style={{display: 'flex', gap: 'var(--space-2)'}}>
+                                            <div className="flex gap-2">
                                                 <a
                                                     href={`tel:${craftsman.phone}`}
-                                                    style={{
-                                                        flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-                                                        padding: 'var(--space-2) var(--space-3)',
-                                                        background: 'var(--color-success)', color: 'white',
-                                                        borderRadius: 'var(--radius-md)', textDecoration: 'none',
-                                                        fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)'
-                                                    }}
+                                                    className="rounded-md text-sm"
                                                 >
                                                     <i className="fas fa-phone"></i> Zavolat
                                                 </a>
                                                 {craftsman.email && (
                                                     <a
                                                         href={`mailto:${craftsman.email}`}
-                                                        style={{
-                                                            flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-                                                            padding: 'var(--space-2) var(--space-3)',
-                                                            background: 'var(--color-primary)', color: 'white',
-                                                            borderRadius: 'var(--radius-md)', textDecoration: 'none',
-                                                            fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)'
-                                                        }}
+                                                        className="rounded-md text-sm"
                                                     >
                                                         <i className="fas fa-envelope"></i> Email
                                                     </a>
@@ -3127,18 +2893,18 @@
                                     ))}
 
                                     {getFilteredCraftsmen().length === 0 && (
-                                        <div style={{textAlign: 'center', padding: 'var(--space-8)', color: 'var(--color-text-secondary)'}}>
-                                            <i className="fas fa-search" style={{fontSize: '2rem', marginBottom: 'var(--space-2)', display: 'block'}}></i>
+                                        <div className="text-center p-8 text-secondary">
+                                            <i className="fas fa-search" className="text-4xl mb-2 block"></i>
                                             <p>Pro tuto kategorii zatím nemáme řemeslníky.</p>
-                                            <p style={{fontSize: 'var(--text-sm)'}}>Zkuste vybrat jinou kategorii.</p>
+                                            <p className="text-sm">Zkuste vybrat jinou kategorii.</p>
                                         </div>
                                     )}
                                 </div>
 
-                                <div style={{marginTop: 'var(--space-4)', padding: 'var(--space-3)', background: 'var(--color-info-light)', borderRadius: 'var(--radius-lg)'}}>
-                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', textAlign: 'center'}}>
+                                <div className="mt-4 p-3 bg-info-light rounded-lg">
+                                    <p className="text-sm text-secondary text-center">
                                         <i className="fas fa-info-circle mr-2"></i>
-                                        Jste řemeslník? <a href="mailto:remeslnik@fixo.cz" style={{color: 'var(--color-primary)', fontWeight: 'var(--font-semibold)'}}>Registrujte se</a> a získejte nové zákazníky!
+                                        Jste řemeslník? <a href="mailto:remeslnik@fixo.cz" className="text-primary font-semibold">Registrujte se</a> a získejte nové zákazníky!
                                     </p>
                                 </div>
                             </div>
@@ -3150,141 +2916,75 @@
                         <div className="translating-overlay" onClick={closeShareAndFinish}>
                             <div className="translating-box" onClick={e => e.stopPropagation()}>
                                 {/* Success animation */}
-                                <div style={{
-                                    fontSize: '4rem',
-                                    marginBottom: 'var(--space-4)',
-                                    animation: 'pulse 1s ease-in-out'
-                                }}>
-                                    🎉
+                                <div className="mb-4">
+                                    <i className="fas fa-party-horn"></i>
                                 </div>
 
-                                <h2 style={{
-                                    fontSize: 'var(--text-2xl)',
-                                    fontWeight: 'var(--font-bold)',
-                                    color: 'var(--color-success)',
-                                    marginBottom: 'var(--space-2)'
-                                }}>
+                                <h2 className="text-2xl font-bold text-success mb-2">
                                     Oprava dokončena!
                                 </h2>
 
-                                <p style={{
-                                    fontSize: 'var(--text-lg)',
-                                    fontWeight: 'var(--font-semibold)',
-                                    marginBottom: 'var(--space-4)'
-                                }}>
+                                <p className="mb-4">
                                     {shareData.issue?.name}
                                 </p>
 
                                 {/* Stats */}
-                                <div style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    gap: 'var(--space-6)',
-                                    marginBottom: 'var(--space-6)',
-                                    padding: 'var(--space-4)',
-                                    background: 'var(--color-bg-secondary)',
-                                    borderRadius: 'var(--radius-xl)'
-                                }}>
-                                    <div style={{textAlign: 'center'}}>
-                                        <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-primary)'}}>
+                                <div className="p-4 bg-secondary">
+                                    <div className="text-center">
+                                        <div className="text-3xl font-bold text-primary">
                                             {shareData.timeSpent > 0 ? formatTime(shareData.timeSpent) : shareData.issue?.timeEstimate || '-'}
                                         </div>
-                                        <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', textTransform: 'uppercase'}}>
+                                        <div className="text-xs text-muted uppercase">
                                             <i className="fas fa-stopwatch mr-1"></i> Čas
                                         </div>
                                     </div>
-                                    <div style={{width: '1px', background: 'var(--color-border)'}}></div>
-                                    <div style={{textAlign: 'center'}}>
-                                        <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-success)'}}>
+                                    <div className="w-px bg-border"></div>
+                                    <div className="text-center">
+                                        <div className="text-3xl font-bold text-success">
                                             {shareData.issue?.costEstimate
                                                 ? `${Math.round((shareData.issue.costEstimate.min + shareData.issue.costEstimate.max) / 2 * 5)} Kč`
                                                 : '~1000 Kč'
                                             }
                                         </div>
-                                        <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', textTransform: 'uppercase'}}>
+                                        <div className="text-xs text-muted uppercase">
                                             <i className="fas fa-piggy-bank mr-1"></i> Ušetřeno
                                         </div>
                                     </div>
                                 </div>
 
-                                <p style={{
-                                    fontSize: 'var(--text-sm)',
-                                    color: 'var(--color-text-secondary)',
-                                    marginBottom: 'var(--space-4)'
-                                }}>
+                                <p className="mb-4 text-sm text-secondary">
                                     Pochlub se svou šikovností na sociálních sítích!
                                 </p>
 
                                 {/* Share preview */}
-                                <div style={{
-                                    background: 'var(--color-bg-tertiary)',
-                                    padding: 'var(--space-4)',
-                                    borderRadius: 'var(--radius-lg)',
-                                    marginBottom: 'var(--space-4)',
-                                    textAlign: 'left',
-                                    fontSize: 'var(--text-sm)',
-                                    border: '1px solid var(--color-border)'
-                                }}>
-                                    <p style={{marginBottom: 'var(--space-2)'}}>
+                                <div className="p-4 mb-4 rounded-lg border border-border text-sm text-left">
+                                    <p className="mb-2">
                                         {shareData.emoji} {shareData.text}
                                     </p>
-                                    <p style={{color: 'var(--color-primary)', fontSize: 'var(--text-xs)'}}>
+                                    <p className="text-primary text-xs">
                                         #{shareData.hashtags.join(' #')}
                                     </p>
                                 </div>
 
                                 {/* Share buttons */}
-                                <div style={{display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-4)', justifyContent: 'center', flexWrap: 'wrap'}}>
+                                <div className="flex gap-2 mb-4 justify-center flex-wrap">
                                     <button
                                         onClick={() => shareToTwitter(shareData)}
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: 'var(--space-2)',
-                                            padding: 'var(--space-3) var(--space-4)',
-                                            background: '#000000',
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: 'var(--radius-lg)',
-                                            fontWeight: 'var(--font-semibold)',
-                                            cursor: 'pointer'
-                                        }}
+                                        className="rounded-lg border-none cursor-pointer"
                                     >
                                         <i className="fab fa-x-twitter"></i>
                                         X / Twitter
                                     </button>
                                     <button
                                         onClick={() => shareToFacebook(shareData)}
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: 'var(--space-2)',
-                                            padding: 'var(--space-3) var(--space-4)',
-                                            background: '#1877f2',
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: 'var(--radius-lg)',
-                                            fontWeight: 'var(--font-semibold)',
-                                            cursor: 'pointer'
-                                        }}
+                                        className="rounded-lg border-none cursor-pointer"
                                     >
                                         <i className="fab fa-facebook"></i>
                                         Facebook
                                     </button>
                                     <button
                                         onClick={() => shareNative(shareData)}
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: 'var(--space-2)',
-                                            padding: 'var(--space-3) var(--space-4)',
-                                            background: 'var(--color-primary)',
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: 'var(--radius-lg)',
-                                            fontWeight: 'var(--font-semibold)',
-                                            cursor: 'pointer'
-                                        }}
+                                        className="rounded-lg border-none cursor-pointer"
                                     >
                                         <i className="fas fa-share-alt"></i>
                                         Sdílet
@@ -3295,7 +2995,7 @@
                                 <button
                                     onClick={() => copyShareText(shareData)}
                                     className="btn btn-secondary w-full mb-4"
-                                    style={{fontSize: 'var(--text-sm)'}}
+                                    className="text-sm"
                                 >
                                     <i className="fas fa-copy mr-2"></i>
                                     Zkopírovat text
@@ -3304,13 +3004,7 @@
                                 {/* Skip button */}
                                 <button
                                     onClick={closeShareAndFinish}
-                                    style={{
-                                        background: 'none',
-                                        border: 'none',
-                                        color: 'var(--color-text-muted)',
-                                        cursor: 'pointer',
-                                        fontSize: 'var(--text-sm)'
-                                    }}
+                                    className="border-none text-sm text-muted cursor-pointer"
                                 >
                                     Přeskočit a dokončit
                                 </button>
@@ -3334,54 +3028,28 @@
                                     onClick={toggleDarkMode}
                                     title={darkMode ? 'Světlý režim' : 'Tmavý režim'}
                                 >
-                                    <i className={`fas ${darkMode ? 'fa-sun' : 'fa-moon'}`} style={{color: darkMode ? 'var(--color-warning)' : 'var(--color-primary)'}}></i>
+                                    <i className={`fas ${darkMode ? 'fa-sun' : 'fa-moon'}`} className={darkMode ? "text-warning" : "text-primary"}></i>
                                 </button>
 
                                 {/* Language Selector */}
-                                <div style={{position: 'relative'}}>
+                                <div className="relative">
                                     <button
                                         className="header-btn"
                                         onClick={() => setLangMenuOpen(!langMenuOpen)}
-                                        style={{width: 'auto', padding: '0 var(--space-2)'}}
+                                        className="w-auto px-2"
                                     >
-                                        <span style={{fontSize: 'var(--text-lg)'}}>{getCurrentLanguageData().flag}</span>
+                                        <span className="text-lg">{getCurrentLanguageData().flag}</span>
                                     </button>
 
                                     {/* Language Dropdown */}
                                     {langMenuOpen && (
-                                        <div style={{
-                                            position: 'absolute',
-                                            top: 'calc(100% + 8px)',
-                                            right: 0,
-                                            background: 'var(--color-bg-primary)',
-                                            border: '1px solid var(--color-border)',
-                                            borderRadius: 'var(--radius-xl)',
-                                            boxShadow: 'var(--shadow-xl)',
-                                            padding: 'var(--space-3)',
-                                            minWidth: '280px',
-                                            maxHeight: '350px',
-                                            overflowY: 'auto',
-                                            zIndex: 1000
-                                        }}>
-                                            <div style={{
-                                                display: 'grid',
-                                                gridTemplateColumns: 'repeat(5, 1fr)',
-                                                gap: 'var(--space-2)'
-                                            }}>
+                                        <div className="p-3 border border-border">
+                                            <div className="grid grid-cols-5 gap-2">
                                                 {languages.map(lang => (
                                                     <button
                                                         key={lang.code}
                                                         onClick={() => { changeLanguage(lang.code); setLangMenuOpen(false); }}
-                                                        style={{
-                                                            padding: 'var(--space-2)',
-                                                            borderRadius: 'var(--radius-lg)',
-                                                            border: currentLanguage === lang.code ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
-                                                            background: currentLanguage === lang.code ? 'var(--color-primary-light)' : 'var(--color-bg-secondary)',
-                                                            cursor: 'pointer',
-                                                            fontSize: 'var(--text-lg)',
-                                                            textAlign: 'center',
-                                                            transition: 'var(--transition-fast)'
-                                                        }}
+                                                        className="p-2 rounded-lg cursor-pointer text-center"
                                                         title={lang.native}
                                                     >
                                                         {lang.flag}
@@ -3486,10 +3154,10 @@
                                     {/* Main Upload Section */}
                                     <div className="upload-card glass-card upload-card-compact">
                                         <div className="text-center mb-4">
-                                            <h2 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-text-primary)', marginBottom: 'var(--space-2)'}}>
+                                            <h2 className="text-xl font-bold text-primary mb-2">
                                                 {t('homeTitle')}
                                             </h2>
-                                            <p className="text-secondary" style={{fontSize: 'var(--text-sm)'}}>
+                                            <p className="text-secondary" className="text-sm">
                                                 {t('homeSubtitle')}
                                             </p>
                                         </div>
@@ -3510,7 +3178,7 @@
                                             onDragLeave={handleDragLeave}
                                             onDrop={handleDrop}
                                             onClick={() => fileInputRef.current.click()}
-                                            style={{padding: 'var(--space-6)'}}
+                                            className="p-6"
                                         >
                                             <div className="drop-zone-icon">
                                                 {isDragging ? (
@@ -3519,16 +3187,16 @@
                                                     <i className="fas fa-camera"></i>
                                                 )}
                                             </div>
-                                            <p style={{fontSize: 'var(--text-base)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)', color: 'var(--color-text-primary)'}}>
+                                            <p className="text-base font-semibold mb-1 text-primary">
                                                 {isDragging ? t('dropzoneDrop') : t('dropzoneText')}
                                             </p>
-                                            <p className="text-secondary" style={{fontSize: 'var(--text-sm)'}}>
+                                            <p className="text-secondary" className="text-sm">
                                                 {t('dropzoneHint')}
                                             </p>
                                         </div>
 
                                         {/* Quick Examples - kompaktní */}
-                                        <div className="grid grid-6 mt-4 gap-2" style={{gridTemplateColumns: 'repeat(6, 1fr)'}}>
+                                        <div className="grid grid-6 mt-4 gap-2" className="grid-cols-6">
                                             {[
                                                 { icon: 'fa-tint', name: 'Kohoutek' },
                                                 { icon: 'fa-toilet', name: 'WC' },
@@ -3537,9 +3205,9 @@
                                                 { icon: 'fa-lightbulb', name: 'Světlo' },
                                                 { icon: 'fa-thermometer-half', name: 'Topení' }
                                             ].map((item, idx) => (
-                                                <div key={idx} className="example-card" style={{padding: 'var(--space-2)'}}>
-                                                    <i className={`fas ${item.icon}`} style={{fontSize: 'var(--text-lg)', color: 'var(--color-primary)'}}></i>
-                                                    <div style={{fontSize: '10px', color: 'var(--color-text-secondary)'}}>{item.name}</div>
+                                                <div key={idx} className="example-card" className="p-2">
+                                                    <i className={`fas ${item.icon}`} className="text-lg text-primary"></i>
+                                                    <div className="text-xs text-secondary">{item.name}</div>
                                                 </div>
                                             ))}
                                         </div>
@@ -3550,19 +3218,11 @@
                                                 resetClarification();
                                                 setShowDescribeModal(true);
                                             }}
-                                            style={{
-                                                marginTop: 'var(--space-3)',
-                                                padding: 'var(--space-3)',
-                                                background: 'var(--color-primary-light)',
-                                                borderRadius: 'var(--radius-lg)',
-                                                cursor: 'pointer',
-                                                textAlign: 'center',
-                                                border: '1px dashed var(--color-primary)'
-                                            }}
+                                            className="p-3 rounded-lg bg-primary-light cursor-pointer text-center"
                                         >
-                                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)'}}>
-                                                <i className="fas fa-keyboard" style={{fontSize: 'var(--text-lg)', color: 'var(--color-primary)'}}></i>
-                                                <span style={{fontWeight: 'var(--font-semibold)', color: 'var(--color-primary-dark)', fontSize: 'var(--text-sm)'}}>
+                                            <div className="flex items-center justify-center gap-2">
+                                                <i className="fas fa-keyboard" className="text-lg text-primary"></i>
+                                                <span className="font-semibold text-primary-dark text-sm">
                                                     Nelze vyfotit? Popište problém
                                                 </span>
                                             </div>
@@ -3570,12 +3230,12 @@
                                     </div>
 
                                     {/* Jak to funguje - stejná výška */}
-                                    <div className="glass-card" style={{display: 'flex', flexDirection: 'column'}}>
-                                        <h3 className="section-title section-title-compact" style={{justifyContent: 'center', marginBottom: 'var(--space-3)'}}>
+                                    <div className="glass-card" className="flex flex-col">
+                                        <h3 className="section-title section-title-compact" className="justify-center mb-3">
                                             <i className="fas fa-magic section-title-icon"></i>
                                             Jak to funguje?
                                         </h3>
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', flex: 1}}>
+                                        <div className="flex flex-col gap-2 flex-1">
                                             {[
                                                 {
                                                     num: '1', icon: 'fa-camera', title: 'Vyfoťte',
@@ -3597,43 +3257,20 @@
                                                     key={idx}
                                                     className="info-box ripple"
                                                     onClick={() => setExpandedStep(expandedStep === idx ? null : idx)}
-                                                    style={{
-                                                        flexDirection: 'column',
-                                                        alignItems: 'flex-start',
-                                                        textAlign: 'left',
-                                                        minHeight: 'auto',
-                                                        padding: 'var(--space-3)',
-                                                        cursor: 'pointer',
-                                                        transition: 'all 0.2s ease',
-                                                        flex: expandedStep === idx ? 'auto' : '1'
-                                                    }}
+                                                    className="p-3 cursor-pointer text-left"
                                                 >
-                                                    <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-3)', width: '100%'}}>
-                                                        <div style={{
-                                                            width: '36px', height: '36px', borderRadius: 'var(--radius-lg)',
-                                                            background: expandedStep === idx ? 'var(--gradient-primary)' : 'var(--color-bg-tertiary)',
-                                                            color: expandedStep === idx ? 'white' : 'var(--color-primary)',
-                                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                            fontSize: 'var(--text-sm)',
-                                                            flexShrink: 0
-                                                        }}>
+                                                    <div className="flex items-center gap-3 w-full">
+                                                        <div className="rounded-lg text-sm">
                                                             <i className={`fas ${step.icon}`}></i>
                                                         </div>
-                                                        <div style={{flex: 1}}>
-                                                            <h4 style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', color: 'var(--color-text-primary)', margin: 0}}>{step.title}</h4>
-                                                            <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', margin: 0}}>{step.desc}</p>
+                                                        <div className="flex-1">
+                                                            <h4 className="font-semibold text-sm text-primary m-0">{step.title}</h4>
+                                                            <p className="text-xs text-muted m-0">{step.desc}</p>
                                                         </div>
-                                                        <i className={`fas fa-chevron-${expandedStep === idx ? 'up' : 'down'}`} style={{color: 'var(--color-text-muted)', fontSize: 'var(--text-xs)'}}></i>
+                                                        <i className={`fas fa-chevron-${expandedStep === idx ? 'up' : 'down'}`} className="text-muted text-xs"></i>
                                                     </div>
                                                     {expandedStep === idx && (
-                                                        <div style={{
-                                                            marginTop: 'var(--space-2)',
-                                                            paddingTop: 'var(--space-2)',
-                                                            borderTop: '1px solid var(--color-border)',
-                                                            fontSize: 'var(--text-xs)',
-                                                            color: 'var(--color-text-secondary)',
-                                                            lineHeight: 1.4
-                                                        }}>
+                                                        <div className="text-secondary">
                                                             {step.detail}
                                                         </div>
                                                     )}
@@ -3644,12 +3281,12 @@
                                 </div>
 
                                 {/* Footer - Kompaktní */}
-                                <div className="app-footer" style={{marginTop: 'var(--space-4)', background: 'transparent', padding: 'var(--space-4) 0'}}>
-                                    <div className="footer-logo" style={{fontSize: 'var(--text-lg)'}}>FIXO</div>
-                                    <p className="footer-text" style={{fontSize: 'var(--text-xs)'}}>
+                                <div className="app-footer" className="mt-4 bg-transparent py-4">
+                                    <div className="footer-logo" className="text-lg">FIXO</div>
+                                    <p className="footer-text" className="text-xs">
                                         "Fix Anything. Anywhere. Instantly."
                                     </p>
-                                    <p className="footer-copyright" style={{fontSize: 'var(--text-xs)'}}>
+                                    <p className="footer-copyright" className="text-xs">
                                         © 2025 FIXO • Váš domácí pomocník
                                     </p>
                                 </div>
@@ -3658,10 +3295,10 @@
 
                         {/* Preview View - Náhled s možností kreslení */}
                         {currentView === 'preview' && selectedImage && (
-                            <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
+                            <div className="app-container" className="pt-4">
                                 <div className="upload-card glass-card">
                                     <div className="text-center mb-4">
-                                        <h2 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>
+                                        <h2 className="text-xl font-bold mb-2">
                                             <i className="fas fa-edit mr-2"></i>
                                             Označte problém na fotce
                                         </h2>
@@ -3671,7 +3308,7 @@
                                     </div>
 
                                     {/* Canvas / Image container - Fixed for touch */}
-                                    <div className="drawing-container" style={{marginBottom: 'var(--space-4)', background: '#000', borderRadius: 'var(--radius-lg)', overflow: 'hidden'}}>
+                                    <div className="drawing-container" className="mb-4 bg-black rounded-lg overflow-hidden">
                                         {isDrawingMode ? (
                                             <>
                                                 <canvas
@@ -3690,22 +3327,17 @@
                                             <img
                                                 src={annotatedImage || selectedImage}
                                                 alt="Nahraná fotka"
-                                                style={{
-                                                    width: '100%',
-                                                    maxHeight: '400px',
-                                                    objectFit: 'contain',
-                                                    display: 'block'
-                                                }}
+                                                className="w-full block"
                                             />
                                         )}
                                     </div>
 
                                     {/* Kreslící nástroje */}
                                     {isDrawingMode && (
-                                        <div className="card mb-4" style={{padding: 'var(--space-3)', background: 'var(--color-bg-secondary)'}}>
+                                        <div className="card mb-4" className="p-3 bg-secondary">
                                             <div className="flex-between flex-wrap gap-3">
                                                 <div className="flex items-center gap-3">
-                                                    <label style={{fontSize: 'var(--text-sm)'}}>Barva:</label>
+                                                    <label className="text-sm">Barva:</label>
                                                     <div className="flex gap-2">
                                                         {['#00ffff', '#ff00ff', '#00ff00', '#ffff00', '#ff0000'].map(color => (
                                                             <button
@@ -3725,17 +3357,17 @@
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center gap-3">
-                                                    <label style={{fontSize: 'var(--text-sm)'}}>Velikost:</label>
+                                                    <label className="text-sm">Velikost:</label>
                                                     <input
                                                         type="range"
                                                         min="2"
                                                         max="15"
                                                         value={brushSize}
                                                         onChange={(e) => setBrushSize(parseInt(e.target.value))}
-                                                        style={{width: '80px'}}
+                                                        className="w-20"
                                                     />
                                                 </div>
-                                                <button onClick={clearCanvas} className="btn btn-secondary" style={{padding: 'var(--space-2) var(--space-3)'}}>
+                                                <button onClick={clearCanvas} className="btn btn-secondary" className="py-2 px-3">
                                                     <i className="fas fa-eraser mr-1"></i> Smazat
                                                 </button>
                                             </div>
@@ -3743,7 +3375,7 @@
                                     )}
 
                                     {/* Akční tlačítka */}
-                                    <div className="flex gap-3" style={{flexWrap: 'wrap'}}>
+                                    <div className="flex gap-3" className="flex-wrap">
                                         {!isDrawingMode ? (
                                             <>
                                                 <button
@@ -3801,7 +3433,7 @@
                                         <button
                                             onClick={() => setShowDescribeModal(true)}
                                             className="btn btn-link flex-1"
-                                            style={{color: 'var(--color-warning)'}}
+                                            className="text-warning"
                                         >
                                             <i className="fas fa-comment-alt mr-2"></i>
                                             Popsat problém
@@ -3826,16 +3458,16 @@
                                         <div className="flex-center mb-4">
                                             <div className="spinner spinner-lg"></div>
                                         </div>
-                                        <h2 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>
+                                        <h2 className="text-xl font-bold mb-2">
                                             {t('analyzingTitle')}
                                         </h2>
-                                        <div className="text-secondary" style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)'}}>
+                                        <div className="text-secondary" className="flex flex-col gap-2">
                                             <div className="flex-center">
-                                                <i className="fas fa-check-circle mr-2" style={{color: 'var(--color-success)'}}></i>
+                                                <i className="fas fa-check-circle mr-2" className="text-success"></i>
                                                 {t('analyzingStep1')}
                                             </div>
                                             <div className="flex-center animate-pulse">
-                                                <i className="fas fa-spinner fa-spin mr-2" style={{color: 'var(--color-primary)'}}></i>
+                                                <i className="fas fa-spinner fa-spin mr-2" className="text-primary"></i>
                                                 {t('analyzingStep2')}
                                             </div>
                                             <div className="flex-center text-muted">
@@ -3850,34 +3482,27 @@
 
                         {/* Results View */}
                         {currentView === 'results' && analysisResult && (
-                            <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
+                            <div className="app-container" className="pt-4">
                                 {/* Desktop: Obrázek vlevo, výsledky vpravo */}
                                 <div className="results-desktop-layout">
                                     {/* Levý sloupec - analyzovaný obrázek (pouze desktop) */}
                                     {selectedImage && (
-                                        <div className="results-image-section" style={{display: 'none'}}>
-                                            <div className="glass-card" style={{padding: 'var(--space-4)', marginBottom: 'var(--space-4)'}}>
-                                                <h3 style={{fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-3)', color: 'var(--color-text-secondary)'}}>
+                                        <div className="results-image-section" className="hidden">
+                                            <div className="glass-card" className="p-4 mb-4">
+                                                <h3 className="text-sm font-semibold mb-3 text-secondary">
                                                     <i className="fas fa-image mr-2"></i>
                                                     Analyzovaný obrázek
                                                 </h3>
                                                 <img
                                                     src={selectedImage}
                                                     alt="Analyzovaný obrázek"
-                                                    style={{
-                                                        width: '100%',
-                                                        height: 'auto',
-                                                        maxHeight: '400px',
-                                                        objectFit: 'contain',
-                                                        borderRadius: 'var(--radius-lg)',
-                                                        background: 'var(--color-bg-secondary)'
-                                                    }}
+                                                    className="w-full rounded-lg bg-secondary"
                                                 />
-                                                <div style={{marginTop: 'var(--space-3)', display: 'flex', gap: 'var(--space-2)', justifyContent: 'center'}}>
+                                                <div className="mt-3 flex gap-2 justify-center">
                                                     <button
                                                         onClick={() => navigateTo('home')}
                                                         className="btn btn-secondary"
-                                                        style={{fontSize: 'var(--text-sm)', padding: 'var(--space-2) var(--space-3)'}}
+                                                        className="text-sm py-2 px-3"
                                                     >
                                                         <i className="fas fa-camera mr-1"></i>
                                                         Nová fotka
@@ -3889,15 +3514,15 @@
 
                                     {/* Pravý sloupec - výsledky analýzy */}
                                     <div>
-                                        <div className="glass-card" style={{padding: 0, overflow: 'hidden'}}>
+                                        <div className="glass-card" className="p-0 overflow-hidden">
                                             {/* Detection Header */}
                                             <div className="result-header">
                                                 <div className="flex-between">
                                                     <div>
-                                                        <h2 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>
+                                                        <h2 className="text-xl font-bold mb-2">
                                                             {analysisResult.object.name}
                                                         </h2>
-                                                        <p style={{opacity: 0.9, fontSize: 'var(--text-sm)'}}>
+                                                        <p className="opacity-90 text-sm">
                                                             {t('detectedWith')} {analysisResult.confidence}% {t('confidence')}
                                                         </p>
                                                 {analysisResult._meta && (
@@ -3934,40 +3559,21 @@
                                                     </span>
                                                 )}
                                             </div>
-                                            <div style={{fontSize: 'var(--text-4xl)'}}>
-                                                <i className={`fas ${getCategoryIcon(analysisResult.issue.category)}`} style={{opacity: 0.9}}></i>
+                                            <div className="text-5xl">
+                                                <i className={`fas ${getCategoryIcon(analysisResult.issue.category)}`} className="opacity-90"></i>
                                             </div>
                                         </div>
                                     </div>
 
                                     {/* Tlačítko pro opravu špatné analýzy */}
-                                    <div style={{
-                                        padding: 'var(--space-3) var(--space-4)',
-                                        background: 'var(--color-bg-secondary)',
-                                        borderBottom: '1px solid var(--color-border)',
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center'
-                                    }}>
-                                        <span style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>
+                                    <div className="bg-secondary">
+                                        <span className="text-sm text-secondary">
                                             <i className="fas fa-question-circle mr-2"></i>
                                             Nesouhlasíte s výsledkem?
                                         </span>
                                         <button
                                             onClick={() => setShowFeedbackModal(true)}
-                                            style={{
-                                                background: 'transparent',
-                                                border: '1px solid var(--color-warning)',
-                                                color: 'var(--color-warning)',
-                                                padding: 'var(--space-1) var(--space-3)',
-                                                borderRadius: 'var(--radius-full)',
-                                                fontSize: 'var(--text-sm)',
-                                                fontWeight: 'var(--font-medium)',
-                                                cursor: 'pointer',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: 'var(--space-1)'
-                                            }}
+                                            className="bg-transparent text-sm cursor-pointer"
                                         >
                                             <i className="fas fa-edit"></i>
                                             Opravit
@@ -3976,12 +3582,12 @@
 
                                     {/* Possible Issues Selection */}
                                     {analysisResult.possibleIssues && analysisResult.possibleIssues.length > 0 && (
-                                        <div style={{padding: 'var(--space-4)', background: 'var(--color-bg-secondary)', borderBottom: '1px solid var(--color-border)'}}>
-                                            <h3 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-3)', fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>
+                                        <div className="p-4 bg-secondary border-b border-border">
+                                            <h3 className="font-semibold mb-3 text-sm text-secondary">
                                                 <i className="fas fa-question-circle mr-2"></i>
                                                 Vyberte váš problém:
                                             </h3>
-                                            <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)'}}>
+                                            <div className="flex flex-col gap-2">
                                                 {analysisResult.possibleIssues.map((issue, idx) => (
                                                     <button
                                                         key={issue.id || idx}
@@ -3995,26 +3601,14 @@
                                                                 }
                                                             }));
                                                         }}
-                                                        style={{
-                                                            padding: 'var(--space-3)',
-                                                            borderRadius: 'var(--radius-lg)',
-                                                            border: analysisResult.issue.name === issue.name
-                                                                ? '2px solid var(--color-primary)'
-                                                                : '1px solid var(--color-border)',
-                                                            background: analysisResult.issue.name === issue.name
-                                                                ? 'var(--color-primary-light)'
-                                                                : 'var(--color-bg-primary)',
-                                                            textAlign: 'left',
-                                                            cursor: 'pointer',
-                                                            transition: 'all var(--transition-fast)'
-                                                        }}
+                                                        className="p-3 rounded-lg cursor-pointer text-left"
                                                     >
-                                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                                        <div className="flex justify-between items-center">
                                                             <div>
-                                                                <p style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>
+                                                                <p className="font-semibold mb-1">
                                                                     {issue.name}
                                                                 </p>
-                                                                <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)'}}>
+                                                                <p className="text-xs text-secondary">
                                                                     {issue.description}
                                                                 </p>
                                                             </div>
@@ -4038,12 +3632,12 @@
                                     {/* Issue Details */}
                                     <div className="card-body">
                                         <div className="mb-6">
-                                            <h3 style={{fontSize: 'var(--text-lg)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>
+                                            <h3 className="text-lg font-semibold mb-2">
                                                 {t('identifiedProblem')}
                                             </h3>
                                             <div className="alert alert-danger">
                                                 <p className="alert-title">{analysisResult.issue.name}</p>
-                                                <p style={{fontSize: 'var(--text-sm)', marginTop: 'var(--space-1)'}}>
+                                                <p className="text-sm mt-1">
                                                     {analysisResult.issue.description}
                                                 </p>
                                             </div>
@@ -4052,99 +3646,68 @@
                                         {/* Quick Info */}
                                         <div className="grid grid-3 gap-4 mb-6">
                                             <div className="info-box">
-                                                <i className="fas fa-clock" style={{color: 'var(--color-primary)', fontSize: 'var(--text-2xl)', marginBottom: 'var(--space-2)', display: 'block'}}></i>
-                                                <div style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>{t('repairTime')}</div>
+                                                <i className="fas fa-clock" className="text-primary text-2xl mb-2 block"></i>
+                                                <div className="text-sm text-secondary">{t('repairTime')}</div>
                                                 <div className="font-semibold">{analysisResult.issue.timeEstimate}</div>
                                             </div>
                                             <div className="info-box">
-                                                <i className="fas fa-signal" style={{color: 'var(--color-warning)', fontSize: 'var(--text-2xl)', marginBottom: 'var(--space-2)', display: 'block'}}></i>
-                                                <div style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>{t('difficulty')}</div>
+                                                <i className="fas fa-signal" className="text-warning text-2xl mb-2 block"></i>
+                                                <div className="text-sm text-secondary">{t('difficulty')}</div>
                                                 <div className="font-semibold">{analysisResult.issue.difficulty}</div>
                                             </div>
                                             <div className="info-box">
-                                                <i className="fas fa-exclamation-triangle" style={{color: 'var(--color-danger)', fontSize: 'var(--text-2xl)', marginBottom: 'var(--space-2)', display: 'block'}}></i>
-                                                <div style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>{t('risk')}</div>
+                                                <i className="fas fa-exclamation-triangle" className="text-danger text-2xl mb-2 block"></i>
+                                                <div className="text-sm text-secondary">{t('risk')}</div>
                                                 <div className="font-semibold">{analysisResult.issue.riskScore}/10</div>
                                             </div>
                                         </div>
 
                                         {/* 💰 Savings Calculator - DIY vs Professional */}
                                         {analysisResult.issue.materialCost && analysisResult.issue.professionalCost && (
-                                            <div style={{
-                                                background: 'var(--color-success-light)',
-                                                border: '2px solid var(--color-success)',
-                                                borderRadius: 'var(--radius-xl)',
-                                                padding: 'var(--space-6)',
-                                                marginBottom: 'var(--space-6)'
-                                            }}>
-                                                <h3 style={{
-                                                    fontWeight: 'var(--font-bold)',
-                                                    color: 'var(--color-success-text)',
-                                                    marginBottom: 'var(--space-4)',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: 'var(--space-2)'
-                                                }}>
-                                                    <i className="fas fa-piggy-bank" style={{fontSize: 'var(--text-xl)'}}></i>
+                                            <div className="p-6">
+                                                <h3 className="mb-4">
+                                                    <i className="fas fa-piggy-bank" className="text-xl"></i>
                                                     Kolik ušetříš?
                                                 </h3>
 
-                                                <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)', marginBottom: 'var(--space-4)'}}>
+                                                <div className="grid grid-cols-2 gap-4 mb-4">
                                                     {/* DIY Cost */}
-                                                    <div style={{
-                                                        background: 'white',
-                                                        padding: 'var(--space-4)',
-                                                        borderRadius: 'var(--radius-lg)',
-                                                        textAlign: 'center',
-                                                        border: '2px solid var(--color-success)'
-                                                    }}>
-                                                        <div style={{fontSize: 'var(--text-xs)', textTransform: 'uppercase', color: 'var(--color-success)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>
+                                                    <div className="p-4 rounded-lg text-center">
+                                                        <div className="text-xs uppercase text-success font-semibold mb-1">
                                                             <i className="fas fa-hand-paper mr-1"></i> DIY oprava
                                                         </div>
-                                                        <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-success-text)'}}>
+                                                        <div className="text-2xl font-bold text-success-text">
                                                             {analysisResult.issue.materialCost.min}-{analysisResult.issue.materialCost.max} Kč
                                                         </div>
-                                                        <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                        <div className="text-xs text-muted">
                                                             pouze materiál
                                                         </div>
                                                     </div>
 
                                                     {/* Professional Cost */}
-                                                    <div style={{
-                                                        background: 'white',
-                                                        padding: 'var(--space-4)',
-                                                        borderRadius: 'var(--radius-lg)',
-                                                        textAlign: 'center',
-                                                        border: '1px solid var(--color-border)'
-                                                    }}>
-                                                        <div style={{fontSize: 'var(--text-xs)', textTransform: 'uppercase', color: 'var(--color-text-secondary)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>
+                                                    <div className="p-4 rounded-lg border border-border text-center">
+                                                        <div className="text-xs uppercase text-secondary font-semibold mb-1">
                                                             <i className="fas fa-user-tie mr-1"></i> Profesionál
                                                         </div>
-                                                        <div style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-text-secondary)'}}>
+                                                        <div className="text-2xl font-bold text-secondary">
                                                             {analysisResult.issue.professionalCost.min}-{analysisResult.issue.professionalCost.max} Kč
                                                         </div>
-                                                        <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                        <div className="text-xs text-muted">
                                                             materiál + práce
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 {/* Savings highlight */}
-                                                <div style={{
-                                                    background: 'var(--color-success)',
-                                                    color: 'white',
-                                                    padding: 'var(--space-4)',
-                                                    borderRadius: 'var(--radius-lg)',
-                                                    textAlign: 'center'
-                                                }}>
-                                                    <div style={{fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)'}}>
+                                                <div className="p-4 rounded-lg text-center">
+                                                    <div className="text-sm mb-1">
                                                         <i className="fas fa-star mr-1"></i> Tvoje úspora s FIXO
                                                     </div>
-                                                    <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)'}}>
+                                                    <div className="text-3xl font-bold">
                                                         {analysisResult.issue.professionalCost.min - analysisResult.issue.materialCost.max}-{analysisResult.issue.professionalCost.max - analysisResult.issue.materialCost.min} Kč
                                                     </div>
-                                                    <div style={{fontSize: 'var(--text-xs)', opacity: 0.9}}>
-                                                        To je {Math.round((analysisResult.issue.professionalCost.min + analysisResult.issue.professionalCost.max) / 2 / 79)} měsíců FIXO Premium zdarma! 💪
+                                                    <div className="text-xs opacity-90">
+                                                        To je {Math.round((analysisResult.issue.professionalCost.min + analysisResult.issue.professionalCost.max) / 2 / 79)} měsíců FIXO Premium zdarma! <i className="fas fa-dumbbell"></i>
                                                     </div>
                                                 </div>
                                             </div>
@@ -4157,7 +3720,7 @@
                                                     <i className="fas fa-exclamation-triangle mr-2"></i>
                                                     {t('safetyWarning')}
                                                 </p>
-                                                <ul style={{fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)'}}>
+                                                <ul className="text-sm mt-2">
                                                     {analysisResult.issue.safetyWarnings.map((warning, idx) => (
                                                         <li key={idx}>• {warning}</li>
                                                     ))}
@@ -4166,12 +3729,12 @@
                                         )}
 
                                         {/* Action Buttons - Nový obchodní model */}
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
+                                        <div className="flex flex-col gap-3">
                                             {/* Základní návod - ZDARMA */}
                                             <button
                                                 onClick={() => startRepair(analysisResult.issue)}
                                                 className="btn btn-success"
-                                                style={{width: '100%', padding: 'var(--space-4)'}}
+                                                className="w-full p-4"
                                             >
                                                 <i className="fas fa-play-circle mr-2"></i>
                                                 Základní návod (3-6 kroků)
@@ -4194,31 +3757,11 @@
                                                         setShowDetailedGuidePayment(true);
                                                     }
                                                 }}
-                                                style={{
-                                                    width: '100%',
-                                                    padding: 'var(--space-4)',
-                                                    background: isGuidePurchased(analysisResult.issue.id || analysisResult.issue.name)
-                                                        ? 'var(--color-success)'
-                                                        : 'linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%)',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: 'var(--radius-lg)',
-                                                    cursor: 'pointer',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    gap: 'var(--space-2)',
-                                                    fontWeight: 'var(--font-semibold)'
-                                                }}
+                                                className="w-full p-4 rounded-lg border-none cursor-pointer"
                                             >
                                                 <i className={`fas ${isGuidePurchased(analysisResult.issue.id || analysisResult.issue.name) ? 'fa-check-circle' : 'fa-crown'}`}></i>
                                                 Detailní návod + schémata
-                                                <span style={{
-                                                    background: 'rgba(255,255,255,0.2)',
-                                                    padding: '2px 10px',
-                                                    borderRadius: 'var(--radius-full)',
-                                                    fontSize: 'var(--text-sm)'
-                                                }}>
+                                                <span className="text-sm">
                                                     {isGuidePurchased(analysisResult.issue.id || analysisResult.issue.name) ? 'ODEMČENO' : `${PRICING.detailedGuide} ${PRICING.currency}`}
                                                 </span>
                                             </button>
@@ -4229,7 +3772,7 @@
                                                     setShowNearbySuppliers(true);
                                                 }}
                                                 className="btn btn-secondary"
-                                                style={{width: '100%', padding: 'var(--space-4)'}}
+                                                className="w-full p-4"
                                             >
                                                 <i className="fas fa-user-tie mr-2"></i>
                                                 {t('callExpert')} v okolí
@@ -4245,30 +3788,19 @@
                                         </div>
 
                                         {/* Affiliate odkazy na e-shopy */}
-                                        <div style={{marginTop: 'var(--space-4)', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
-                                            <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-2)', textAlign: 'center'}}>
+                                        <div className="mt-4 p-3 bg-secondary rounded-lg">
+                                            <p className="text-xs text-secondary mb-2 text-center">
                                                 <i className="fas fa-shopping-cart mr-1"></i>
                                                 Nakupte potřebný materiál:
                                             </p>
-                                            <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', justifyContent: 'center'}}>
+                                            <div className="flex flex-wrap gap-2 justify-center">
                                                 {Object.entries(affiliateLinks).filter(([_, shop]) => shop.hasAffiliate).map(([key, shop]) => (
                                                     <a
                                                         key={key}
                                                         href={shop.baseUrl + encodeURIComponent(analysisResult.issue.name)}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        style={{
-                                                            display: 'inline-flex',
-                                                            alignItems: 'center',
-                                                            gap: '4px',
-                                                            padding: '4px 10px',
-                                                            background: shop.color,
-                                                            color: 'white',
-                                                            borderRadius: 'var(--radius-md)',
-                                                            textDecoration: 'none',
-                                                            fontSize: 'var(--text-xs)',
-                                                            fontWeight: 'var(--font-semibold)'
-                                                        }}
+                                                        className="rounded-md"
                                                     >
                                                         <i className={`fas ${shop.icon}`}></i>
                                                         {shop.name}
@@ -4285,10 +3817,10 @@
 
                         {/* Repair Steps View */}
                         {currentView === 'repair' && selectedIssue && (
-                            <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
-                                <div className="glass-card" style={{padding: 0, overflow: 'hidden'}}>
+                            <div className="app-container" className="pt-4">
+                                <div className="glass-card" className="p-0 overflow-hidden">
                                     {/* Progress Bar */}
-                                    <div className="progress" style={{borderRadius: 0}}>
+                                    <div className="progress" className="rounded-none">
                                         <div
                                             className="progress-bar"
                                             style={{ width: `${((currentStep + 1) / selectedIssue.steps.length) * 100}%` }}
@@ -4296,51 +3828,19 @@
                                     </div>
 
                                     {/* Save for Offline & Stopwatch */}
-                                    <div style={{
-                                        background: 'var(--color-bg-secondary)',
-                                        padding: 'var(--space-2) var(--space-4)',
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center',
-                                        borderBottom: '1px solid var(--color-border)',
-                                        flexWrap: 'wrap',
-                                        gap: 'var(--space-2)'
-                                    }}>
-                                        <span style={{fontSize: 'var(--text-sm)', fontWeight: 'var(--font-semibold)'}}>
+                                    <div className="bg-secondary">
+                                        <span className="text-sm font-semibold">
                                             {selectedIssue.name}
                                         </span>
-                                        <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                                        <div className="flex items-center gap-2">
                                             {/* Stopwatch */}
-                                            <div style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: 'var(--space-1)',
-                                                background: timerRunning ? 'var(--color-success)' : 'var(--color-bg-tertiary)',
-                                                color: timerRunning ? 'white' : 'var(--color-text-primary)',
-                                                padding: 'var(--space-1) var(--space-2)',
-                                                borderRadius: 'var(--radius-md)',
-                                                fontFamily: 'var(--font-mono)',
-                                                fontSize: 'var(--text-sm)',
-                                                fontWeight: 'var(--font-bold)'
-                                            }}>
+                                            <div className="rounded-md text-sm">
                                                 <i className="fas fa-stopwatch"></i>
                                                 <span>{formatTime(elapsedTime)}</span>
                                             </div>
                                             <button
                                                 onClick={timerRunning ? pauseTimer : startTimer}
-                                                style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    width: '28px',
-                                                    height: '28px',
-                                                    background: timerRunning ? 'var(--color-warning)' : 'var(--color-success)',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: 'var(--radius-md)',
-                                                    cursor: 'pointer',
-                                                    fontSize: 'var(--text-xs)'
-                                                }}
+                                                className="rounded-md border-none cursor-pointer"
                                                 title={timerRunning ? 'Pozastavit' : 'Spustit'}
                                             >
                                                 <i className={`fas ${timerRunning ? 'fa-pause' : 'fa-play'}`}></i>
@@ -4348,19 +3848,7 @@
                                             {elapsedTime > 0 && (
                                                 <button
                                                     onClick={resetTimer}
-                                                    style={{
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        justifyContent: 'center',
-                                                        width: '28px',
-                                                        height: '28px',
-                                                        background: 'var(--color-bg-tertiary)',
-                                                        color: 'var(--color-text-secondary)',
-                                                        border: 'none',
-                                                        borderRadius: 'var(--radius-md)',
-                                                        cursor: 'pointer',
-                                                        fontSize: 'var(--text-xs)'
-                                                    }}
+                                                    className="rounded-md border-none text-secondary cursor-pointer"
                                                     title="Reset"
                                                 >
                                                     <i className="fas fa-undo"></i>
@@ -4369,19 +3857,7 @@
                                             {/* Save offline button */}
                                             <button
                                                 onClick={() => saveGuideOffline(selectedIssue)}
-                                                style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: 'var(--space-1)',
-                                                    padding: 'var(--space-1) var(--space-2)',
-                                                    background: isGuideSaved(selectedIssue.name) ? 'var(--color-success)' : 'var(--color-primary)',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: 'var(--radius-md)',
-                                                    fontSize: 'var(--text-xs)',
-                                                    fontWeight: 'var(--font-semibold)',
-                                                    cursor: 'pointer'
-                                                }}
+                                                className="rounded-md border-none cursor-pointer"
                                             >
                                                 <i className={`fas ${isGuideSaved(selectedIssue.name) ? 'fa-check' : 'fa-download'}`}></i>
                                             </button>
@@ -4389,50 +3865,30 @@
                                     </div>
 
                                     {/* Tools Needed with Affiliate Links */}
-                                    <div style={{background: 'var(--color-info-light)', padding: 'var(--space-6)', borderBottom: '1px solid var(--color-border)'}}>
-                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-3)'}}>
-                                            <h3 style={{fontWeight: 'var(--font-semibold)', color: 'var(--color-info)'}}>
+                                    <div className="bg-info-light p-6 border-b border-border">
+                                        <div className="flex justify-between items-center mb-3">
+                                            <h3 className="font-semibold text-info">
                                                 <i className="fas fa-toolbox mr-2"></i>
                                                 {t('toolsNeeded')}
                                             </h3>
                                             <button
                                                 onClick={() => exportShoppingList(selectedIssue)}
-                                                style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: 'var(--space-1)',
-                                                    padding: 'var(--space-1) var(--space-2)',
-                                                    background: 'var(--color-success)',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: 'var(--radius-md)',
-                                                    fontSize: 'var(--text-xs)',
-                                                    fontWeight: 'var(--font-semibold)',
-                                                    cursor: 'pointer'
-                                                }}
+                                                className="rounded-md border-none cursor-pointer"
                                                 title="Exportovat nákupní seznam"
                                             >
                                                 <i className="fas fa-share-alt"></i>
                                                 Export
                                             </button>
                                         </div>
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)'}}>
+                                        <div className="flex flex-col gap-2">
                                             {selectedIssue.tools.map((tool, idx) => (
-                                                <div key={idx} style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'space-between',
-                                                    background: 'var(--color-bg-primary)',
-                                                    padding: 'var(--space-2) var(--space-3)',
-                                                    borderRadius: 'var(--radius-lg)',
-                                                    border: '1px solid var(--color-border)'
-                                                }}>
-                                                    <span style={{fontWeight: 'var(--font-medium)', fontSize: 'var(--text-sm)'}}>
-                                                        <i className="fas fa-wrench mr-2" style={{color: 'var(--color-primary)', opacity: 0.7}}></i>
+                                                <div key={idx} className="rounded-lg border border-border">
+                                                    <span className="font-medium text-sm">
+                                                        <i className="fas fa-wrench mr-2" className="text-primary opacity-70"></i>
                                                         {tool}
                                                     </span>
                                                     {/* Affiliate odkazy - pouze e-shopy s affiliate programem */}
-                                                    <div style={{display: 'flex', gap: 'var(--space-1)', flexWrap: 'wrap'}}>
+                                                    <div className="flex gap-1 flex-wrap">
                                                         {Object.entries(affiliateLinks)
                                                             .filter(([_, shop]) => shop.hasAffiliate)
                                                             .slice(0, 3) // Zobrazit max 3 e-shopy
@@ -4442,21 +3898,10 @@
                                                                 href={getAffiliateUrl(key, tool, selectedIssue)}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
-                                                                style={{
-                                                                    padding: 'var(--space-1) var(--space-2)',
-                                                                    background: shop.color,
-                                                                    color: 'white',
-                                                                    borderRadius: 'var(--radius-md)',
-                                                                    fontSize: 'var(--text-xs)',
-                                                                    textDecoration: 'none',
-                                                                    fontWeight: 'var(--font-semibold)',
-                                                                    display: 'inline-flex',
-                                                                    alignItems: 'center',
-                                                                    gap: '3px'
-                                                                }}
+                                                                className="rounded-md"
                                                                 title={`Koupit na ${shop.name}`}
                                                             >
-                                                                <i className={`fas ${shop.icon}`} style={{fontSize: '10px'}}></i>
+                                                                <i className={`fas ${shop.icon}`} className="text-[10px]"></i>
                                                                 {shop.name.length > 5 ? shop.name.slice(0, 4) : shop.name}
                                                             </a>
                                                         ))}
@@ -4469,52 +3914,52 @@
                                     {/* Current Step */}
                                     <div className="card-body">
                                         <div className="mb-6">
-                                            <h2 style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)'}}>
+                                            <h2 className="text-2xl font-bold mb-4">
                                                 {t('step')} {currentStep + 1} {t('of')} {selectedIssue.steps.length}
                                             </h2>
 
                                             <div className="step-box">
-                                                <div style={{fontSize: 'var(--text-6xl)', marginBottom: 'var(--space-4)'}}>
+                                                <div className="text-7xl mb-4">
                                                     {selectedIssue.steps[currentStep].icon}
                                                 </div>
-                                                <p style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>
+                                                <p className="text-xl font-semibold mb-2">
                                                     {selectedIssue.steps[currentStep].action}
                                                 </p>
 
                                                 {/* Detailed description */}
                                                 {selectedIssue.steps[currentStep].description && (
-                                                    <p style={{fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)', lineHeight: 1.6}}>
+                                                    <p className="text-base text-secondary mb-3 leading-relaxed">
                                                         {selectedIssue.steps[currentStep].description}
                                                     </p>
                                                 )}
 
                                                 {/* Tools for this step */}
                                                 {selectedIssue.steps[currentStep].tools_for_step && selectedIssue.steps[currentStep].tools_for_step.length > 0 && (
-                                                    <div style={{background: 'var(--color-info-light)', padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)', marginBottom: 'var(--space-3)', textAlign: 'left'}}>
-                                                        <p style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)'}}>
-                                                            <i className="fas fa-wrench mr-2" style={{color: 'var(--color-info)'}}></i>Nástroje:
+                                                    <div className="bg-info-light p-3 rounded-lg mb-3 text-left">
+                                                        <p className="font-semibold text-sm mb-1">
+                                                            <i className="fas fa-wrench mr-2" className="text-info"></i>Nástroje:
                                                         </p>
-                                                        <p style={{fontSize: 'var(--text-sm)'}}>{selectedIssue.steps[currentStep].tools_for_step.join(', ')}</p>
+                                                        <p className="text-sm">{selectedIssue.steps[currentStep].tools_for_step.join(', ')}</p>
                                                     </div>
                                                 )}
 
                                                 {/* Parts for this step */}
                                                 {selectedIssue.steps[currentStep].parts_for_step && selectedIssue.steps[currentStep].parts_for_step.length > 0 && (
-                                                    <div style={{background: 'var(--color-warning-light)', padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)', marginBottom: 'var(--space-3)', textAlign: 'left'}}>
-                                                        <p style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)'}}>
-                                                            <i className="fas fa-box mr-2" style={{color: 'var(--color-warning)'}}></i>Potřebné díly:
+                                                    <div className="bg-warning-light p-3 rounded-lg mb-3 text-left">
+                                                        <p className="font-semibold text-sm mb-1">
+                                                            <i className="fas fa-box mr-2" className="text-warning"></i>Potřebné díly:
                                                         </p>
-                                                        <p style={{fontSize: 'var(--text-sm)'}}>{selectedIssue.steps[currentStep].parts_for_step.join(', ')}</p>
+                                                        <p className="text-sm">{selectedIssue.steps[currentStep].parts_for_step.join(', ')}</p>
                                                     </div>
                                                 )}
 
                                                 {/* Tip for this step */}
                                                 {selectedIssue.steps[currentStep].tip && (
-                                                    <div style={{background: 'var(--color-success-light)', padding: 'var(--space-3)', borderRadius: 'var(--radius-lg)', marginBottom: 'var(--space-3)', textAlign: 'left'}}>
-                                                        <p style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)'}}>
-                                                            <i className="fas fa-lightbulb mr-2" style={{color: 'var(--color-success)'}}></i>Tip:
+                                                    <div className="bg-success-light p-3 rounded-lg mb-3 text-left">
+                                                        <p className="font-semibold text-sm mb-1">
+                                                            <i className="fas fa-lightbulb mr-2" className="text-success"></i>Tip:
                                                         </p>
-                                                        <p style={{fontSize: 'var(--text-sm)'}}>{selectedIssue.steps[currentStep].tip}</p>
+                                                        <p className="text-sm">{selectedIssue.steps[currentStep].tip}</p>
                                                     </div>
                                                 )}
 
@@ -4527,7 +3972,7 @@
 
                                         {/* All Steps Overview */}
                                         <div className="mb-6">
-                                            <h3 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-3)'}}>{t('allStepsOverview')}</h3>
+                                            <h3 className="font-semibold mb-3">{t('allStepsOverview')}</h3>
                                             <div className="steps-timeline">
                                                 {selectedIssue.steps.map((step, idx) => (
                                                     <div
@@ -4540,12 +3985,12 @@
                                                                     : 'step-item-pending'
                                                         }`}
                                                     >
-                                                        <span style={{marginRight: 'var(--space-3)', fontSize: 'var(--text-2xl)'}}>{step.icon}</span>
-                                                        <span className="flex-1" style={{fontWeight: idx === currentStep ? 'var(--font-semibold)' : 'normal'}}>
+                                                        <span className="mr-3 text-2xl">{step.icon}</span>
+                                                        <span className="flex-1" className={idx === currentStep ? "font-semibold" : "font-normal"}>
                                                             {step.step}. {step.action}
                                                         </span>
                                                         {idx < currentStep && (
-                                                            <i className="fas fa-check-circle" style={{color: 'var(--color-success)'}}></i>
+                                                            <i className="fas fa-check-circle" className="text-success"></i>
                                                         )}
                                                     </div>
                                                 ))}
@@ -4583,8 +4028,8 @@
                                         </div>
 
                                         {/* Option to find local repair service */}
-                                        <div style={{marginTop: 'var(--space-6)', padding: 'var(--space-4)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)', textAlign: 'center'}}>
-                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                        <div className="mt-6 p-4 bg-secondary rounded-lg text-center">
+                                            <p className="text-sm text-secondary mb-3">
                                                 <i className="fas fa-question-circle mr-2"></i>
                                                 Nevyřešili jste problém? Potřebujete odbornou pomoc?
                                             </p>
@@ -4594,7 +4039,7 @@
                                                     window.open(`https://www.google.com/search?q=${query}`, '_blank');
                                                 }}
                                                 className="btn btn-secondary"
-                                                style={{marginRight: 'var(--space-2)'}}
+                                                className="mr-2"
                                             >
                                                 <i className="fas fa-search mr-2"></i>
                                                 Najít opraváře
@@ -4614,57 +4059,29 @@
 
                         {/* Knowledge Base View */}
                         {currentView === 'knowledge' && (
-                            <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
-                                <h2 className="section-title" style={{marginBottom: 'var(--space-4)'}}>
+                            <div className="app-container" className="pt-4">
+                                <h2 className="section-title" className="mb-4">
                                     <i className="fas fa-book section-title-icon"></i>
                                     {t('databaseTitle')}
                                 </h2>
 
                                 {/* Search Input */}
-                                <div style={{marginBottom: 'var(--space-6)'}}>
-                                    <div style={{
-                                        position: 'relative',
-                                        maxWidth: '500px',
-                                        margin: '0 auto'
-                                    }}>
-                                        <i className="fas fa-search" style={{
-                                            position: 'absolute',
-                                            left: 'var(--space-4)',
-                                            top: '50%',
-                                            transform: 'translateY(-50%)',
-                                            color: 'var(--color-text-muted)'
-                                        }}></i>
+                                <div className="mb-6">
+                                    <div className="max-w-lg">
+                                        <i className="fas fa-search" className="text-muted"></i>
                                         <input
                                             type="text"
                                             placeholder="Hledat opravy, nástroje, problémy..."
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
-                                            style={{
-                                                width: '100%',
-                                                padding: 'var(--space-3) var(--space-4) var(--space-3) var(--space-10)',
-                                                borderRadius: 'var(--radius-full)',
-                                                border: '2px solid var(--color-border)',
-                                                fontSize: 'var(--text-base)',
-                                                transition: 'all var(--transition-fast)',
-                                                outline: 'none'
-                                            }}
+                                            className="w-full text-base"
                                             onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
                                             onBlur={(e) => e.target.style.borderColor = 'var(--color-border)'}
                                         />
                                         {searchTerm && (
                                             <button
                                                 onClick={() => setSearchTerm('')}
-                                                style={{
-                                                    position: 'absolute',
-                                                    right: 'var(--space-4)',
-                                                    top: '50%',
-                                                    transform: 'translateY(-50%)',
-                                                    background: 'none',
-                                                    border: 'none',
-                                                    color: 'var(--color-text-muted)',
-                                                    cursor: 'pointer',
-                                                    padding: 'var(--space-1)'
-                                                }}
+                                                className="p-1 border-none text-muted cursor-pointer"
                                             >
                                                 <i className="fas fa-times"></i>
                                             </button>
@@ -4680,14 +4097,14 @@
                                             onClick={() => setSelectedCategory(cat.id)}
                                             className={`category-btn ${selectedCategory === cat.id ? 'active' : ''}`}
                                         >
-                                            <i className={`fas ${cat.icon}`} style={{marginRight: 'var(--space-1)'}}></i>
+                                            <i className={`fas ${cat.icon}`} className="mr-1"></i>
                                             {cat.name}
                                         </button>
                                     ))}
                                 </div>
 
                                 {/* Results count */}
-                                <p className="text-center text-secondary mb-4" style={{fontSize: 'var(--text-sm)'}}>
+                                <p className="text-center text-secondary mb-4" className="text-sm">
                                     {t('showing')} {getFilteredDatabase().length} {t('outOf')} {Object.keys(repairDatabase).length} {t('items')}
                                 </p>
 
@@ -4697,18 +4114,18 @@
                                         <div key={key} className="knowledge-card knowledge-card-compact">
                                             <div className="knowledge-card-header">
                                                 <div className="flex-between items-center">
-                                                    <h3 style={{fontWeight: 'var(--font-bold)', fontSize: 'var(--text-base)'}}>{item.name}</h3>
-                                                    <i className={`fas ${getCategoryIcon(item.category)}`} style={{fontSize: 'var(--text-xl)', opacity: 0.9}}></i>
+                                                    <h3 className="font-bold text-base">{item.name}</h3>
+                                                    <i className={`fas ${getCategoryIcon(item.category)}`} className="text-xl opacity-90"></i>
                                                 </div>
                                             </div>
-                                            <div className="p-3 scrollable-content" style={{maxHeight: '180px'}}>
-                                                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)'}}>
+                                            <div className="p-3 scrollable-content" className="max-h-[180px]">
+                                                <div className="flex flex-col gap-2">
                                                     {item.issues.map(issue => (
-                                                        <div key={issue.id} className="issue-item" style={{padding: 'var(--space-2)', paddingLeft: 'var(--space-3)'}}>
-                                                            <p style={{fontWeight: 'var(--font-semibold)', fontSize: 'var(--text-sm)'}}>{issue.name}</p>
-                                                            <div style={{marginTop: 'var(--space-1)', display: 'flex', gap: 'var(--space-3)', fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', flexWrap: 'wrap'}}>
+                                                        <div key={issue.id} className="issue-item" className="p-2 pl-3">
+                                                            <p className="font-semibold text-sm">{issue.name}</p>
+                                                            <div className="mt-1 flex gap-3 text-xs text-muted flex-wrap">
                                                                 <span><i className="fas fa-clock mr-1"></i>{issue.timeEstimate}</span>
-                                                                <span className={`badge badge-${issue.riskScore > 5 ? 'danger' : issue.riskScore > 2 ? 'warning' : 'success'}`} style={{fontSize: '10px', padding: '1px 6px'}}>
+                                                                <span className={`badge badge-${issue.riskScore > 5 ? 'danger' : issue.riskScore > 2 ? 'warning' : 'success'}`} className="text-[10px] px-1.5 py-[1px]">
                                                                     {issue.riskScore}/10
                                                                 </span>
                                                             </div>
@@ -4742,17 +4159,17 @@
 
                         {/* About Page View */}
                         {currentView === 'about' && (
-                            <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
-                                <h2 className="section-title" style={{marginBottom: 'var(--space-4)'}}>
+                            <div className="app-container" className="pt-4">
+                                <h2 className="section-title" className="mb-4">
                                     <i className="fas fa-info-circle section-title-icon"></i>
                                     O nás
                                 </h2>
 
                                 <div className="card mb-6">
-                                    <div className="card-body text-center" style={{padding: 'var(--space-8)'}}>
-                                        <div style={{fontSize: '4rem', marginBottom: 'var(--space-4)'}}>🔧</div>
-                                        <h3 style={{fontSize: 'var(--text-2xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-4)'}}>FIXO</h3>
-                                        <p style={{fontSize: 'var(--text-lg)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-6)'}}>
+                                    <div className="card-body text-center" className="p-8">
+                                        <div className="text-6xl mb-4"><i className="fas fa-wrench"></i></div>
+                                        <h3 className="text-2xl font-bold mb-4">FIXO</h3>
+                                        <p className="text-lg text-secondary mb-6">
                                             Váš chytrý pomocník pro domácí opravy
                                         </p>
                                     </div>
@@ -4760,16 +4177,16 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-lightbulb mr-2" style={{color: 'var(--color-warning)'}}></i>Náš příběh</h3>
+                                        <h3 className="card-title"><i className="fas fa-lightbulb mr-2" className="text-warning"></i>Náš příběh</h3>
                                     </div>
                                     <div className="card-body">
-                                        <p style={{lineHeight: 1.7, marginBottom: 'var(--space-4)'}}>
+                                        <p className="leading-relaxed mb-4">
                                             FIXO vzniklo z jednoduché myšlenky - co kdyby každý mohl snadno opravit běžné domácí závady bez nutnosti volat drahého opraváře?
                                         </p>
-                                        <p style={{lineHeight: 1.7, marginBottom: 'var(--space-4)'}}>
+                                        <p className="leading-relaxed mb-4">
                                             Díky umělé inteligenci dokážeme z fotografie rozpoznat problém a poskytnout přesný návod krok za krokem. Ušetříte čas, peníze a získáte nové dovednosti.
                                         </p>
-                                        <p style={{lineHeight: 1.7}}>
+                                        <p className="leading-relaxed">
                                             Naše databáze obsahuje stovky návodů pokrývajících vodoinstalaci, elektroinstalaci, topení, bytové opravy a další oblasti.
                                         </p>
                                     </div>
@@ -4777,19 +4194,19 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-users mr-2" style={{color: 'var(--color-primary)'}}></i>Náš tým</h3>
+                                        <h3 className="card-title"><i className="fas fa-users mr-2" className="text-primary"></i>Náš tým</h3>
                                     </div>
                                     <div className="card-body">
                                         <div className="grid grid-2 gap-4">
-                                            <div className="text-center" style={{padding: 'var(--space-4)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
-                                                <div style={{fontSize: '2.5rem', marginBottom: 'var(--space-2)'}}>👨‍💻</div>
-                                                <p style={{fontWeight: 'var(--font-semibold)'}}>Vývojáři</p>
-                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>AI & technologie</p>
+                                            <div className="text-center" className="p-4 bg-secondary rounded-lg">
+                                                <div className="text-5xl mb-2">👨‍<i className="fas fa-laptop"></i></div>
+                                                <p className="font-semibold">Vývojáři</p>
+                                                <p className="text-sm text-secondary">AI & technologie</p>
                                             </div>
-                                            <div className="text-center" style={{padding: 'var(--space-4)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
-                                                <div style={{fontSize: '2.5rem', marginBottom: 'var(--space-2)'}}>🔧</div>
-                                                <p style={{fontWeight: 'var(--font-semibold)'}}>Odborníci</p>
-                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Řemeslníci & technici</p>
+                                            <div className="text-center" className="p-4 bg-secondary rounded-lg">
+                                                <div className="text-5xl mb-2"><i className="fas fa-wrench"></i></div>
+                                                <p className="font-semibold">Odborníci</p>
+                                                <p className="text-sm text-secondary">Řemeslníci & technici</p>
                                             </div>
                                         </div>
                                     </div>
@@ -4797,16 +4214,16 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-envelope mr-2" style={{color: 'var(--color-success)'}}></i>Kontakt</h3>
+                                        <h3 className="card-title"><i className="fas fa-envelope mr-2" className="text-success"></i>Kontakt</h3>
                                     </div>
                                     <div className="card-body">
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
-                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-3)'}}>
-                                                <i className="fas fa-envelope" style={{color: 'var(--color-primary)', width: '20px'}}></i>
+                                        <div className="flex flex-col gap-3">
+                                            <div className="flex items-center gap-3">
+                                                <i className="fas fa-envelope" className="text-primary w-5"></i>
                                                 <span>support@fixo.app</span>
                                             </div>
-                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-3)'}}>
-                                                <i className="fas fa-globe" style={{color: 'var(--color-primary)', width: '20px'}}></i>
+                                            <div className="flex items-center gap-3">
+                                                <i className="fas fa-globe" className="text-primary w-5"></i>
                                                 <span>www.fixo.app</span>
                                             </div>
                                         </div>
@@ -4814,60 +4231,60 @@
                                 </div>
 
                                 <div className="alert alert-info">
-                                    <p><i className="fas fa-heart mr-2" style={{color: 'var(--color-danger)'}}></i>Děkujeme, že používáte FIXO!</p>
+                                    <p><i className="fas fa-heart mr-2" className="text-danger"></i>Děkujeme, že používáte FIXO!</p>
                                 </div>
                             </div>
                         )}
 
                         {/* Premium Page View - Freemium Tiers */}
                         {currentView === 'premium' && (
-                            <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
-                                <h2 className="section-title" style={{marginBottom: 'var(--space-4)'}}>
-                                    <i className="fas fa-crown section-title-icon" style={{color: 'var(--color-warning)'}}></i>
+                            <div className="app-container" className="pt-4">
+                                <h2 className="section-title" className="mb-4">
+                                    <i className="fas fa-crown section-title-icon" className="text-warning"></i>
                                     Vyberte si plán
                                 </h2>
 
-                                <p style={{textAlign: 'center', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-6)'}}>
+                                <p className="text-center text-secondary mb-6">
                                     Začněte zdarma, upgradujte kdykoliv
                                 </p>
 
                                 {/* Pricing Cards */}
-                                <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-6)'}}>
+                                <div className="grid grid-cols-auto-fit gap-4 mb-6">
                                     {/* FREE Tier */}
-                                    <div className="card" style={{border: '2px solid var(--color-border)'}}>
-                                        <div className="card-body" style={{padding: 'var(--space-6)'}}>
-                                            <div style={{textAlign: 'center', marginBottom: 'var(--space-4)'}}>
-                                                <span style={{fontSize: '2rem'}}>🆓</span>
-                                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginTop: 'var(--space-2)'}}>FREE</h3>
-                                                <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-success)', margin: 'var(--space-2) 0'}}>0 Kč</div>
-                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Navždy zdarma</p>
+                                    <div className="card" className="border-2 border-border">
+                                        <div className="card-body" className="p-6">
+                                            <div className="text-center mb-4">
+                                                <span className="text-4xl">🆓</span>
+                                                <h3 className="text-xl font-bold mt-2">FREE</h3>
+                                                <div className="text-3xl font-bold text-success my-2">0 Kč</div>
+                                                <p className="text-sm text-secondary">Navždy zdarma</p>
                                             </div>
-                                            <ul style={{listStyle: 'none', padding: 0, marginBottom: 'var(--space-4)'}}>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                            <ul className="list-none p-0 mb-4">
+                                                <li className="py-2 flex items-center gap-2">
+                                                    <i className="fas fa-check" className="text-success"></i>
                                                     <span>3 AI analýzy denně</span>
                                                 </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                <li className="py-2 flex items-center gap-2">
+                                                    <i className="fas fa-check" className="text-success"></i>
                                                     <span>Základní návody</span>
                                                 </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                <li className="py-2 flex items-center gap-2">
+                                                    <i className="fas fa-check" className="text-success"></i>
                                                     <span>Databáze 67 oprav</span>
                                                 </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', opacity: 0.5}}>
-                                                    <i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i>
+                                                <li className="py-2 flex items-center gap-2 opacity-50">
+                                                    <i className="fas fa-times" className="text-muted"></i>
                                                     <span>Kontakty řemeslníků</span>
                                                 </li>
                                             </ul>
-                                            <button className="btn btn-secondary w-full" disabled style={{opacity: 0.7}}>
+                                            <button className="btn btn-secondary w-full" disabled className="opacity-70">
                                                 Aktuální plán
                                             </button>
                                         </div>
                                     </div>
 
                                     {/* PLUS Tier - Most Popular */}
-                                    <div className="card" style={{border: '2px solid var(--color-primary)', position: 'relative', transform: 'scale(1.02)'}}>
+                                    <div className="card" className="border-2 border-primary relative scale-105">
                                         <div style={{
                                             position: 'absolute',
                                             top: '-12px',
@@ -4882,28 +4299,28 @@
                                         }}>
                                             NEJOBLÍBENĚJŠÍ
                                         </div>
-                                        <div className="card-body" style={{padding: 'var(--space-6)'}}>
-                                            <div style={{textAlign: 'center', marginBottom: 'var(--space-4)'}}>
-                                                <span style={{fontSize: '2rem'}}>⭐</span>
-                                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginTop: 'var(--space-2)'}}>PLUS</h3>
-                                                <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-primary)', margin: 'var(--space-2) 0'}}>49 Kč<span style={{fontSize: 'var(--text-base)', fontWeight: 'normal'}}>/měsíc</span></div>
-                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>nebo 399 Kč/rok (ušetříte 33%)</p>
+                                        <div className="card-body" className="p-6">
+                                            <div className="text-center mb-4">
+                                                <span className="text-4xl">⭐</span>
+                                                <h3 className="text-xl font-bold mt-2">PLUS</h3>
+                                                <div className="text-3xl font-bold text-primary my-2">49 Kč<span className="text-base font-normal">/měsíc</span></div>
+                                                <p className="text-sm text-secondary">nebo 399 Kč/rok (ušetříte 33%)</p>
                                             </div>
-                                            <ul style={{listStyle: 'none', padding: 0, marginBottom: 'var(--space-4)'}}>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                            <ul className="list-none p-0 mb-4">
+                                                <li className="py-2 flex items-center gap-2">
+                                                    <i className="fas fa-check" className="text-success"></i>
                                                     <span><strong>Neomezené</strong> AI analýzy</span>
                                                 </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                <li className="py-2 flex items-center gap-2">
+                                                    <i className="fas fa-check" className="text-success"></i>
                                                     <span>Affiliate odkazy na materiál</span>
                                                 </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                <li className="py-2 flex items-center gap-2">
+                                                    <i className="fas fa-check" className="text-success"></i>
                                                     <span>Odhady nákladů</span>
                                                 </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', opacity: 0.5}}>
-                                                    <i className="fas fa-times" style={{color: 'var(--color-text-muted)'}}></i>
+                                                <li className="py-2 flex items-center gap-2 opacity-50">
+                                                    <i className="fas fa-times" className="text-muted"></i>
                                                     <span>Prioritní podpora</span>
                                                 </li>
                                             </ul>
@@ -4915,37 +4332,37 @@
                                     </div>
 
                                     {/* PRO Tier */}
-                                    <div className="card" style={{border: '2px solid var(--color-warning)', background: 'linear-gradient(135deg, #fefce8 0%, #fef9c3 100%)'}}>
-                                        <div className="card-body" style={{padding: 'var(--space-6)'}}>
-                                            <div style={{textAlign: 'center', marginBottom: 'var(--space-4)'}}>
-                                                <span style={{fontSize: '2rem'}}>👑</span>
-                                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginTop: 'var(--space-2)'}}>PRO</h3>
-                                                <div style={{fontSize: 'var(--text-3xl)', fontWeight: 'var(--font-bold)', color: 'var(--color-warning-text)', margin: 'var(--space-2) 0'}}>99 Kč<span style={{fontSize: 'var(--text-base)', fontWeight: 'normal'}}>/měsíc</span></div>
-                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>nebo 799 Kč/rok (ušetříte 33%)</p>
+                                    <div className="card" className="border-2 border-warning gradient-yellow">
+                                        <div className="card-body" className="p-6">
+                                            <div className="text-center mb-4">
+                                                <span className="text-4xl"><i className="fas fa-crown"></i></span>
+                                                <h3 className="text-xl font-bold mt-2">PRO</h3>
+                                                <div className="text-3xl font-bold text-warning-text my-2">99 Kč<span className="text-base font-normal">/měsíc</span></div>
+                                                <p className="text-sm text-secondary">nebo 799 Kč/rok (ušetříte 33%)</p>
                                             </div>
-                                            <ul style={{listStyle: 'none', padding: 0, marginBottom: 'var(--space-4)'}}>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                            <ul className="list-none p-0 mb-4">
+                                                <li className="py-2 flex items-center gap-2">
+                                                    <i className="fas fa-check" className="text-success"></i>
                                                     <span>Vše z PLUS</span>
                                                 </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                <li className="py-2 flex items-center gap-2">
+                                                    <i className="fas fa-check" className="text-success"></i>
                                                     <span><strong>Kontakty řemeslníků</strong></span>
                                                 </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                <li className="py-2 flex items-center gap-2">
+                                                    <i className="fas fa-check" className="text-success"></i>
                                                     <span>Technická schémata</span>
                                                 </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                <li className="py-2 flex items-center gap-2">
+                                                    <i className="fas fa-check" className="text-success"></i>
                                                     <span>Prioritní podpora 24/7</span>
                                                 </li>
-                                                <li style={{padding: 'var(--space-2) 0', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                    <i className="fas fa-check" style={{color: 'var(--color-success)'}}></i>
+                                                <li className="py-2 flex items-center gap-2">
+                                                    <i className="fas fa-check" className="text-success"></i>
                                                     <span>Offline režim</span>
                                                 </li>
                                             </ul>
-                                            <button className="btn w-full" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white'}} onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 99 Kč/měsíc\n\nZískáte VŠE:\n• Neomezené AI analýzy\n• Kontakty řemeslníků\n• Technická schémata\n• Prioritní podpora')}>
+                                            <button className="btn w-full" className="gradient-orange text-white" onClick={() => alert('Platební brána bude brzy dostupná!\n\nCena: 99 Kč/měsíc\n\nZískáte VŠE:\n• Neomezené AI analýzy\n• Kontakty řemeslníků\n• Technická schémata\n• Prioritní podpora')}>
                                                 <i className="fas fa-crown mr-2"></i>
                                                 Získat PRO
                                             </button>
@@ -4959,41 +4376,41 @@
                                         <h3 className="card-title">Co získáte s Premium</h3>
                                     </div>
                                     <div className="card-body">
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-4)'}}>
-                                            <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
-                                                <div style={{background: 'var(--color-success-light)', color: 'var(--color-success)', padding: 'var(--space-2)', borderRadius: 'var(--radius-lg)'}}>
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex items-start gap-3">
+                                                <div className="bg-success-light text-success p-2 rounded-lg">
                                                     <i className="fas fa-project-diagram"></i>
                                                 </div>
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Technické schémata a diagramy</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Detailní nákresy zapojení, rozměry a technické výkresy</p>
+                                                    <p className="font-semibold">Technické schémata a diagramy</p>
+                                                    <p className="text-sm text-secondary">Detailní nákresy zapojení, rozměry a technické výkresy</p>
                                                 </div>
                                             </div>
-                                            <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
-                                                <div style={{background: 'var(--color-primary-light)', color: 'var(--color-primary)', padding: 'var(--space-2)', borderRadius: 'var(--radius-lg)'}}>
+                                            <div className="flex items-start gap-3">
+                                                <div className="bg-primary-light text-primary p-2 rounded-lg">
                                                     <i className="fas fa-shopping-cart"></i>
                                                 </div>
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Affiliate odkazy na materiál</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Přímé odkazy na potřebný materiál s nejlepšími cenami</p>
+                                                    <p className="font-semibold">Affiliate odkazy na materiál</p>
+                                                    <p className="text-sm text-secondary">Přímé odkazy na potřebný materiál s nejlepšími cenami</p>
                                                 </div>
                                             </div>
-                                            <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
-                                                <div style={{background: 'var(--color-warning-light)', color: 'var(--color-warning-text)', padding: 'var(--space-2)', borderRadius: 'var(--radius-lg)'}}>
+                                            <div className="flex items-start gap-3">
+                                                <div className="bg-warning-light text-warning-text p-2 rounded-lg">
                                                     <i className="fas fa-map-marker-alt"></i>
                                                 </div>
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Kontakty na místní opraváře</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>AI vyhledá ověřené řemeslníky ve vašem okolí</p>
+                                                    <p className="font-semibold">Kontakty na místní opraváře</p>
+                                                    <p className="text-sm text-secondary">AI vyhledá ověřené řemeslníky ve vašem okolí</p>
                                                 </div>
                                             </div>
-                                            <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
-                                                <div style={{background: '#faf5ff', color: '#9333ea', padding: 'var(--space-2)', borderRadius: 'var(--radius-lg)'}}>
+                                            <div className="flex items-start gap-3">
+                                                <div className="bg-purple-50 text-purple-600 p-2 rounded-lg">
                                                     <i className="fas fa-infinity"></i>
                                                 </div>
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Neomezené analýzy</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Žádné denní limity na AI analýzu fotek</p>
+                                                    <p className="font-semibold">Neomezené analýzy</p>
+                                                    <p className="text-sm text-secondary">Žádné denní limity na AI analýzu fotek</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -5008,41 +4425,41 @@
                                             Časté dotazy
                                         </h3>
                                     </div>
-                                    <div className="card-body" style={{padding: 0}}>
-                                        <div style={{borderBottom: '1px solid var(--color-border)', padding: 'var(--space-4)'}}>
-                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Mohu kdykoliv zrušit předplatné?</h4>
-                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Ano, předplatné můžete zrušit kdykoliv bez poplatků. Po zrušení budete moci používat placenou verzi do konce zaplaceného období.</p>
+                                    <div className="card-body" className="p-0">
+                                        <div className="border-b border-border p-4">
+                                            <h4 className="font-semibold mb-2">Mohu kdykoliv zrušit předplatné?</h4>
+                                            <p className="text-sm text-secondary">Ano, předplatné můžete zrušit kdykoliv bez poplatků. Po zrušení budete moci používat placenou verzi do konce zaplaceného období.</p>
                                         </div>
-                                        <div style={{borderBottom: '1px solid var(--color-border)', padding: 'var(--space-4)'}}>
-                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Jak funguje roční platba?</h4>
-                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Při roční platbě ušetříte 33% oproti měsíční platbě. PLUS stojí 399 Kč/rok místo 588 Kč, PRO stojí 799 Kč/rok místo 1188 Kč.</p>
+                                        <div className="border-b border-border p-4">
+                                            <h4 className="font-semibold mb-2">Jak funguje roční platba?</h4>
+                                            <p className="text-sm text-secondary">Při roční platbě ušetříte 33% oproti měsíční platbě. PLUS stojí 399 Kč/rok místo 588 Kč, PRO stojí 799 Kč/rok místo 1188 Kč.</p>
                                         </div>
-                                        <div style={{borderBottom: '1px solid var(--color-border)', padding: 'var(--space-4)'}}>
-                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Existují speciální ceny pro důchodce nebo studenty?</h4>
-                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Ano! Nabízíme 50% slevu pro seniory (65+) a studenty. Kontaktujte nás na podpora@fixo.cz s dokladem o věku nebo studiu.</p>
+                                        <div className="border-b border-border p-4">
+                                            <h4 className="font-semibold mb-2">Existují speciální ceny pro důchodce nebo studenty?</h4>
+                                            <p className="text-sm text-secondary">Ano! Nabízíme 50% slevu pro seniory (65+) a studenty. Kontaktujte nás na podpora@fixo.cz s dokladem o věku nebo studiu.</p>
                                         </div>
-                                        <div style={{padding: 'var(--space-4)'}}>
-                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>Mohu si FIXO vyzkoušet před placením?</h4>
-                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Samozřejmě! Verze FREE je navždy zdarma. Navíc nabízíme 7denní zkušební dobu na PLUS a PRO plány.</p>
+                                        <div className="p-4">
+                                            <h4 className="font-semibold mb-2">Mohu si FIXO vyzkoušet před placením?</h4>
+                                            <p className="text-sm text-secondary">Samozřejmě! Verze FREE je navždy zdarma. Navíc nabízíme 7denní zkušební dobu na PLUS a PRO plány.</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Social Pricing Info */}
-                                <div className="alert" style={{background: 'var(--color-primary-light)', border: 'none'}}>
-                                    <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
-                                        <i className="fas fa-heart" style={{color: 'var(--color-primary)', fontSize: 'var(--text-xl)'}}></i>
+                                <div className="alert" className="bg-primary-light border-none">
+                                    <div className="flex items-start gap-3">
+                                        <i className="fas fa-heart" className="text-primary text-xl"></i>
                                         <div>
-                                            <p style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>Sociální dostupnost</p>
-                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>
+                                            <p className="font-semibold mb-1">Sociální dostupnost</p>
+                                            <p className="text-sm text-secondary">
                                                 FIXO věří v dostupnost pro všechny. Senioři 65+ a studenti získají 50% slevu.
-                                                Kontaktujte nás na <a href="mailto:podpora@fixo.cz" style={{color: 'var(--color-primary)'}}>podpora@fixo.cz</a>.
+                                                Kontaktujte nás na <a href="mailto:podpora@fixo.cz" className="text-primary">podpora@fixo.cz</a>.
                                             </p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="alert alert-info" style={{marginTop: 'var(--space-4)'}}>
+                                <div className="alert alert-info" className="mt-4">
                                     <p><i className="fas fa-shield-alt mr-2"></i>Bezpečná platba přes Stripe. Zrušit můžete kdykoliv.</p>
                                 </div>
                             </div>
@@ -5050,18 +4467,18 @@
 
                         {/* Partnership Page View */}
                         {currentView === 'partnership' && (
-                            <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
-                                <h2 className="section-title" style={{marginBottom: 'var(--space-4)'}}>
+                            <div className="app-container" className="pt-4">
+                                <h2 className="section-title" className="mb-4">
                                     <i className="fas fa-handshake section-title-icon"></i>
                                     Partnerský program
                                 </h2>
 
                                 {/* Hero banner */}
-                                <div className="card mb-6" style={{background: 'linear-gradient(135deg, var(--color-primary) 0%, #4338ca 100%)', color: 'white'}}>
-                                    <div className="card-body text-center" style={{padding: 'var(--space-8)'}}>
-                                        <div style={{fontSize: '3rem', marginBottom: 'var(--space-4)'}}>🤝</div>
-                                        <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>Staňte se partnerem FIXO</h3>
-                                        <p style={{opacity: 0.9}}>Získejte provize z doporučení a rozšiřte svůj byznys</p>
+                                <div className="card mb-6" className="gradient-primary text-white">
+                                    <div className="card-body text-center" className="p-8">
+                                        <div className="text-6xl mb-4"><i className="fas fa-handshake"></i></div>
+                                        <h3 className="text-xl font-bold mb-2">Staňte se partnerem FIXO</h3>
+                                        <p className="opacity-90">Získejte provize z doporučení a rozšiřte svůj byznys</p>
                                     </div>
                                 </div>
 
@@ -5071,14 +4488,14 @@
                                         <h3 className="card-title">Typy partnerství</h3>
                                     </div>
                                     <div className="card-body">
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-4)'}}>
-                                            <div className="card" style={{background: 'var(--color-bg-secondary)'}}>
+                                        <div className="flex flex-col gap-4">
+                                            <div className="card" className="bg-secondary">
                                                 <div className="card-body">
-                                                    <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
-                                                        <div style={{fontSize: '2rem'}}>🔧</div>
-                                                        <div style={{flex: 1}}>
-                                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>Řemeslníci & Opraváři</h4>
-                                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-2)'}}>
+                                                    <div className="flex items-start gap-3">
+                                                        <div className="text-4xl"><i className="fas fa-wrench"></i></div>
+                                                        <div className="flex-1">
+                                                            <h4 className="font-semibold mb-1">Řemeslníci & Opraváři</h4>
+                                                            <p className="text-sm text-secondary mb-2">
                                                                 Registrujte se jako místní odborník a získávejte zakázky od uživatelů FIXO
                                                             </p>
                                                             <span className="badge badge-success">Provize 15%</span>
@@ -5087,13 +4504,13 @@
                                                 </div>
                                             </div>
 
-                                            <div className="card" style={{background: 'var(--color-bg-secondary)'}}>
+                                            <div className="card" className="bg-secondary">
                                                 <div className="card-body">
-                                                    <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
-                                                        <div style={{fontSize: '2rem'}}>🏪</div>
-                                                        <div style={{flex: 1}}>
-                                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>E-shopy & Prodejci</h4>
-                                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-2)'}}>
+                                                    <div className="flex items-start gap-3">
+                                                        <div className="text-4xl"><i className="fas fa-store"></i></div>
+                                                        <div className="flex-1">
+                                                            <h4 className="font-semibold mb-1">E-shopy & Prodejci</h4>
+                                                            <p className="text-sm text-secondary mb-2">
                                                                 Nabídněte své produkty přímo v FIXO návodech
                                                             </p>
                                                             <span className="badge badge-primary">Affiliate program</span>
@@ -5102,13 +4519,13 @@
                                                 </div>
                                             </div>
 
-                                            <div className="card" style={{background: 'var(--color-bg-secondary)'}}>
+                                            <div className="card" className="bg-secondary">
                                                 <div className="card-body">
-                                                    <div style={{display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
-                                                        <div style={{fontSize: '2rem'}}>📢</div>
-                                                        <div style={{flex: 1}}>
-                                                            <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-1)'}}>Influenceři & Blogeři</h4>
-                                                            <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-2)'}}>
+                                                    <div className="flex items-start gap-3">
+                                                        <div className="text-4xl"><i className="fas fa-bullhorn"></i></div>
+                                                        <div className="flex-1">
+                                                            <h4 className="font-semibold mb-1">Influenceři & Blogeři</h4>
+                                                            <p className="text-sm text-secondary mb-2">
                                                                 Sdílejte FIXO se svými sledujícími a získávejte provize
                                                             </p>
                                                             <span className="badge badge-warning">20% z prodejů</span>
@@ -5127,21 +4544,21 @@
                                     </div>
                                     <div className="card-body">
                                         <div className="grid grid-2 gap-4">
-                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                <i className="fas fa-check-circle" style={{color: 'var(--color-success)'}}></i>
-                                                <span style={{fontSize: 'var(--text-sm)'}}>Pravidelné výplaty</span>
+                                            <div className="flex items-center gap-2">
+                                                <i className="fas fa-check-circle" className="text-success"></i>
+                                                <span className="text-sm">Pravidelné výplaty</span>
                                             </div>
-                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                <i className="fas fa-check-circle" style={{color: 'var(--color-success)'}}></i>
-                                                <span style={{fontSize: 'var(--text-sm)'}}>Marketing materiály</span>
+                                            <div className="flex items-center gap-2">
+                                                <i className="fas fa-check-circle" className="text-success"></i>
+                                                <span className="text-sm">Marketing materiály</span>
                                             </div>
-                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                <i className="fas fa-check-circle" style={{color: 'var(--color-success)'}}></i>
-                                                <span style={{fontSize: 'var(--text-sm)'}}>Detailní statistiky</span>
+                                            <div className="flex items-center gap-2">
+                                                <i className="fas fa-check-circle" className="text-success"></i>
+                                                <span className="text-sm">Detailní statistiky</span>
                                             </div>
-                                            <div style={{display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
-                                                <i className="fas fa-check-circle" style={{color: 'var(--color-success)'}}></i>
-                                                <span style={{fontSize: 'var(--text-sm)'}}>Dedikovaná podpora</span>
+                                            <div className="flex items-center gap-2">
+                                                <i className="fas fa-check-circle" className="text-success"></i>
+                                                <span className="text-sm">Dedikovaná podpora</span>
                                             </div>
                                         </div>
                                     </div>
@@ -5153,7 +4570,7 @@
                                         <h3 className="card-title"><i className="fas fa-user-plus mr-2"></i>Registrace partnera</h3>
                                     </div>
                                     <div className="card-body">
-                                        <form onSubmit={(e) => e.preventDefault()} style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-4)'}}>
+                                        <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4">
                                             <div>
                                                 <label className="label">Jméno / Firma</label>
                                                 <input type="text" className="input" placeholder="Váš název nebo název firmy" />
@@ -5191,8 +4608,8 @@
 
                         {/* Suppliers Page View */}
                         {currentView === 'suppliers' && (
-                            <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
-                                <h2 className="section-title" style={{marginBottom: 'var(--space-4)'}}>
+                            <div className="app-container" className="pt-4">
+                                <h2 className="section-title" className="mb-4">
                                     <i className="fas fa-truck section-title-icon"></i>
                                     Dodavatelé a partneři
                                 </h2>
@@ -5204,21 +4621,21 @@
                                 {/* Kategorie dodavatelů */}
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-faucet mr-2" style={{color: 'var(--color-info)'}}></i>Vodoinstalace</h3>
+                                        <h3 className="card-title"><i className="fas fa-faucet mr-2" className="text-info"></i>Vodoinstalace</h3>
                                     </div>
                                     <div className="card-body">
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
-                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                        <div className="flex flex-col gap-3">
+                                            <div className="flex justify-between items-center p-3 bg-secondary rounded-lg">
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>SIKO koupelny</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Baterie, sprchy, WC</p>
+                                                    <p className="font-semibold">SIKO koupelny</p>
+                                                    <p className="text-sm text-secondary">Baterie, sprchy, WC</p>
                                                 </div>
                                                 <span className="badge badge-primary">Partner</span>
                                             </div>
-                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                            <div className="flex justify-between items-center p-3 bg-secondary rounded-lg">
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Ptáček velkoobchod</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Trubky, fitinky, čerpadla</p>
+                                                    <p className="font-semibold">Ptáček velkoobchod</p>
+                                                    <p className="text-sm text-secondary">Trubky, fitinky, čerpadla</p>
                                                 </div>
                                                 <span className="badge badge-success">Ověřený</span>
                                             </div>
@@ -5228,21 +4645,21 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-bolt mr-2" style={{color: 'var(--color-warning)'}}></i>Elektroinstalace</h3>
+                                        <h3 className="card-title"><i className="fas fa-bolt mr-2" className="text-warning"></i>Elektroinstalace</h3>
                                     </div>
                                     <div className="card-body">
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
-                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                        <div className="flex flex-col gap-3">
+                                            <div className="flex justify-between items-center p-3 bg-secondary rounded-lg">
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>ELKOV elektro</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Kabely, zásuvky, jističe</p>
+                                                    <p className="font-semibold">ELKOV elektro</p>
+                                                    <p className="text-sm text-secondary">Kabely, zásuvky, jističe</p>
                                                 </div>
                                                 <span className="badge badge-primary">Partner</span>
                                             </div>
-                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                            <div className="flex justify-between items-center p-3 bg-secondary rounded-lg">
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>K+B Expert</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Elektro spotřebiče</p>
+                                                    <p className="font-semibold">K+B Expert</p>
+                                                    <p className="text-sm text-secondary">Elektro spotřebiče</p>
                                                 </div>
                                                 <span className="badge badge-success">Ověřený</span>
                                             </div>
@@ -5252,28 +4669,28 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-tools mr-2" style={{color: 'var(--color-success)'}}></i>Nářadí a stavební materiál</h3>
+                                        <h3 className="card-title"><i className="fas fa-tools mr-2" className="text-success"></i>Nářadí a stavební materiál</h3>
                                     </div>
                                     <div className="card-body">
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
-                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                        <div className="flex flex-col gap-3">
+                                            <div className="flex justify-between items-center p-3 bg-secondary rounded-lg">
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Hornbach</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Kompletní sortiment</p>
+                                                    <p className="font-semibold">Hornbach</p>
+                                                    <p className="text-sm text-secondary">Kompletní sortiment</p>
                                                 </div>
                                                 <span className="badge badge-primary">Partner</span>
                                             </div>
-                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                            <div className="flex justify-between items-center p-3 bg-secondary rounded-lg">
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>OBI</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>DIY materiál a nářadí</p>
+                                                    <p className="font-semibold">OBI</p>
+                                                    <p className="text-sm text-secondary">DIY materiál a nářadí</p>
                                                 </div>
                                                 <span className="badge badge-success">Ověřený</span>
                                             </div>
-                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                            <div className="flex justify-between items-center p-3 bg-secondary rounded-lg">
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Bauhaus</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Stavební centrum</p>
+                                                    <p className="font-semibold">Bauhaus</p>
+                                                    <p className="text-sm text-secondary">Stavební centrum</p>
                                                 </div>
                                                 <span className="badge badge-success">Ověřený</span>
                                             </div>
@@ -5283,21 +4700,21 @@
 
                                 <div className="card mb-6">
                                     <div className="card-header">
-                                        <h3 className="card-title"><i className="fas fa-fire mr-2" style={{color: 'var(--color-danger)'}}></i>Topení a klimatizace</h3>
+                                        <h3 className="card-title"><i className="fas fa-fire mr-2" className="text-danger"></i>Topení a klimatizace</h3>
                                     </div>
                                     <div className="card-body">
-                                        <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
-                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                        <div className="flex flex-col gap-3">
+                                            <div className="flex justify-between items-center p-3 bg-secondary rounded-lg">
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Thermona</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Kotle, zásobníky</p>
+                                                    <p className="font-semibold">Thermona</p>
+                                                    <p className="text-sm text-secondary">Kotle, zásobníky</p>
                                                 </div>
                                                 <span className="badge badge-primary">Partner</span>
                                             </div>
-                                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-3)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-lg)'}}>
+                                            <div className="flex justify-between items-center p-3 bg-secondary rounded-lg">
                                                 <div>
-                                                    <p style={{fontWeight: 'var(--font-semibold)'}}>Vaillant</p>
-                                                    <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)'}}>Tepelná čerpadla, kotle</p>
+                                                    <p className="font-semibold">Vaillant</p>
+                                                    <p className="text-sm text-secondary">Tepelná čerpadla, kotle</p>
                                                 </div>
                                                 <span className="badge badge-success">Ověřený</span>
                                             </div>
@@ -5306,11 +4723,11 @@
                                 </div>
 
                                 {/* Chci být dodavatelem */}
-                                <div className="card mb-6" style={{borderColor: 'var(--color-primary)', borderWidth: '2px'}}>
-                                    <div className="card-body text-center" style={{padding: 'var(--space-6)'}}>
-                                        <div style={{fontSize: '2.5rem', marginBottom: 'var(--space-3)'}}>🤝</div>
-                                        <h3 style={{fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)'}}>Chcete být náš partner?</h3>
-                                        <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)'}}>
+                                <div className="card mb-6" className="border-primary border-2">
+                                    <div className="card-body text-center" className="p-6">
+                                        <div className="text-5xl mb-3"><i className="fas fa-handshake"></i></div>
+                                        <h3 className="font-bold mb-2">Chcete být náš partner?</h3>
+                                        <p className="text-sm text-secondary mb-4">
                                             Nabízíme spolupráci pro výrobce a prodejce materiálu
                                         </p>
                                         <button onClick={() => navigateTo('partnership')} className="btn btn-primary">
@@ -5328,58 +4745,58 @@
 
                         {/* Offline Guides View */}
                         {currentView === 'offline' && (
-                            <div className="app-container" style={{paddingTop: 'var(--space-4)'}}>
+                            <div className="app-container" className="pt-4">
                                 {/* Desktop: AI Learning + Guides vedle sebe */}
                                 <div className="offline-desktop-layout">
                                     {/* AI Learning Stats - levý sloupec na desktopu */}
                                     <div>
                                         {analyzerStats && (
                                             <div className="card mb-4">
-                                                <div className="card-body" style={{padding: 'var(--space-4)'}}>
-                                                    <h3 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-3)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-base)'}}>
-                                                        <i className="fas fa-brain" style={{color: 'var(--color-primary)'}}></i>
+                                                <div className="card-body" className="p-4">
+                                                    <h3 className="font-semibold mb-3 flex items-center gap-2 text-base">
+                                                        <i className="fas fa-brain" className="text-primary"></i>
                                                         AI Učení
                                                     </h3>
                                                     {/* Desktop: 6 sloupců, mobil: 3 */}
                                                     <div className="analyze-stats-grid">
-                                                        <div style={{textAlign: 'center', padding: 'var(--space-2)', background: 'var(--color-success-light)', borderRadius: 'var(--radius-md)'}}>
-                                                            <div style={{fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--color-success)'}}>
+                                                        <div className="text-center p-2 bg-success-light rounded-md">
+                                                            <div className="text-lg font-bold text-success">
                                                                 {analyzerStats.cacheHits || 0}
                                                             </div>
-                                                            <div style={{fontSize: '10px', color: 'var(--color-text-secondary)'}}>Cache</div>
+                                                            <div className="text-xs text-secondary">Cache</div>
                                                         </div>
-                                                        <div style={{textAlign: 'center', padding: 'var(--space-2)', background: 'var(--color-info-light)', borderRadius: 'var(--radius-md)'}}>
-                                                            <div style={{fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: 'var(--color-info)'}}>
+                                                        <div className="text-center p-2 bg-info-light rounded-md">
+                                                            <div className="text-lg font-bold text-info">
                                                                 {analyzerStats.localClassifications || 0}
                                                             </div>
-                                                            <div style={{fontSize: '10px', color: 'var(--color-text-secondary)'}}>Lokální</div>
+                                                            <div className="text-xs text-secondary">Lokální</div>
                                                         </div>
-                                                        <div style={{textAlign: 'center', padding: 'var(--space-2)', background: 'rgba(168, 85, 247, 0.1)', borderRadius: 'var(--radius-md)'}}>
-                                                            <div style={{fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: '#a855f7'}}>
+                                                        <div className="text-center p-2 bg-purple-100/10 rounded-md">
+                                                            <div className="text-lg font-bold text-purple-500">
                                                                 {analyzerStats.apiCalls || 0}
                                                             </div>
-                                                            <div style={{fontSize: '10px', color: 'var(--color-text-secondary)'}}>Cloud</div>
+                                                            <div className="text-xs text-secondary">Cloud</div>
                                                         </div>
-                                                        <div style={{textAlign: 'center', padding: 'var(--space-2)', background: 'rgba(251, 146, 60, 0.1)', borderRadius: 'var(--radius-md)'}}>
-                                                            <div style={{fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: '#fb923c'}}>
+                                                        <div className="text-center p-2 bg-orange-100/10 rounded-md">
+                                                            <div className="text-lg font-bold text-orange-400">
                                                                 {analyzerStats.feedbackUsed || 0}
                                                             </div>
-                                                            <div style={{fontSize: '10px', color: 'var(--color-text-secondary)'}}>Opravy</div>
+                                                            <div className="text-xs text-secondary">Opravy</div>
                                                         </div>
-                                                        <div style={{textAlign: 'center', padding: 'var(--space-2)', background: 'rgba(244, 114, 182, 0.1)', borderRadius: 'var(--radius-md)'}}>
-                                                            <div style={{fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: '#f472b6'}}>
+                                                        <div className="text-center p-2 bg-pink-100/10 rounded-md">
+                                                            <div className="text-lg font-bold text-pink-400">
                                                                 {analyzerStats.feedbackSubmitted || 0}
                                                             </div>
-                                                            <div style={{fontSize: '10px', color: 'var(--color-text-secondary)'}}>Odesláno</div>
+                                                            <div className="text-xs text-secondary">Odesláno</div>
                                                         </div>
-                                                        <div style={{textAlign: 'center', padding: 'var(--space-2)', background: 'rgba(34, 211, 238, 0.1)', borderRadius: 'var(--radius-md)'}}>
-                                                            <div style={{fontSize: 'var(--text-lg)', fontWeight: 'var(--font-bold)', color: '#22d3ee'}}>
+                                                        <div className="text-center p-2 bg-cyan-100/10 rounded-md">
+                                                            <div className="text-lg font-bold text-cyan-400">
                                                                 {analyzerStats.feedback?.totalFeedbacks || 0}
                                                             </div>
-                                                            <div style={{fontSize: '10px', color: 'var(--color-text-secondary)'}}>Feedback</div>
+                                                            <div className="text-xs text-secondary">Feedback</div>
                                                         </div>
                                                     </div>
-                                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--space-2)', background: 'var(--color-bg-secondary)', borderRadius: 'var(--radius-md)', fontSize: 'var(--text-xs)'}}>
+                                                    <div className="flex justify-between items-center p-2 bg-secondary rounded-md text-xs">
                                                         <span>
                                                             <i className="fas fa-database mr-1"></i>
                                                             {analyzerStats.cache?.totalAnalyses || 0} závad
@@ -5401,24 +4818,24 @@
 
                                     {/* Offline guides - pravý sloupec na desktopu */}
                                     <div>
-                                        <h2 className="section-title section-title-compact" style={{marginBottom: 'var(--space-3)'}}>
+                                        <h2 className="section-title section-title-compact" className="mb-3">
                                             <i className="fas fa-cloud-download-alt section-title-icon"></i>
                                             Offline návody
                                         </h2>
 
                                         {savedGuides.length === 0 ? (
                                             <div className="card">
-                                                <div className="card-body text-center" style={{padding: 'var(--space-6)'}}>
-                                                    <div style={{fontSize: '3rem', marginBottom: 'var(--space-3)', opacity: 0.3}}>
+                                                <div className="card-body text-center" className="p-6">
+                                                    <div className="text-6xl mb-3 opacity-30">
                                                         <i className="fas fa-cloud-download-alt"></i>
                                                     </div>
-                                                    <h3 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)', fontSize: 'var(--text-base)'}}>
+                                                    <h3 className="font-semibold mb-2 text-base">
                                                         Žádné uložené návody
                                                     </h3>
-                                                    <p style={{color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)', fontSize: 'var(--text-sm)'}}>
+                                                    <p className="text-secondary mb-4 text-sm">
                                                         Při prohlížení návodu klikni na "Uložit offline".
                                                     </p>
-                                                    <button onClick={() => navigateTo('knowledge')} className="btn btn-primary" style={{padding: 'var(--space-2) var(--space-4)', fontSize: 'var(--text-sm)'}}>
+                                                    <button onClick={() => navigateTo('knowledge')} className="btn btn-primary" className="py-2 px-4 text-sm">
                                                         <i className="fas fa-book mr-2"></i>
                                                         Procházet databázi
                                                     </button>
@@ -5427,26 +4844,26 @@
                                         ) : (
                                             <>
                                                 <div className="alert alert-success alert-compact mb-4">
-                                                    <p style={{margin: 0, fontSize: 'var(--text-sm)'}}>
+                                                    <p className="m-0 text-sm">
                                                         <i className="fas fa-wifi-slash mr-2"></i>
                                                         <strong>Offline!</strong> Návody uložené v zařízení.
                                                     </p>
                                                 </div>
 
-                                                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)'}}>
+                                                <div className="flex flex-col gap-3">
                                             {savedGuides.map(guide => (
                                                 <div key={guide.id} className="card">
                                                     <div className="card-body">
-                                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 'var(--space-3)'}}>
-                                                            <div style={{flex: 1}}>
-                                                                <h3 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)'}}>
+                                                        <div className="flex justify-between items-start gap-3">
+                                                            <div className="flex-1">
+                                                                <h3 className="font-semibold mb-2">
                                                                     {guide.name}
                                                                 </h3>
-                                                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                                                <p className="text-sm text-secondary mb-3">
                                                                     {guide.description}
                                                                 </p>
 
-                                                                <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', marginBottom: 'var(--space-3)'}}>
+                                                                <div className="flex flex-wrap gap-2 mb-3">
                                                                     <span className="badge">
                                                                         <i className="fas fa-clock mr-1"></i>
                                                                         {guide.timeEstimate}
@@ -5461,13 +4878,13 @@
                                                                     </span>
                                                                 </div>
 
-                                                                <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)'}}>
+                                                                <p className="text-xs text-muted">
                                                                     <i className="fas fa-save mr-1"></i>
                                                                     Uloženo: {new Date(guide.savedAt).toLocaleDateString('cs-CZ')}
                                                                 </p>
                                                             </div>
 
-                                                            <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)'}}>
+                                                            <div className="flex flex-col gap-2">
                                                                 <button
                                                                     onClick={() => loadOfflineGuide(guide)}
                                                                     className="btn btn-success btn-sm"
@@ -5482,7 +4899,7 @@
                                                                         }
                                                                     }}
                                                                     className="btn btn-secondary btn-sm"
-                                                                    style={{opacity: 0.7}}
+                                                                    className="opacity-70"
                                                                 >
                                                                     <i className="fas fa-trash"></i>
                                                                 </button>
@@ -5493,8 +4910,8 @@
                                             ))}
                                         </div>
 
-                                        <div style={{marginTop: 'var(--space-4)', textAlign: 'center'}}>
-                                            <button onClick={() => navigateTo('knowledge')} className="btn btn-secondary" style={{padding: 'var(--space-2) var(--space-4)', fontSize: 'var(--text-sm)'}}>
+                                        <div className="mt-4 text-center">
+                                            <button onClick={() => navigateTo('knowledge')} className="btn btn-secondary" className="py-2 px-4 text-sm">
                                                 <i className="fas fa-plus mr-2"></i>
                                                 Přidat další návody
                                             </button>
