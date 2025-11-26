@@ -271,4 +271,29 @@
   .z-20 { z-index: var(--z-sticky); }
   .z-40 { z-index: var(--z-overlay); }
   .z-50 { z-index: var(--z-modal); }
+
+  /* ==========================================
+     ADDITIONAL UTILITIES - Pro app.js refaktoring
+     ========================================== */
+
+  /* Text sizes */
+  .text-xs { font-size: var(--text-xs); }
+  .text-sm { font-size: var(--text-sm); }
+  .text-base { font-size: var(--text-base); }
+  .text-lg { font-size: var(--text-lg); }
+  .text-xl { font-size: var(--text-xl); }
+  .text-2xl { font-size: var(--text-2xl); }
+  .text-3xl { font-size: var(--text-3xl); }
+  .text-4xl { font-size: var(--text-4xl); }
+
+  /* Colors */
+  .color-success { color: var(--color-success); }
+  .color-error { color: var(--color-error); }
+  .color-primary { color: var(--color-primary); }
+
+  /* Icon sizes */
+  .icon-sm { font-size: var(--text-base); }
+  .icon-md { font-size: var(--text-xl); }
+  .icon-lg { font-size: var(--text-2xl); }
+  .icon-xl { font-size: var(--text-3xl); }
 }
