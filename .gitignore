@@ -39,3 +39,7 @@ temp/
 
 # Archives (optional - remove if you want to track them)
 *.zip
+
+# Backup files from refactoring
+*.old
+*.backup
