@@ -370,6 +370,13 @@
 
 /* Desktop grid layouts */
 @media (min-width: 1024px) {
+  .home-two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+
   .desktop-two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
