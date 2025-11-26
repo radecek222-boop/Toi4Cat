@@ -1946,98 +1946,59 @@
                         </div>
                     )}
 
-                    {/* Před-opravní checklist modal */}
+                    {/* Před-opravní checklist modal - Compact */}
                     {showChecklist && pendingIssue && (
                         <div className="translating-overlay" onClick={cancelChecklist}>
-                            <div className="translating-box" onClick={e => e.stopPropagation()}>
-                                <h3 style={{fontSize: 'var(--text-xl)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-2)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
+                            <div className="translating-box" onClick={e => e.stopPropagation()} style={{padding: 'var(--space-4)'}}>
+                                <h3 style={{fontSize: 'var(--text-base)', fontWeight: 'var(--font-bold)', marginBottom: 'var(--space-3)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)'}}>
                                     <i className="fas fa-clipboard-check" style={{color: 'var(--color-primary)'}}></i>
                                     Před zahájením opravy
                                 </h3>
-                                <p style={{fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)'}}>
-                                    Zkontrolujte prosím tyto body před začátkem práce:
-                                </p>
 
-                                {/* Checklist items */}
-                                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', marginBottom: 'var(--space-6)'}}>
+                                {/* Checklist items - compact */}
+                                <div style={{display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginBottom: 'var(--space-3)'}}>
                                     {generateChecklistItems(pendingIssue).map(item => (
                                         <label
                                             key={item.id}
                                             style={{
                                                 display: 'flex',
                                                 alignItems: 'center',
-                                                gap: 'var(--space-3)',
-                                                padding: 'var(--space-3)',
-                                                background: item.important
-                                                    ? (checklistItems[item.id] ? 'var(--color-success-light)' : 'var(--color-warning-light)')
-                                                    : (checklistItems[item.id] ? 'var(--color-success-light)' : 'var(--color-bg-secondary)'),
-                                                borderRadius: 'var(--radius-lg)',
+                                                gap: 'var(--space-2)',
+                                                padding: 'var(--space-2)',
+                                                background: checklistItems[item.id] ? 'var(--color-success-light)' : (item.important ? 'var(--color-warning-light)' : 'var(--color-bg-secondary)'),
+                                                borderRadius: 'var(--radius-md)',
                                                 cursor: 'pointer',
-                                                border: item.important ? '2px solid' : '1px solid',
-                                                borderColor: item.important
-                                                    ? (checklistItems[item.id] ? 'var(--color-success)' : 'var(--color-warning)')
-                                                    : 'var(--color-border)',
-                                                transition: 'var(--transition-fast)'
+                                                fontSize: 'var(--text-sm)'
                                             }}
                                         >
                                             <input
                                                 type="checkbox"
                                                 checked={checklistItems[item.id] || false}
                                                 onChange={() => setChecklistItems(prev => ({...prev, [item.id]: !prev[item.id]}))}
-                                                style={{
-                                                    width: '20px',
-                                                    height: '20px',
-                                                    accentColor: 'var(--color-success)'
-                                                }}
+                                                style={{width: '16px', height: '16px', accentColor: 'var(--color-success)'}}
                                             />
-                                            <i className={`fas ${item.icon}`} style={{
-                                                fontSize: 'var(--text-lg)',
-                                                color: item.important ? 'var(--color-warning)' : 'var(--color-primary)',
-                                                width: '24px'
-                                            }}></i>
                                             <span style={{
                                                 flex: 1,
-                                                fontSize: 'var(--text-sm)',
-                                                fontWeight: item.important ? 'var(--font-semibold)' : 'var(--font-normal)',
                                                 textDecoration: checklistItems[item.id] ? 'line-through' : 'none',
-                                                opacity: checklistItems[item.id] ? 0.7 : 1
+                                                opacity: checklistItems[item.id] ? 0.6 : 1
                                             }}>
                                                 {item.text}
-                                                {item.important && <span style={{color: 'var(--color-danger)', marginLeft: 'var(--space-1)'}}>*</span>}
+                                                {item.important && <span style={{color: 'var(--color-danger)'}}>*</span>}
                                             </span>
                                         </label>
                                     ))}
                                 </div>
 
-                                {/* Nářadí k připravení */}
+                                {/* Nářadí - inline compact */}
                                 {pendingIssue.tools && pendingIssue.tools.length > 0 && (
-                                    <div style={{
-                                        background: 'var(--color-info-light)',
-                                        padding: 'var(--space-4)',
-                                        borderRadius: 'var(--radius-lg)',
-                                        marginBottom: 'var(--space-4)'
-                                    }}>
-                                        <h4 style={{fontWeight: 'var(--font-semibold)', marginBottom: 'var(--space-2)', fontSize: 'var(--text-sm)'}}>
-                                            <i className="fas fa-toolbox mr-2"></i>
-                                            Potřebné nářadí:
-                                        </h4>
-                                        <div style={{display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)'}}>
-                                            {pendingIssue.tools.map((tool, idx) => (
-                                                <span key={idx} style={{
-                                                    background: 'var(--color-bg-primary)',
-                                                    padding: 'var(--space-1) var(--space-2)',
-                                                    borderRadius: 'var(--radius-md)',
-                                                    fontSize: 'var(--text-xs)'
-                                                }}>{tool}</span>
-                                            ))}
-                                        </div>
+                                    <div style={{fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-3)'}}>
+                                        <strong>Nářadí:</strong> {pendingIssue.tools.join(', ')}
                                     </div>
                                 )}
 
                                 {/* Action buttons */}
-                                <div className="flex gap-3">
-                                    <button onClick={cancelChecklist} className="btn btn-secondary flex-1">
-                                        <i className="fas fa-times mr-2"></i>
+                                <div className="flex gap-2">
+                                    <button onClick={cancelChecklist} className="btn btn-secondary flex-1" style={{padding: 'var(--space-2)'}}>
                                         Zrušit
                                     </button>
                                     <button
@@ -2045,20 +2006,14 @@
                                         className="btn btn-success flex-1"
                                         disabled={generateChecklistItems(pendingIssue).filter(i => i.important).some(i => !checklistItems[i.id])}
                                         style={{
+                                            padding: 'var(--space-2)',
                                             opacity: generateChecklistItems(pendingIssue).filter(i => i.important).some(i => !checklistItems[i.id]) ? 0.5 : 1
                                         }}
                                     >
-                                        <i className="fas fa-play mr-2"></i>
-                                        Začít opravu
+                                        <i className="fas fa-play mr-1"></i>
+                                        Začít
                                     </button>
                                 </div>
-
-                                {generateChecklistItems(pendingIssue).filter(i => i.important).some(i => !checklistItems[i.id]) && (
-                                    <p style={{fontSize: 'var(--text-xs)', color: 'var(--color-warning)', textAlign: 'center', marginTop: 'var(--space-2)'}}>
-                                        <i className="fas fa-info-circle mr-1"></i>
-                                        Zaškrtni všechny důležité položky (*) pro pokračování
-                                    </p>
-                                )}
                             </div>
                         </div>
                     )}
