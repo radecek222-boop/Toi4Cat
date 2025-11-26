@@ -3195,19 +3195,18 @@
                     <main className="main-content">
                         {/* Home View - Single Page s Hero */}
                         {currentView === 'home' && (
-                            <div className="app-container">
-                                <div className="page-frame" data-block="layout_shell">
-                                    {/* action_block */}
-                                    <section className="action-block" data-block="action_block">
-                                        <div className="upload-card glass-card upload-card-compact">
-                                            <div className="text-center mb-4">
-                                                <h2 className="text-xl font-bold text-primary mb-2">
-                                                    {t('homeTitle')}
-                                                </h2>
-                                                <p className="text-secondary" className="text-sm">
-                                                    {t('homeSubtitle')}
-                                                </p>
-                                            </div>
+                            <div className="content-two-columns">
+                                {/* Levý blok - AKČNÍ */}
+                                <div className="content-left">
+                                    <div className="upload-card glass-card">
+                                        <div className="text-center mb-4">
+                                            <h2 className="text-xl font-bold text-primary mb-2">
+                                                {t('homeTitle')}
+                                            </h2>
+                                            <p className="text-secondary" className="text-sm">
+                                                {t('homeSubtitle')}
+                                            </p>
+                                        </div>
 
                                             <input
                                                 ref={fileInputRef}
@@ -3275,10 +3274,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </section>
+                                    </div>
+                                </div>
 
-                                    {/* information_block */}
-                                    <section className="information-block" data-block="information_block">
+                                {/* Pravý blok - INFORMATIVNÍ */}
+                                <div className="content-right">
+                                        {/* Jak to funguje */}
                                         <div className="glass-card flex flex-col">
                                             <h3 className="section-title mb-4">
                                                 <i className="fas fa-magic"></i>
@@ -3351,7 +3352,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </section>
                                 </div>
                             </div>
                         )}
