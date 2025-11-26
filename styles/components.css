@@ -546,6 +546,7 @@
   .alert-title {
     font-weight: var(--font-semibold);
     margin-block-end: var(--space-1);
+    color: white;
   }
 
   .alert-description {
