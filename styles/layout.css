@@ -596,7 +596,7 @@
     padding: 0 var(--space-4);
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 769px) {
     .footer > .container {
       max-width: 84%;
     }
