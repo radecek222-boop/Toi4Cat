@@ -17,6 +17,42 @@ const paymentGateway = require('./src/paymentGateway');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// CORS konfigurace - MUSÍ být před vším ostatním!
+const corsOptions = {
+    origin: function (origin, callback) {
+        // Povolit requesty bez origin (např. mobilní aplikace, Postman)
+        if (!origin) return callback(null, true);
+
+        const allowedOrigins = [
+            'https://radecek222-boop.github.io',
+            'http://localhost:3000',
+            'http://localhost:3001',
+            'http://localhost:5500',
+            'http://127.0.0.1:3000',
+            'http://127.0.0.1:5500'
+        ];
+
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            // Pro vývoj povolit všechny origins
+            console.log('CORS: Povoleno pro origin:', origin);
+            callback(null, true);
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    credentials: true,
+    optionsSuccessStatus: 200, // Pro starší prohlížeče
+    preflightContinue: false
+};
+
+// CORS middleware MUSÍ být úplně první!
+app.use(cors(corsOptions));
+
+// Explicitní OPTIONS handler pro všechny routes
+app.options('*', cors(corsOptions));
+
 // Middleware
 app.use(helmet({
     contentSecurityPolicy: {
@@ -34,25 +70,10 @@ app.use(helmet({
                 "https://radecek222-boop.github.io"
             ]
         }
-    }
+    },
+    crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 app.use(compression());
-
-// CORS konfigurace - povolit GitHub Pages a localhost
-const corsOptions = {
-    origin: [
-        'https://radecek222-boop.github.io',
-        'http://localhost:3000',
-        'http://localhost:5500',
-        'http://127.0.0.1:3000',
-        'http://127.0.0.1:5500'
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-    optionsSuccessStatus: 200 // Pro starší prohlížeče
-};
-app.use(cors(corsOptions));
 
 app.use(express.json({ limit: '10mb' })); // Zvýšit limit pro base64 obrazy
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -65,9 +86,6 @@ const limiter = rateLimit({
     skip: (req) => req.method === 'OPTIONS' // Vynechat preflight requests
 });
 app.use('/api/', limiter);
-
-// Explicitně zpracovat všechny OPTIONS requests pro preflight (MUSÍ být PO rate limiteru)
-app.options('*', cors(corsOptions));
 
 // Servírování statických souborů (CSS, JS, images)
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
