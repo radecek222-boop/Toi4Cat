@@ -181,7 +181,7 @@ class PaymentGateway {
     }
 
     /**
-     * Cenové plány
+     * Cenové plány pro uživatele
      */
     getPricingPlans() {
         return {
@@ -224,6 +224,61 @@ class PaymentGateway {
                     'Video chat podpora',
                     'Záruka kvality opravy',
                     'Možnost objednání řemeslníka'
+                ]
+            }
+        };
+    }
+
+    /**
+     * Cenové plány pro dodavatele služeb
+     */
+    getProviderPlans() {
+        return {
+            basic: {
+                id: 'basic',
+                name: 'Základní',
+                description: 'Pro začínající řemeslníky',
+                price: 0,
+                currency: 'CZK',
+                period: 'měsíc',
+                features: [
+                    'Profil v databázi',
+                    '5 poptávek za měsíc',
+                    'Základní statistiky',
+                    'Email notifikace'
+                ]
+            },
+            premium: {
+                id: 'premium',
+                name: 'Premium',
+                description: 'Pro profesionální řemeslníky',
+                price: 299,
+                currency: 'CZK',
+                period: 'měsíc',
+                features: [
+                    'Vše ze Základního',
+                    'Neomezené poptávky',
+                    'Prioritní zobrazení v okolí',
+                    'Detailní statistiky a analýzy',
+                    'Odznak "Ověřeno"',
+                    'SMS notifikace'
+                ]
+            },
+            enterprise: {
+                id: 'enterprise',
+                name: 'Enterprise',
+                description: 'Pro firmy a větší provozovatele',
+                price: 999,
+                currency: 'CZK',
+                period: 'měsíc',
+                features: [
+                    'Vše z Premium',
+                    'Vlastní firemní profil',
+                    'Marketingová podpora',
+                    'API integrace',
+                    'Dedikovaný account manager',
+                    'Prioritní podpora 24/7',
+                    'Možnost více techniků'
                 ]
             }
         };
