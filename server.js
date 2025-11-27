@@ -49,23 +49,25 @@ const corsOptions = {
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    credentials: true,
+    optionsSuccessStatus: 200 // Pro starší prohlížeče
 };
 app.use(cors(corsOptions));
-
-// Explicitně zpracovat OPTIONS requests pro preflight
-app.options('*', cors(corsOptions));
 
 app.use(express.json({ limit: '10mb' })); // Zvýšit limit pro base64 obrazy
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(morgan('combined'));
 
-// Rate limiting
+// Rate limiting - vynechat OPTIONS requests
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minut
-    max: 100 // limit každé IP na 100 požadavků
+    max: 100, // limit každé IP na 100 požadavků
+    skip: (req) => req.method === 'OPTIONS' // Vynechat preflight requests
 });
 app.use('/api/', limiter);
+
+// Explicitně zpracovat všechny OPTIONS requests pro preflight (MUSÍ být PO rate limiteru)
+app.options('*', cors(corsOptions));
 
 // Servírování statických souborů (CSS, JS, images)
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
@@ -305,6 +307,9 @@ const repairDatabase = {
 };
 
 // API Endpoints
+
+// Explicitní OPTIONS handlers pro všechny API endpointy
+app.options('/api/*', cors(corsOptions));
 
 // Health check
 app.get('/api/health', (req, res) => {
