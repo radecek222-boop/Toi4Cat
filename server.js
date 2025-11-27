@@ -776,16 +776,247 @@ app.get('/api/tools', (req, res) => {
 });
 
 // ============================================
+// PROVIDER ENDPOINTS (Dodavatelé oprav)
+// ============================================
+
+// Databáze dodavatelů (v produkci by byla v samostatné DB)
+const providersDatabase = [];
+
+// Registrace nového dodavatele
+app.post('/api/providers/register', async (req, res) => {
+    try {
+        const { companyName, ico, contactName, email, phone, serviceRadius, specialization, description, location, plan } = req.body;
+
+        // Validace povinných polí
+        if (!companyName || !ico || !contactName || !email || !phone || !location || !location.latitude || !location.longitude) {
+            return res.status(400).json({ success: false, error: 'Chybí povinné údaje' });
+        }
+
+        // Vytvořit nového dodavatele
+        const provider = {
+            id: uuidv4(),
+            companyName,
+            ico,
+            contactName,
+            email,
+            phone,
+            serviceRadius: serviceRadius || 10,
+            specialization: specialization || [],
+            description: description || '',
+            location: {
+                latitude: location.latitude,
+                longitude: location.longitude
+            },
+            plan: plan || 'basic',
+            verified: false,
+            rating: 0,
+            reviewCount: 0,
+            createdAt: new Date().toISOString(),
+            active: true
+        };
+
+        // Uložit do databáze
+        providersDatabase.push(provider);
+
+        console.log(`✅ Nový dodavatel registrován: ${companyName} (${provider.id})`);
+
+        // Pokud je to premium nebo enterprise plán, vytvořit platební intent
+        let paymentData = null;
+        if (plan === 'premium' || plan === 'enterprise') {
+            const amount = plan === 'premium' ? 299 : 999;
+            const paymentIntent = await paymentGateway.createPaymentIntent({
+                amount,
+                currency: 'czk',
+                description: `FIXO Provider ${plan.charAt(0).toUpperCase() + plan.slice(1)} - ${companyName}`,
+                metadata: {
+                    providerId: provider.id,
+                    plan: plan,
+                    email: email
+                }
+            });
+
+            paymentData = {
+                paymentIntentId: paymentIntent.id,
+                clientSecret: paymentIntent.clientSecret,
+                amount: paymentIntent.amount,
+                paymentUrl: `/payment?intent=${paymentIntent.id}` // Pro demo
+            };
+        }
+
+        res.json({
+            success: true,
+            data: {
+                provider: {
+                    id: provider.id,
+                    companyName: provider.companyName,
+                    plan: provider.plan
+                },
+                payment: paymentData
+            }
+        });
+
+    } catch (error) {
+        console.error('Provider registration error:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Chyba při registraci dodavatele',
+            message: error.message
+        });
+    }
+});
+
+// Získat všechny dodavatele
+app.get('/api/providers', (req, res) => {
+    const { specialization, plan } = req.query;
+
+    let providers = providersDatabase.filter(p => p.active);
+
+    // Filtrovat podle specializace
+    if (specialization) {
+        providers = providers.filter(p => p.specialization.includes(specialization));
+    }
+
+    // Filtrovat podle plánu
+    if (plan) {
+        providers = providers.filter(p => p.plan === plan);
+    }
+
+    res.json({
+        success: true,
+        count: providers.length,
+        data: providers.map(p => ({
+            id: p.id,
+            companyName: p.companyName,
+            specialization: p.specialization,
+            serviceRadius: p.serviceRadius,
+            location: p.location,
+            plan: p.plan,
+            verified: p.verified,
+            rating: p.rating,
+            reviewCount: p.reviewCount
+        }))
+    });
+});
+
+// Najít dodavatele v okolí (geolokace)
+app.get('/api/providers/nearby', (req, res) => {
+    const { lat, lng, radius, specialization } = req.query;
+
+    if (!lat || !lng) {
+        return res.status(400).json({ success: false, error: 'Chybí parametry lat a lng' });
+    }
+
+    const userLat = parseFloat(lat);
+    const userLng = parseFloat(lng);
+    const searchRadius = radius ? parseFloat(radius) : 20; // km
+
+    // Haversine formula pro výpočet vzdálenosti
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Poloměr Země v km
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R * c;
+    }
+
+    // Najít dodavatele v okolí
+    let nearbyProviders = providersDatabase
+        .filter(p => p.active)
+        .map(p => {
+            const distance = calculateDistance(
+                userLat, userLng,
+                p.location.latitude, p.location.longitude
+            );
+            return { ...p, distance };
+        })
+        .filter(p => p.distance <= searchRadius && p.distance <= p.serviceRadius);
+
+    // Filtrovat podle specializace
+    if (specialization) {
+        nearbyProviders = nearbyProviders.filter(p => p.specialization.includes(specialization));
+    }
+
+    // Seřadit podle vzdálenosti
+    nearbyProviders.sort((a, b) => a.distance - b.distance);
+
+    res.json({
+        success: true,
+        searchRadius,
+        count: nearbyProviders.length,
+        data: nearbyProviders.map(p => ({
+            id: p.id,
+            companyName: p.companyName,
+            contactName: p.contactName,
+            phone: p.phone,
+            email: p.email,
+            specialization: p.specialization,
+            description: p.description,
+            distance: Math.round(p.distance * 10) / 10, // Zaokrouhlit na 1 des. místo
+            location: p.location,
+            plan: p.plan,
+            verified: p.verified,
+            rating: p.rating,
+            reviewCount: p.reviewCount
+        }))
+    });
+});
+
+// Získat detail dodavatele
+app.get('/api/providers/:id', (req, res) => {
+    const { id } = req.params;
+    const provider = providersDatabase.find(p => p.id === id);
+
+    if (!provider) {
+        return res.status(404).json({ success: false, error: 'Dodavatel nenalezen' });
+    }
+
+    res.json({
+        success: true,
+        data: {
+            id: provider.id,
+            companyName: provider.companyName,
+            ico: provider.ico,
+            contactName: provider.contactName,
+            phone: provider.phone,
+            email: provider.email,
+            specialization: provider.specialization,
+            description: provider.description,
+            serviceRadius: provider.serviceRadius,
+            location: provider.location,
+            plan: provider.plan,
+            verified: provider.verified,
+            rating: provider.rating,
+            reviewCount: provider.reviewCount,
+            createdAt: provider.createdAt
+        }
+    });
+});
+
+// ============================================
 // PAYMENT ENDPOINTS
 // ============================================
 
-// Get pricing plans
+// Get pricing plans (pro uživatele)
 app.get('/api/pricing', (req, res) => {
     try {
         const plans = paymentGateway.getPricingPlans();
         res.json({ success: true, data: plans });
     } catch (error) {
         console.error('Error fetching pricing:', error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Get provider pricing plans (pro dodavatele)
+app.get('/api/pricing/providers', (req, res) => {
+    try {
+        const plans = paymentGateway.getProviderPlans();
+        res.json({ success: true, data: plans });
+    } catch (error) {
+        console.error('Error fetching provider pricing:', error);
         res.status(500).json({ success: false, error: error.message });
     }
 });
@@ -855,9 +1086,11 @@ app.listen(PORT, () => {
     ╚══════════════════════════════════╝
     `);
     console.log('API Endpoints:');
+    console.log('\n📊 CORE:');
     console.log('  GET  /api/health         - Health check');
-    console.log('  GET  /api/sections       - 🆕 Sekce oprav (Koupelna, Dům, Zahrada...)');
+    console.log('  GET  /api/sections       - Sekce oprav (Koupelna, Dům, Zahrada...)');
     console.log('  GET  /api/categories     - Seznam kategorií (deprecated)');
+    console.log('\n🔍 REPAIRS:');
     console.log('  POST /api/analyze        - Analyzovat obrázek (multipart)');
     console.log('  POST /api/analyze-base64 - Analyzovat obrázek (base64)');
     console.log('  GET  /api/repair/:id/:id - Detail opravy');
@@ -866,7 +1099,14 @@ app.listen(PORT, () => {
     console.log('  POST /api/history        - Uložit historii');
     console.log('  GET  /api/stats          - Statistiky');
     console.log('  GET  /api/tools          - Seznam nástrojů');
-    console.log('  GET  /api/pricing        - Cenové plány');
+    console.log('\n👷 PROVIDERS:');
+    console.log('  POST /api/providers/register - 🆕 Registrace dodavatele');
+    console.log('  GET  /api/providers      - 🆕 Seznam všech dodavatelů');
+    console.log('  GET  /api/providers/nearby - 🆕 Dodavatelé v okolí (geolokace)');
+    console.log('  GET  /api/providers/:id  - 🆕 Detail dodavatele');
+    console.log('\n💳 PAYMENTS:');
+    console.log('  GET  /api/pricing        - Cenové plány pro uživatele');
+    console.log('  GET  /api/pricing/providers - 🆕 Cenové plány pro dodavatele');
     console.log('  POST /api/payment/create-intent - Vytvořit platbu');
     console.log('  POST /api/payment/verify - Ověřit platbu');
 });
