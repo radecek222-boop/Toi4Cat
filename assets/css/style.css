@@ -43,11 +43,11 @@
     /* Spacing */
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
-    --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-2xl: 3rem;
-    --spacing-3xl: 4rem;
+    --spacing-md: 0.75rem;
+    --spacing-lg: 1rem;
+    --spacing-xl: 1.5rem;
+    --spacing-2xl: 2rem;
+    --spacing-3xl: 2.5rem;
 
     /* Layout */
     --container-max: 1200px;
@@ -232,7 +232,7 @@ p {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(0, 217, 255, 0.1);
     color: var(--color-text);
-    padding: var(--spacing-3xl) 0;
+    padding: var(--spacing-2xl) 0;
     text-align: center;
     position: relative;
 }
@@ -350,7 +350,7 @@ p {
 }
 
 .card__content {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
 }
 
 .card__title {
@@ -367,13 +367,13 @@ p {
    -------------------------------------------------------------------------- */
 .features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-xl);
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
 }
 
 .feature {
     text-align: center;
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
 }
 
 .feature__icon {
@@ -412,7 +412,7 @@ p {
 .about-item {
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     border-radius: var(--radius-lg);
     border-left: 4px solid #00D9FF;
     border: 1px solid rgba(0, 217, 255, 0.2);
@@ -569,6 +569,7 @@ p {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-xl);
+    text-align: center;
 }
 
 .footer__title {
@@ -658,6 +659,11 @@ p {
         padding: var(--spacing-2xl) 0;
     }
 
+    .features {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+
     .about-grid {
         grid-template-columns: 1fr;
     }
@@ -670,5 +676,10 @@ p {
 
     .btn {
         width: 100%;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
     }
 }
