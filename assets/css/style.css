@@ -569,6 +569,7 @@ p {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-xl);
+    text-align: center;
 }
 
 .footer__title {
