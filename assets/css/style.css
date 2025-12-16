@@ -86,7 +86,6 @@ html {
     scroll-snap-type: y mandatory;
     height: 100vh;
     overflow-y: scroll;
-    perspective: 1000px;
 }
 
 body {
@@ -98,6 +97,8 @@ body {
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    perspective: 1200px;
+    perspective-origin: center;
 }
 
 img {
