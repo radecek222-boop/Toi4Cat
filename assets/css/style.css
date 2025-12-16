@@ -83,6 +83,9 @@
 html {
     font-size: var(--font-size-base);
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    height: 100vh;
+    overflow-y: scroll;
 }
 
 body {
@@ -149,6 +152,10 @@ p {
 
 .section {
     padding: var(--spacing-3xl) 0;
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
 }
 
 .section--alt {
@@ -238,6 +245,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
+    scroll-snap-align: start;
 }
 
 .hero__title {
