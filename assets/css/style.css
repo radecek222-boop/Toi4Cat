@@ -113,9 +113,9 @@ img { display: block; max-width: 100%; }
   letter-spacing: 0.02em;
 }
 
-.site-header .logo img { height: 120px; width: auto; }
+.site-header .logo img { height: 240px; width: auto; }
 
-.footer .logo img { height: 160px; width: auto; }
+.footer .logo img { height: 320px; width: auto; }
 
 .nav {
   display: flex;
