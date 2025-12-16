@@ -180,6 +180,28 @@
     }
 
     /**
+     * 3D Book Flip Scroll Effect
+     */
+    function init3DScrollEffect() {
+        const sections = document.querySelectorAll('.section, .hero');
+        if (!sections.length) return;
+
+        window.addEventListener('scroll', () => {
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const scrollPercent = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+
+                // Calculate rotation based on scroll position
+                const rotationX = (scrollPercent - 0.5) * 8;
+                const scale = 0.95 + (scrollPercent * 0.05);
+
+                // Apply 3D transformation
+                section.style.transform = `rotateX(${rotationX}deg) scale(${scale})`;
+            });
+        });
+    }
+
+    /**
      * Initialize all modules
      */
     function init() {
@@ -190,6 +212,7 @@
         initGallery();
         initLazyLoading();
         initScrollAnimations();
+        init3DScrollEffect();
     }
 
     // Run on DOM ready
