@@ -86,6 +86,7 @@ html {
     scroll-snap-type: y mandatory;
     height: 100vh;
     overflow-y: scroll;
+    perspective: 1000px;
 }
 
 body {
@@ -195,6 +196,12 @@ p {
     scroll-snap-align: start;
     display: flex;
     align-items: center;
+    transform-style: preserve-3d;
+    transition: transform var(--transition-slow);
+}
+
+.section:hover {
+    transform: rotateX(2deg);
 }
 
 .section--alt {
@@ -340,7 +347,7 @@ p {
 .btn--primary:hover {
     background: linear-gradient(135deg, rgba(0, 217, 255, 1) 0%, rgba(0, 255, 136, 1) 100%);
     box-shadow: 0 12px 48px rgba(0, 217, 255, 0.5);
-    transform: translateY(-2px);
+    transform: translateY(-4px) translateZ(10px) rotateY(2deg);
     color: #FFFFFF;
 }
 
@@ -424,6 +431,13 @@ p {
 .feature {
     text-align: center;
     padding: var(--spacing-lg);
+    transform-style: preserve-3d;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.feature:hover {
+    transform: translateZ(20px) rotateY(5deg) rotateX(-3deg);
+    box-shadow: 0 20px 40px rgba(0, 217, 255, 0.3);
 }
 
 .feature__icon {
@@ -509,7 +523,7 @@ p {
 }
 
 .gallery__item:hover {
-    transform: scale(1.05) translateY(-8px);
+    transform: scale(1.05) translateY(-8px) rotateY(5deg) rotateX(-5deg);
     border-color: rgba(0, 217, 255, 0.5);
     box-shadow: 0 16px 48px rgba(0, 217, 255, 0.3);
 }
