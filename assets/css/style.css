@@ -471,6 +471,53 @@ p {
 }
 
 /* --------------------------------------------------------------------------
+   Cat Showcase Section
+   -------------------------------------------------------------------------- */
+.section--cat-showcase {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(0, 217, 255, 0.05) 100%);
+}
+
+.cat-showcase {
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0, 217, 255, 0.2);
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    transition: all var(--transition-base);
+}
+
+.cat-showcase:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3);
+    border-color: rgba(0, 217, 255, 0.4);
+}
+
+.cat-showcase__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 600px;
+    object-fit: cover;
+    transition: transform var(--transition-base);
+}
+
+.cat-showcase:hover .cat-showcase__image {
+    transform: scale(1.02);
+}
+
+/* Responsive adjustments for cat showcase */
+@media (max-width: 768px) {
+    .cat-showcase {
+        max-width: 100%;
+    }
+
+    .cat-showcase__image {
+        max-height: 400px;
+    }
+}
+
+/* --------------------------------------------------------------------------
    FAQ Section
    -------------------------------------------------------------------------- */
 .faq-list {
