@@ -1,233 +1,182 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TOI4CAT - Ekologická jednorázová cestovní toaleta pro kočky. Komfortní, praktická a šetrná k životnímu prostředí.">
-    <meta name="keywords" content="kočičí toaleta, cestovní toaleta pro kočky, ekologická toaleta, TOI4CAT">
-    <title>TOI4CAT - Ekologická toaleta pro vaši kočku</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TOI4CAT - Ekologická jednorázová cestovní toaleta pro kočky. Minimalistický design, rychlá příprava a nulová zátěž na cestách.">
+  <title>TOI4CAT | Ekologická toaleta pro vaši kočku</title>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header__inner">
-                <a href="index.html" class="logo">
-                    <img src="assets/images/logos/logo-small.webp" alt="TOI4CAT Logo" class="logo__image">
-                </a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <img src="assets/images/logos/logo-small.webp" alt="TOI4CAT logo">
+        <span>TOI4CAT</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html" class="active">Hlavní strana</a>
+        <a href="about.html">O nás</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Kontakt</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
 
-                <button class="nav__toggle" aria-label="Menu" aria-expanded="false">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button>
-
-                <nav class="nav">
-                    <a href="index.html" class="nav__link nav__link--active">Hlavní strana</a>
-                    <a href="about.html" class="nav__link">O nás</a>
-                    <a href="faq.html" class="nav__link">FAQ</a>
-                    <a href="contact.html" class="nav__link">Kontakt</a>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
+  <main>
     <section class="hero">
-        <div class="container">
-            <h1 class="hero__title">Ekologická toaleta pro vaši kočku</h1>
-            <p class="hero__subtitle">
-                Komfortní toaleta pro kočky, připravena k použití během několika vteřin.
-                Ideální na cesty, dovolenou, ale i pro každodenní použití.
-            </p>
-            <div class="hero__cta">
-                <a href="#features" class="btn btn--secondary">Zjistit více</a>
-                <a href="contact.html" class="btn btn--secondary">Kontaktovat</a>
-            </div>
+      <div class="container hero__inner">
+        <div class="hero__content" data-animate>
+          <span class="badge">Ekologická &amp; cestovní</span>
+          <h1 class="hero__title">Minimalistická toaleta, která cestuje s vaší kočkou</h1>
+          <p class="hero__subtitle">TOI4CAT rozložíte za pár vteřin, vezmete kamkoli a po týdnu ji prostě recyklujete. Žádná špína, žádné těžké plastové boxy.</p>
+          <div class="hero__meta">
+            <span>100% recyklovatelný karton</span>
+            <span>0,5 kg prémiového steliva</span>
+            <span>Výdrž 8–10 dní</span>
+          </div>
+          <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
+            <a class="btn primary" href="contact.html">Objednat / kontakt</a>
+            <a class="btn" href="#features">Proč je nejlepší</a>
+          </div>
         </div>
+        <div class="hero__figure" data-animate>
+          <img src="assets/images/products/product-01.webp" alt="Toi4Cat produkt" loading="lazy">
+        </div>
+      </div>
     </section>
 
-    <!-- Features Section -->
     <section class="section" id="features">
-        <div class="container">
-            <h2 class="text-center mb-2">Proč TOI4CAT - Jednička na trhu</h2>
-            <p class="text-center feature-intro">
-                TOI4CAT je jedinečná ekologická toaleta speciálně navržená pro vaší kočku.
-                Kombinuje komfort, praktičnost a péči o životní prostředí.
-            </p>
-            <div class="features">
-                <div class="feature">
-                    <h3 class="feature__title">100% Ekologické</h3>
-                    <p class="feature__text">
-                        Vyrobeno z recyklovatelného papírového kartonu.
-                        Nezanechává žádné stopy na životním prostředí oproti běžným plastovým toaletám.
-                    </p>
-                </div>
-                <div class="feature">
-                    <h3 class="feature__title">Rychle připraveno</h3>
-                    <p class="feature__text">
-                        Jednoduchým způsobem TOI4CAT připravíte k použití
-                        během několika vteřin. Bez vyřizování či montáže.
-                    </p>
-                </div>
-                <div class="feature">
-                    <h3 class="feature__title">Snadné čištění</h3>
-                    <p class="feature__text">
-                        Po několika dnech použití ji jednoduše vyhodíte do tříděného odpadu.
-                        Odpadne vám práce s mytím, nebudete si špinit ruce!
-                    </p>
-                </div>
-                <div class="feature">
-                    <h3 class="feature__title">Lehká & Kompaktní</h3>
-                    <p class="feature__text">
-                        Perfektní na dovolenou, výlety, cestování i návštěvy.
-                        Však ideální i pro každodenní domácí použití.
-                    </p>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section__title" data-animate>Navržená pro cesty, klid i estetiku</h2>
+        <p class="section__lead" data-animate>Každý detail TOI4CAT je promyšlený: od čistých linií přes lehkou konstrukci po komfort vaší kočky. Žádné zbytečnosti – jen funkční minimalismus.</p>
+        <div class="grid feature-grid">
+          <div class="card" data-animate>
+            <h3>Ekologická konstrukce</h3>
+            <p>Recyklovatelný karton s moderním tvarováním. Po použití ho vyhodíte do tříděného odpadu.</p>
+          </div>
+          <div class="card" data-animate>
+            <h3>Ready během chvilky</h3>
+            <p>Rozložíte a naplníte za pár vteřin. Žádné nářadí, žádné montování.</p>
+          </div>
+          <div class="card" data-animate>
+            <h3>Čisté ruce</h3>
+            <p>Součástí balení jsou 4 lopatky. Po 8–10 dnech vše složíte a recyklujete.</p>
+          </div>
+          <div class="card" data-animate>
+            <h3>Lehká &amp; skladná</h3>
+            <p>Perfektní do auta, kufru i batohu. Připravená na dovolenou, víkend i nečekané cesty.</p>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Product Info Section -->
-    <section class="section section--alt" id="products">
-        <div class="container">
-            <h2 class="text-center mb-2">Co TOI4CAT obsahuje</h2>
-            <p class="text-center feature-intro">
-                Každé balení obsahuje vše potřebné pro pohodlné používání.
-                TOI4CAT je připravena k použití bez dodatečného nákupu.
-            </p>
-            <div class="features">
-                <div class="feature">
-                    <h3 class="feature__title">Pevná konstrukce</h3>
-                    <p class="feature__text">
-                        Kvalitní kartonový box, který vydrží po celou dobu použití.
-                        Stabilní a odolná řešení pro vaší kočku.
-                    </p>
-                </div>
-                <div class="feature">
-                    <h3 class="feature__title">0,5 kg steliva</h3>
-                    <p class="feature__text">
-                        Vysoce kvalitní recyklovatelné stelivo.
-                        Bezpečné a pohodlné pro vaši kočku.
-                    </p>
-                </div>
-                <div class="feature">
-                    <h3 class="feature__title">4 lopatky</h3>
-                    <p class="feature__text">
-                        Praktické pomůcky pro snadné čištění během používání.
-                        Všechno v jednom balení.
-                    </p>
-                </div>
-                <div class="feature">
-                    <h3 class="feature__title">8-10 dní použití</h3>
-                    <p class="feature__text">
-                        Doporučená doba použití jednoho TOI4CAT.
-                        Většina koček si bez problému zvykne.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="section section--highlight">
-        <div class="container">
-            <h2 class="text-center mb-2">Rychle, čistě a snadno</h2>
-            <div class="about-grid">
-                <div class="about-item">
-                    <h4>Okamžitá příprava</h4>
-                    <p>Snadno a rychle připraveno k použití. Stačí otevřít a je připraveno.</p>
-                </div>
-                <div class="about-item">
-                    <h4>Jednoduše vyhoďte</h4>
-                    <p>Po několika dnech použití jednoduše vyhodíte TOI4CAT do koše s tříděným odpadem.</p>
-                </div>
-                <div class="about-item">
-                    <h4>Čisté ruce</h4>
-                    <p>Odpadne vám práce s mytím tradičních toalet. Už si nebudete špinit ruce!</p>
-                </div>
-                <div class="about-item">
-                    <h4>Všude s sebou</h4>
-                    <p>Lehká, kompaktní a praktická. Ideální na cesty i do domácnosti.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
     <section class="section">
-        <div class="container">
-            <h2 class="text-center mb-2">Galerie produktu</h2>
-            <div class="text-center mb-2">
-                <a href="contact.html" class="btn btn--primary">Objednat nyní</a>
-            </div>
-            <div class="gallery">
-                <div class="gallery__item">
-                    <img src="assets/images/products/product-01.webp" alt="TOI4CAT produkt" class="gallery__image">
-                </div>
-                <div class="gallery__item">
-                    <img src="assets/images/products/product-04.webp" alt="TOI4CAT produkt" class="gallery__image">
-                </div>
-                <div class="gallery__item">
-                    <img src="assets/images/products/product-05.webp" alt="TOI4CAT produkt" class="gallery__image">
-                </div>
-                <div class="gallery__item">
-                    <img src="assets/images/products/product-06.webp" alt="TOI4CAT produkt" class="gallery__image">
-                </div>
-                <div class="gallery__item">
-                    <img src="assets/images/products/product-07.webp" alt="TOI4CAT produkt" class="gallery__image">
-                </div>
-                <div class="gallery__item">
-                    <img src="assets/images/products/product-09.webp" alt="TOI4CAT produkt" class="gallery__image">
-                </div>
-                <div class="gallery__item">
-                    <img src="assets/images/products/product-10.webp" alt="TOI4CAT produkt" class="gallery__image">
-                </div>
-            </div>
+      <div class="container split">
+        <div data-animate>
+          <span class="badge">Co dostanete</span>
+          <h2 class="section__title">Kompletní sada v jednom balení</h2>
+          <p class="section__lead">Není potřeba nic dokupovat. Otevřete box, vsypete přibalené stelivo a vaše kočka má nové oblíbené místo.</p>
+          <ul class="list">
+            <li><span class="tag">01</span> Pevný kartonový box, který drží tvar.</li>
+            <li><span class="tag">02</span> 0,5 kg přírodního recyklovatelného steliva.</li>
+            <li><span class="tag">03</span> 4 lopatky pro průběžné čištění během týdne.</li>
+          </ul>
+          <div class="metrics">
+            <div class="metric"><strong>8–10 dní</strong><span>doporučená výdrž</span></div>
+            <div class="metric"><strong>&lt;30 s</strong><span>příprava k použití</span></div>
+            <div class="metric"><strong>0 kg plastu</strong><span>jen papír &amp; stelivo</span></div>
+          </div>
         </div>
+        <div class="subtle-card" data-animate>
+          <h3>Jak to probíhá</h3>
+          <div class="timeline">
+            <div class="timeline__item">
+              <strong>Rozložíte</strong>
+              <span>Box složíte do tvaru během několika tahů.</span>
+            </div>
+            <div class="timeline__item">
+              <strong>Nasypete stelivo</strong>
+              <span>Přibalených 0,5 kg je připravených k okamžitému použití.</span>
+            </div>
+            <div class="timeline__item">
+              <strong>Pohodlně cestujete</strong>
+              <span>Bez zápachu, bez těžké výbavy. Po týdnu vše vytřídíte.</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="hero">
-        <div class="container">
-            <h2 class="hero__title">Máte zájem o TOI4CAT?</h2>
-            <p class="hero__subtitle">
-                Kontaktujte nás a zjistěte více o našich produktech.
-            </p>
-            <a href="contact.html" class="btn btn--secondary">Kontaktovat</a>
+    <section class="section">
+      <div class="container">
+        <div class="split" style="align-items:flex-start;">
+          <div data-animate>
+            <span class="badge">Moderní minimalismus</span>
+            <h2 class="section__title">Čisté linie, které zapadnou do každého interiéru</h2>
+            <p class="section__lead">Žádné nevzhledné plastové boxy. TOI4CAT působí moderně, lehce a nenápadně. Díky kartonu bez chemie je šetrná ke kočce i k planetě.</p>
+            <div class="hero__panel">
+              <strong style="color:var(--primary)">„Konečně toaleta, která vypadá dobře a nezabere místo. Z cest se stala pohoda.“</strong>
+              <p style="color:var(--muted); margin:8px 0 0;">Jana, cestující se dvěma kočkami</p>
+            </div>
+          </div>
+          <div class="grid gallery" data-animate>
+            <img src="assets/images/products/product-04.webp" alt="Detaily TOI4CAT" loading="lazy">
+            <img src="assets/images/products/product-05.webp" alt="TOI4CAT na cestách" loading="lazy">
+            <img src="assets/images/products/product-06.webp" alt="TOI4CAT v interiéru" loading="lazy">
+            <img src="assets/images/products/product-07.webp" alt="Balení TOI4CAT" loading="lazy">
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__inner">
-                <div>
-                    <h3 class="footer__title">TOI4CAT</h3>
-                    <p>Ekologická jednorázová cestovní toaleta pro kočky.</p>
-                </div>
-                <div>
-                    <h3 class="footer__title">Navigace</h3>
-                    <a href="index.html" class="footer__link">Hlavní strana</a>
-                    <a href="about.html" class="footer__link">O nás</a>
-                    <a href="faq.html" class="footer__link">FAQ</a>
-                    <a href="contact.html" class="footer__link">Kontakt</a>
-                </div>
-                <div>
-                    <h3 class="footer__title">Kontakt</h3>
-                    <a href="mailto:info@toi4cat.com" class="footer__link">info@toi4cat.com</a>
-                    <a href="tel:+420725965826" class="footer__link">+420 725 965 826</a>
-                </div>
-            </div>
-            <div class="footer__bottom">
-                <p>&copy; 2025 TOI4CAT. Všechna práva vyhrazena.</p>
-            </div>
+    <section class="section">
+      <div class="container" data-animate>
+        <div class="hero__panel" style="text-align:center;">
+          <span class="badge">Připravení na další cestu?</span>
+          <h2 class="section__title">Stačí napsat. Poradíme, odešleme a vaše kočka má klid.</h2>
+          <p class="section__lead" style="margin:0 auto 26px;">Máte otázky nebo chcete rovnou objednat? Dejte nám vědět a připravíme balíček na míru.</p>
+          <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+            <a class="btn primary" href="contact.html">Kontaktovat tým</a>
+            <a class="btn" href="faq.html">Podívat se na FAQ</a>
+          </div>
         </div>
-    </footer>
+      </div>
+    </section>
+  </main>
 
-    <script src="assets/js/main.js"></script>
+  <footer class="footer">
+    <div class="container grid footer__grid">
+      <div>
+        <a href="index.html" class="logo">
+          <img src="assets/images/logos/logo-small.webp" alt="TOI4CAT logo">
+          <span>TOI4CAT</span>
+        </a>
+        <p class="footer__meta">Ekologická, jednorázová a cestovní toaleta pro kočky, která dává smysl.</p>
+      </div>
+      <div class="footer__links">
+        <strong>Navigace</strong>
+        <a href="index.html">Hlavní strana</a>
+        <a href="about.html">O nás</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Kontakt</a>
+      </div>
+      <div class="footer__links">
+        <strong>Kontakt</strong>
+        <a href="mailto:info@toi4cat.com">info@toi4cat.com</a>
+        <a href="tel:+420725965826">+420 725 965 826</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
