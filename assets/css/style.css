@@ -367,8 +367,8 @@ p {
    -------------------------------------------------------------------------- */
 .features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--spacing-xl);
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
 }
 
 .feature {
@@ -659,6 +659,11 @@ p {
         padding: var(--spacing-2xl) 0;
     }
 
+    .features {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+
     .about-grid {
         grid-template-columns: 1fr;
     }
@@ -671,5 +676,10 @@ p {
 
     .btn {
         width: 100%;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
     }
 }
