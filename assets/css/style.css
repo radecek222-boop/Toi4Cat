@@ -228,13 +228,30 @@ p {
    Hero Section
    -------------------------------------------------------------------------- */
 .hero {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.6) 100%);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 217, 255, 0.1);
+    background-image: url('../images/IMG_5636.JPG');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: var(--color-text);
     padding: var(--spacing-2xl) 0;
     text-align: center;
     position: relative;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.6) 100%);
+    z-index: 1;
+}
+
+.hero > * {
+    position: relative;
+    z-index: 2;
 }
 
 .hero__title {
@@ -468,53 +485,6 @@ p {
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
-}
-
-/* --------------------------------------------------------------------------
-   Cat Showcase Section
-   -------------------------------------------------------------------------- */
-.section--cat-showcase {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(0, 217, 255, 0.05) 100%);
-}
-
-.cat-showcase {
-    max-width: 800px;
-    margin: 0 auto;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: 0 16px 48px rgba(0, 217, 255, 0.2);
-    border: 1px solid rgba(0, 217, 255, 0.2);
-    transition: all var(--transition-base);
-}
-
-.cat-showcase:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3);
-    border-color: rgba(0, 217, 255, 0.4);
-}
-
-.cat-showcase__image {
-    width: 100%;
-    height: auto;
-    display: block;
-    max-height: 600px;
-    object-fit: cover;
-    transition: transform var(--transition-base);
-}
-
-.cat-showcase:hover .cat-showcase__image {
-    transform: scale(1.02);
-}
-
-/* Responsive adjustments for cat showcase */
-@media (max-width: 768px) {
-    .cat-showcase {
-        max-width: 100%;
-    }
-
-    .cat-showcase__image {
-        max-height: 400px;
-    }
 }
 
 /* --------------------------------------------------------------------------
