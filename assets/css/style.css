@@ -102,7 +102,7 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 0;
+  padding: 8px 0;
 }
 
 .logo {
@@ -113,7 +113,9 @@ img { display: block; max-width: 100%; }
   letter-spacing: 0.02em;
 }
 
-.logo img { height: 80px; width: auto; }
+.site-header .logo img { height: 120px; width: auto; }
+
+.footer .logo img { height: 160px; width: auto; }
 
 .nav {
   display: flex;
