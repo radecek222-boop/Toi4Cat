@@ -159,6 +159,27 @@
     }
 
     /**
+     * Scroll Animation Effects
+     */
+    function initScrollAnimations() {
+        const animElements = document.querySelectorAll('.feature, .feature__text, .feature__title, .gallery__item, .about-item');
+        if (!animElements.length) return;
+
+        const animObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    animObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        animElements.forEach(el => animObserver.observe(el));
+    }
+
+    /**
      * Initialize all modules
      */
     function init() {
@@ -168,6 +189,7 @@
         initContactForm();
         initGallery();
         initLazyLoading();
+        initScrollAnimations();
     }
 
     // Run on DOM ready
