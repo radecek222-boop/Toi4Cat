@@ -96,18 +96,13 @@ img { display: block; max-width: 100%; }
   background: linear-gradient(180deg, rgba(5, 9, 21, 0.9), rgba(5, 9, 21, 0.35));
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--outline);
-  overflow: hidden;
-  height: 240px;
-  display: flex;
-  align-items: center;
 }
 
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0;
-  width: 100%;
+  padding: 18px 0;
 }
 
 .logo {
@@ -116,12 +111,9 @@ img { display: block; max-width: 100%; }
   gap: 12px;
   font-weight: 800;
   letter-spacing: 0.02em;
-  line-height: 0;
 }
 
-.site-header .logo img { height: 240px; width: auto; display: block; }
-
-.footer .logo img { height: 320px; width: auto; }
+.logo img { height: 40px; width: auto; }
 
 .nav {
   display: flex;
