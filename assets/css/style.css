@@ -10,23 +10,23 @@
 
 :root {
     /* Colors */
-    --color-primary: #4CAF50;
-    --color-primary-dark: #388E3C;
-    --color-primary-light: #81C784;
-    --color-secondary: #8D6E63;
-    --color-accent: #FF9800;
+    --color-primary: #666666;
+    --color-primary-dark: #333333;
+    --color-primary-light: #999999;
+    --color-secondary: #757575;
+    --color-accent: #808080;
 
-    --color-text: #333333;
-    --color-text-light: #666666;
-    --color-text-muted: #999999;
+    --color-text: #FFFFFF;
+    --color-text-light: #E0E0E0;
+    --color-text-muted: #B0B0B0;
 
-    --color-bg: #FFFFFF;
-    --color-bg-alt: #F5F5F5;
-    --color-bg-dark: #2C2C2C;
+    --color-bg: #1A1A1A;
+    --color-bg-alt: #2D2D2D;
+    --color-bg-dark: #000000;
 
-    --color-border: #E0E0E0;
-    --color-success: #4CAF50;
-    --color-error: #F44336;
+    --color-border: #404040;
+    --color-success: #666666;
+    --color-error: #FF6B6B;
 
     /* Typography */
     --font-family: 'Poppins', sans-serif;
@@ -154,7 +154,7 @@ p {
 }
 
 .section--highlight {
-    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(141, 110, 99, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(102, 102, 102, 0.1) 0%, rgba(117, 117, 117, 0.1) 100%);
 }
 
 /* --------------------------------------------------------------------------
@@ -224,7 +224,7 @@ p {
    Hero Section
    -------------------------------------------------------------------------- */
 .hero {
-    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
+    background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
     color: white;
     padding: var(--spacing-3xl) 0;
     text-align: center;
@@ -268,32 +268,32 @@ p {
 }
 
 .btn--primary {
-    background-color: var(--color-primary);
+    background-color: #666666;
     color: white;
 }
 
 .btn--primary:hover {
-    background-color: var(--color-primary-dark);
+    background-color: #808080;
     color: white;
 }
 
 .btn--secondary {
-    background-color: white;
-    color: var(--color-primary);
+    background-color: #404040;
+    color: #FFFFFF;
 }
 
 .btn--secondary:hover {
-    background-color: var(--color-bg-alt);
+    background-color: #666666;
 }
 
 .btn--outline {
     background-color: transparent;
-    border: 2px solid var(--color-primary);
-    color: var(--color-primary);
+    border: 2px solid #666666;
+    color: #FFFFFF;
 }
 
 .btn--outline:hover {
-    background-color: var(--color-primary);
+    background-color: #666666;
     color: white;
 }
 
@@ -301,7 +301,7 @@ p {
    Cards
    -------------------------------------------------------------------------- */
 .card {
-    background-color: var(--color-bg);
+    background-color: #2D2D2D;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     overflow: hidden;
@@ -378,10 +378,10 @@ p {
 }
 
 .about-item {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(45, 45, 45, 0.7);
     padding: var(--spacing-xl);
     border-radius: var(--radius-lg);
-    border-left: 4px solid var(--color-primary);
+    border-left: 4px solid #666666;
     transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
@@ -393,11 +393,11 @@ p {
 .about-item h4 {
     font-size: var(--font-size-lg);
     margin-bottom: var(--spacing-sm);
-    color: var(--color-primary);
+    color: #FFFFFF;
 }
 
 .about-item p {
-    color: var(--color-text-light);
+    color: #E0E0E0;
     font-size: 0.95rem;
 }
 
