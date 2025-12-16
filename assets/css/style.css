@@ -97,6 +97,9 @@ img { display: block; max-width: 100%; }
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--outline);
   overflow: hidden;
+  height: 240px;
+  display: flex;
+  align-items: center;
 }
 
 .navbar {
@@ -104,7 +107,7 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: space-between;
   padding: 0;
-  height: 240px;
+  width: 100%;
 }
 
 .logo {
