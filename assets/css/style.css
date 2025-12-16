@@ -182,21 +182,14 @@ img { display: block; max-width: 100%; }
 
 .hero__figure {
   position: relative;
-  padding: 24px;
-  border-radius: var(--radius-lg);
-  background: var(--surface);
+  padding: 8px;
+  border-radius: 0;
+  background: transparent;
   border: 1px solid var(--outline);
-  box-shadow: var(--shadow);
 }
 
 .hero__figure::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(circle at 20% 20%, rgba(110, 243, 197, 0.22), transparent 40%),
-              radial-gradient(circle at 80% 80%, rgba(90, 200, 255, 0.16), transparent 36%);
-  pointer-events: none;
+  display: none;
 }
 
 .section__title { font-size: clamp(1.9rem, 3vw, 2.4rem); margin-bottom: 12px; letter-spacing: -0.01em; }
