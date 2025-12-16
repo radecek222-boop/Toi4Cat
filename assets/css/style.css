@@ -6,6 +6,8 @@
 /* --------------------------------------------------------------------------
    CSS Variables / Design Tokens
    -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 :root {
     /* Colors */
     --color-primary: #4CAF50;
@@ -27,7 +29,7 @@
     --color-error: #F44336;
 
     /* Typography */
-    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-family: 'Poppins', sans-serif;
     --font-size-base: 16px;
     --font-size-sm: 0.875rem;
     --font-size-lg: 1.125rem;
