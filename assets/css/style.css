@@ -123,6 +123,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: var(--line-height-tight);
     color: var(--color-text);
     margin-bottom: var(--spacing-md);
+    letter-spacing: 0.1em;
 }
 
 h1 { font-size: var(--font-size-3xl); }
