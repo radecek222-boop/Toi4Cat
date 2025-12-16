@@ -232,9 +232,12 @@ p {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(0, 217, 255, 0.1);
     color: var(--color-text);
-    padding: var(--spacing-2xl) 0;
     text-align: center;
     position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero__title {
